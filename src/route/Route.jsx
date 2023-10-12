@@ -3,7 +3,7 @@ import Main from "../layout/Main";
 import HomePage from "../pages/HomePage/HomePage";
 import Login from "../components/Login/Login";
 import PrivateRoute from "./PrivateRoute";
-
+import SingleCasino from "../pages/CasinoList/SingleCasino";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +18,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <HomePage />,
       },
-    
+      {
+        path: "/casino/:name",
+        element: <SingleCasino />,
+      },
     ],
   },
   {
