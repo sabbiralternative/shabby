@@ -13,14 +13,9 @@ const Main = () => {
           <Sidebar />
         </div>
         <Category />
-        {/* <div
-          className="center-main-container home-page"
-          style={{ height: "calc(100vh - 270px)" }}
-        > */}
          <div className="center-main-container home-page">
         <Outlet />
         </div>
-        {/* </div> */}
       </div>
       <Footer />
     </div>

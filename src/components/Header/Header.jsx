@@ -88,12 +88,12 @@ const Header = () => {
       <section className="header">
         <div className="header-top">
           <div className="logo-header">
-            <a className="d-xl-none" href="/home">
+            <Link className="d-xl-none" href="/">
               <i className="fas fa-home me-1"></i>
-            </a>
-            <a href="/home">
+            </Link>
+            <Link href="/">
               <img src={logo} />
-            </a>
+            </Link>
           </div>
           <div className="user-details">
             <div className="search-box-container d-none d-xl-block">
