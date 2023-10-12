@@ -1,0 +1,63 @@
+{
+    "status": {
+        "statusCode": "0",
+        "statusDesc": "Success"
+    },
+    "result": {
+        "banner": {
+            "ludo": false,
+            "casino": true,
+            "racing": true,
+            "top": false,
+            "middle": true,
+            "bottom": false
+        },
+        "settings": {
+            "whitelistedDomains": [
+                "localhost:8080",
+                "api7.live",
+                "bmwexch7.com"
+            ],
+            "siteTitle": "WINBUZZ365",
+            "recaptcha": "6Lc4UB8dAAAAAJkIpe063dHBO_o19nUYe7hqkVHb",
+            "interval": "600",
+            "casino": "aura"
+
+        },
+        "endpoint": {
+            "login": "https://api7.live/api/account/diamond/login",
+            "inPlayAndPopularEvents": "https://api7.live/api/exchange/odds/inPlayAndPopularEvents",
+            "menu": "https://cache.api7.live/api/exchange/diamond/menu",
+            "balance": "https://api7.live/api/account/diamond/balance",
+            "notification": "https://cache.api7.live/api/exchange/diamond/notification",
+            "openEvents": "https://cache.api7.live/api/exchange/diamond/openEvents",
+            "stats": "https://cache.api7.live/api/exchange/diamond/stats.php?id=",
+            "odds": "https://cache.api7.live/api/exchange/diamond/odds/event",
+            "order": "https://api7.live/api/exchange/diamond/order",
+            "rules": "https://api7.live/api/exchange/diamond/rules",
+            "orderCount": "https://api7.live/api/exchange/diamond/order-count.php",
+            "accessToken": "https://api7.live/api/exchange/diamond/accessToken",
+            "orderList": "https://api7.live/api/exchange/diamond/open_bets.php",
+            "inplayEvents": "https://cache.api7.live/api/exchange/diamond/inplayEvents",
+            "group": "https://cache.api7.live/api/exchange/diamond/group",
+            "pnl": "https://api7.live/api/exchange/diamond/exposure.php",
+            "mobileStakes": "https://api7.live/api/account/settings/mobile-stakes",
+            "oneClick": "https://api7.live/api/account/settings/one-click",
+            "reportPnl": "https://api7.live/api/exchange/diamond/pnl.php",
+            "reportTransfer": "https://api7.live/api/account/reports/transfer",
+            "pastEvents": "https://cache.api7.live/api/exchange/diamond/pastevents",
+            "history": "https://cache.api7.live/api/exchange/diamond/history/event",
+            "changePassword": "https://api7.live/api/exchange/diamond/password.php",
+            "buttonValue": "https://api7.live/api/exchange/diamond/buttonValue.php",
+            "serverTime": "https://cache.api7.live/api/exchnage/diamond/serverTime",
+            "approveRules": "https://api7.live/api/approved-rules",
+            "ladder": "https://api7.live/api/exchange/diamond/ladder.php",
+            "casinoResult": "https://api7.live/api/exchange/diamond/casinoResult.php",
+            "singleResult": "https://api7.live/api/exchange/diamond/singleResult",
+            "ourCasino": "https://cache.api7.live/api/exchange/diamond/ourCasino",
+            "diamondCasino": "https://cache.api7.live/api/exchange/diamond/diamondCasino",
+            "auraCasino": "https://cache.api7.live/api/exchange/diamond/auraCasino"
+        }
+    },
+    "success": true
+}

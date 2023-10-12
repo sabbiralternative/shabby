@@ -1,0 +1,95 @@
+.sportsbook iframe {
+  height: calc(100% - 1px);
+}
+
+.sportsbook .slot-iframe.show {
+  top: 125px;
+  height: calc(100vh - 125px);
+}
+
+.PhoneInput input:focus-visible {
+  outline: 0;
+}
+
+.PhoneInput input {
+  border: 0;
+}
+
+.login-auth-box {
+  width: 500px;
+  max-width: 90%;
+}
+
+.login-auth input {
+  padding: 10px;
+  width: 60px !important;
+  height: 60px !important;
+}
+
+.login-auth>div {
+  margin-top: 20px;
+  justify-content: space-between;
+}
+
+.live-casino-bets .game-name {
+  width: 110px;
+}
+
+.live-casino-bets .report-type {
+  width: 70px;
+}
+
+.live-casino-bets .report-amount {
+  width: 70px;
+}
+
+#floater {
+  position: absolute;
+  top: 50vh;
+  right: 0;
+  width: 50px;
+  height: auto;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  z-index: 10001;
+  border-radius: 3px 0 0 3px;
+  padding: 0px;
+  box-shadow: rgb(255 255 255 / 98%) -5px 0px 10px -5px;
+  /* background-color: #41a6d9; */
+  /* color: white; */
+  text-align: center;
+  box-sizing: border-box;
+}
+
+#floater img {
+  width: 50px;
+  height: 50px;
+}
+
+.modal-18plus img {
+  height: 30px;
+}
+
+@media screen and (max-width: 767px) {
+  .login-auth input {
+    padding: 10px;
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .sportsbook .slot-iframe.show {
+    top: 60px;
+    height: calc(100vh - 60px);
+    left: 0;
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width:1199px) {
+  .sportsbook .slot-iframe.show {
+    top: 60px;
+    height: calc(100vh - 60px);
+    left: 0;
+    width: 100%;
+  }
+}
