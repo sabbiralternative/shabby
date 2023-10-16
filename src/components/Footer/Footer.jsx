@@ -1,35 +1,56 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init();
 
 const Footer = () => {
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
     if (!hasModalBeenShown) {
-      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(true);
+      }, 200);
     }
   }, []);
 
   const closeModal = () => {
-    localStorage.setItem("hasModalBeenShown", "true");
     setShowModal(false);
+    localStorage.setItem("hasModalBeenShown", "true");
+  };
+
+  const modalStyle = {
+    position: "fixed",
+    top: showModal ? "0px" : "-100%",
+    transition: "transform 0.5s ease",
+    left: "0",
+    zIndex: 1055,
+    width: "100%",
+    height: "100%",
+    overflowX: "hidden",
+    overflowY: "auto",
+    outline: "0",
   };
 
   return (
     <>
       {showModal && (
         <>
-          <div className="fade modal-backdrop show"></div>
+          <div className={`fade modal-backdrop show`}></div>
           <div
+            data-aos="fade-down"
+            data-aos-duration="500"
             role="dialog"
             aria-modal="true"
-            className="fade modal show"
+            className={` fade  show `}
             tabIndex="-1"
             style={{
               display: "block",
+              ...modalStyle,
             }}
           >
-            <div className="modal-dialog modal-lg">
+            <div className={`modal-dialog modal-lg `}>
               <div className="modal-content">
                 <div className="modal-header">
                   <div className="modal-title h4">

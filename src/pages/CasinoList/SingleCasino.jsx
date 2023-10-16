@@ -13,7 +13,7 @@ const SingleCasino = () => {
         src={url}
         title="casino video"
         width="100%"
-        height={window.innerWidth * (9 / 16)}
+        height="100%"
         style={{ border: "0px" }}
       ></iframe>
     </>

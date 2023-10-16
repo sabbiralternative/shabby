@@ -17,27 +17,33 @@ const Header = () => {
   const [showNotification, setShowNotification] = useState("");
   const navigate = useNavigate();
 
+  const cricketEndpoint = () => {
+    localStorage.removeItem("group");
+    localStorage.setItem("group", 4);
+  };
+  const tennisEndpoint = () => {
+    localStorage.removeItem("group");
+    localStorage.setItem("group", 2);
+  };
+  const footballEndpoint = () => {
+    localStorage.removeItem("group");
+    localStorage.setItem("group", 1);
+  };
 
   useEffect(() => {
     const handleWindowResize = () => {
       if (window.innerWidth > 1199) {
         setOpen(false);
-      }
-      else if(window.innerWidth < 1200){
-        setDropDown(false)
+      } else if (window.innerWidth < 1200) {
+        setDropDown(false);
       }
     };
     handleWindowResize();
-    window.addEventListener('resize', handleWindowResize);
+    window.addEventListener("resize", handleWindowResize);
     return () => {
-      window.removeEventListener('resize', handleWindowResize);
+      window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
-
-
-
-
-
 
   /* Call balance anx exp api every 5 seconds */
   useEffect(() => {
@@ -103,16 +109,16 @@ const Header = () => {
                   placeholder="Search here"
                   className="form-control"
                 />
-                <a>
+                <Link>
                   <i className="fas fa-search-plus"></i>
-                </a>
+                </Link>
               </div>
             </div>
             <div className="header-rules ms-3">
               <div>
-                <a className="rules-link pointer">
+                <Link className="rules-link pointer">
                   <b>Rules</b>
-                </a>
+                </Link>
               </div>
             </div>
             <div className="ms-3 d-none d-xl-flex"></div>
@@ -131,24 +137,24 @@ const Header = () => {
                   </>
                 )}
                 <div onClick={() => setOpen(!open)} className="dropdown">
-                  <a
+                  <div
                     className="user-name ms-1 ms-xl-3 d-inline-block d-xl-none dropdown-toggle"
                     id="react-aria2236598939-1"
                     aria-expanded="false"
                   >
                     Demo<i className="fas fa-chevron-down ms-1"></i>
-                  </a>
+                  </div>
                 </div>
 
                 {open && (
                   <div className="show dropdown">
-                    <a
+                    <Link
                       className="user-name ms-3 d-none d-xl-block dropdown-toggle show"
                       id="react-aria9626335788-2"
                       aria-expanded="true"
                     >
                       Lake777<i className="fas fa-chevron-down ms-1"></i>
-                    </a>
+                    </Link>
                     <ul
                       // xPlacement="bottom-start"
                       aria-labelledby="react-aria9626335788-2"
@@ -163,69 +169,69 @@ const Header = () => {
                       }}
                     >
                       <div className="d-xl-none d-flex justify-content-center"></div>
-                      <a href="/account-statement">
+                      <Link href="/account-statement">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
                           Account Statement
                         </li>
-                      </a>
-                      <a href="/current-bet">
+                      </Link>
+                      <Link href="/current-bet">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
                           Current Bet
                         </li>
-                      </a>
-                      <a href="/activity-log">
+                      </Link>
+                      <Link href="/activity-log">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
                           Activity Logs
                         </li>
-                      </a>
-                      <a href="/casino-results">
+                      </Link>
+                      <Link href="/casino-results">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
                           Casino Results
                         </li>
-                      </a>
-                      <a href="/live-casino-bets">
+                      </Link>
+                      <Link href="/live-casino-bets">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
                           Live Casino Bets
                         </li>
-                      </a>
-                      <a>
+                      </Link>
+                      <Link>
                         <li className="dropdown-item">Set Button Values</li>
-                      </a>
-                      <a href="/secure-auth">
+                      </Link>
+                      <Link href="/secure-auth">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
                           Security Auth Verification
                         </li>
-                      </a>
-                      <a href="/change-password">
+                      </Link>
+                      <Link href="/change-password">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
                           Change Password
                         </li>
-                      </a>
-                      <a className="d-xl-none">
+                      </Link>
+                      <Link className="d-xl-none">
                         <li className="dropdown-item">Rules</li>
-                      </a>
-                      <a
+                      </Link>
+                      <Link
                         onClick={() => setBalance(!balance)}
                         className="dropdown-item d-xl-none"
                       >
@@ -234,11 +240,11 @@ const Header = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            checked=""
+                        
                           />
                         </div>
-                      </a>
-                      <a
+                      </Link>
+                      <Link
                         onClick={() => setExp(!exp)}
                         className="dropdown-item d-xl-none"
                       >
@@ -247,10 +253,10 @@ const Header = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            checked=""
+                       
                           />
                         </div>
-                      </a>
+                      </Link>
                       <hr className="dropdown-divider" role="separator" />
                       <li
                         onClick={logOut}
@@ -262,9 +268,8 @@ const Header = () => {
                     </ul>
                   </div>
                 )}
-                  {dropDown && (
+                {dropDown && (
                   <div className="show dropdown">
-                   
                     <ul
                       // xPlacement="bottom-start"
                       aria-labelledby="react-aria9626335788-2"
@@ -275,73 +280,73 @@ const Header = () => {
                       style={{
                         position: "absolute",
                         inset: "0px auto auto 0px",
-                        transform: "translate(-15px, 5px)",
+                        transform: "translate(10px, 5px)",
                       }}
                     >
                       <div className="d-xl-none d-flex justify-content-center"></div>
-                      <a href="/account-statement">
+                      <Link href="/account-statement">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
                           Account Statement
                         </li>
-                      </a>
-                      <a href="/current-bet">
+                      </Link>
+                      <Link href="/current-bet">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
                           Current Bet
                         </li>
-                      </a>
-                      <a href="/activity-log">
+                      </Link>
+                      <Link href="/activity-log">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
                           Activity Logs
                         </li>
-                      </a>
-                      <a href="/casino-results">
+                      </Link>
+                      <Link href="/casino-results">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
                           Casino Results
                         </li>
-                      </a>
-                      <a href="/live-casino-bets">
+                      </Link>
+                      <Link href="/live-casino-bets">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
                           Live Casino Bets
                         </li>
-                      </a>
-                      <a>
+                      </Link>
+                      <Link>
                         <li className="dropdown-item">Set Button Values</li>
-                      </a>
-                      <a href="/secure-auth">
+                      </Link>
+                      <Link href="/secure-auth">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
                           Security Auth Verification
                         </li>
-                      </a>
-                      <a href="/change-password">
+                      </Link>
+                      <Link href="/change-password">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
                           Change Password
                         </li>
-                      </a>
-                      <a className="d-xl-none">
+                      </Link>
+                      <Link className="d-xl-none">
                         <li className="dropdown-item">Rules</li>
-                      </a>
-                      <a
+                      </Link>
+                      <Link
                         onClick={() => setBalance(!balance)}
                         className="dropdown-item d-xl-none"
                       >
@@ -350,11 +355,11 @@ const Header = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            checked=""
+                       
                           />
                         </div>
-                      </a>
-                      <a
+                      </Link>
+                      <Link
                         onClick={() => setExp(!exp)}
                         className="dropdown-item d-xl-none"
                       >
@@ -363,10 +368,10 @@ const Header = () => {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            checked=""
+                       
                           />
                         </div>
-                      </a>
+                      </Link>
                       <hr className="dropdown-divider" role="separator" />
                       <li
                         onClick={logOut}
@@ -381,15 +386,14 @@ const Header = () => {
               </div>
             </div>
             <div onClick={() => setDropDown(!dropDown)} className="dropdown">
-              <Link
+              <div
                 className="user-name ms-3 d-none d-xl-block dropdown-toggle"
                 id="react-aria2236598939-2"
                 aria-expanded="false"
               >
                 Demo<i className="fas fa-chevron-down ms-1"></i>
-              </Link>
+              </div>
             </div>
-          
           </div>
           <div className="search-box-container d-xl-none">
             <div className="search-box">
@@ -398,12 +402,13 @@ const Header = () => {
                 placeholder="Search here"
                 className="form-control"
               />
-              <a>
+              <Link>
                 <i className="fas fa-search-plus"></i>
-              </a>
+              </Link>
             </div>
           </div>
           <div className="news">
+           
             <marquee scrollAmount="3">{showNotification} </marquee>
           </div>
         </div>
@@ -411,59 +416,59 @@ const Header = () => {
           <nav className="navbar navbar-expand">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <a className="nav-link" href="/home">
+                <Link className="nav-link" to="/">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/sports-book/33">
+                <Link className="nav-link" to="/lottery">
                   Lottery
-                </a>
+                </Link>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/all-sports/4">
+              <li onClick={cricketEndpoint} className="nav-item">
+                <Link className="nav-link" to="/cricket">
                   Cricket
-                </a>
+                </Link>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/all-sports/2">
+              <li onClick={tennisEndpoint} className="nav-item">
+                <Link className="nav-link" to="/tennis">
                   Tennis
-                </a>
+                </Link>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/all-sports/1">
+              <li onClick={footballEndpoint} className="nav-item">
+                <Link className="nav-link" to="/football">
                   Football
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/all-sports/8">
+                <Link className="nav-link" to="/table-tennis">
                   Table Tennis
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/casino-list/LC/4/22">
+                <Link className="nav-link" to="/baccarat">
                   Baccarat
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/casino-list/LC/4/24">
+                <Link className="nav-link" to="/32-cards">
                   32 Cards
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/casino-list/LC/4/20">
+                <Link className="nav-link" to="/teenpatti">
                   Teenpatti
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/casino-list/LC/4/21">
+                <Link className="nav-link" to="/poker">
                   Poker
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/casino-list/LC/4/27">
+                <Link className="nav-link" to="/lucky-7">
                   Lucky 7
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

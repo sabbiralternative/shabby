@@ -39,7 +39,8 @@ const HomePage = () => {
           },
         });
         const data = res.data;
-        setData(data);
+        const sortData = Object.values(data).sort((a, b) => a.sort - b.sort);
+        setData(sortData);
       }
     };
     cricketData();
@@ -81,19 +82,72 @@ const HomePage = () => {
               </div>
             </div>
             <div className="bet-table-body">
-              {sports === 4 &&
-                Object.values(data).map((d, i) => (
-                  <BetTable key={i} data={d} />
-                ))}
-              {sports === 1 &&
+              {Object.values(data).length > 0 &&
+                sports === 4 &&
                 Object.values(data).map((d, i) => (
                   <BetTable key={i} data={d} />
                 ))}
 
-              {sports === 2 &&
+              {Object.values(data).length > 0 &&
+                sports === 1 &&
                 Object.values(data).map((d, i) => (
                   <BetTable key={i} data={d} />
                 ))}
+
+              {Object.values(data).length > 0 &&
+                sports === 2 &&
+                Object.values(data).map((d, i) => (
+                  <BetTable key={i} data={d} />
+                ))}
+
+              {Object.values(data).length > 0 &&
+                sports === 8 &&
+                Object.values(data).map((d, i) => (
+                  <BetTable key={i} data={d} />
+                ))}
+
+              {Object.values(data).length > 0 &&
+                sports === 15 &&
+                Object.values(data).map((d, i) => (
+                  <BetTable key={i} data={d} />
+                ))}
+
+              {Object.values(data).length > 0 &&
+                sports === 18 &&
+                Object.values(data).map((d, i) => (
+                  <BetTable key={i} data={d} />
+                ))}
+
+              {Object.values(data).length > 0 &&
+                sports === 59 &&
+                Object.values(data).map((d, i) => (
+                  <BetTable key={i} data={d} />
+                ))}
+              {Object.values(data).length > 0 &&
+                sports === 11 &&
+                Object.values(data).map((d, i) => (
+                  <BetTable key={i} data={d} />
+                ))}
+              {Object.values(data).length > 0 &&
+                sports === 9 &&
+                Object.values(data).map((d, i) => (
+                  <BetTable key={i} data={d} />
+                ))}
+              {Object.values(data).length > 0 &&
+                sports === 85 &&
+                Object.values(data).map((d, i) => (
+                  <BetTable key={i} data={d} />
+                ))}
+
+              {Object.values(data).length > 0 &&
+                sports === 99 &&
+                Object.values(data).map((d, i) => (
+                  <BetTable key={i} data={d} />
+                ))}
+
+              {Object.values(data).length < 1 && (
+                <div className="bet-table-row">No Record Found</div>
+              )}
             </div>
           </div>
         </div>

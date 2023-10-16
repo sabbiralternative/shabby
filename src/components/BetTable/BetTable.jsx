@@ -16,6 +16,7 @@ const BetTable = ({ data }) => {
     isVirtual,
     status,
   } = data;
+  
 
   return (
     <>
@@ -38,6 +39,7 @@ const BetTable = ({ data }) => {
             {isTv === 1 ? (
               <div className="game-icon">
                 <i className="fas fa-tv icon-tv"></i>
+              
               </div>
             ) : (
               <div className="game-icon"></div>
@@ -157,6 +159,8 @@ const BetTable = ({ data }) => {
             </div>
           </div>
         )}
+
+   
 
         {status === "OPEN" ? (
           <div className="bet-nation-odd">

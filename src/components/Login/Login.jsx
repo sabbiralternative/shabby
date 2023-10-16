@@ -129,7 +129,7 @@ const Login = () => {
                 {" "}
                 Privacy Policy
               </a>{" "}
-              and
+              and{" "}
               <a href="https://policies.google.com/terms">
                 Terms of Service
               </a>{" "}

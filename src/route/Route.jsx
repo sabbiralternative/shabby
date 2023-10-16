@@ -4,6 +4,9 @@ import HomePage from "../pages/HomePage/HomePage";
 import Login from "../components/Login/Login";
 import PrivateRoute from "./PrivateRoute";
 import SingleCasino from "../pages/CasinoList/SingleCasino";
+import Cricket from '../pages/Cricket/Cricket'
+import Football from '../pages/Football/Football'
+import Tennis from '../pages/Tennis/Tennis.jsx'
 
 const router = createBrowserRouter([
   {
@@ -21,6 +24,18 @@ const router = createBrowserRouter([
       {
         path: "/casino/:name",
         element: <SingleCasino />,
+      },
+      {
+        path: "/cricket",
+        element: <Cricket />,
+      },
+      {
+        path: "/football",
+        element: <Football />,
+      },
+      {
+        path: "/tennis",
+        element: <Tennis />,
       },
     ],
   },
