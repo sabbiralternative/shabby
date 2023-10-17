@@ -2,8 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import loginBanner from "../../static/front/img/logo.png";
 import { config } from "../../utils/config";
+
 const Login = () => {
   const navigate = useNavigate();
+
   const loginApi = config?.result?.endpoint?.login;
   const {
     register,
@@ -13,7 +15,7 @@ const Login = () => {
 
   const onSubmit = ({ username, password }) => {
     if (username !== "demo") {
-      return;
+      return ;
     } else if (password !== "1234") {
       return;
     } else if (username === "demo" && password === "1234") {
@@ -32,7 +34,7 @@ const Login = () => {
           localStorage.setItem("token", data.result.token);
           localStorage.setItem("loginName", data.result.loginName);
           const buttonValue = JSON.stringify(data.result.buttonValue.game);
-          localStorage.setItem("game", buttonValue);
+          localStorage.setItem("buttonValue", buttonValue);
           if (
             localStorage.getItem("token") &&
             localStorage.getItem("loginName")
@@ -59,7 +61,7 @@ const Login = () => {
         localStorage.setItem("token", data.result.token);
         localStorage.setItem("loginName", data.result.loginName);
         const buttonValue = JSON.stringify(data.result.buttonValue.game);
-        localStorage.setItem("game", buttonValue);
+        localStorage.setItem("buttonValue", buttonValue);
         if (
           localStorage.getItem("token") &&
           localStorage.getItem("loginName")

@@ -7,7 +7,8 @@ import SingleCasino from "../pages/CasinoList/SingleCasino";
 import Cricket from '../pages/Cricket/Cricket'
 import Football from '../pages/Football/Football'
 import Tennis from '../pages/Tennis/Tennis.jsx'
-
+import TableTennis from '../pages/TableTennis/TableTennis'
+import ChangePassword from '../pages/ChangePassword/ChangePassword.jsx'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +37,14 @@ const router = createBrowserRouter([
       {
         path: "/tennis",
         element: <Tennis />,
+      },
+      {
+        path: "/table-tennis",
+        element: <TableTennis />,
+      },
+      {
+        path: "/change-password",
+        element: <ChangePassword />,
       },
     ],
   },

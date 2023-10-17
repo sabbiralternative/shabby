@@ -3,6 +3,8 @@ import { config } from "../../utils/config";
 import logo from "../../static/front/img/logo.png";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import RulesModal from "./RulesModal";
 const Header = () => {
   // const [input, setInput] = useState(false);
   const [open, setOpen] = useState(false);
@@ -15,7 +17,16 @@ const Header = () => {
   const [showBalance, setShowBalance] = useState(0);
   const [showExp, setShowExp] = useState(0);
   const [showNotification, setShowNotification] = useState("");
+  const [buttonValue, SetButtonValue] = useState(false);
+  const [ruleModal,setRuleModal] = useState(false)
+  const buttonGameValue = JSON.parse(localStorage.getItem("buttonValue"));
   const navigate = useNavigate();
+  const buttonValueApi = config?.result?.endpoint?.buttonValue;
+  const {
+    register,
+    handleSubmit,
+    
+  } = useForm();
 
   const cricketEndpoint = () => {
     localStorage.removeItem("group");
@@ -28,6 +39,10 @@ const Header = () => {
   const footballEndpoint = () => {
     localStorage.removeItem("group");
     localStorage.setItem("group", 1);
+  };
+  const tableTennisEndpoint = () => {
+    localStorage.removeItem("group");
+    localStorage.setItem("group", 8);
   };
 
   useEffect(() => {
@@ -84,6 +99,133 @@ const Header = () => {
     navigate("/login");
   };
 
+  const onSubmit = ({
+    buttons0label,
+    buttons0value,
+    buttons1label,
+    buttons1value,
+    buttons2label,
+    buttons2value,
+    buttons3label,
+    buttons3value,
+    buttons4label,
+    buttons4value,
+    buttons5label,
+    buttons5value,
+    buttons6label,
+    buttons6value,
+    buttons7label,
+    buttons7value,
+    buttons8label,
+    buttons8value,
+    buttons9label,
+    buttons9value,
+  }) => {
+    fetch(buttonValueApi, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        game: [
+          {
+            label: buttons0label,
+            value: buttons0value,
+          },
+          {
+            label: buttons1label,
+            value: buttons1value,
+          },
+          {
+            label: buttons2label,
+            value: buttons2value,
+          },
+          {
+            label: buttons3label,
+            value: buttons3value,
+          },
+          {
+            label: buttons4label,
+            value: buttons4value,
+          },
+          {
+            label: buttons5label,
+            value: buttons5value,
+          },
+          {
+            label: buttons6label,
+            value: buttons6value,
+          },
+          {
+            label: buttons7label,
+            value: buttons7value,
+          },
+          {
+            label: buttons8label,
+            value: buttons8value,
+          },
+          {
+            label: buttons9label,
+            value: buttons9value,
+          },
+        ],
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          localStorage.removeItem("buttonValue");
+          const gameButtonsValues = [
+            {
+              label: buttons0label,
+              value: buttons0value,
+            },
+            {
+              label: buttons1label,
+              value: buttons1value,
+            },
+            {
+              label: buttons2label,
+              value: buttons2value,
+            },
+            {
+              label: buttons3label,
+              value: buttons3value,
+            },
+            {
+              label: buttons4label,
+              value: buttons4value,
+            },
+            {
+              label: buttons5label,
+              value: buttons5value,
+            },
+            {
+              label: buttons6label,
+              value: buttons6value,
+            },
+            {
+              label: buttons7label,
+              value: buttons7value,
+            },
+            {
+              label: buttons8label,
+              value: buttons8value,
+            },
+            {
+              label: buttons9label,
+              value: buttons9value,
+            },
+          ];
+          localStorage.setItem(
+            "buttonValue",
+            JSON.stringify(gameButtonsValues)
+          );
+          SetButtonValue(!buttonValue)
+        }
+      });
+  };
+
   return (
     <div
       className="wrapper"
@@ -93,6 +235,14 @@ const Header = () => {
     >
       <section className="header">
         <div className="header-top">
+          {
+            ruleModal && (
+              <RulesModal
+              ruleModal={ruleModal}
+              setRuleModal={setRuleModal}
+              />
+            )
+          }
           <div className="logo-header">
             <Link className="d-xl-none" href="/">
               <i className="fas fa-home me-1"></i>
@@ -114,7 +264,7 @@ const Header = () => {
                 </Link>
               </div>
             </div>
-            <div className="header-rules ms-3">
+            <div onClick={()=> setRuleModal(!ruleModal)} className="header-rules ms-3">
               <div>
                 <Link className="rules-link pointer">
                   <b>Rules</b>
@@ -145,7 +295,325 @@ const Header = () => {
                     Demo<i className="fas fa-chevron-down ms-1"></i>
                   </div>
                 </div>
-
+                {buttonValue && (
+                  <>
+                  <div className={`fade modal-backdrop show`}></div>
+                  <div
+                    role="dialog"
+                    aria-modal="true"
+                    className="fade modal show"
+                    tabIndex="-1"
+                    style={{
+                      display: "block",
+                    }}
+                  >
+                    <div className="modal-dialog modal-md">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <div className="modal-title h4">Set Button Value</div>
+                          <button
+                            onClick={() => SetButtonValue(!buttonValue)}
+                            type="button"
+                            className="btn-close"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div className="modal-body">
+                          <div className="mt-1 nav nav-pills" role="tablist">
+                            <div className="nav-item">
+                              <a
+                                role="tab"
+                                data-rr-ui-event-key="1"
+                                id="rules-tabs-tab-1"
+                                aria-controls="rules-tabs-tabpane-1"
+                                aria-selected="true"
+                                className="nav-link active"
+                                tabIndex="0"
+                                href="#"
+                              >
+                                Game Buttons
+                              </a>
+                            </div>
+                          </div>
+                          <div className="mt-1 tab-content">
+                            <div
+                              role="tabpanel"
+                              id="rules-tabs-tabpane-1"
+                              aria-labelledby="rules-tabs-tab-1"
+                              className="fade tab-pane active show"
+                            >
+                              <form onSubmit={handleSubmit(onSubmit)}>
+                                <div className="row row10">
+                                  <div className="mb-1 col-6">
+                                    <label className="form-label">
+                                      <b>Price Label:</b>
+                                    </label>
+                                  </div>
+                                  <div className="mb-1 col-6">
+                                    <label className="form-label">
+                                      <b>Price Value:</b>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div className="row row10">
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons0label", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[0].label}
+                                      name="buttons0label"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons0value", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[0].value}
+                                      name="buttons0value"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="row row10">
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons1label", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[1].label}
+                                      name="buttons1label"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons1value", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[1].value}
+                                      name="buttons1value"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="row row10">
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons2label", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[2].label}
+                                      name="buttons2label"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons2value", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[2].value}
+                                      name="buttons2value"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="row row10">
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons3label", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[3].label}
+                                      name="buttons3label"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons3value", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[3].value}
+                                      name="buttons3value"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="row row10">
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons4label", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[4].label}
+                                      name="buttons4label"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons4value", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[4].value}
+                                      name="buttons4value"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="row row10">
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons5label", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[5].label}
+                                      name="buttons5label"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons5value", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[5].value}
+                                      name="buttons5value"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="row row10">
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons6label", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[6].label}
+                                      name="buttons6label"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons6value", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[6].value}
+                                      name="buttons6value"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="row row10">
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons7label", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[7].label}
+                                      name="buttons7label"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons7value", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[7].value}
+                                      name="buttons7value"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="row row10">
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons8label", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[8].label}
+                                      name="buttons8label"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons8value", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[8].value}
+                                      name="buttons8value"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="row row10">
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons9label", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[9].label}
+                                      name="buttons9label"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                  <div className="mb-3 col-6 position-relative">
+                                    <input
+                                      {...register("buttons9value", {
+                                        required: true,
+                                      })}
+                                      defaultValue={buttonGameValue[9].value}
+                                      name="buttons9value"
+                                      type="text"
+                                      className="form-control"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="row row10">
+                                  <div className="mb-3 col-md-6 ">
+                                    <button
+                                      type="submit"
+                                      className="btn btn-primary btn-block"
+                                    >
+                                      Update
+                                    </button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </>
+                )}
                 {open && (
                   <div className="show dropdown">
                     <Link
@@ -209,9 +677,16 @@ const Header = () => {
                           Live Casino Bets
                         </li>
                       </Link>
-                      <Link>
+
+                      <div
+                        onClick={() => {
+                          SetButtonValue(!buttonValue);
+                          setOpen(!open);
+                        }}
+                      >
                         <li className="dropdown-item">Set Button Values</li>
-                      </Link>
+                      </div>
+
                       <Link href="/secure-auth">
                         <li
                           data-rr-ui-dropdown-item=""
@@ -220,7 +695,9 @@ const Header = () => {
                           Security Auth Verification
                         </li>
                       </Link>
-                      <Link href="/change-password">
+                      <Link
+                      onClick={()=>setOpen(!open)}
+                      to="/change-password">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
@@ -237,11 +714,7 @@ const Header = () => {
                       >
                         Balance
                         <div className="form-check float-end">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                        
-                          />
+                          <input className="form-check-input" type="checkbox" />
                         </div>
                       </Link>
                       <Link
@@ -250,11 +723,7 @@ const Header = () => {
                       >
                         Exposure
                         <div className="form-check float-end">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                       
-                          />
+                          <input className="form-check-input" type="checkbox" />
                         </div>
                       </Link>
                       <hr className="dropdown-divider" role="separator" />
@@ -324,9 +793,16 @@ const Header = () => {
                           Live Casino Bets
                         </li>
                       </Link>
-                      <Link>
+
+                      <div
+                        onClick={() => {
+                          SetButtonValue(!buttonValue);
+                          setDropDown(!dropDown);
+                        }}
+                      >
                         <li className="dropdown-item">Set Button Values</li>
-                      </Link>
+                      </div>
+
                       <Link href="/secure-auth">
                         <li
                           data-rr-ui-dropdown-item=""
@@ -335,7 +811,9 @@ const Header = () => {
                           Security Auth Verification
                         </li>
                       </Link>
-                      <Link href="/change-password">
+                      <Link
+                      onClick={()=>setDropDown(!dropDown)}
+                      to="/change-password">
                         <li
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
@@ -352,11 +830,7 @@ const Header = () => {
                       >
                         Balance
                         <div className="form-check float-end">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                       
-                          />
+                          <input className="form-check-input" type="checkbox" />
                         </div>
                       </Link>
                       <Link
@@ -365,11 +839,7 @@ const Header = () => {
                       >
                         Exposure
                         <div className="form-check float-end">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                       
-                          />
+                          <input className="form-check-input" type="checkbox" />
                         </div>
                       </Link>
                       <hr className="dropdown-divider" role="separator" />
@@ -385,7 +855,12 @@ const Header = () => {
                 )}
               </div>
             </div>
-            <div onClick={() => setDropDown(!dropDown)} className="dropdown">
+            <div
+              onClick={() => {
+                setDropDown(!dropDown);
+              }}
+              className="dropdown"
+            >
               <div
                 className="user-name ms-3 d-none d-xl-block dropdown-toggle"
                 id="react-aria2236598939-2"
@@ -408,8 +883,8 @@ const Header = () => {
             </div>
           </div>
           <div className="news">
-           
-            <marquee scrollAmount="3">{showNotification} </marquee>
+            {/* ToDO scrollAmount="3" */}
+            <marquee >{showNotification} </marquee>
           </div>
         </div>
         <div className="header-bottom d-none d-xl-block">
@@ -440,7 +915,7 @@ const Header = () => {
                   Football
                 </Link>
               </li>
-              <li className="nav-item">
+              <li onClick={tableTennisEndpoint} className="nav-item">
                 <Link className="nav-link" to="/table-tennis">
                   Table Tennis
                 </Link>
@@ -459,6 +934,7 @@ const Header = () => {
                 <Link className="nav-link" to="/teenpatti">
                   Teenpatti
                 </Link>
+           
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/poker">

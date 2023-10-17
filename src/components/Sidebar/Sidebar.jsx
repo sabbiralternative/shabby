@@ -1,7 +1,7 @@
 import axios from "axios";
 import { config } from "../../utils/config";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [sportsLink, setSportsLink] = useState(true);
@@ -44,7 +44,12 @@ const Sidebar = () => {
                 <ul className="navbar-nav">
                   <li className="nav-item dropdown">
                     {menu.map((m, i) => (
-                      <Menu key={i} eventTypeName={m.eventTypeName} menu={m} />
+                      <Menu
+                        key={i}
+                        eventTypeName={m.eventTypeName}
+                        menu={m}
+                        singleEvent={m}
+                      />
                     ))}
                   </li>
                 </ul>
@@ -59,8 +64,9 @@ const Sidebar = () => {
 
 export default Sidebar;
 
-export const Menu = ({ eventTypeName, menu }) => {
+export const Menu = ({ eventTypeName, menu, singleEvent }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       <div
@@ -81,7 +87,12 @@ export const Menu = ({ eventTypeName, menu }) => {
         <ul className="dropdown-menu show">
           <li className="nav-item">
             {menu.competitions.map((c, i) => (
-              <Competitions key={i} competitions={c} menu={menu} />
+              <Competitions
+                key={i}
+                competitions={c}
+                menu={menu}
+                singleEvent={singleEvent}
+              />
             ))}
           </li>
         </ul>
@@ -90,13 +101,14 @@ export const Menu = ({ eventTypeName, menu }) => {
   );
 };
 
-export const Competitions = ({ competitions, menu }) => {
+export const Competitions = ({ competitions, menu, singleEvent }) => {
   const [links, setLinks] = useState([]);
   const [showLinks, setShowLinks] = useState(false);
   const showLink = (link) => {
     const find = menu.competitions.filter((c) => c.competitionName === link);
-    setLinks(find[0].events.map((j) => j.eventName));
+    setLinks(find);
   };
+
   return (
     <>
       <div
@@ -116,8 +128,13 @@ export const Competitions = ({ competitions, menu }) => {
       {showLinks && (
         <ul className="dropdown-menu show">
           <li className="nav-item">
-            {links?.map((link, i) => (
-              <Links key={i} links={links} />
+            {links[0].events.map((li, i) => (
+              <Links
+                key={i}
+                eventName={li.eventName}
+                competitions={competitions}
+                singleEvent={singleEvent}
+              />
             ))}
           </li>
         </ul>
@@ -126,10 +143,20 @@ export const Competitions = ({ competitions, menu }) => {
   );
 };
 
-export const Links = ({ links }) => {
+export const Links = ({ eventName, singleEvent, competitions }) => {
+  const navigate = useNavigate();
+  const getSingleGame = (name) => {
+    const filter = competitions.events.find((ev) => ev.eventName === name);
+    const evenTypeId = singleEvent.eventTypeId;
+    const eventId = filter.eventId;
+    navigate(`/game-details/${evenTypeId}/${eventId}`);
+  };
   return (
-    <Link className="dropdown-toggle nav-link" to="/game-details/40/494346387">
-      <span>{links}</span>
-    </Link>
+    <div
+      onClick={() => getSingleGame(eventName)}
+      className="dropdown-toggle nav-link"
+    >
+      <span>{eventName}</span>
+    </div>
   );
 };
