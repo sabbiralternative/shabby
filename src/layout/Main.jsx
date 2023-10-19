@@ -13,7 +13,7 @@ const Main = () => {
           <Sidebar />
         </div>
         <Category />
-         <div className="center-main-container home-page">
+         <div className="center-main-container home-page report-page">
         <Outlet />
         </div>
       </div>

@@ -9,6 +9,8 @@ import Football from '../pages/Football/Football'
 import Tennis from '../pages/Tennis/Tennis.jsx'
 import TableTennis from '../pages/TableTennis/TableTennis'
 import ChangePassword from '../pages/ChangePassword/ChangePassword.jsx'
+import ActivityLogs from '../pages/ActivityLogs/ActivityLogs'
+import CurrentBet from '../pages/CurrentBet/CurrentBet.jsx'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
       {
         path: "/change-password",
         element: <ChangePassword />,
+      },
+      {
+        path: "/activity-logs",
+        element: <ActivityLogs/>,
+      },
+      {
+        path: "/current-bet",
+        element: <CurrentBet/>,
       },
     ],
   },

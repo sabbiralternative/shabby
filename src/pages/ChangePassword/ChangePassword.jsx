@@ -8,38 +8,26 @@ const ChangePassword = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const onSubmit = ({ password, newPassword, newPasswordConfirm }) => {
-    if (password !== "Abcd1234") {
-      return;
-    } else if (newPassword !== "Abcd1234") {
-      return;
-    } else if (newPasswordConfirm !== "Abcd1234") {
-      return;
-    } else if (
-      password === "Abcd1234" &&
-      newPassword === "Abcd1234" &&
-      newPasswordConfirm === "Abcd1234"
-    ) {
-      fetch(ChangePasswordApi, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          oldPassword: password,
-          password: newPassword,
-          passVerify: newPasswordConfirm,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-         if(data.success){
-            navigate('/')
-         }
-        });
-    }
+    fetch(ChangePasswordApi, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        oldPassword: password,
+        password: newPassword,
+        passVerify: newPasswordConfirm,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          navigate("/");
+        }
+      });
   };
 
   return (
@@ -71,12 +59,10 @@ const ChangePassword = () => {
                 <div className="mb-3 position-relative col-md-6">
                   <label className="form-label">New Password:</label>
                   <input
-                   {...register("newPassword", {
-                    required: true,
-                    pattern:
-                      /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])/,
-                  })}
-                    
+                    {...register("newPassword", {
+                      required: true,
+                      pattern: /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])/,
+                    })}
                     name="newPassword"
                     type="password"
                     className="form-control"
@@ -86,23 +72,22 @@ const ChangePassword = () => {
                   {errors.newPassword?.type === "required" && (
                     <p className="error-form">New Password is required.</p>
                   )}
-                   {errors.newPassword?.type === "pattern" && (
-                  <p className="error-form">
-                    New Password must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number
-                  </p>
-                )}
+                  {errors.newPassword?.type === "pattern" && (
+                    <p className="error-form">
+                      New Password must contain at least: 1 uppercase letter, 1
+                      lowercase letter, 1 number
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="row row10">
                 <div className="mb-4 position-relative col-md-6">
                   <label className="form-label">Confirm Password:</label>
                   <input
-                   {...register("newPasswordConfirm", {
-                    required: true,
-                    pattern:
-                      /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])/,
-                  })}
-                   
+                    {...register("newPasswordConfirm", {
+                      required: true,
+                      pattern: /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])/,
+                    })}
                     name="newPasswordConfirm"
                     type="password"
                     className="form-control"
@@ -113,11 +98,12 @@ const ChangePassword = () => {
                       New Password Confirmation is required.
                     </p>
                   )}
-                      {errors.newPasswordConfirm?.type === "pattern" && (
-                  <p className="error-form">
-                    New Password Confirmation must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number
-                  </p>
-                )}
+                  {errors.newPasswordConfirm?.type === "pattern" && (
+                    <p className="error-form">
+                      New Password Confirmation must contain at least: 1
+                      uppercase letter, 1 lowercase letter, 1 number
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="row row10">

@@ -56,7 +56,10 @@
             "singleResult": "https://api7.live/api/exchange/diamond/singleResult",
             "ourCasino": "https://cache.api7.live/api/exchange/diamond/ourCasino",
             "diamondCasino": "https://cache.api7.live/api/exchange/diamond/diamondCasino",
-            "auraCasino": "https://cache.api7.live/api/exchange/diamond/auraCasino"
+            "auraCasino": "https://cache.api7.live/api/exchange/diamond/auraCasino",
+            "currentBets": "https://api7.live/api/exchange/diamond/currentBets",
+            "activityLogs": "https://api7.live/api/exchange/diamond/activityLogs",
+            "ipDetails": "https://api7.live/api/exchange/diamond/ipDetails"
         }
     },
     "success": true

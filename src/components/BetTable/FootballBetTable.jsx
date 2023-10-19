@@ -2,9 +2,8 @@ import ic_vir from "../../static/front/img/ic_vir.png";
 import ic_bm from "../../static/front/img/ic_bm.png";
 import ic_fancy from "../../static/front/img/ic_fancy.png";
 import game_icon from "../../static/front/img/game-icon.svg";
-import UseState from "../../hooks/UseState";
-const BetTable = ({ data }) => {
-  const { sports } = UseState();
+
+const FootballBetTable = ({ data }) => {
   const {
     eventName,
     date,
@@ -113,22 +112,7 @@ const BetTable = ({ data }) => {
           </div>
         )}
 
-        {!data[2] && sports !== 1 && (
-          <div className="bet-nation-odd">
-            <div className="back odd-box">
-              <span className="bet-odd">
-                <b>-</b>
-              </span>
-            </div>
-            <div className="lay odd-box">
-              <span className="bet-odd">
-                <b>-</b>
-              </span>
-            </div>
-          </div>
-        )}
-
-        {status === "OPEN" && data[2] && (
+        {status === "OPEN" ? (
           <div className="bet-nation-odd">
             <div className="back odd-box">
               <span className="bet-odd">
@@ -141,8 +125,7 @@ const BetTable = ({ data }) => {
               </span>
             </div>
           </div>
-        )}
-        {status === "SUSPENDED" && !data[2] && sports === 1 && (
+        ) : (
           <div className="bet-nation-odd suspended-box">
             <div className="back odd-box">
               <span className="bet-odd">
@@ -189,4 +172,4 @@ const BetTable = ({ data }) => {
   );
 };
 
-export default BetTable;
+export default FootballBetTable;

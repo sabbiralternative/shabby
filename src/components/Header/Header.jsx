@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { config } from "../../utils/config";
 import logo from "../../static/front/img/logo.png";
 import axios from "axios";
@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import RulesModal from "./RulesModal";
 const Header = () => {
-  // const [input, setInput] = useState(false);
   const [open, setOpen] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [balance, setBalance] = useState(true);
@@ -14,20 +13,46 @@ const Header = () => {
   const token = localStorage.getItem("token");
   const balanceApi = config?.result?.endpoint?.balance;
   const notificationApi = config?.result?.endpoint?.notification;
+  const buttonValueApi = config?.result?.endpoint?.buttonValue;
+  const { register, handleSubmit } = useForm();
   const [showBalance, setShowBalance] = useState(0);
   const [showExp, setShowExp] = useState(0);
   const [showNotification, setShowNotification] = useState("");
   const [buttonValue, SetButtonValue] = useState(false);
-  const [ruleModal,setRuleModal] = useState(false)
+  const [ruleModal, setRuleModal] = useState(false);
   const buttonGameValue = JSON.parse(localStorage.getItem("buttonValue"));
   const navigate = useNavigate();
-  const buttonValueApi = config?.result?.endpoint?.buttonValue;
-  const {
-    register,
-    handleSubmit,
-    
-  } = useForm();
+  const modalRef = useRef(null);
+  const openModalRef = useRef()
 
+ 
+  /* Close modalRef modal click outside the modal */
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if ( !modalRef.current.contains(e.target)) {
+        setDropDown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if ( !openModalRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
+  /* Game endpoint  */
   const cricketEndpoint = () => {
     localStorage.removeItem("group");
     localStorage.setItem("group", 4);
@@ -45,6 +70,7 @@ const Header = () => {
     localStorage.setItem("group", 8);
   };
 
+  // /* Close modal after specific width */
   useEffect(() => {
     const handleWindowResize = () => {
       if (window.innerWidth > 1199) {
@@ -79,7 +105,7 @@ const Header = () => {
     return () => clearInterval(intervalId);
   }, [balanceApi, token]);
 
-  /* Get notification */
+  /* Get marquee notification */
   useEffect(() => {
     axios
       .get(notificationApi, {
@@ -92,6 +118,7 @@ const Header = () => {
       });
   }, [notificationApi, token]);
 
+  /* Logout */
   const logOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("loginName");
@@ -99,6 +126,7 @@ const Header = () => {
     navigate("/login");
   };
 
+  /* SetButton value */
   const onSubmit = ({
     buttons0label,
     buttons0value,
@@ -221,7 +249,7 @@ const Header = () => {
             "buttonValue",
             JSON.stringify(gameButtonsValues)
           );
-          SetButtonValue(!buttonValue)
+          SetButtonValue(!buttonValue);
         }
       });
   };
@@ -235,14 +263,9 @@ const Header = () => {
     >
       <section className="header">
         <div className="header-top">
-          {
-            ruleModal && (
-              <RulesModal
-              ruleModal={ruleModal}
-              setRuleModal={setRuleModal}
-              />
-            )
-          }
+          {ruleModal && (
+            <RulesModal ruleModal={ruleModal} setRuleModal={setRuleModal} />
+          )}
           <div className="logo-header">
             <Link className="d-xl-none" href="/">
               <i className="fas fa-home me-1"></i>
@@ -251,6 +274,7 @@ const Header = () => {
               <img src={logo} />
             </Link>
           </div>
+
           <div className="user-details">
             <div className="search-box-container d-none d-xl-block">
               <div className="search-box">
@@ -264,7 +288,10 @@ const Header = () => {
                 </Link>
               </div>
             </div>
-            <div onClick={()=> setRuleModal(!ruleModal)} className="header-rules ms-3">
+            <div
+              onClick={() => setRuleModal(!ruleModal)}
+              className="header-rules ms-3"
+            >
               <div>
                 <Link className="rules-link pointer">
                   <b>Rules</b>
@@ -286,590 +313,603 @@ const Header = () => {
                     <b className="pointer">{showExp}</b>
                   </>
                 )}
-                <div onClick={() => setOpen(!open)} className="dropdown">
+
+                {buttonValue && (
+                  <>
+                    <div className={`fade modal-backdrop show`}></div>
+                    <div
+                      role="dialog"
+                      aria-modal="true"
+                      className="fade modal show"
+                      tabIndex="-1"
+                      style={{
+                        display: "block",
+                      }}
+                    >
+                      <div className="modal-dialog modal-md">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <div className="modal-title h4">
+                              Set Button Value
+                            </div>
+                            <button
+                              onClick={() => SetButtonValue(!buttonValue)}
+                              type="button"
+                              className="btn-close"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                          <div className="modal-body">
+                            <div className="mt-1 nav nav-pills" role="tablist">
+                              <div className="nav-item">
+                                <a
+                                  role="tab"
+                                  data-rr-ui-event-key="1"
+                                  id="rules-tabs-tab-1"
+                                  aria-controls="rules-tabs-tabpane-1"
+                                  aria-selected="true"
+                                  className="nav-link active"
+                                  tabIndex="0"
+                                  href="#"
+                                >
+                                  Game Buttons
+                                </a>
+                              </div>
+                            </div>
+                            <div className="mt-1 tab-content">
+                              <div
+                                role="tabpanel"
+                                id="rules-tabs-tabpane-1"
+                                aria-labelledby="rules-tabs-tab-1"
+                                className="fade tab-pane active show"
+                              >
+                                <form onSubmit={handleSubmit(onSubmit)}>
+                                  <div className="row row10">
+                                    <div className="mb-1 col-6">
+                                      <label className="form-label">
+                                        <b>Price Label:</b>
+                                      </label>
+                                    </div>
+                                    <div className="mb-1 col-6">
+                                      <label className="form-label">
+                                        <b>Price Value:</b>
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div className="row row10">
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons0label", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[0].label}
+                                        name="buttons0label"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons0value", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[0].value}
+                                        name="buttons0value"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="row row10">
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons1label", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[1].label}
+                                        name="buttons1label"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons1value", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[1].value}
+                                        name="buttons1value"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="row row10">
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons2label", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[2].label}
+                                        name="buttons2label"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons2value", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[2].value}
+                                        name="buttons2value"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="row row10">
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons3label", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[3].label}
+                                        name="buttons3label"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons3value", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[3].value}
+                                        name="buttons3value"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="row row10">
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons4label", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[4].label}
+                                        name="buttons4label"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons4value", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[4].value}
+                                        name="buttons4value"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="row row10">
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons5label", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[5].label}
+                                        name="buttons5label"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons5value", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[5].value}
+                                        name="buttons5value"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="row row10">
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons6label", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[6].label}
+                                        name="buttons6label"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons6value", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[6].value}
+                                        name="buttons6value"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="row row10">
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons7label", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[7].label}
+                                        name="buttons7label"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons7value", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[7].value}
+                                        name="buttons7value"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="row row10">
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons8label", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[8].label}
+                                        name="buttons8label"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons8value", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[8].value}
+                                        name="buttons8value"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="row row10">
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons9label", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[9].label}
+                                        name="buttons9label"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                    <div className="mb-3 col-6 position-relative">
+                                      <input
+                                        {...register("buttons9value", {
+                                          required: true,
+                                        })}
+                                        defaultValue={buttonGameValue[9].value}
+                                        name="buttons9value"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="row row10">
+                                    <div className="mb-3 col-md-6 ">
+                                      <button
+                                        type="submit"
+                                        className="btn btn-primary btn-block"
+                                      >
+                                        Update
+                                      </button>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                <div
+                  ref={openModalRef}
+                  className="dropdown"
+                >
                   <div
+                    onClick={() => setOpen(!open)}
                     className="user-name ms-1 ms-xl-3 d-inline-block d-xl-none dropdown-toggle"
                     id="react-aria2236598939-1"
                     aria-expanded="false"
                   >
                     Demo<i className="fas fa-chevron-down ms-1"></i>
                   </div>
-                </div>
-                {buttonValue && (
-                  <>
-                  <div className={`fade modal-backdrop show`}></div>
-                  <div
-                    role="dialog"
-                    aria-modal="true"
-                    className="fade modal show"
-                    tabIndex="-1"
-                    style={{
-                      display: "block",
-                    }}
-                  >
-                    <div className="modal-dialog modal-md">
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <div className="modal-title h4">Set Button Value</div>
-                          <button
-                            onClick={() => SetButtonValue(!buttonValue)}
-                            type="button"
-                            className="btn-close"
-                            aria-label="Close"
-                          ></button>
+                  {open && (
+                    <div className="show dropdown ">
+                      <Link
+                        className="user-name ms-3 d-none d-xl-block dropdown-toggle show"
+                        id="react-aria9626335788-2"
+                        aria-expanded="true"
+                      >
+                        Lake777<i className="fas fa-chevron-down ms-1"></i>
+                      </Link>
+                      <ul
+                        // xPlacement="bottom-start"
+                        aria-labelledby="react-aria9626335788-2"
+                        className="dropdown-menu show"
+                        data-popper-reference-hidden="true"
+                        data-popper-escaped="false"
+                        data-popper-placement="bottom-start"
+                        style={{
+                          position: "absolute",
+                          inset: "0px auto auto 0px",
+                          transform: "translate(-190px, 5px)",
+                        }}
+                      >
+                        <div className="d-xl-none d-flex justify-content-center"></div>
+                        <Link href="/account-statement">
+                          <li
+                            data-rr-ui-dropdown-item=""
+                            className="dropdown-item"
+                          >
+                            Account Statement
+                          </li>
+                        </Link>
+                        <Link onClick={() => setOpen(!open)} to="/current-bet">
+                          <li
+                            data-rr-ui-dropdown-item=""
+                            className="dropdown-item"
+                          >
+                            Current Bet
+                          </li>
+                        </Link>
+                        <Link
+                          onClick={() => setOpen(!open)}
+                          to="/activity-logs"
+                        >
+                          <li
+                            data-rr-ui-dropdown-item=""
+                            className="dropdown-item"
+                          >
+                            Activity Logs
+                          </li>
+                        </Link>
+                        <Link href="/casino-results">
+                          <li
+                            data-rr-ui-dropdown-item=""
+                            className="dropdown-item"
+                          >
+                            Casino Results
+                          </li>
+                        </Link>
+                        <Link href="/live-casino-bets">
+                          <li
+                            data-rr-ui-dropdown-item=""
+                            className="dropdown-item"
+                          >
+                            Live Casino Bets
+                          </li>
+                        </Link>
+
+                        <div
+                          onClick={() => {
+                            SetButtonValue(!buttonValue);
+                            setOpen(!open);
+                          }}
+                        >
+                          <li className="dropdown-item">Set Button Values</li>
                         </div>
-                        <div className="modal-body">
-                          <div className="mt-1 nav nav-pills" role="tablist">
-                            <div className="nav-item">
-                              <a
-                                role="tab"
-                                data-rr-ui-event-key="1"
-                                id="rules-tabs-tab-1"
-                                aria-controls="rules-tabs-tabpane-1"
-                                aria-selected="true"
-                                className="nav-link active"
-                                tabIndex="0"
-                                href="#"
-                              >
-                                Game Buttons
-                              </a>
-                            </div>
+
+                        <Link href="/secure-auth">
+                          <li
+                            data-rr-ui-dropdown-item=""
+                            className="dropdown-item"
+                          >
+                            Security Auth Verification
+                          </li>
+                        </Link>
+                        <Link
+                          onClick={() => setOpen(!open)}
+                          to="/change-password"
+                        >
+                          <li
+                            data-rr-ui-dropdown-item=""
+                            className="dropdown-item"
+                          >
+                            Change Password
+                          </li>
+                        </Link>
+                        <Link
+                          onClick={() => {
+                            setRuleModal(!ruleModal);
+                            setOpen(!open);
+                          }}
+                          className="d-xl-none"
+                        >
+                          <li className="dropdown-item">Rules</li>
+                        </Link>
+                        <Link
+                          onClick={() => setBalance(!balance)}
+                          className="dropdown-item d-xl-none"
+                        >
+                          Balance
+                          <div className="form-check float-end">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                            />
                           </div>
-                          <div className="mt-1 tab-content">
-                            <div
-                              role="tabpanel"
-                              id="rules-tabs-tabpane-1"
-                              aria-labelledby="rules-tabs-tab-1"
-                              className="fade tab-pane active show"
-                            >
-                              <form onSubmit={handleSubmit(onSubmit)}>
-                                <div className="row row10">
-                                  <div className="mb-1 col-6">
-                                    <label className="form-label">
-                                      <b>Price Label:</b>
-                                    </label>
-                                  </div>
-                                  <div className="mb-1 col-6">
-                                    <label className="form-label">
-                                      <b>Price Value:</b>
-                                    </label>
-                                  </div>
-                                </div>
-                                <div className="row row10">
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons0label", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[0].label}
-                                      name="buttons0label"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons0value", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[0].value}
-                                      name="buttons0value"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="row row10">
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons1label", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[1].label}
-                                      name="buttons1label"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons1value", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[1].value}
-                                      name="buttons1value"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="row row10">
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons2label", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[2].label}
-                                      name="buttons2label"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons2value", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[2].value}
-                                      name="buttons2value"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="row row10">
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons3label", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[3].label}
-                                      name="buttons3label"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons3value", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[3].value}
-                                      name="buttons3value"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="row row10">
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons4label", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[4].label}
-                                      name="buttons4label"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons4value", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[4].value}
-                                      name="buttons4value"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="row row10">
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons5label", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[5].label}
-                                      name="buttons5label"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons5value", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[5].value}
-                                      name="buttons5value"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="row row10">
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons6label", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[6].label}
-                                      name="buttons6label"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons6value", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[6].value}
-                                      name="buttons6value"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="row row10">
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons7label", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[7].label}
-                                      name="buttons7label"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons7value", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[7].value}
-                                      name="buttons7value"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="row row10">
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons8label", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[8].label}
-                                      name="buttons8label"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons8value", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[8].value}
-                                      name="buttons8value"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="row row10">
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons9label", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[9].label}
-                                      name="buttons9label"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                  <div className="mb-3 col-6 position-relative">
-                                    <input
-                                      {...register("buttons9value", {
-                                        required: true,
-                                      })}
-                                      defaultValue={buttonGameValue[9].value}
-                                      name="buttons9value"
-                                      type="text"
-                                      className="form-control"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="row row10">
-                                  <div className="mb-3 col-md-6 ">
-                                    <button
-                                      type="submit"
-                                      className="btn btn-primary btn-block"
-                                    >
-                                      Update
-                                    </button>
-                                  </div>
-                                </div>
-                              </form>
-                            </div>
+                        </Link>
+                        <Link
+                          onClick={() => setExp(!exp)}
+                          className="dropdown-item d-xl-none"
+                        >
+                          Exposure
+                          <div className="form-check float-end">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                            />
                           </div>
-                        </div>
-                      </div>
+                        </Link>
+                        <hr className="dropdown-divider" role="separator" />
+                        <li
+                          onClick={logOut}
+                          data-rr-ui-dropdown-item=""
+                          className="dropdown-item"
+                        >
+                          SignOut
+                        </li>
+                      </ul>
                     </div>
-                  </div>
-                  </>
-                )}
-                {open && (
-                  <div className="show dropdown">
-                    <Link
-                      className="user-name ms-3 d-none d-xl-block dropdown-toggle show"
-                      id="react-aria9626335788-2"
-                      aria-expanded="true"
-                    >
-                      Lake777<i className="fas fa-chevron-down ms-1"></i>
-                    </Link>
-                    <ul
-                      // xPlacement="bottom-start"
-                      aria-labelledby="react-aria9626335788-2"
-                      className="dropdown-menu show"
-                      data-popper-reference-hidden="true"
-                      data-popper-escaped="false"
-                      data-popper-placement="bottom-start"
-                      style={{
-                        position: "absolute",
-                        inset: "0px auto auto 0px",
-                        transform: "translate(-190px, 5px)",
-                      }}
-                    >
-                      <div className="d-xl-none d-flex justify-content-center"></div>
-                      <Link href="/account-statement">
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Account Statement
-                        </li>
-                      </Link>
-                      <Link href="/current-bet">
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Current Bet
-                        </li>
-                      </Link>
-                      <Link href="/activity-log">
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Activity Logs
-                        </li>
-                      </Link>
-                      <Link href="/casino-results">
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Casino Results
-                        </li>
-                      </Link>
-                      <Link href="/live-casino-bets">
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Live Casino Bets
-                        </li>
-                      </Link>
-
-                      <div
-                        onClick={() => {
-                          SetButtonValue(!buttonValue);
-                          setOpen(!open);
-                        }}
-                      >
-                        <li className="dropdown-item">Set Button Values</li>
-                      </div>
-
-                      <Link href="/secure-auth">
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Security Auth Verification
-                        </li>
-                      </Link>
-                      <Link
-                      onClick={()=>setOpen(!open)}
-                      to="/change-password">
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Change Password
-                        </li>
-                      </Link>
-                      <Link className="d-xl-none">
-                        <li className="dropdown-item">Rules</li>
-                      </Link>
-                      <Link
-                        onClick={() => setBalance(!balance)}
-                        className="dropdown-item d-xl-none"
-                      >
-                        Balance
-                        <div className="form-check float-end">
-                          <input className="form-check-input" type="checkbox" />
-                        </div>
-                      </Link>
-                      <Link
-                        onClick={() => setExp(!exp)}
-                        className="dropdown-item d-xl-none"
-                      >
-                        Exposure
-                        <div className="form-check float-end">
-                          <input className="form-check-input" type="checkbox" />
-                        </div>
-                      </Link>
-                      <hr className="dropdown-divider" role="separator" />
-                      <li
-                        onClick={logOut}
-                        data-rr-ui-dropdown-item=""
-                        className="dropdown-item"
-                      >
-                        SignOut
-                      </li>
-                    </ul>
-                  </div>
-                )}
-                {dropDown && (
-                  <div className="show dropdown">
-                    <ul
-                      // xPlacement="bottom-start"
-                      aria-labelledby="react-aria9626335788-2"
-                      className="dropdown-menu show"
-                      data-popper-reference-hidden="true"
-                      data-popper-escaped="false"
-                      data-popper-placement="bottom-start"
-                      style={{
-                        position: "absolute",
-                        inset: "0px auto auto 0px",
-                        transform: "translate(10px, 5px)",
-                      }}
-                    >
-                      <div className="d-xl-none d-flex justify-content-center"></div>
-                      <Link href="/account-statement">
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Account Statement
-                        </li>
-                      </Link>
-                      <Link href="/current-bet">
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Current Bet
-                        </li>
-                      </Link>
-                      <Link href="/activity-log">
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Activity Logs
-                        </li>
-                      </Link>
-                      <Link href="/casino-results">
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Casino Results
-                        </li>
-                      </Link>
-                      <Link href="/live-casino-bets">
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Live Casino Bets
-                        </li>
-                      </Link>
-
-                      <div
-                        onClick={() => {
-                          SetButtonValue(!buttonValue);
-                          setDropDown(!dropDown);
-                        }}
-                      >
-                        <li className="dropdown-item">Set Button Values</li>
-                      </div>
-
-                      <Link href="/secure-auth">
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Security Auth Verification
-                        </li>
-                      </Link>
-                      <Link
-                      onClick={()=>setDropDown(!dropDown)}
-                      to="/change-password">
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Change Password
-                        </li>
-                      </Link>
-                      <Link className="d-xl-none">
-                        <li className="dropdown-item">Rules</li>
-                      </Link>
-                      <Link
-                        onClick={() => setBalance(!balance)}
-                        className="dropdown-item d-xl-none"
-                      >
-                        Balance
-                        <div className="form-check float-end">
-                          <input className="form-check-input" type="checkbox" />
-                        </div>
-                      </Link>
-                      <Link
-                        onClick={() => setExp(!exp)}
-                        className="dropdown-item d-xl-none"
-                      >
-                        Exposure
-                        <div className="form-check float-end">
-                          <input className="form-check-input" type="checkbox" />
-                        </div>
-                      </Link>
-                      <hr className="dropdown-divider" role="separator" />
-                      <li
-                        onClick={logOut}
-                        data-rr-ui-dropdown-item=""
-                        className="dropdown-item"
-                      >
-                        SignOut
-                      </li>
-                    </ul>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
-            <div
-              onClick={() => {
-                setDropDown(!dropDown);
-              }}
-              className="dropdown"
-            >
+
+            <div ref={modalRef} className="dropdown">
               <div
+                onClick={() => {
+                  setDropDown(!dropDown);
+                }}
                 className="user-name ms-3 d-none d-xl-block dropdown-toggle"
                 id="react-aria2236598939-2"
                 aria-expanded="false"
               >
                 Demo<i className="fas fa-chevron-down ms-1"></i>
               </div>
+
+              {dropDown && (
+                <div className="show dropdown">
+                  <ul
+                    // xPlacement="bottom-start"
+                    aria-labelledby="react-aria9626335788-2"
+                    className="dropdown-menu show"
+                    data-popper-reference-hidden="true"
+                    data-popper-escaped="false"
+                    data-popper-placement="bottom-start"
+                    style={{
+                      position: "absolute",
+                      inset: "0px auto auto 0px",
+                      transform: "translate(-110px, 10px)",
+                    }}
+                  >
+                    <div className="d-xl-none d-flex justify-content-center"></div>
+                    <Link href="/account-statement">
+                      <li data-rr-ui-dropdown-item="" className="dropdown-item">
+                        Account Statement
+                      </li>
+                    </Link>
+                    <Link
+                      onClick={() => setDropDown(!dropDown)}
+                      to="/current-bet"
+                    >
+                      <li data-rr-ui-dropdown-item="" className="dropdown-item">
+                        Current Bet
+                      </li>
+                    </Link>
+                    <Link
+                      onClick={() => setDropDown(!dropDown)}
+                      to="/activity-logs"
+                    >
+                      <li data-rr-ui-dropdown-item="" className="dropdown-item">
+                        Activity Logs
+                      </li>
+                    </Link>
+                    <Link href="/casino-results">
+                      <li data-rr-ui-dropdown-item="" className="dropdown-item">
+                        Casino Results
+                      </li>
+                    </Link>
+                    <Link href="/live-casino-bets">
+                      <li data-rr-ui-dropdown-item="" className="dropdown-item">
+                        Live Casino Bets
+                      </li>
+                    </Link>
+
+                    <div
+                      onClick={() => {
+                        SetButtonValue(!buttonValue);
+                        setDropDown(!dropDown);
+                      }}
+                    >
+                      <li className="dropdown-item">Set Button Values</li>
+                    </div>
+
+                    <Link href="/secure-auth">
+                      <li data-rr-ui-dropdown-item="" className="dropdown-item">
+                        Security Auth Verification
+                      </li>
+                    </Link>
+                    <Link
+                      onClick={() => setDropDown(!dropDown)}
+                      to="/change-password"
+                    >
+                      <li data-rr-ui-dropdown-item="" className="dropdown-item">
+                        Change Password
+                      </li>
+                    </Link>
+
+                    <div className="d-xl-none">
+                      <li className="dropdown-item">Rules</li>
+                    </div>
+
+                    <Link
+                      onClick={() => setBalance(!balance)}
+                      className="dropdown-item d-xl-none"
+                    >
+                      Balance
+                      <div className="form-check float-end">
+                        <input className="form-check-input" type="checkbox" />
+                      </div>
+                    </Link>
+                    <Link
+                      onClick={() => setExp(!exp)}
+                      className="dropdown-item d-xl-none"
+                    >
+                      Exposure
+                      <div className="form-check float-end">
+                        <input className="form-check-input" type="checkbox" />
+                      </div>
+                    </Link>
+                    <hr className="dropdown-divider" role="separator" />
+                    <li
+                      onClick={logOut}
+                      data-rr-ui-dropdown-item=""
+                      className="dropdown-item"
+                    >
+                      SignOut
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
+
           <div className="search-box-container d-xl-none">
             <div className="search-box">
               <input
@@ -884,7 +924,7 @@ const Header = () => {
           </div>
           <div className="news">
             {/* ToDO scrollAmount="3" */}
-            <marquee >{showNotification} </marquee>
+            <marquee>{showNotification} </marquee>
           </div>
         </div>
         <div className="header-bottom d-none d-xl-block">
@@ -934,7 +974,6 @@ const Header = () => {
                 <Link className="nav-link" to="/teenpatti">
                   Teenpatti
                 </Link>
-           
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/poker">

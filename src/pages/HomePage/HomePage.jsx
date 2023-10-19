@@ -7,6 +7,7 @@ import UseState from "../../hooks/UseState";
 import TabPanel from "./TabPanel";
 import { tabPanel } from "../../static/tabs/tabs";
 import BetTable from "../../components/BetTable/BetTable";
+import FootballBetTable from "../../components/BetTable/FootballBetTable";
 const HomePage = () => {
   const isCasino = config?.result?.settings.casino;
   const auraCasinoApi = config?.result?.endpoint?.auraCasino;
@@ -30,7 +31,7 @@ const HomePage = () => {
   }, [auraCasinoApi, token]);
 
   useEffect(() => {
-    const cricketData = async () => {
+    const gameData = async () => {
       if (sports !== null) {
         const apiUrl = `${cricketApi}/${sports}`;
         const res = await axios.get(apiUrl, {
@@ -43,9 +44,9 @@ const HomePage = () => {
         setData(sortData);
       }
     };
-    cricketData();
+    gameData();
     if (sports === 4 || sports === 1) {
-      const intervalId = setInterval(cricketData, 1000);
+      const intervalId = setInterval(gameData, 1000);
       return () => clearInterval(intervalId);
     }
   }, [sports, cricketApi, token]);
@@ -91,7 +92,7 @@ const HomePage = () => {
               {Object.values(data).length > 0 &&
                 sports === 1 &&
                 Object.values(data).map((d, i) => (
-                  <BetTable key={i} data={d} />
+                  <FootballBetTable key={i} data={d} />
                 ))}
 
               {Object.values(data).length > 0 &&
