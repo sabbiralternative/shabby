@@ -41,7 +41,7 @@ const CurrentBet = () => {
 
   /* Get total amount */
   let totalAmount = 0;
-  for (const sport of sports) {
+  for (const sport of filteredData) {
     totalAmount = totalAmount + sport.amount;
   }
 
@@ -127,7 +127,7 @@ const CurrentBet = () => {
               </div>
               <div className="col-lg-3 col-md-6 text-center">
                 <div>
-                  Total Bets: <span className="me-2">{sports.length}</span>{" "}
+                  Total Bets: <span className="me-2">{filteredData.length}</span>{" "}
                   Total Amount: <span className="me-2">{totalAmount}</span>
                 </div>
               </div>
@@ -137,7 +137,7 @@ const CurrentBet = () => {
                   <input
                     type="search"
                     className="form-control"
-                    placeholder={`${sports.length} records...`}
+                    placeholder={`${filteredData.length} records...`}
                   />
                 </div>
               </div>

@@ -671,7 +671,10 @@ const Header = () => {
                         }}
                       >
                         <div className="d-xl-none d-flex justify-content-center"></div>
-                        <Link href="/account-statement">
+                        <Link to="/account-statement"
+                        onClick={()=> setOpen(!open)}
+                        >
+                          
                           <li
                             data-rr-ui-dropdown-item=""
                             className="dropdown-item"
@@ -819,7 +822,9 @@ const Header = () => {
                     }}
                   >
                     <div className="d-xl-none d-flex justify-content-center"></div>
-                    <Link href="/account-statement">
+                    <Link to="/account-statement"
+                    onClick={()=> setDropDown(!dropDown)}
+                    >
                       <li data-rr-ui-dropdown-item="" className="dropdown-item">
                         Account Statement
                       </li>

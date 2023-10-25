@@ -1,10 +1,12 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Category from "../components/Category/Category";
 
 const Main = () => {
+  const params = useParams();
+
   return (
     <div>
       <Header />
@@ -13,8 +15,12 @@ const Main = () => {
           <Sidebar />
         </div>
         <Category />
-         <div className="center-main-container home-page report-page">
-        <Outlet />
+        <div
+          className={`center-main-container home-page report-page ${
+            params.eventId && params.id ? "detail-page" : ""
+          } `}
+        >
+          <Outlet />
         </div>
       </div>
       <Footer />
