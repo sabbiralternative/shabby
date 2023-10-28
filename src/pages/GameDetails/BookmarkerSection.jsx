@@ -79,6 +79,17 @@ const BookmarkerSection = ({ bookmarker }) => {
                   <span className="market-nation-name">{runner.name} </span>
                   <div className="market-nation-book"></div>
                 </div>
+                {runner.back.length === 1 && (
+                  <>
+                    <div className={`market-odd-box back2`}>
+                      <span className="market-odd">-</span>
+                    </div>
+
+                    <div className={`market-odd-box back1`}>
+                      <span className="market-odd">-</span>
+                    </div>
+                  </>
+                )}
                 {runner?.back
                   ?.slice()
                   ?.reverse()
@@ -86,9 +97,9 @@ const BookmarkerSection = ({ bookmarker }) => {
                     return (
                       <div
                         key={i}
-                        className={`market-odd-box ${i === 0 ? "back2" : ""} ${
+                        className={`market-odd-box ${i === 0 ? "back" : ""} ${
                           i === 1 ? "back1" : ""
-                        } ${i === 2 ? "back" : ""}
+                        } ${i === 2 ? "back2" : ""}
                         ${
                           changedPrices[`back-${runner?.id}-${i}`]
                             ? "blink"
@@ -107,7 +118,7 @@ const BookmarkerSection = ({ bookmarker }) => {
                       </div>
                     );
                   })}
-
+              
                 {runner.lay.map((lay, i) => {
                   return (
                     <div
@@ -115,11 +126,7 @@ const BookmarkerSection = ({ bookmarker }) => {
                       className={`market-odd-box ${i === 0 ? "lay" : ""} ${
                         i === 1 ? "lay1" : ""
                       } ${i === 2 ? "lay2" : ""}
-                      ${
-                        changedPrices[`lay-${runner.id}-${i}`]
-                          ? "blink"
-                          : ""
-                      }
+                      ${changedPrices[`lay-${runner.id}-${i}`] ? "blink" : ""}
                       `}
                     >
                       {lay?.price || lay?.size ? (
@@ -133,6 +140,18 @@ const BookmarkerSection = ({ bookmarker }) => {
                     </div>
                   );
                 })}
+
+                {runner.lay.length === 1 && (
+                  <>
+                    <div className={`market-odd-box lay1`}>
+                      <span className="market-odd">-</span>
+                    </div>
+
+                    <div className={`market-odd-box lay2`}>
+                      <span className="market-odd">-</span>
+                    </div>
+                  </>
+                )}
               </div>
             );
           })}

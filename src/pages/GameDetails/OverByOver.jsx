@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 const OverByOver = ({ overByOver }) => {
-console.log(overByOver);
   const [previousData, setPreviousData] = useState(overByOver);
   const [changedPrices, setChangedPrices] = useState({});
   useEffect(() => {

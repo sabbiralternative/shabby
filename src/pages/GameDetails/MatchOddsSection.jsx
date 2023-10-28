@@ -4,7 +4,6 @@ const MatchOddsSection = ({ match_odds }) => {
   const [previousData, setPreviousData] = useState(match_odds);
   const [changedPrices, setChangedPrices] = useState({});
 
-  
   useEffect(() => {
     const newChangedPrices = {};
     match_odds.forEach((item, index) => {
@@ -94,6 +93,18 @@ const MatchOddsSection = ({ match_odds }) => {
                       <div className="market-nation-book"></div>
                     </div>
 
+                    {runner.back.length === 1 && (
+                      <>
+                        <div className={`market-odd-box back2`}>
+                          <span className="market-odd">-</span>
+                        </div>
+
+                        <div className={`market-odd-box back1`}>
+                          <span className="market-odd">-</span>
+                        </div>
+                      </>
+                    )}
+
                     {runner?.back
                       ?.slice()
                       ?.reverse()
@@ -102,10 +113,13 @@ const MatchOddsSection = ({ match_odds }) => {
                           <div
                             key={i}
                             className={`market-odd-box ${
-                              i === 0 ? "back2" : ""
+                              i === 0 && runner.back.length !== 1 ? "back2" : ""
                             } ${i === 1 ? "back1" : ""} ${
-                              i === 2 ? "back" : ""
-                            } ${
+                              i === 2 && runner ? "back" : ""
+                            }
+                            ${runner.back.length === 1 && i === 0 ? "back" : ""}
+                            
+                            ${
                               changedPrices[`back-${runner?.id}-${i}`]
                                 ? "blink"
                                 : ""
@@ -150,6 +164,18 @@ const MatchOddsSection = ({ match_odds }) => {
                         </div>
                       );
                     })}
+
+                    {runner.lay.length === 1 && (
+                      <>
+                        <div className={`market-odd-box lay1`}>
+                          <span className="market-odd">-</span>
+                        </div>
+
+                        <div className={`market-odd-box lay2`}>
+                          <span className="market-odd">-</span>
+                        </div>
+                      </>
+                    )}
                   </div>
                 );
               })}
