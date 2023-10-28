@@ -6,6 +6,8 @@ AOS.init();
 
 const Footer = () => {
   const [showModal, setShowModal] = useState(false);
+  const modal = JSON.parse(localStorage.getItem('modal'))
+
   useEffect(() => {
     const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
     if (!hasModalBeenShown) {
@@ -54,9 +56,7 @@ const Footer = () => {
               <div className="modal-content">
                 <div className="modal-header">
                   <div className="modal-title h4">
-                    Be Aware Of Phishing Websites. Check Website Before Log In.
-                    We Requesting You To Enable 2 Step Security Auth To Secure
-                    Your Account.
+               {modal[1].bannerTitle}
                   </div>
                   <button
                     onClick={closeModal}
@@ -67,8 +67,12 @@ const Footer = () => {
                 </div>
                 <div className="p-0 modal-body">
                   <img
-                    src="https://sitethemedata.com/common/wel-banner/wel-1697093837368.png"
+                    src={modal[0].banner}
                     className="img-fluid"
+                    style={{
+                      width:'100%',
+                      objectFit:'contain'
+                    }}
                   />
                 </div>
               </div>

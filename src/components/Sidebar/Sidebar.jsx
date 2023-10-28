@@ -43,7 +43,7 @@ const Sidebar = () => {
               <div className="menu-box accordion-body">
                 <ul className="navbar-nav">
                   <li className="nav-item dropdown">
-                    {menu.map((m, i) => (
+                    {menu?.map((m, i) => (
                       <Menu
                         key={i}
                         eventTypeName={m.eventTypeName}

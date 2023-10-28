@@ -142,22 +142,20 @@ const BetTable = ({ data, keys }) => {
             </div>
           </div>
         )}
-        {data[keys]?.status === "SUSPENDED" &&
-          !data[keys][2] &&
-          sports === 1 && (
-            <div className="bet-nation-odd suspended-box">
-              <div className="back odd-box">
-                <span className="bet-odd">
-                  <b>{data[keys]?.[1]?.ex?.availableToBack[0]?.price}</b>
-                </span>
-              </div>
-              <div className="lay odd-box ">
-                <span className="bet-odd">
-                  <b>{data[keys]?.[1]?.ex?.availableToLay[0]?.price}</b>
-                </span>
-              </div>
+        {data[keys]?.status === "SUSPENDED" && sports === 1 && (
+          <div className="bet-nation-odd suspended-box">
+            <div className="back odd-box">
+              <span className="bet-odd">
+                <b>{data[keys]?.[1]?.ex?.availableToBack[0]?.price}</b>
+              </span>
             </div>
-          )}
+            <div className="lay odd-box ">
+              <span className="bet-odd">
+                <b>{data[keys]?.[1]?.ex?.availableToLay[0]?.price}</b>
+              </span>
+            </div>
+          </div>
+        )}
 
         {data[keys]?.status === "OPEN" ? (
           <div className="bet-nation-odd">

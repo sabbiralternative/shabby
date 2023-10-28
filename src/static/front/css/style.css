@@ -632,6 +632,9 @@ a {
     content: "\e93c";
 }
 
+.length1{
+    width: calc(100% - 28%);
+}
 .icon-63:before {
     content: "\e93d";
 }

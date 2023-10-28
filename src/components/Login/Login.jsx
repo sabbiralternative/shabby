@@ -15,7 +15,7 @@ const Login = () => {
 
   const onSubmit = ({ username, password }) => {
     if (username !== "demo") {
-      return ;
+      return;
     } else if (password !== "1234") {
       return;
     } else if (username === "demo" && password === "1234") {
@@ -35,6 +35,11 @@ const Login = () => {
           localStorage.setItem("loginName", data.result.loginName);
           const buttonValue = JSON.stringify(data.result.buttonValue.game);
           localStorage.setItem("buttonValue", buttonValue);
+          const modal = [
+            { banner: data?.result?.banner },
+            { bannerTitle: data?.result?.bannerTitle },
+          ];
+          localStorage.setItem("modal", JSON.stringify(modal));
           if (
             localStorage.getItem("token") &&
             localStorage.getItem("loginName")
@@ -62,6 +67,11 @@ const Login = () => {
         localStorage.setItem("loginName", data.result.loginName);
         const buttonValue = JSON.stringify(data.result.buttonValue.game);
         localStorage.setItem("buttonValue", buttonValue);
+        const modal = [
+          { banner: data?.result?.banner },
+          { bannerTitle: data?.result?.bannerTitle },
+        ];
+        localStorage.setItem("modal", JSON.stringify(modal));
         if (
           localStorage.getItem("token") &&
           localStorage.getItem("loginName")

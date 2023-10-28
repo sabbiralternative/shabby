@@ -16,7 +16,7 @@ const Main = () => {
         </div>
         <Category />
         <div
-          className={`center-main-container home-page report-page ${
+          className={`center-main-container home-page ${
             params.eventId && params.id ? "detail-page" : ""
           } `}
         >

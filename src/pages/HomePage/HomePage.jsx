@@ -16,6 +16,7 @@ const HomePage = () => {
   const { sports } = UseState();
   const [data, setData] = useState([]);
   const cricketApi = config?.result?.endpoint?.group;
+  const interval = config?.result?.settings?.interval
 
   useEffect(() => {
     const getAuraCasino = async () => {
@@ -40,17 +41,15 @@ const HomePage = () => {
           },
         });
         const data = res.data;
-        // const sortData = Object.values(data).sort((a, b) => a.sort - b.sort);
-        // setData(sortData);
         setData(data);
       }
     };
     gameData();
-    if (sports === 4 || sports === 1) {
-      // const intervalId = setInterval(gameData, 1000);
-      // return () => clearInterval(intervalId);
+    if (sports === 4 || sports === 1 || sports === 2) {
+      const intervalId = setInterval(gameData, interval);
+      return () => clearInterval(intervalId);
     }
-  }, [sports, cricketApi, token]);
+  }, [sports, cricketApi, token,interval]);
 
   return (
     <div className="center-container">

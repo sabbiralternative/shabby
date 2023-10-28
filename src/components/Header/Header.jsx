@@ -123,6 +123,8 @@ const Header = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("loginName");
     localStorage.removeItem("hasModalBeenShown");
+    localStorage.removeItem('modal')
+    localStorage.removeItem('buttonValue')
     navigate("/login");
   };
 

@@ -5,10 +5,14 @@ import axios from "axios";
 import MatchOddsSection from "./MatchOddsSection";
 import BookmarkerSection from "./BookmarkerSection";
 import BookmarkerTwoSection from "./BookmarkerTwoSection";
+import NormalSection from "./NormalSection";
+import OverByOver from "./OverByOver";
+import FancyOne from "./FancyOne";
 
 const GameDetails = () => {
   const { id, eventId } = useParams();
   const oddsApi = config?.result?.endpoint?.odds;
+  const interval = config?.result?.settings?.interval;
   const token = localStorage.getItem("token");
   const [data, setData] = useState([]);
   const [match_odds, setMatch_odds] = useState([]);
@@ -29,11 +33,12 @@ const GameDetails = () => {
       const data = res.data;
       if (data.success) {
         setData(data.result);
-        console.log(data.result);
       }
     };
     getGameDetails();
-  }, [token, oddsApi, id, eventId]);
+    const intervalId = setInterval(getGameDetails, interval);
+    return () => clearInterval(intervalId);
+  }, [token, oddsApi, id, eventId, interval]);
 
   /* Filtered all the game  */
   useEffect(() => {
@@ -69,15 +74,14 @@ const GameDetails = () => {
     );
     setOverByOver(overByOverFilter);
   }, [data]);
- 
 
   return (
     <>
       <div className="center-container">
         <div className="detail-page-container">
-            <div className="game-header">
-            <span>India v New Zealand</span>
-            <span className="float-right">22/10/2023 14:00:00</span>
+          <div className="game-header">
+            <span>{data[0]?.eventName}</span>
+            <span className="float-right">{data[0]?.openDate}</span>
           </div>
           <ul className="nav nav-tabs d-xl-none menu-tabs">
             <li className="nav-item">
@@ -146,131 +150,29 @@ const GameDetails = () => {
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
 
           {/* Match odds */}
-          {match_odds &&
-            match_odds?.length > 0 &&
-            match_odds?.map((match_odd) => (
-              <MatchOddsSection
-                key={match_odd.id}
-                match_odd={match_odd}
-                match_odds={match_odds}
-              />
-            ))}
+          {match_odds && match_odds?.length > 0 && (
+            <MatchOddsSection match_odds={match_odds} />
+          )}
 
           {/* Bookmarker section  */}
-          {bookmarker &&
-            bookmarker.length > 0 &&
-            bookmarker.map((bookmark) => (
-              <BookmarkerSection
-                key={bookmark.id}
-                bookmark={bookmark}
-                bookmarker={bookmarker}
-              />
-            ))}
+          {bookmarker && bookmarker?.length > 0 && (
+            <BookmarkerSection bookmarker={bookmarker} />
+          )}
 
           {/* Bookmarker 2 section  */}
-          {bookmarker2 &&
-            bookmarker2.length > 0 &&
-            bookmarker2.map((bookmark2) => (
-              <BookmarkerTwoSection
-                key={bookmark2.id}
-                bookmark2={bookmark2}
-                bookmarker2={bookmarker2}
-              />
-            ))}
+          {bookmarker2 && bookmarker2?.length > 0 && (
+            <BookmarkerTwoSection bookmarker2={bookmarker2} />
+          )}
 
           {/* Normal section */}
-          {normal && normal.length > 0 && (
-            <div className="game-market market-6">
-              <div className="market-title">
-                <span>{normal[0]?.tabGroupName}</span>
-              </div>
-              <div className="row row10">
-                <div className="col-md-6">
-                  <div className="market-header">
-                    <div className="market-nation-detail"></div>
-                    <div className="market-odd-box lay">
-                      <b>No</b>
-                    </div>
-                    <div className="market-odd-box back">
-                      <b>Yes</b>
-                    </div>
-                    <div className="fancy-min-max-box"></div>
-                  </div>
-                </div>
-                <div className="col-md-6 d-none d-xl-block">
-                  <div className="market-header">
-                    <div className="market-nation-detail"></div>
-                    <div className="market-odd-box lay">
-                      <b>No</b>
-                    </div>
-                    <div className="market-odd-box back">
-                      <b>Yes</b>
-                    </div>
-                    <div className="fancy-min-max-box"></div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="market-body" data-title="OPEN">
-                <div className="row row10">
-                  {normal.map((fancyGame) => {
-                    return (
-                      <div key={fancyGame.id} className="col-md-6">
-                        <div
-                          className={`${
-                            fancyGame?.status === "OPEN"
-                              ? "fancy-market "
-                              : "fancy-market suspended-row"
-                          }`}
-                          data-title={`${
-                            fancyGame?.status === "OPEN"
-                              ? "ACTIVATE"
-                              : "SUSPENDED"
-                          }`}
-                        >
-                          <div className="market-row">
-                            <div className="market-nation-detail">
-                              <span className="market-nation-name">
-                                {fancyGame?.name}
-                              </span>
-                            </div>
-                            <div className="market-odd-box lay">
-                              <span className="market-odd">
-                                {fancyGame?.runners[0]?.lay[0]?.price}
-                              </span>
-                              <span className="market-volume">
-                                {fancyGame?.runners[0]?.lay[0]?.line}
-                              </span>
-                            </div>
-                            <div className="market-odd-box back">
-                              <span className="market-odd">
-                                {fancyGame?.runners[0]?.back[0]?.price}
-                              </span>
-                              <span className="market-volume">
-                                {fancyGame?.runners[0]?.back[0]?.line}
-                              </span>
-                            </div>
-                            <div className="fancy-min-max-box">
-                              <div className="fancy-min-max">
-                                <span className="w-100 d-block">
-                                  Min: {fancyGame?.minLiabilityPerBet}
-                                </span>
-                                <span className="w-100 d-block">
-                                  Max: {fancyGame?.maxLiabilityPerBet}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
+          {normal && normal?.length > 0 && (
+            <NormalSection
+            normal={normal}
+            />
+          
           )}
 
           {/* Tie Match */}
@@ -328,91 +230,10 @@ const GameDetails = () => {
 
           {/* Over by over */}
           {overByOver && overByOver.length > 0 && (
-            <div className="game-market market-6">
-              <div className="market-title">
-                <span>{overByOver[0]?.tabGroupName}</span>
-              </div>
-              <div className="row row10">
-                <div className="col-md-6">
-                  <div className="market-header">
-                    <div className="market-nation-detail"></div>
-                    <div className="market-odd-box lay">
-                      <b>No</b>
-                    </div>
-                    <div className="market-odd-box back">
-                      <b>Yes</b>
-                    </div>
-                    <div className="fancy-min-max-box"></div>
-                  </div>
-                </div>
-                <div className="col-md-6 d-none d-xl-block">
-                  <div className="market-header">
-                    <div className="market-nation-detail"></div>
-                    <div className="market-odd-box lay">
-                      <b>No</b>
-                    </div>
-                    <div className="market-odd-box back">
-                      <b>Yes</b>
-                    </div>
-                    <div className="fancy-min-max-box"></div>
-                  </div>
-                </div>
-              </div>
-              <div className="market-body" data-title="OPEN">
-                <div className="row row10">
-                  {overByOver.map((over) => {
-                    return (
-                      <div key={over?.id} className="col-md-6">
-                        <div
-                          className={`${
-                            over?.status === "OPEN"
-                              ? "fancy-market "
-                              : "fancy-market suspended-row"
-                          }`}
-                          data-title={`${
-                            over?.status === "OPEN" ? "ACTIVATE" : "SUSPENDED"
-                          }`}
-                        >
-                          <div className="market-row">
-                            <div className="market-nation-detail">
-                              <span className="market-nation-name">
-                                {over?.name}
-                              </span>
-                            </div>
-                            <div className="market-odd-box lay">
-                              <span className="market-odd">
-                                {over?.runners[0]?.lay[0]?.prize}
-                              </span>
-                              <span className="market-volume">
-                                {over?.runners[0]?.lay[0]?.size}
-                              </span>
-                            </div>
-                            <div className="market-odd-box back">
-                              <span className="market-odd">
-                                {over?.runners[0]?.back[0]?.prize}
-                              </span>
-                              <span className="market-volume">
-                                {over?.runners[0]?.back[0]?.size}
-                              </span>
-                            </div>
-                            <div className="fancy-min-max-box">
-                              <div className="fancy-min-max">
-                                <span className="w-100 d-block">
-                                  Min: {over?.minLiabilityPerBet}
-                                </span>
-                                <span className="w-100 d-block">
-                                  Max: {over?.maxLiabilityPerBet}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
+            <OverByOver
+            overByOver={overByOver}
+            />
+          
           )}
 
           {/* Ball by ball */}
@@ -583,92 +404,10 @@ const GameDetails = () => {
 
           {/* Fancy1 section */}
           {fancy1 && fancy1.length > 0 && (
-            <div className="game-market market-6">
-              <div className="market-title">
-                <span>{fancy1[0]?.tabGroupName}</span>
-              </div>
-              <div className="row row10">
-                <div className="col-md-6">
-                  <div className="market-header">
-                    <div className="market-nation-detail"></div>
-                    <div className="market-odd-box back">
-                      <b>Back</b>
-                    </div>
-                    <div className="market-odd-box lay">
-                      <b>Lay</b>
-                    </div>
-                    <div className="fancy-min-max-box"></div>
-                  </div>
-                </div>
-                <div className="col-md-6 d-none d-xl-block">
-                  <div className="market-header">
-                    <div className="market-nation-detail"></div>
-                    <div className="market-odd-box back">
-                      <b>Back</b>
-                    </div>
-                    <div className="market-odd-box lay">
-                      <b>Lay</b>
-                    </div>
-                    <div className="fancy-min-max-box"></div>
-                  </div>
-                </div>
-              </div>
-              <div className="market-body" data-title="OPEN">
-                <div className="row row10">
-                  {fancy1.map((odds) => {
-                    return (
-                      <div key={odds?.id} className="col-md-6">
-                        <div
-                          className={`${
-                            odds?.status === "OPEN"
-                              ? "fancy-market "
-                              : "fancy-market suspended-row"
-                          }`}
-                          data-title={`${
-                            odds?.status === "OPEN" ? "ACTIVATE" : "SUSPENDED"
-                          }`}
-                        >
-                          <div className="market-row">
-                            <div className="market-nation-detail">
-                              <span className="market-nation-name">
-                                {odds?.name}
-                              </span>
-                              <div className="market-nation-book"></div>
-                            </div>
-                            <div className="market-odd-box back">
-                              <span className="market-odd">
-                                {odds?.runners[0]?.back[0]?.price}
-                              </span>
-                              <span className="market-volume">
-                                {odds?.runners[0]?.back[0]?.size}
-                              </span>
-                            </div>
-                            <div className="market-odd-box lay">
-                              <span className="market-odd">
-                                {odds?.runners[0]?.lay[0]?.price}
-                              </span>
-                              <span className="market-volume">
-                                {odds?.runners[0]?.lay[0]?.size}
-                              </span>
-                            </div>
-                            <div className="fancy-min-max-box">
-                              <div className="fancy-min-max">
-                                <span className="w-100 d-block">
-                                  Min: {odds?.minLiabilityPerBet}
-                                </span>
-                                <span className="w-100 d-block">
-                                  Max: {odds?.maxLiabilityPerBet}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
+            <FancyOne
+            fancy1={fancy1}
+            />
+           
           )}
 
           {/* Meter section */}
