@@ -23,8 +23,8 @@ console.log(overByOver);
           }
         });
         runner.lay.forEach((layItem, layIndex) => {
-          const previousLayItem = previousRunner.lay[layIndex];
-          if (layItem.price !== previousLayItem.price) {
+          const previousLayItem = previousRunner?.lay[layIndex];
+          if (layItem.price !== previousLayItem?.price) {
             newChangedPrices[`lay-${runner.id}-${layIndex}`] = true;
             setChangedPrices({ ...newChangedPrices });
             setTimeout(() => {

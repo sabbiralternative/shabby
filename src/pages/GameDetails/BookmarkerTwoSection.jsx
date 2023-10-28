@@ -1,4 +1,42 @@
+import { useEffect, useState } from "react";
+
 const BookmarkerTwoSection = ({ bookmarker2 }) => {
+  const [previousData, setPreviousData] = useState(bookmarker2);
+  const [changedPrices, setChangedPrices] = useState({});
+  useEffect(() => {
+    const newChangedPrices = {};
+   if(bookmarker2.length > 0){
+    bookmarker2.forEach((item, index) => {
+      item.runners.forEach((runner, runnerIndex) => {
+        const previousRunner = previousData[index]?.runners[runnerIndex];
+        runner.back.forEach((backItem, backIndex) => {
+          const previousBackItem = previousRunner?.back[backIndex];
+          if (backItem.price !== previousBackItem?.price) {
+            newChangedPrices[`back-${runner.id}-${backIndex}`] = true;
+            setChangedPrices({ ...newChangedPrices });
+            setTimeout(() => {
+              newChangedPrices[`back-${runner.id}-${backIndex}`] = false;
+
+              setChangedPrices({ ...newChangedPrices });
+            }, 300);
+          }
+        });
+        runner.lay.forEach((layItem, layIndex) => {
+          const previousLayItem = previousRunner.lay[layIndex];
+          if (layItem.price !== previousLayItem.price) {
+            newChangedPrices[`lay-${runner.id}-${layIndex}`] = true;
+            setChangedPrices({ ...newChangedPrices });
+            setTimeout(() => {
+              newChangedPrices[`lay-${runner.id}-${layIndex}`] = false;
+              setChangedPrices({ ...newChangedPrices });
+            }, 300);
+          }
+        });
+      });
+    });
+    setPreviousData(bookmarker2);
+   }
+  }, [bookmarker2, previousData]);
   return (
     <>
       <div className="game-market market-2">
@@ -44,7 +82,11 @@ const BookmarkerTwoSection = ({ bookmarker2 }) => {
                 {
                   runner?.back?.slice().reverse().map( (back,i) => {
                    return(
-                    <div key={i} className={`market-odd-box ${i === 0 ? 'back2': ''} ${i === 1 ? 'back1': ''} ${i === 2 ? 'back': ''}`}>
+                    <div key={i} className={`market-odd-box ${i === 0 ? 'back2': ''} ${i === 1 ? 'back1': ''} ${i === 2 ? 'back': ''} ${
+                      changedPrices[`back-${runner.id}-${i}`]
+                        ? "blink"
+                        : ""
+                    }`}>
                     {back?.price ||
                    back?.size ? (
                       <>
@@ -67,7 +109,11 @@ const BookmarkerTwoSection = ({ bookmarker2 }) => {
                 {
                   runner?.lay?.map( (lay,i) => {
                    return(
-                    <div key={i} className={`market-odd-box ${i === 0 ? 'lay': ''} ${i === 1 ? 'lay1': ''} ${i === 2 ? 'lay2': ''}`}>
+                    <div key={i} className={`market-odd-box ${i === 0 ? 'lay': ''} ${i === 1 ? 'lay1': ''} ${i === 2 ? 'lay2': ''} ${
+                      changedPrices[`lay-${runner.id}-${i}`]
+                        ? "blink"
+                        : ""
+                    }`}>
                     {lay?.price ||
                    lay?.size ? (
                       <>

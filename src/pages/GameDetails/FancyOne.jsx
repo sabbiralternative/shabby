@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const FancyOne = ({ fancy1 }) => {
-console.log(fancy1);
+
   const [previousData, setPreviousData] = useState(fancy1);
   const [changedPrices, setChangedPrices] = useState({});
   useEffect(() => {
