@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 const BookmarkerTwoSection = ({ bookmarker2, exposer }) => {
   const [previousData, setPreviousData] = useState(bookmarker2);
   const [changedPrices, setChangedPrices] = useState({});
-  const obj = exposer?.pnlBySelection;
-  const pnlBySelection = Object.values(obj);
+  let pnlBySelection;
+  if (exposer?.pnlBySelection) {
+    const obj = exposer?.pnlBySelection;
+    pnlBySelection = Object?.values(obj);
+  }
   useEffect(() => {
     const newChangedPrices = {};
     if (bookmarker2.length > 0) {
