@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { config } from "../../utils/config";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -11,6 +11,7 @@ import FancyOne from "./FancyOne";
 
 const GameDetails = () => {
   const { id, eventId } = useParams();
+
   const oddsApi = config?.result?.endpoint?.odds;
   const interval = config?.result?.settings?.interval;
   const token = localStorage.getItem("token");
@@ -21,6 +22,11 @@ const GameDetails = () => {
   const [normal, setNormal] = useState([]);
   const [fancy1, setFancy1] = useState([]);
   const [overByOver, setOverByOver] = useState([]);
+  const [showTv, setShowTv] = useState(false);
+  const accessTokenApi = config?.result?.endpoint?.accessToken;
+  const [videoUrl, setVideoUrl] = useState();
+  const exposerApi = config?.result?.endpoint?.exposure;
+  const [exposer,setExposer] = useState([])
 
   /* Get game details */
   useEffect(() => {
@@ -75,6 +81,44 @@ const GameDetails = () => {
     setOverByOver(overByOverFilter);
   }, [data]);
 
+  useEffect(() => {
+    if (showTv) {
+      fetch(accessTokenApi, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          eventTypeId: id,
+          eventId: eventId,
+          type: "video",
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setVideoUrl(data?.result);
+       
+        });
+    }
+  }, [eventId, id, showTv, token, accessTokenApi]);
+
+  useEffect(() => {
+    const getExposer = async () => {
+      const res = await axios.get(`${exposerApi}/${eventId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = res.data;
+   
+
+      if (data.success) {
+        setExposer(data.result);
+     
+      }
+    };
+    getExposer();
+  }, [token, exposerApi, eventId]);
   return (
     <>
       <div className="center-container">
@@ -94,86 +138,115 @@ const GameDetails = () => {
                 Matched Bet (0)
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link">
-                <i className="fas fa-tv"></i>
-              </a>
-            </li>
-          </ul>
-          <div className="live-tv d-xl-none">
-            <iframe
-              src="https://demo.livestream11.com/user/651724969/ios/49.36.109.100/7e7b0893-21f1-410c-b082-86bab63df61f"
-              style={{
-                width: "100%",
-                border: "0px",
-              }}
-              scrolling="no"
-            ></iframe>
-          </div>
 
-          <div className="scorecard">
-            <div className="row">
-              <div className="col-12 col-md-6">
-                <p className="team-1 row">
-                  <span className="team-name col-3">IND</span>
-                  <span className="score col-4 text-end">22-0 (3.0)</span>
-                  <span className="team-name col-5">
-                    <span>CRR 7.33 </span>
-                    <span>RR 5.36</span>
-                  </span>
-                </p>
-                <p className="team-1 row mt-2">
-                  <span className="team-name col-3">NZ</span>
-                  <span className="score col-4 text-end">273-10 (50.0)</span>
-                  <span className="team-name col-5"></span>
-                </p>
-              </div>
-              <div className="col-12 col-md-6">
-                <div className="row">
-                  <div className="col-12">
-                    <div className="text-xl-end">
-                      <span>IND Needed 252 runs from 282 balls</span>
+            {match_odds[0]?.hasVideo && (
+              <li onClick={() => setShowTv(!showTv)} className="nav-item">
+                <Link className="nav-link">
+                  <i className="fas fa-tv"></i>
+                </Link>
+              </li>
+            )}
+          </ul>
+
+          {showTv && (
+            <div className="live-tv d-xl-none">
+              <iframe
+                src={videoUrl?.url}
+                style={{
+                  width: "100%",
+                  border: "0px",
+                  
+                }}
+                referrerPolicy={videoUrl?.ref === false ? "no-referrer" : ""}
+              ></iframe>
+            </div>
+          )}
+
+          {match_odds[0]?.score?.length !== 0 && (
+            <div className="scorecard">
+              {match_odds[0]?.score?.map((scoreInfo, i) => {
+                return (
+                  <div key={i} className="row">
+                    <div className="col-12 col-md-6">
+                      <p className="team-1 row">
+                        <span className="team-name col-3">
+                          {scoreInfo?.team1Name}
+                        </span>
+                        <span className="score col-4 text-end"></span>
+                        <span className="team-name col-5">
+                          <span>{scoreInfo?.runRate} </span>
+                          <span></span>
+                        </span>
+                      </p>
+                      <p className="team-1 row mt-2">
+                        <span className="team-name col-3">
+                          {scoreInfo?.team2Name}
+                        </span>
+                        <span className="score col-4 text-end">
+                          {scoreInfo?.team2Score}
+                        </span>
+                        <span className="team-name col-5"></span>
+                      </p>
                     </div>
-                    <div className="row">
-                      <div className="col-12">
-                        <p className="text-xl-end ball-by-ball mt-2">
-                          <span className="ball-runs">1</span>
-                          <span className="ball-runs">1</span>
-                          <span className="ball-runs">1</span>
-                          <span className="ball-runs">0</span>
-                          <span className="ball-runs">0</span>
-                          <span className="ball-runs four">4</span>
-                        </p>
+                    <div className="col-12 col-md-6">
+                      <div className="row">
+                        <div className="col-12">
+                          {scoreInfo.target !== null && (
+                            <div className="text-xl-end">
+                              <span>{scoreInfo?.target}</span>
+                            </div>
+                          )}
+
+                          <div className="row">
+                            <div className="col-12">
+                              <p className="text-xl-end ball-by-ball mt-2">
+                                {scoreInfo?.recent.map((score, i) => {
+                                  return (
+                                    <span
+                                      key={i}
+                                      className={`ball-runs ${
+                                        score === "4" ? "four" : ""
+                                      } ${score === "6" ? "six" : ""} ${
+                                        score === "ww" ? "wicket" : ""
+                                      }`}
+                                    >
+                                      {score}
+                                    </span>
+                                  );
+                                })}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
-          </div>
+          )}
 
           {/* Match odds */}
           {match_odds && match_odds?.length > 0 && (
-            <MatchOddsSection match_odds={match_odds} />
+            <MatchOddsSection 
+            match_odds={match_odds}
+            exposer={exposer}
+            
+            />
           )}
 
           {/* Bookmarker section  */}
           {bookmarker && bookmarker?.length > 0 && (
-            <BookmarkerSection bookmarker={bookmarker} />
+            <BookmarkerSection bookmarker={bookmarker} exposer={exposer} />
           )}
 
           {/* Bookmarker 2 section  */}
           {bookmarker2 && bookmarker2?.length > 0 && (
-            <BookmarkerTwoSection bookmarker2={bookmarker2} />
+            <BookmarkerTwoSection bookmarker2={bookmarker2} exposer={exposer} />
           )}
 
           {/* Normal section */}
-          {normal && normal?.length > 0 && (
-            <NormalSection
-            normal={normal}
-            />
-          
-          )}
+          {normal && normal?.length > 0 && <NormalSection normal={normal} exposer={exposer} />}
 
           {/* Tie Match */}
           {/* <div className="game-market market-2 width30">
@@ -230,10 +303,7 @@ const GameDetails = () => {
 
           {/* Over by over */}
           {overByOver && overByOver.length > 0 && (
-            <OverByOver
-            overByOver={overByOver}
-            />
-          
+            <OverByOver overByOver={overByOver}  exposer={exposer}/>
           )}
 
           {/* Ball by ball */}
@@ -403,12 +473,7 @@ const GameDetails = () => {
           </div> */}
 
           {/* Fancy1 section */}
-          {fancy1 && fancy1.length > 0 && (
-            <FancyOne
-            fancy1={fancy1}
-            />
-           
-          )}
+          {fancy1 && fancy1.length > 0 && <FancyOne fancy1={fancy1}  exposer={exposer}/>}
 
           {/* Meter section */}
           {/* <div className="game-market market-6">

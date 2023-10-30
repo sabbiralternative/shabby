@@ -4,13 +4,14 @@ const FancyOne = ({ fancy1 }) => {
 
   const [previousData, setPreviousData] = useState(fancy1);
   const [changedPrices, setChangedPrices] = useState({});
+
   useEffect(() => {
     const newChangedPrices = {};
    if(fancy1.length > 0){
     fancy1.forEach((item, index) => {
-      item.runners.forEach((runner, runnerIndex) => {
+      item?.runners?.forEach((runner, runnerIndex) => {
         const previousRunner = previousData[index]?.runners[runnerIndex];
-        runner.back.forEach((backItem, backIndex) => {
+        runner?.back?.forEach((backItem, backIndex) => {
           const previousBackItem = previousRunner?.back[backIndex];
           if (backItem.price !== previousBackItem?.price) {
             newChangedPrices[`back-${runner.id}-${backIndex}`] = true;
@@ -22,9 +23,9 @@ const FancyOne = ({ fancy1 }) => {
             }, 300);
           }
         });
-        runner.lay.forEach((layItem, layIndex) => {
-          const previousLayItem = previousRunner.lay[layIndex];
-          if (layItem.price !== previousLayItem.price) {
+        runner?.lay?.forEach((layItem, layIndex) => {
+          const previousLayItem = previousRunner?.lay[layIndex];
+          if (layItem.price !== previousLayItem?.price) {
             newChangedPrices[`lay-${runner.id}-${layIndex}`] = true;
             setChangedPrices({ ...newChangedPrices });
             setTimeout(() => {
@@ -38,6 +39,7 @@ const FancyOne = ({ fancy1 }) => {
     setPreviousData(fancy1);
    }
   }, [fancy1, previousData]);
+
   return (
     <>
     <div className="game-market market-6">

@@ -56,7 +56,8 @@
       "activityLogs": "https://api7.live/api/exchange/diamond/activityLogs",
       "ipDetails": "https://api7.live/api/exchange/diamond/ipDetails",
       "accountStatement": "https://api7.live/api/exchange/diamond/accountStatement",
-      "settledBets": "https://api7.live/api/exchange/diamond/settledBets"
+      "settledBets": "https://api7.live/api/exchange/diamond/settledBets",
+      "exposure": "https://api7.live/api/exchange/diamond/exposure"
     }
   },
   "success": true

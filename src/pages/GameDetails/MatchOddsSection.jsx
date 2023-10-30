@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 
-const MatchOddsSection = ({ match_odds }) => {
+const MatchOddsSection = ({ match_odds, exposer }) => {
   const [previousData, setPreviousData] = useState(match_odds);
   const [changedPrices, setChangedPrices] = useState({});
+  const obj = exposer?.pnlBySelection;
+  const pnlBySelection = Object?.values(obj);
 
   useEffect(() => {
     const newChangedPrices = {};
@@ -66,8 +68,17 @@ const MatchOddsSection = ({ match_odds }) => {
               <div className="market-odd-box no-border"></div>
             </div>
 
-            <div className="market-body">
+            <div
+              className={`market-body ${
+                item?.status !== "OPEN" ? "suspended-row" : " "
+              }`}
+              data-title={`${item?.status !== "OPEN" ? "SUSPENDED" : ""}`}
+            >
               {item?.runners?.map((runner) => {
+                const pnl = pnlBySelection?.filter(
+                  (pnl) => pnl?.RunnerId === runner?.id
+                );
+
                 return (
                   <div
                     key={runner?.id}
@@ -90,7 +101,20 @@ const MatchOddsSection = ({ match_odds }) => {
                       <span className="market-nation-name">
                         {runner?.name}{" "}
                       </span>
-                      <div className="market-nation-book"></div>
+                      <div className="market-nation-book">
+                        {pnl?.map(({ pnl }, i) => {
+                          return (
+                            <span
+                              key={i}
+                              className={`market-book ${
+                                pnl > 0 ? "text-success" : "text-danger"
+                              }`}
+                            >
+                              {pnl}
+                            </span>
+                          );
+                        })}
+                      </div>
                     </div>
 
                     {runner.back.length === 1 && (

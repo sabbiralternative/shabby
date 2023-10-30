@@ -19,8 +19,7 @@ const Tennis = () => {
           },
         });
         const data = res.data;
-        const sortData = Object.values(data).sort((a, b) => a.sort - b.sort);
-        setData(sortData);
+      setData(data)
       }
     };
     gamesData();
@@ -45,10 +44,13 @@ const Tennis = () => {
             </div>
           </div>
           <div className="bet-table-body">
-            {Object.values(data).length > 0 &&
+          {Object.values(data).length > 0 &&
               group === 2 &&
-              Object.values(data).map((d, i) => <BetTable key={i} data={d} />)}
-
+              Object.keys(data)
+                .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
+                .map((key, index) => (
+                  <BetTable key={index} keys={key} data={data} />
+                ))}
             {Object.values(data).length < 1 && (
               <div className="bet-table-row">No Record Found</div>
             )}

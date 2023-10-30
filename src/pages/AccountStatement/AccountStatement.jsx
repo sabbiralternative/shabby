@@ -13,7 +13,6 @@ const AccountStatement = () => {
   const [filteredData, setFilteredData] = useState([]);
 
   const onSubmit = ({ toDate, fromDate, reportType }) => {
-    console.log(toDate, fromDate, reportType);
     fetch(accountStatementApi, {
       method: "POST",
       headers: {

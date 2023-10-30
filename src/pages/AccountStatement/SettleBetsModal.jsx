@@ -7,7 +7,7 @@ const SettleBetsModal = ({
   setFilteredData,
 }) => {
   const [sportsRef, setSportsRef] = useState("");
-  console.log(data);
+
   /* Filter sports */
   useEffect(() => {
     if (sportsRef !== "all" && sportsRef !== "") {
