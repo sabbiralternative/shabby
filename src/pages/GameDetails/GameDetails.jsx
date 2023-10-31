@@ -8,13 +8,18 @@ import BookmarkerTwoSection from "./BookmarkerTwoSection";
 import NormalSection from "./NormalSection";
 import OverByOver from "./OverByOver";
 import FancyOne from "./FancyOne";
+import UseState from "../../hooks/UseState";
 
 const GameDetails = () => {
   const { id, eventId } = useParams();
-
   const oddsApi = config?.result?.endpoint?.odds;
   const interval = config?.result?.settings?.interval;
+  const accessTokenApi = config?.result?.endpoint?.accessToken;
+  const exposerApi = config?.result?.endpoint?.exposure;
+  const orderApi = config?.result?.endpoint?.order;
+  const currentBetsApi = config?.result?.endpoint?.currentBets;
   const token = localStorage.getItem("token");
+  const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
   const [data, setData] = useState([]);
   const [match_odds, setMatch_odds] = useState([]);
   const [bookmarker, setBookmarker] = useState([]);
@@ -23,10 +28,19 @@ const GameDetails = () => {
   const [fancy1, setFancy1] = useState([]);
   const [overByOver, setOverByOver] = useState([]);
   const [showTv, setShowTv] = useState(false);
-  const accessTokenApi = config?.result?.endpoint?.accessToken;
   const [videoUrl, setVideoUrl] = useState();
-  const exposerApi = config?.result?.endpoint?.exposure;
-  const [exposer,setExposer] = useState([])
+  const [exposer, setExposer] = useState([]);
+  const [showMobileTv, setShowMobileTv] = useState(false);
+  const [showBets, setShowBets] = useState(false);
+  const { buttonValue, SetButtonValue } = UseState();
+  const { placeBetValue } = UseState();
+  const [price, setPrice] = useState("");
+  const [totalSize, setTotalSize] = useState("");
+  const [myBets, setMyBets] = useState([]);
+
+  useEffect(() => {
+    setPrice(placeBetValue?.price);
+  }, [placeBetValue]);
 
   /* Get game details */
   useEffect(() => {
@@ -42,8 +56,8 @@ const GameDetails = () => {
       }
     };
     getGameDetails();
-    const intervalId = setInterval(getGameDetails, interval);
-    return () => clearInterval(intervalId);
+    // const intervalId = setInterval(getGameDetails, interval);
+    // return () => clearInterval(intervalId);
   }, [token, oddsApi, id, eventId, interval]);
 
   /* Filtered all the game  */
@@ -82,7 +96,7 @@ const GameDetails = () => {
   }, [data]);
 
   useEffect(() => {
-    if (showTv) {
+    if (showTv || showMobileTv) {
       fetch(accessTokenApi, {
         method: "POST",
         headers: {
@@ -97,10 +111,9 @@ const GameDetails = () => {
         .then((res) => res.json())
         .then((data) => {
           setVideoUrl(data?.result);
-       
         });
     }
-  }, [eventId, id, showTv, token, accessTokenApi]);
+  }, [eventId, id, showTv, token, accessTokenApi, showMobileTv]);
 
   useEffect(() => {
     const getExposer = async () => {
@@ -110,15 +123,54 @@ const GameDetails = () => {
         },
       });
       const data = res.data;
-   
 
       if (data.success) {
         setExposer(data.result);
-     
       }
     };
     getExposer();
   }, [token, exposerApi, eventId]);
+
+  const handleOrderBets = () => {
+    fetch(orderApi, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify([
+        {
+          betDelay: placeBetValue?.betDelay,
+          btype: placeBetValue?.btype,
+          eventTypeId: placeBetValue?.eventTypeId,
+          marketId: placeBetValue?.marketId,
+          price: price ? price : placeBetValue?.price,
+          selectionId: placeBetValue?.selectionId,
+          side: placeBetValue?.side,
+          totalSize: totalSize,
+        },
+      ]),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setShowBets(false);
+      });
+  };
+
+  useEffect(() => {
+    fetch(`${currentBetsApi}/${eventId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setMyBets(data?.result);
+        }
+      });
+  }, [currentBetsApi, eventId, token]);
+
   return (
     <>
       <div className="center-container">
@@ -135,7 +187,7 @@ const GameDetails = () => {
             </li>
             <li className="nav-item">
               <a className="nav-link" data-bs-toggle="tab">
-                Matched Bet (0)
+                Matched Bet {myBets?.length}
               </a>
             </li>
 
@@ -155,7 +207,6 @@ const GameDetails = () => {
                 style={{
                   width: "100%",
                   border: "0px",
-                  
                 }}
                 referrerPolicy={videoUrl?.ref === false ? "no-referrer" : ""}
               ></iframe>
@@ -172,7 +223,9 @@ const GameDetails = () => {
                         <span className="team-name col-3">
                           {scoreInfo?.team1Name}
                         </span>
-                        <span className="score col-4 text-end"></span>
+                        <span className="score col-4 text-end">
+                          {scoreInfo?.team1Score}
+                        </span>
                         <span className="team-name col-5">
                           <span>{scoreInfo?.runRate} </span>
                           <span></span>
@@ -228,25 +281,43 @@ const GameDetails = () => {
 
           {/* Match odds */}
           {match_odds && match_odds?.length > 0 && (
-            <MatchOddsSection 
-            match_odds={match_odds}
-            exposer={exposer}
-            
+            <MatchOddsSection
+              match_odds={match_odds}
+              exposer={exposer}
+              showBets={showBets}
+              setShowBets={setShowBets}
             />
           )}
 
           {/* Bookmarker section  */}
           {bookmarker && bookmarker?.length > 0 && (
-            <BookmarkerSection bookmarker={bookmarker} exposer={exposer} />
+            <BookmarkerSection
+              bookmarker={bookmarker}
+              exposer={exposer}
+              showBets={showBets}
+              setShowBets={setShowBets}
+            />
           )}
 
           {/* Bookmarker 2 section  */}
           {bookmarker2 && bookmarker2?.length > 0 && (
-            <BookmarkerTwoSection bookmarker2={bookmarker2} exposer={exposer} />
+            <BookmarkerTwoSection
+              bookmarker2={bookmarker2}
+              exposer={exposer}
+              showBets={showBets}
+              setShowBets={setShowBets}
+            />
           )}
 
           {/* Normal section */}
-          {normal && normal?.length > 0 && <NormalSection normal={normal} exposer={exposer} />}
+          {normal && normal?.length > 0 && (
+            <NormalSection
+              normal={normal}
+              exposer={exposer}
+              showBets={showBets}
+              setShowBets={setShowBets}
+            />
+          )}
 
           {/* Tie Match */}
           {/* <div className="game-market market-2 width30">
@@ -303,7 +374,12 @@ const GameDetails = () => {
 
           {/* Over by over */}
           {overByOver && overByOver.length > 0 && (
-            <OverByOver overByOver={overByOver}  exposer={exposer}/>
+            <OverByOver
+              overByOver={overByOver}
+              exposer={exposer}
+              showBets={showBets}
+              setShowBets={setShowBets}
+            />
           )}
 
           {/* Ball by ball */}
@@ -473,7 +549,14 @@ const GameDetails = () => {
           </div> */}
 
           {/* Fancy1 section */}
-          {fancy1 && fancy1.length > 0 && <FancyOne fancy1={fancy1}  exposer={exposer}/>}
+          {fancy1 && fancy1.length > 0 && (
+            <FancyOne
+              fancy1={fancy1}
+              exposer={exposer}
+              showBets={showBets}
+              setShowBets={setShowBets}
+            />
+          )}
 
           {/* Meter section */}
           {/* <div className="game-market market-6">
@@ -1075,13 +1158,278 @@ const GameDetails = () => {
             </div>
           </div> */}
         </div>
+
+
+        {/* Mobile place bet starts */}
+        {showBets && window.innerWidth < 1200 && (
+          <>
+            <div className="fade modal-backdrop show"></div>
+            <div
+              role="dialog"
+              aria-modal="true"
+              className="fade modal show"
+              tabIndex="-1"
+              style={{
+                paddingRight: "17px",
+                display: "block",
+              }}
+            >
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <div className="modal-title h4">Place Bet</div>
+                    <button
+                      onClick={() => setShowBets(false)}
+                      type="button"
+                      className="btn-close"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    <div
+                      className={`place-bet-modal ${
+                        placeBetValue?.back ? "back" : ""
+                      } ${placeBetValue?.lay ? "lay" : ""}`}
+                    >
+                      <div className="row align-items-end">
+                        <div className="col-6">
+                          <b>Lazio</b>
+                        </div>
+                        <div className="col-6">
+                          <div className="float-end">
+                            <button
+                              onClick={() => setPrice(parseFloat(price) - 1)}
+                              className="stakeactionminus btn"
+                            >
+                              <span className="fa fa-minus"></span>
+                            </button>
+                            <input
+                              onChange={(e) => setPrice(e.target.value)}
+                              type="text"
+                              className="stakeinput"
+                              disabled=""
+                             value={price}
+                            />
+                            <button
+                              onClick={() => setPrice(parseFloat(price) + 1)}
+                              className="stakeactionminus btn"
+                            >
+                              <span className="fa fa-plus"></span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row mt-2">
+                        <div className="col-4">
+                          <input
+                            onChange={(e) => setTotalSize(e.target.value)}
+                            type="number"
+                            className="stakeinput w-100"
+                          value={totalSize}
+                          />
+                        </div>
+                        <div onClick={handleOrderBets} className="col-4 d-grid">
+                          <button className="btn btn-primary btn-block">
+                            Submit
+                          </button>
+                        </div>
+                        <div className="col-4 text-center pt-2">
+                          <span>188</span>
+                        </div>
+                      </div>
+                      <div className="place-bet-buttons mt-2">
+                        {buttonValues?.map((buttonVal,i) => {
+                          const handleButtonValue = (val) => {
+                            setTotalSize(val.value);
+                          };
+                          return (
+                        
+                              <button
+                              key={i}
+                                onClick={() => handleButtonValue(buttonVal)}
+                                className="btn btn-place-bet"
+                              >
+                                {buttonVal?.label}
+                              </button>
+                   
+                          );
+                        })}
+                      </div>
+                      <div
+                        onClick={() => {
+                          setShowBets(!showBets);
+                          SetButtonValue(!buttonValue);
+                        }}
+                        className="mt-3 d-flex justify-content-between align-items-center"
+                      >
+                        <button className="btn btn-info">Edit</button>
+                      </div>
+                      <div className="row mt-2">
+                        <div className="col-4">
+                          <span>Lazio</span>
+                        </div>
+                        <div className="col-4 text-center">
+                          <span className="text-success">188</span>
+                        </div>
+                        <div className="col-4 text-end">
+                          <span className="text-success">376</span>
+                        </div>
+                      </div>
+                      <div className="row mt-2">
+                        <div className="col-4">
+                          <span>Fiorentina</span>
+                        </div>
+                        <div className="col-4 text-center">
+                          <span className="text-danger">-100</span>
+                        </div>
+                        <div className="col-4 text-end">
+                          <span className="text-danger">-200</span>
+                        </div>
+                      </div>
+                      <div className="row mt-2">
+                        <div className="col-4">
+                          <span>The Draw</span>
+                        </div>
+                        <div className="col-4 text-center">
+                          <span className="text-danger">-100</span>
+                        </div>
+                        <div className="col-4 text-end">
+                          <span className="text-danger">-200</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+        {/* Mobile place bet ends */}
       </div>
+
+
       <div className="sidebar right-sidebar">
-        <div className="sidebar-box">
-          <div className="sidebar-title">
-            <h4>Live Match</h4>
+        {match_odds[0]?.hasVideo && (
+          <div
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={() => setShowMobileTv(!showMobileTv)}
+            className="sidebar-box"
+          >
+            <div className="sidebar-title">
+              <h4>Live Match</h4>
+            </div>
           </div>
-        </div>
+        )}
+        {showMobileTv && (
+          <div className="live-tv">
+            <iframe
+              src={videoUrl?.url}
+              referrerPolicy={videoUrl?.ref === false ? "no-referrer" : ""}
+              style={{
+                width: "100%",
+                border: "0px",
+              }}
+            ></iframe>
+          </div>
+        )}
+
+        {/* Place bet start */}
+        {showBets && window.innerWidth > 1199 && (
+          <div className="sidebar-box place-bet-container">
+            <div className="sidebar-title">
+              <h4>Place Bet</h4>
+            </div>
+            <div
+              className={`place-bet-box ${placeBetValue?.back ? "back" : ""} ${
+                placeBetValue?.lay ? "lay" : ""
+              }`}
+            >
+              <div className="place-bet-box-header">
+                <div className="place-bet-for">(Bet for)</div>
+                <div className="place-bet-odds">Odds</div>
+                <div className="place-bet-stake">Stake</div>
+                <div className="place-bet-profit">Profit</div>
+              </div>
+              <div className="place-bet-box-body">
+                <div className="place-bet-for">
+                  <span>Fiorentina</span>
+                </div>
+                <div className="place-bet-odds">
+                  <input
+                    onChange={(e) => setPrice(e.target.value)}
+                    type="text"
+                    className="form-control"
+                    disabled=""
+                    value={price}
+                  />
+                  <div className="spinner-buttons input-group-btn btn-group-vertical">
+                    <button
+                      onClick={() => setPrice(parseFloat(price) + 1)}
+                      className="btn-default"
+                    >
+                      <i className="fa fa-angle-up"></i>
+                    </button>
+                    <button
+                      onClick={() => setPrice(parseFloat(price) - 1)}
+                      className="btn-default"
+                    >
+                      <i className="fa fa-angle-down"></i>
+                    </button>
+                  </div>
+                </div>
+                <div className="place-bet-stake">
+                  <input
+                    onChange={(e) => setTotalSize(e.target.value)}
+                    type="number"
+                    className="form-control"
+                    value={totalSize}
+                  />
+                </div>
+                <div className="place-bet-profit">0</div>
+              </div>
+              <div className="place-bet-buttons">
+                {buttonValues?.map((buttonVal) => {
+                  const handleButtonValue = (val) => {
+                    setTotalSize(val.value);
+                  };
+                  return (
+                    <>
+                      <button
+                        onClick={() => handleButtonValue(buttonVal)}
+                        className="btn btn-place-bet"
+                      >
+                        {buttonVal?.label}
+                      </button>
+                    </>
+                  );
+                })}
+              </div>
+              <div className="place-bet-action-buttons">
+                <div onClick={() => SetButtonValue(!buttonValue)}>
+                  <button className="btn btn-info">Edit</button>
+                </div>
+                <div>
+                  <button
+                    onClick={() => setShowBets(!showBets)}
+                    className="btn btn-danger me-1"
+                  >
+                    Reset
+                  </button>
+                  <button
+                    onClick={handleOrderBets}
+                    className="btn btn-success"
+                    disabled=""
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* Place bet end */}
         <div className="sidebar-box my-bet-container">
           <div className="sidebar-title">
             <h4>My Bet</h4>
@@ -1096,7 +1444,22 @@ const GameDetails = () => {
                     <th className="text-end">Stake</th>
                   </tr>
                 </thead>
-                <tbody></tbody>
+                {myBets.length > 0 && Array.isArray(myBets) && (
+                  <tbody>
+                    {myBets?.map(({ nation, userRate, amount, betType }, i) => {
+                      return (
+                        <tr
+                          key={i}
+                          className={`${betType === "Lay" ? "lay" : "back"}`}
+                        >
+                          <td>{nation}</td>
+                          <td className="text-end">{userRate}</td>
+                          <td className="text-end">{amount}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                )}
               </table>
             </div>
           </div>

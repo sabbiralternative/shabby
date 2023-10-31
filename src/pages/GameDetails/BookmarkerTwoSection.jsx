@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import UseState from "../../hooks/UseState";
 
-const BookmarkerTwoSection = ({ bookmarker2, exposer }) => {
+const BookmarkerTwoSection = ({ bookmarker2, exposer, setShowBets }) => {
   const [previousData, setPreviousData] = useState(bookmarker2);
   const [changedPrices, setChangedPrices] = useState({});
+  const { setPlaceBetValue } = UseState();
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -75,7 +77,7 @@ const BookmarkerTwoSection = ({ bookmarker2, exposer }) => {
               data-title={`${bookmaker?.status !== "OPEN" ? "SUSPENDED" : ""}`}
             >
               {bookmaker?.runners?.map((runner) => {
-                 const pnl = pnlBySelection?.filter(
+                const pnl = pnlBySelection?.filter(
                   (pnl) => pnl?.RunnerId === runner?.id
                 );
                 return (
@@ -122,8 +124,23 @@ const BookmarkerTwoSection = ({ bookmarker2, exposer }) => {
                       ?.slice()
                       .reverse()
                       .map((back, i) => {
+                        const handlePlaceBackBet = () => {
+                          setShowBets(true);
+                          setPlaceBetValue({});
+                          setPlaceBetValue({
+                            price: back?.price,
+                            side: 0,
+                            selectionId: runner?.id,
+                            btype: bookmaker?.btype,
+                            eventTypeId: bookmaker?.eventTypeId,
+                            betDelay: bookmaker?.betDelay,
+                            marketId: bookmaker?.id,
+                            back: true,
+                          });
+                        };
                         return (
                           <div
+                            onClick={handlePlaceBackBet}
                             key={i}
                             className={`market-odd-box ${
                               i === 0 ? "back2" : ""
@@ -152,8 +169,23 @@ const BookmarkerTwoSection = ({ bookmarker2, exposer }) => {
                       })}
 
                     {runner?.lay?.map((lay, i) => {
+                      const handlePlaceLayBets = () => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: lay?.price,
+                          side: 1,
+                          selectionId: runner?.id,
+                          btype: bookmaker?.btype,
+                          eventTypeId: bookmaker?.eventTypeId,
+                          betDelay: bookmaker?.betDelay,
+                          marketId: bookmaker?.id,
+                          lay: true,
+                        });
+                      };
                       return (
                         <div
+                          onClick={handlePlaceLayBets}
                           key={i}
                           className={`market-odd-box ${i === 0 ? "lay" : ""} ${
                             i === 1 ? "lay1" : ""

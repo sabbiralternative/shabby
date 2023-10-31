@@ -5,6 +5,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import RulesModal from "./RulesModal";
+import UseState from "../../hooks/UseState";
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [dropDown, setDropDown] = useState(false);
@@ -18,7 +19,7 @@ const Header = () => {
   const [showBalance, setShowBalance] = useState(0);
   const [showExp, setShowExp] = useState(0);
   const [showNotification, setShowNotification] = useState("");
-  const [buttonValue, SetButtonValue] = useState(false);
+  const {buttonValue, SetButtonValue} = UseState()
   const [ruleModal, setRuleModal] = useState(false);
   const buttonGameValue = JSON.parse(localStorage.getItem("buttonValue"));
   const navigate = useNavigate();

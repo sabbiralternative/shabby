@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import UseState from "../../hooks/UseState";
 
-const MatchOddsSection = ({ match_odds, exposer }) => {
+const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
   const [previousData, setPreviousData] = useState(match_odds);
   const [changedPrices, setChangedPrices] = useState({});
+  const { setPlaceBetValue } = UseState();
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -136,8 +138,23 @@ const MatchOddsSection = ({ match_odds, exposer }) => {
                       ?.slice()
                       ?.reverse()
                       ?.map((back, i) => {
+                        const handlePlaceBackBet = () => {
+                          setShowBets(true);
+                          setPlaceBetValue({});
+                          setPlaceBetValue({
+                            price: back?.price,
+                            side: 0,
+                            selectionId: runner?.id,
+                            btype: item?.btype,
+                            eventTypeId: item?.eventTypeId,
+                            betDelay: item?.betDelay,
+                            marketId: item?.id,
+                            back: true,
+                          });
+                        };
                         return (
                           <div
+                            onClick={handlePlaceBackBet}
                             key={i}
                             className={`market-odd-box ${
                               i === 0 && runner.back.length !== 1 ? "back2" : ""
@@ -169,8 +186,23 @@ const MatchOddsSection = ({ match_odds, exposer }) => {
                       })}
 
                     {runner?.lay?.map((lay, i) => {
+                      const handlePlaceLayBets = () => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: lay?.price,
+                          side: 1,
+                          selectionId: runner?.id,
+                          btype: item?.btype,
+                          eventTypeId: item?.eventTypeId,
+                          betDelay: item?.betDelay,
+                          marketId: item?.id,
+                          lay: true,
+                        });
+                      };
                       return (
                         <div
+                          onClick={handlePlaceLayBets}
                           key={i}
                           className={`market-odd-box ${i === 0 ? "lay" : ""} ${
                             i === 1 ? "lay1" : ""

@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import UseState from "../../hooks/UseState";
 
-const NormalSection = ({ normal }) => {
+const NormalSection = ({ normal,setShowBets }) => {
   const [previousData, setPreviousData] = useState(normal);
   const [changedPrices, setChangedPrices] = useState({});
+  const { setPlaceBetValue } = UseState();
 
   useEffect(() => {
     const newChangedPrices = {};
@@ -95,8 +97,23 @@ const NormalSection = ({ normal }) => {
 
                       {fancyGame?.runners.map((runner) =>
                         runner.lay.map((lay, i) => {
+                          const handlePlaceLayBet = () => {
+                            setShowBets(true);
+                            setPlaceBetValue({});
+                            setPlaceBetValue({
+                              price: lay?.line,
+                              side: 1,
+                              selectionId: runner?.id,
+                              btype: fancyGame?.btype,
+                              eventTypeId: fancyGame?.eventTypeId,
+                              betDelay: fancyGame?.betDelay,
+                              marketId: fancyGame?.id,
+                              lay:true
+                            });
+                          };
                           return (
                             <div
+                            onClick={handlePlaceLayBet}
                               key={i}
                               className={`market-odd-box lay ${
                                 changedPrices[`lay-${runner.id}-${i}`]
@@ -113,8 +130,23 @@ const NormalSection = ({ normal }) => {
 
                       {fancyGame?.runners?.map((runner) =>
                         runner.back.map((back, i) => {
+                          const handlePlaceBackBets = () => {
+                            setShowBets(true);
+                            setPlaceBetValue({});
+                            setPlaceBetValue({
+                              price: back?.line,
+                              side: 0,
+                              selectionId: runner?.id,
+                              btype: fancyGame?.btype,
+                              eventTypeId: fancyGame?.eventTypeId,
+                              betDelay: fancyGame?.betDelay,
+                              marketId: fancyGame?.id,
+                              back:true
+                            });
+                          };
                           return (
                             <div
+                            onClick={handlePlaceBackBets}
                               key={i}
                               className={`market-odd-box back ${
                                 changedPrices[`back-${runner.id}-${i}`]
