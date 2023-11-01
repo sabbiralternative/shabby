@@ -1,11 +1,34 @@
 import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
+import { config } from "../../utils/config";
 
-const NormalSection = ({ normal,setShowBets }) => {
+const NormalSection = ({ normal, setShowBets, exposer }) => {
+  const token = localStorage.getItem("token");
   const [previousData, setPreviousData] = useState(normal);
   const [changedPrices, setChangedPrices] = useState({});
   const { setPlaceBetValue } = UseState();
-
+  const laderApi = config?.result?.endpoint?.ladder;
+  const [showLadder, setShowLadder] = useState(false);
+  const [ladderData, setLadderData] = useState([]);
+  let pnlBySelection;
+  if (exposer?.pnlBySelection) {
+    const obj = exposer?.pnlBySelection;
+    pnlBySelection = Object?.values(obj);
+  }
+  const handleLadder = (marketId) => {
+    setShowLadder(!showLadder);
+    fetch(`${laderApi}/${marketId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setLadderData(data.result);
+        }
+      });
+  };
   useEffect(() => {
     const newChangedPrices = {};
     if (normal?.length > 0) {
@@ -41,8 +64,68 @@ const NormalSection = ({ normal,setShowBets }) => {
       setPreviousData(normal);
     }
   }, [normal, previousData]);
+ 
   return (
     <>
+      {showLadder && (
+        <>
+          <div className="fade modal-backdrop show"></div>
+          <div
+            role="dialog"
+            aria-modal="true"
+            className="fade modal show"
+            tabIndex="-1"
+            style={{
+              display: "block",
+            }}
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <div className="modal-title h4">Run Amount</div>
+                  <button
+                    onClick={() => setShowLadder(!showLadder)}
+                    type="button"
+                    className="btn-close"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  <div className="table-responsive">
+                    <table className="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Run</th>
+                          <th className="text-end">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {ladderData?.map(({ exposure, start, end }, i) => {
+                          return (
+                            <tr key={i}>
+                              <td>
+                                {start}-{end}
+                              </td>
+                              <td
+                                className={`text-end ${
+                                  exposure > 0 ? "text-success" : "text-danger"
+                                }`}
+                              >
+                                {exposure}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
       <div className="game-market market-6">
         <div className="market-title">
           <span>{normal[0]?.tabGroupName}</span>
@@ -76,6 +159,10 @@ const NormalSection = ({ normal,setShowBets }) => {
         <div className="market-body" data-title="OPEN">
           <div className="row row10">
             {normal?.map((fancyGame) => {
+              const pnl = pnlBySelection?.filter(
+                (pnl) => pnl?.MarketId === fancyGame?.id
+              );
+
               return (
                 <div key={fancyGame.id} className="col-md-6">
                   <div
@@ -93,6 +180,22 @@ const NormalSection = ({ normal,setShowBets }) => {
                         <span className="market-nation-name">
                           {fancyGame?.name}
                         </span>
+                        {pnl?.map(({ pnl, MarketId }, i) => {
+                          return (
+                            <span
+                              onClick={() => handleLadder(MarketId)}
+                              key={i}
+                              className={`market-book float-end  ${
+                                pnl > 0 ? "text-success" : "text-danger"
+                              }`}
+                              style={{
+                                cursor: "pointer",
+                              }}
+                            >
+                              {pnl}
+                            </span>
+                          );
+                        })}
                       </div>
 
                       {fancyGame?.runners.map((runner) =>
@@ -108,12 +211,14 @@ const NormalSection = ({ normal,setShowBets }) => {
                               eventTypeId: fancyGame?.eventTypeId,
                               betDelay: fancyGame?.betDelay,
                               marketId: fancyGame?.id,
-                              lay:true
+                              lay: true,
+                              name: runner?.name,
+                              isWeak: fancyGame?.isWeak,
                             });
                           };
                           return (
                             <div
-                            onClick={handlePlaceLayBet}
+                              onClick={handlePlaceLayBet}
                               key={i}
                               className={`market-odd-box lay ${
                                 changedPrices[`lay-${runner.id}-${i}`]
@@ -141,12 +246,14 @@ const NormalSection = ({ normal,setShowBets }) => {
                               eventTypeId: fancyGame?.eventTypeId,
                               betDelay: fancyGame?.betDelay,
                               marketId: fancyGame?.id,
-                              back:true
+                              back: true,
+                              name: runner?.name,
+                              isWeak: fancyGame?.isWeak,
                             });
                           };
                           return (
                             <div
-                            onClick={handlePlaceBackBets}
+                              onClick={handlePlaceBackBets}
                               key={i}
                               className={`market-odd-box back ${
                                 changedPrices[`back-${runner.id}-${i}`]

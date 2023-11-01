@@ -46,7 +46,7 @@
       "buttonValue": "https://api7.live/api/exchange/diamond/buttonValue.php",
       "serverTime": "https://cache.api7.live/api/exchnage/diamond/serverTime",
       "approveRules": "https://api7.live/api/approved-rules",
-      "ladder": "https://api7.live/api/exchange/diamond/ladder.php",
+      "ladder": "https://api7.live/api/exchange/diamond/ladder",
       "casinoResult": "https://api7.live/api/exchange/diamond/casinoResult.php",
       "singleResult": "https://api7.live/api/exchange/diamond/singleResult",
       "ourCasino": "https://cache.api7.live/api/exchange/diamond/ourCasino",
@@ -58,6 +58,7 @@
       "accountStatement": "https://api7.live/api/exchange/diamond/accountStatement",
       "settledBets": "https://api7.live/api/exchange/diamond/settledBets",
       "exposure": "https://api7.live/api/exchange/diamond/exposure"
+    
     }
   },
   "success": true

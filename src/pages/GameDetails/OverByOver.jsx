@@ -1,8 +1,36 @@
 import { useEffect, useState } from "react";
+import { config } from "../../utils/config";
+import UseState from "../../hooks/UseState";
 
-const OverByOver = ({ overByOver }) => {
+const OverByOver = ({ overByOver,setShowBets, exposer }) => {
   const [previousData, setPreviousData] = useState(overByOver);
   const [changedPrices, setChangedPrices] = useState({});
+  const laderApi = config?.result?.endpoint?.ladder;
+  const [showLadder, setShowLadder] = useState(false);
+  const [ladderData, setLadderData] = useState([]);
+  const token = localStorage.getItem("token");
+  const { setPlaceBetValue } = UseState();
+  let pnlBySelection;
+  if (exposer?.pnlBySelection) {
+    const obj = exposer?.pnlBySelection;
+    pnlBySelection = Object?.values(obj);
+  }
+
+  const handleLadder = (marketId) => {
+    setShowLadder(!showLadder);
+    fetch(`${laderApi}/${marketId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setLadderData(data.result);
+        }
+      });
+  };
+
   useEffect(() => {
     const newChangedPrices = {};
    if(overByOver.length > 0){
@@ -39,6 +67,65 @@ const OverByOver = ({ overByOver }) => {
   }, [overByOver, previousData]);
   return (
     <>
+     {showLadder && (
+        <>
+          <div className="fade modal-backdrop show"></div>
+          <div
+            role="dialog"
+            aria-modal="true"
+            className="fade modal show"
+            tabIndex="-1"
+            style={{
+              display: "block",
+            }}
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <div className="modal-title h4">Run Amount</div>
+                  <button
+                    onClick={() => setShowLadder(!showLadder)}
+                    type="button"
+                    className="btn-close"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  <div className="table-responsive">
+                    <table className="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Run</th>
+                          <th className="text-end">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {ladderData?.map(({ exposure, start, end }, i) => {
+                          return (
+                            <tr key={i}>
+                              <td>
+                                {start}-{end}
+                              </td>
+                              <td
+                                className={`text-end ${
+                                  exposure > 0 ? "text-success" : "text-danger"
+                                }`}
+                              >
+                                {exposure}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
     <div className="game-market market-6">
       <div className="market-title">
         <span>{overByOver[0]?.tabGroupName}</span>
@@ -72,6 +159,9 @@ const OverByOver = ({ overByOver }) => {
       <div className="market-body" data-title="OPEN">
         <div className="row row10">
           {overByOver?.map((over) => {
+               const pnl = pnlBySelection?.filter(
+                (pnl) => pnl?.MarketId === over?.id
+              );
             return (
               <div key={over.id} className="col-md-6">
                 <div
@@ -89,12 +179,45 @@ const OverByOver = ({ overByOver }) => {
                       <span className="market-nation-name">
                         {over?.name}
                       </span>
+                      {pnl?.map(({ pnl, MarketId }, i) => {
+                          return (
+                            <span
+                              onClick={() => handleLadder(MarketId)}
+                              key={i}
+                              className={`market-book float-end  ${
+                                pnl > 0 ? "text-success" : "text-danger"
+                              }`}
+                              style={{
+                                cursor: "pointer",
+                              }}
+                            >
+                              {pnl}
+                            </span>
+                          );
+                        })}
                     </div>
 
                     {over?.runners.map((runner) =>
                       runner.lay.map((lay, i) => {
+                        const handlePlaceLayBet = () => {
+                          setShowBets(true);
+                          setPlaceBetValue({});
+                          setPlaceBetValue({
+                            price: lay?.line,
+                            side: 1,
+                            selectionId: runner?.id,
+                            btype: over?.btype,
+                            eventTypeId: over?.eventTypeId,
+                            betDelay: over?.betDelay,
+                            marketId: over?.id,
+                            lay: true,
+                            name: runner?.name,
+                            isWeak: over?.isWeak,
+                          });
+                        };
                         return (
                           <div
+                          onClick={handlePlaceLayBet}
                             key={i}
                             className={`market-odd-box lay ${
                               changedPrices[`lay-${runner.id}-${i}`]
@@ -111,8 +234,25 @@ const OverByOver = ({ overByOver }) => {
 
                     {over?.runners?.map((runner) =>
                       runner.back.map((back, i) => {
+                        const handlePlaceBackBets = () => {
+                          setShowBets(true);
+                          setPlaceBetValue({});
+                          setPlaceBetValue({
+                            price: back?.line,
+                            side: 0,
+                            selectionId: runner?.id,
+                            btype: over?.btype,
+                            eventTypeId: over?.eventTypeId,
+                            betDelay: over?.betDelay,
+                            marketId: over?.id,
+                            back: true,
+                            name: runner?.name,
+                            isWeak: over?.isWeak,
+                          });
+                        };
                         return (
                           <div
+                          onClick={handlePlaceBackBets}
                             key={i}
                             className={`market-odd-box back ${
                               changedPrices[`back-${runner.id}-${i}`]

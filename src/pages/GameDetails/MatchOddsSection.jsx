@@ -1,15 +1,35 @@
 import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
+import { config } from "../../utils/config";
 
 const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
+  const token = localStorage.getItem("token");
+  const laderApi = config?.result?.endpoint?.ladder;
   const [previousData, setPreviousData] = useState(match_odds);
   const [changedPrices, setChangedPrices] = useState({});
   const { setPlaceBetValue } = UseState();
+  const [showLadder, setShowLadder] = useState(false);
+  const [ladderData, setLadderData] = useState([]);
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
+
+  const handleLader = (marketId) => {
+    setShowLadder(!showLadder);
+    fetch(`${laderApi}/${marketId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setLadderData(data.result);
+        }
+      });
+  };
 
   useEffect(() => {
     const newChangedPrices = {};
@@ -47,6 +67,65 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
 
   return (
     <>
+      {showLadder && (
+        <>
+          <div className="fade modal-backdrop show"></div>
+          <div
+            role="dialog"
+            aria-modal="true"
+            className="fade modal show"
+            tabIndex="-1"
+            style={{
+              display: "block",
+            }}
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <div className="modal-title h4">Run Amount</div>
+                  <button
+                    onClick={() => setShowLadder(!showLadder)}
+                    type="button"
+                    className="btn-close"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  <div className="table-responsive">
+                    <table className="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Run</th>
+                          <th className="text-end">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {ladderData?.map(({ exposure, start, end }, i) => {
+                          return (
+                            <tr key={i}>
+                              <td>
+                                {start}-{end}
+                              </td>
+                              <td
+                                className={`text-end ${
+                                  exposure > 0 ? "text-success" : "text-danger"
+                                }`}
+                              >
+                                {exposure}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
       {match_odds?.map((item) => {
         return (
           <div key={item.id} className={`game-market market-4`}>
@@ -106,20 +185,26 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
                       <span className="market-nation-name">
                         {runner?.name}{" "}
                       </span>
-                      <div className="market-nation-book">
-                        {pnl?.map(({ pnl }, i) => {
-                          return (
-                            <span
-                              key={i}
-                              className={`market-book ${
-                                pnl > 0 ? "text-success" : "text-danger"
-                              }`}
-                            >
-                              {pnl}
-                            </span>
-                          );
-                        })}
-                      </div>
+                      {pnl && (
+                        <div className="market-nation-book">
+                          {pnl?.map(({ pnl, MarketId }, i) => {
+                            return (
+                              <span
+                                onClick={() => handleLader(MarketId)}
+                                key={i}
+                                className={`market-book ${
+                                  pnl > 0 ? "text-success" : "text-danger"
+                                }`}
+                                style={{
+                                  cursor: "pointer",
+                                }}
+                              >
+                                {pnl}
+                              </span>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
 
                     {runner.back.length === 1 && (
@@ -150,6 +235,8 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
                             betDelay: item?.betDelay,
                             marketId: item?.id,
                             back: true,
+                            name: runner?.name,
+                            isWeak: item?.isWeak,
                           });
                         };
                         return (
@@ -198,6 +285,8 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
                           betDelay: item?.betDelay,
                           marketId: item?.id,
                           lay: true,
+                          name: runner?.name,
+                          isWeak: item?.isWeak,
                         });
                       };
                       return (

@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
+import { config } from "../../utils/config";
 
 const BookmarkerSection = ({ bookmarker,exposer,setShowBets }) => {
+  const token = localStorage.getItem("token");
+  const laderApi = config?.result?.endpoint?.ladder;
+  const [showLadder, setShowLadder] = useState(false);
+  const [ladderData, setLadderData] = useState([]);
   const [previousData, setPreviousData] = useState(bookmarker);
   const [changedPrices, setChangedPrices] = useState({});
   const { setPlaceBetValue } = UseState();
@@ -10,6 +15,23 @@ const BookmarkerSection = ({ bookmarker,exposer,setShowBets }) => {
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
+
+  const handleLader = (marketId) => {
+    setShowLadder(!showLadder);
+    fetch(`${laderApi}/${marketId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setLadderData(data.result);
+        }
+      });
+  };
+
+
   useEffect(() => {
     const newChangedPrices = {};
     bookmarker.forEach((item, index) => {
@@ -45,6 +67,64 @@ const BookmarkerSection = ({ bookmarker,exposer,setShowBets }) => {
   }, [bookmarker, previousData]);
   return (
     <>
+     {showLadder && (
+        <>
+          <div className="fade modal-backdrop show"></div>
+          <div
+            role="dialog"
+            aria-modal="true"
+            className="fade modal show"
+            tabIndex="-1"
+            style={{
+              display: "block",
+            }}
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <div className="modal-title h4">Run Amount</div>
+                  <button
+                    onClick={() => setShowLadder(!showLadder)}
+                    type="button"
+                    className="btn-close"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  <div className="table-responsive">
+                    <table className="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Run</th>
+                          <th className="text-end">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {ladderData?.map(({ exposure, start, end }, i) => {
+                          return (
+                            <tr key={i}>
+                              <td>
+                                {start}-{end}
+                              </td>
+                              <td
+                                className={`text-end ${
+                                  exposure > 0 ? "text-success" : "text-danger"
+                                }`}
+                              >
+                                {exposure}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
       {bookmarker.map((bookmark) => {
         return (
           <div key={bookmark.id} className="game-market market-4">
@@ -94,13 +174,14 @@ const BookmarkerSection = ({ bookmarker,exposer,setShowBets }) => {
                     <div className="market-nation-detail">
                       <span className="market-nation-name">{runner.name} </span>
                       <div className="market-nation-book">
-                        {pnl?.map(({ pnl }, i) => {
+                        {pnl?.map(({ pnl,MarketId }, i) => {
                           return (
                             <span
+                            onClick={() => handleLader(MarketId)}
                               key={i}
                               className={`market-book ${
                                 pnl > 0 ? "text-success" : "text-danger"
-                              }`}
+                              }`} style={{cursor:'pointer'}}
                             >
                               {pnl}
                             </span>
@@ -134,7 +215,9 @@ const BookmarkerSection = ({ bookmarker,exposer,setShowBets }) => {
                             eventTypeId: bookmark?.eventTypeId,
                             betDelay: bookmark?.betDelay,
                             marketId: bookmark?.id,
-                            back:true
+                            back:true,
+                            name:runner?.name,
+                            isWeak:bookmark?.isWeak
                           });
                         };
                         return (
@@ -181,7 +264,9 @@ const BookmarkerSection = ({ bookmarker,exposer,setShowBets }) => {
                             eventTypeId: bookmark?.eventTypeId,
                             betDelay: bookmark?.betDelay,
                             marketId: bookmark?.id,
-                            lay:true
+                            lay:true,
+                            name:runner?.name,
+                            isWeak:bookmark?.isWeak
                           });
                         };
                       return (
