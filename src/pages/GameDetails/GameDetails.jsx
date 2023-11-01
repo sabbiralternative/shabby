@@ -202,7 +202,7 @@ const GameDetails = () => {
 
   /* Increase price bets */
   const handleIncreasePrice = () => {
-    if (price === 1000 || placeBetValue?.isWeak === true) {
+    if (price == 1000 || placeBetValue?.isWeak === true) {
       return;
     } else if (price > 1.0 && price < 2) {
       setPrice((parseFloat(price) + 0.01).toFixed(2));
@@ -223,7 +223,7 @@ const GameDetails = () => {
 
   /* Decrease price bets */
   const handleDecreasePrice = () => {
-    if (price < 1.02 || price > 999 || placeBetValue?.isWeak === true) {
+    if (price < 1.02 || placeBetValue?.isWeak === true) {
       return;
     } else if (price < 2) {
       setPrice((parseFloat(price) - 0.01).toFixed(2));
