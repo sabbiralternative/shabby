@@ -176,6 +176,7 @@ const NormalSection = ({ normal, setShowBets, exposer }) => {
                     }`}
                   >
                     <div className="market-row">
+
                       <div className="market-nation-detail">
                         <span className="market-nation-name">
                           {fancyGame?.name}
@@ -214,8 +215,10 @@ const NormalSection = ({ normal, setShowBets, exposer }) => {
                               lay: true,
                               name: runner?.name,
                               isWeak: fancyGame?.isWeak,
+            
                             });
                           };
+                     
                           return (
                             <div
                               onClick={handlePlaceLayBet}

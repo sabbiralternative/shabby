@@ -239,6 +239,7 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
                             isWeak: item?.isWeak,
                           });
                         };
+                   
                         return (
                           <div
                             onClick={handlePlaceBackBet}

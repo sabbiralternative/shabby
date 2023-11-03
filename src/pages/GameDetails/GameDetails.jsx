@@ -39,7 +39,7 @@ const GameDetails = () => {
   const [totalSize, setTotalSize] = useState("");
   const [myBets, setMyBets] = useState([]);
   const [profit, setProfit] = useState("");
-  const [loader,setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
 
   /* Set price */
   useEffect(() => {
@@ -48,11 +48,16 @@ const GameDetails = () => {
 
   /* Profit */
   useEffect(() => {
-    if (price && totalSize && placeBetValue?.back) {
-      const multiply = price * totalSize
+    if (
+      price &&
+      totalSize &&
+      placeBetValue?.back &&
+      placeBetValue?.btype !== "FANCY"
+    ) {
+      const multiply = price * totalSize;
       setProfit(multiply - totalSize);
     }
-  }, [price, totalSize, placeBetValue?.back]);
+  }, [price, totalSize, placeBetValue?.back, placeBetValue?.btype]);
 
   /* Get game details */
   useEffect(() => {
@@ -107,7 +112,6 @@ const GameDetails = () => {
     setOverByOver(overByOverFilter);
   }, [data]);
 
-
   /* Get video */
   useEffect(() => {
     if (showTv || showMobileTv) {
@@ -129,10 +133,10 @@ const GameDetails = () => {
     }
   }, [eventId, id, showTv, token, accessTokenApi, showMobileTv]);
 
- /* Get exposure data */
-  const {refetch:refetchExposure} = useQuery({
-    queryKey:['exposure'],
-    queryFn:async () =>{
+  /* Get exposure data */
+  const { refetch: refetchExposure } = useQuery({
+    queryKey: ["exposure"],
+    queryFn: async () => {
       const res = await axios.get(`${exposerApi}/${eventId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -143,14 +147,12 @@ const GameDetails = () => {
       if (data.success) {
         setExposer(data.result);
       }
-    }
-  })
-    
-
+    },
+  });
 
   /* Handle bets */
   const handleOrderBets = () => {
-    setLoader(true)
+    setLoader(true);
     fetch(orderApi, {
       method: "POST",
       headers: {
@@ -171,20 +173,18 @@ const GameDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        refetchExposure()
-        refetchCurrentBets()
+        refetchExposure();
+        refetchCurrentBets();
         console.log(data);
-        setLoader(false)
+        setLoader(false);
         setShowBets(false);
       });
   };
 
-
-
   /* Fetch Current Bets */
-  const {refetch:refetchCurrentBets} = useQuery({
-    queryKey:['currentBets'],
-    queryFn: () =>{
+  const { refetch: refetchCurrentBets } = useQuery({
+    queryKey: ["currentBets"],
+    queryFn: () => {
       fetch(`${currentBetsApi}/${eventId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -196,9 +196,8 @@ const GameDetails = () => {
             setMyBets(data?.result);
           }
         });
-    }
-  })
-
+    },
+  });
 
   /* Increase price bets */
   const handleIncreasePrice = () => {
@@ -258,7 +257,7 @@ const GameDetails = () => {
             </li>
             <li className="nav-item">
               <a className="nav-link" data-bs-toggle="tab">
-                Matched Bet {myBets?.length}
+                Matched Bet ({myBets?.length})
               </a>
             </li>
 
@@ -357,7 +356,8 @@ const GameDetails = () => {
               exposer={exposer}
               showBets={showBets}
               setShowBets={setShowBets}
-              id={id} eventId={eventId}
+              id={id}
+              eventId={eventId}
             />
           )}
 
@@ -1262,11 +1262,13 @@ const GameDetails = () => {
                         placeBetValue?.back ? "back" : ""
                       } ${placeBetValue?.lay ? "lay" : ""}`}
                     >
-                      {
-              loader && (
-                <div id="loader-section"><div id="load-inner"><i className="fa fa-spinner fa-spin"></i></div></div> 
-              )
-            }
+                      {loader && (
+                        <div id="loader-section">
+                          <div id="load-inner">
+                            <i className="fa fa-spinner fa-spin"></i>
+                          </div>
+                        </div>
+                      )}
                       <div className="row align-items-end">
                         <div className="col-6">
                           <b>{placeBetValue?.name}</b>
@@ -1415,15 +1417,17 @@ const GameDetails = () => {
               <h4>Place Bet</h4>
             </div>
             <div
-              className={`place-bet-box position-relative ${placeBetValue?.back ? "back" : ""} ${
-                placeBetValue?.lay ? "lay" : ""
-              }`}
+              className={`place-bet-box position-relative ${
+                placeBetValue?.back ? "back" : ""
+              } ${placeBetValue?.lay ? "lay" : ""}`}
             >
-            {
-              loader && (
-                <div id="loader-section"><div id="load-inner"><i className="fa fa-spinner fa-spin"></i></div></div> 
-              )
-            }
+              {loader && (
+                <div id="loader-section">
+                  <div id="load-inner">
+                    <i className="fa fa-spinner fa-spin"></i>
+                  </div>
+                </div>
+              )}
               <div className="place-bet-box-header">
                 <div className="place-bet-for">(Bet for)</div>
                 <div className="place-bet-odds">Odds</div>
@@ -1465,7 +1469,23 @@ const GameDetails = () => {
                     value={totalSize}
                   />
                 </div>
-                <div className="place-bet-profit">{placeBetValue?.back ? profit : totalSize}</div>
+                <div className="place-bet-profit">
+                  {price &&
+                  totalSize &&
+                  placeBetValue?.back &&
+                  placeBetValue?.btype !== "FANCY"
+                    ? profit
+                    : null}
+                  {price &&
+                  totalSize &&
+                  placeBetValue?.lay &&
+                  placeBetValue?.btype !== "FANCY"
+                    ? totalSize
+                    : null}
+                  {price && totalSize && placeBetValue?.btype == "FANCY"
+                    ? 0
+                    : null}
+                </div>
               </div>
               <div className="place-bet-buttons">
                 {buttonValues?.map((buttonVal) => {

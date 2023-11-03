@@ -13,6 +13,12 @@ import ActivityLogs from "../pages/ActivityLogs/ActivityLogs";
 import CurrentBet from "../pages/CurrentBet/CurrentBet";
 import AccountStatement from "../pages/AccountStatement/AccountStatement";
 import GameDetails from '../pages/GameDetails/GameDetails'
+import FantasyGames from '../pages/FantasyGames/FantasyGames'
+import LiveCasino from '../pages/LiveCasino/LiveCasino'
+import OurVirtual from '../pages/OurVirtual/OurVirtual'
+import SlotGames from '../pages/SlotGames/SlotGames'
+import OurCasino from '../pages/OurCasino/OurCasino'
+import Lucky7 from '../pages/OurCasino/Lucky7/Lucky7.jsx'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -65,6 +71,30 @@ const router = createBrowserRouter([
       {
         path: "/account-statement",
         element: <AccountStatement />,
+      },
+      {
+        path: "/fantasy-games",
+        element: <FantasyGames />,
+      },
+      {
+        path: "/live-casino",
+        element: <LiveCasino />,
+      },
+      {
+        path: "/our-virtual",
+        element: <OurVirtual />,
+      },
+      {
+        path: "/slot-games",
+        element: <SlotGames />,
+      },
+      {
+        path: "/our-casino",
+        element: <OurCasino />,
+      },
+      {
+        path: "/diamond/:eventTypeId/:eventId",
+        element: <Lucky7 />,
       },
     ],
   },
