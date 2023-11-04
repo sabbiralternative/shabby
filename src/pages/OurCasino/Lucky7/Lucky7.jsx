@@ -3,19 +3,23 @@ import { config } from "../../../utils/config";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import one from "../../../static/front/img/virtual-casino/1.jpg";
-import seven from '../../../static/front/img/cards/7.png'
-import A from '../../../static/front/img/cards/A.png'
-import two from '../../../static/front/img/cards/2.png'
-import three from '../../../static/front/img/cards/3.png'
-import four from '../../../static/front/img/cards/4.png'
-import five from '../../../static/front/img/cards/5.png'
-import six from '../../../static/front/img/cards/6.png'
-import eight from '../../../static/front/img/cards/8.png'
-import nine from '../../../static/front/img/cards/9.png'
-import ten from '../../../static/front/img/cards/10.png'
-import j from '../../../static/front/img/cards/J.png'
-import q from '../../../static/front/img/cards/Q.png'
-import k from '../../../static/front/img/cards/K.png'
+import seven from "../../../static/front/img/cards/7.png";
+import A from "../../../static/front/img/cards/A.png";
+import two from "../../../static/front/img/cards/2.png";
+import three from "../../../static/front/img/cards/3.png";
+import four from "../../../static/front/img/cards/4.png";
+import five from "../../../static/front/img/cards/5.png";
+import six from "../../../static/front/img/cards/6.png";
+import eight from "../../../static/front/img/cards/8.png";
+import nine from "../../../static/front/img/cards/9.png";
+import ten from "../../../static/front/img/cards/10.png";
+import j from "../../../static/front/img/cards/J.png";
+import q from "../../../static/front/img/cards/Q.png";
+import k from "../../../static/front/img/cards/K.png";
+import UseState from "../../../hooks/UseState";
+import PlaceBets from "../../../components/PlaceBets/PlaceBets.jsx";
+import { useQuery } from "@tanstack/react-query";
+import PlaceBetModal from "../../../components/PlaceBets/PlaceBetModal.jsx";
 
 const Lucky7 = () => {
   const getSingleCasinoApi = config?.result?.endpoint?.accessToken;
@@ -25,6 +29,74 @@ const Lucky7 = () => {
   const { eventId, eventTypeId } = useParams();
   const [url, setUrl] = useState("");
   const [data, setData] = useState([]);
+  const [showBets, setShowBets] = useState(false);
+  const { setPlaceBetValue, placeBetValue } = UseState();
+  const [exposer, setExposer] = useState([]);
+  const [myBets, setMyBets] = useState([]);
+  const exposerApi = config?.result?.endpoint?.exposure;
+  const currentBetsApi = config?.result?.endpoint?.currentBets;
+  const [lowExposure, setLowExposure] = useState([]);
+  const [highExposure, setHighExposure] = useState([]);
+  const [evenExposure, setEvenExposure] = useState([]);
+  const [oddExposure, setOddExposure] = useState([]);
+  const [redExposure, setRedExposure] = useState([]);
+  const [blackExposure, setBlackExposure] = useState([]);
+  const [a23Exposure, setA23Exposure] = useState([]);
+  const [four56Exposure, setFour56Exposure] = useState([]);
+  const [eight910Exposure, setEight910Exposure] = useState([]);
+  const [jqkExposure, setJqkExposure] = useState([]);
+
+
+  let pnlBySelection;
+  if (exposer?.pnlBySelection) {
+    const obj = exposer?.pnlBySelection;
+    pnlBySelection = Object?.values(obj);
+  }
+
+  useEffect(() => {
+    const low = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[0]?.runners[0]?.id
+    );
+    setLowExposure(low);
+    const high = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[0]?.runners[1]?.id
+    );
+    setHighExposure(high)
+    const even = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[1]?.runners[0]?.id
+    );
+    setEvenExposure(even)
+    const odd = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[1]?.runners[1]?.id
+    );
+    setOddExposure(odd)
+    const red = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[2]?.runners[0]?.id
+    );
+    setRedExposure(red)
+    const black = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[2]?.runners[1]?.id
+    );
+    setBlackExposure(black)
+    const a23 = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[3]?.runners[0]?.id
+    );
+    setA23Exposure(a23)
+    const four56 = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[3]?.runners[1]?.id
+    );
+    setFour56Exposure(four56)
+    const eight910 = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[3]?.runners[2]?.id
+    );
+    setEight910Exposure(eight910)
+    const jqk = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[3]?.runners[3]?.id
+    );
+   setJqkExposure(jqk)
+  
+  }, [data]);
+
 
   /* Get video */
   useEffect(() => {
@@ -66,10 +138,49 @@ const Lucky7 = () => {
     const intervalId = setInterval(getGameDetails, interval);
     return () => clearInterval(intervalId);
   }, [token, oddsApi, eventTypeId, eventId, interval]);
-  console.log(data);
+
+  /* Get exposure data */
+  const { refetch: refetchExposure } = useQuery({
+    queryKey: ["exposure"],
+    queryFn: async () => {
+      const res = await axios.get(`${exposerApi}/${eventId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = res.data;
+
+      if (data.success) {
+        setExposer(data.result);
+      }
+    },
+  });
+
+  /* Fetch Current Bets */
+  const { refetch: refetchCurrentBets } = useQuery({
+    queryKey: ["currentBets"],
+    queryFn: () => {
+      fetch(`${currentBetsApi}/${eventId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            setMyBets(data?.result);
+            console.log(data);
+          }
+        });
+    },
+  });
+
   return (
     <>
       <div className="center-container">
+      {showBets && window.innerWidth < 1200 && (
+        <PlaceBetModal placeBetValue={placeBetValue} refetchCurrentBets={refetchCurrentBets} refetchExposure={refetchExposure} setShowBets={setShowBets} showBets={showBets}/>
+      )}
         <div className="casino-page-container lucky7a">
           <div className="casino-header">
             <span className="casino-name">
@@ -90,7 +201,7 @@ const Lucky7 = () => {
                 <div className="nav-link active">Game</div>
               </li>
               <li className="nav-item">
-                <div className="nav-link">Placed Bet (0)</div>
+                <div className="nav-link">Placed Bet ({myBets?.length})</div>
               </li>
             </ul>
             <div className="pe-2">
@@ -121,17 +232,18 @@ const Lucky7 = () => {
                           <div className="flip-card-front">
                             <img src={one} />
                           </div>
-                        ):(
+                        ) : (
                           <div className="flip-card-front">
-                          <img src={one} />
-                        </div>
+                            <img
+                              src={`/src/static/front/img/cards/${data[0]?.indexCard}.jpg`}
+                              alt={`Card`}
+                            />
+                          </div>
                         )}
 
-                     
-                          <div className="flip-card-back">
-                            <img src={`../../../static/front/img/cards/1.jpg`} />
-                          </div>
-                    
+                        <div className="flip-card-back">
+                          <img src={`../../../static/front/img/cards/1.jpg`} />
+                        </div>
 
                         {/* <!-- card html end --> */}
                       </div>
@@ -196,19 +308,51 @@ const Lucky7 = () => {
             </div>
 
             {/* <!-- winner  market start --> */}
-
             <div className="casino-detail">
               <div className="casino-table">
                 <div className="casino-table-full-box">
-                  
                   <div className="lucky7low">
-                    <div className="casino-odds text-center">{data[0]?.runners[0]?.back[0]?.price}</div>
-                    <div className="casino-odds-box back casino-odds-box-theme">
+                    <div className="casino-odds text-center">
+                      {data[0]?.runners[0]?.back[0]?.price}
+                    </div>
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[0]?.runners[0]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[0]?.runners[0]?.id,
+                          btype: data[0]?.btype,
+                          eventTypeId: data[0]?.eventTypeId,
+                          betDelay: data[0]?.betDelay,
+                          marketId: data[0]?.id,
+                          back: true,
+                          name: data[0]?.runners[0]?.name,
+                          isWeak: data[0]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[0]?.status === "OPEN" &&
+                        data[0]?.runners[0]?.status === "ACTIVE"
+                          ? "casino-odds-box back casino-odds-box-theme"
+                          : "casino-odds-box back casino-odds-box-theme suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <span className="casino-odds">Low Card</span>
                     </div>
                     <div className="casino-nation-book text-center">
-                      <span className={`${data[0]?.runners[0]?.back[0]?.size < 0 ?'text-danger':'text-success'}`}>{data[0]?.runners[0]?.back[0]?.size}</span>
+                      <span
+                        className={`${ lowExposure && lowExposure[0]?.pnl
+                          < 0
+                            ? "text-danger"
+                            : "text-success"
+                        }`}
+                      >
+                       
+                    {lowExposure ? lowExposure[0]?.pnl:null}
+                      </span>
                     </div>
                   </div>
                   <div className="lucky7">
@@ -216,14 +360,46 @@ const Lucky7 = () => {
                   </div>
 
                   <div className="lucky7high">
-                    <div className="casino-odds text-center">{data[0]?.runners[1]?.lay[0]?.price}
+                    <div className="casino-odds text-center">
+                      {data[0]?.runners[1]?.back[0]?.price}
                     </div>
-                    <div className="casino-odds-box back casino-odds-box-theme">
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[0]?.runners[1]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[0]?.runners[1]?.id,
+                          btype: data[0]?.btype,
+                          eventTypeId: data[0]?.eventTypeId,
+                          betDelay: data[0]?.betDelay,
+                          marketId: data[0]?.id,
+                          back: true,
+                          name: data[0]?.runners[1]?.name,
+                          isWeak: data[0]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[0]?.status === "OPEN" &&
+                        data[0]?.runners[1]?.status === "ACTIVE"
+                          ? "casino-odds-box back casino-odds-box-theme"
+                          : "casino-odds-box back casino-odds-box-theme suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <span className="casino-odds">High Card</span>
                     </div>
                     <div className="casino-nation-book text-center">
-                    <span className={`${data[0]?.runners[1]?.lay[0]?.size < 0 ?'text-danger':'text-success'}`}>{data[0]?.runners[1]?.lay[0]?.size}</span>
+                      <span
+                        className={`${
+                          lowExposure && highExposure[0]?.pnl < 0
+                            ? "text-danger"
+                            : "text-success"
+                        }`}
+                      >
+                         {highExposure ? highExposure[0]?.pnl:null}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -233,23 +409,93 @@ const Lucky7 = () => {
                       <!-- even odd  market start --> */}
 
                 <div className="casino-table-box mt-3">
-                  <div className="casino-table-left-box" >
+                  <div className="casino-table-left-box">
                     <div className="lucky7odds">
-                      <div className="casino-odds text-center">{data[1]?.runners[0]?.back[0]?.price}</div>
-                      <div className="casino-odds-box back casino-odds-box-theme">
+                      <div className="casino-odds text-center">
+                        {data[1]?.runners[0]?.back[0]?.price}
+                      </div>
+                      <div
+                        onClick={() => {
+                          setShowBets(true);
+                          setPlaceBetValue({});
+                          setPlaceBetValue({
+                            price: data[1]?.runners[0]?.back[0]?.price,
+                            side: 0,
+                            selectionId: data[1]?.runners[0]?.id,
+                            btype: data[1]?.btype,
+                            eventTypeId: data[1]?.eventTypeId,
+                            betDelay: data[1]?.betDelay,
+                            marketId: data[1]?.id,
+                            back: true,
+                            name: data[1]?.runners[0]?.name,
+                            isWeak: data[1]?.isWeak,
+                          });
+                        }}
+                        className={`${
+                          data[1]?.status === "OPEN" &&
+                          data[1]?.runners[0]?.status === "ACTIVE"
+                            ? "casino-odds-box back casino-odds-box-theme"
+                            : "casino-odds-box back casino-odds-box-theme suspended-box"
+                        }`}
+                      >
                         {/* <!-- suspended-box --> */}
-                        
+
                         <span className="casino-odds">Even</span>
                       </div>
-                      <div className="casino-nation-book text-center"></div>
+                      <div className="casino-nation-book text-center">
+                      <span
+                        className={`${
+                          evenExposure && evenExposure[0]?.pnl < 0
+                            ? "text-danger"
+                            : "text-success"
+                        }`}
+                      >
+                         {evenExposure ? evenExposure[0]?.pnl:null}
+                      </span>
+                    </div>
                     </div>
                     <div className="lucky7odds">
-                      <div className="casino-odds text-center">{data[1]?.runners[1]?.lay[0]?.price}</div>
-                      <div className="casino-odds-box back casino-odds-box-theme">
+                      <div className="casino-odds text-center">
+                        {data[1]?.runners[1]?.back[0]?.price}
+                      </div>
+                      <div
+                        onClick={() => {
+                          setShowBets(true);
+                          setPlaceBetValue({});
+                          setPlaceBetValue({
+                            price: data[1]?.runners[1]?.back[0]?.price,
+                            side: 0,
+                            selectionId: data[1]?.runners[1]?.id,
+                            btype: data[1]?.btype,
+                            eventTypeId: data[1]?.eventTypeId,
+                            betDelay: data[1]?.betDelay,
+                            marketId: data[1]?.id,
+                            back: true,
+                            name: data[1]?.runners[1]?.name,
+                            isWeak: data[1]?.isWeak,
+                          });
+                        }}
+                        className={`${
+                          data[1]?.status === "OPEN" &&
+                          data[1]?.runners[1]?.status === "ACTIVE"
+                            ? "casino-odds-box back casino-odds-box-theme"
+                            : "casino-odds-box back casino-odds-box-theme suspended-box"
+                        }`}
+                      >
                         {/* <!-- suspended-box --> */}
                         <span className="casino-odds">Odd</span>
                       </div>
-                      <div className="casino-nation-book text-center"></div>
+                      <div className="casino-nation-book text-center">
+                      <span
+                        className={`${
+                          oddExposure && oddExposure[0]?.pnl < 0
+                            ? "text-danger"
+                            : "text-success"
+                        }`}
+                      >
+                         {oddExposure ? oddExposure[0]?.pnl:null}
+                      </span>
+                    </div>
                     </div>
                   </div>
 
@@ -258,8 +504,33 @@ const Lucky7 = () => {
                   {/* <!-- color  market start --> */}
                   <div className="casino-table-right-box">
                     <div className="lucky7odds">
-                      <div className="casino-odds text-center">{data[2]?.runners[0]?.back[0]?.price}</div>
-                      <div className="casino-odds-box back casino-odds-box-theme">
+                      <div className="casino-odds text-center">
+                        {data[2]?.runners[0]?.back[0]?.price}
+                      </div>
+                      <div
+                        onClick={() => {
+                          setShowBets(true);
+                          setPlaceBetValue({});
+                          setPlaceBetValue({
+                            price: data[2]?.runners[0]?.back[0]?.price,
+                            side: 0,
+                            selectionId: data[2]?.runners[0]?.id,
+                            btype: data[2]?.btype,
+                            eventTypeId: data[2]?.eventTypeId,
+                            betDelay: data[2]?.betDelay,
+                            marketId: data[2]?.id,
+                            back: true,
+                            name: data[2]?.runners[0]?.name,
+                            isWeak: data[2]?.isWeak,
+                          });
+                        }}
+                        className={`${
+                          data[2]?.status === "OPEN" &&
+                          data[2]?.runners[0]?.status === "ACTIVE"
+                            ? "casino-odds-box back casino-odds-box-theme"
+                            : "casino-odds-box back casino-odds-box-theme suspended-box"
+                        }`}
+                      >
                         {/* <!-- suspended-box --> */}
                         <span className="casino-odds">
                           <span className="card-icon ms-1">
@@ -270,11 +541,46 @@ const Lucky7 = () => {
                           </span>
                         </span>
                       </div>
-                      <div className="casino-nation-book text-center"></div>
+                      <div className="casino-nation-book text-center">
+                      <span
+                        className={`${
+                          redExposure && redExposure[0]?.pnl < 0
+                            ? "text-danger"
+                            : "text-success"
+                        }`}
+                      >
+                         {redExposure ? redExposure[0]?.pnl:null}
+                      </span>
+                    </div>
                     </div>
                     <div className="lucky7odds">
-                      <div className="casino-odds text-center">{data[2]?.runners[1]?.lay[0]?.price}</div>
-                      <div className="casino-odds-box back casino-odds-box-theme">
+                      <div className="casino-odds text-center">
+                        {data[2]?.runners[1]?.back[0]?.price}
+                      </div>
+                      <div
+                        onClick={() => {
+                          setShowBets(true);
+                          setPlaceBetValue({});
+                          setPlaceBetValue({
+                            price: data[2]?.runners[1]?.back[0]?.price,
+                            side: 0,
+                            selectionId: data[2]?.runners[1]?.id,
+                            btype: data[2]?.btype,
+                            eventTypeId: data[2]?.eventTypeId,
+                            betDelay: data[2]?.betDelay,
+                            marketId: data[2]?.id,
+                            back: true,
+                            name: data[2]?.runners[1]?.name,
+                            isWeak: data[2]?.isWeak,
+                          });
+                        }}
+                        className={`${
+                          data[2]?.status === "OPEN" &&
+                          data[2]?.runners[1]?.status === "ACTIVE"
+                            ? "casino-odds-box back casino-odds-box-theme"
+                            : "casino-odds-box back casino-odds-box-theme suspended-box"
+                        }`}
+                      >
                         {/* <!-- suspended-box --> */}
                         <span className="casino-odds">
                           <span className="card-icon ms-1">
@@ -285,7 +591,17 @@ const Lucky7 = () => {
                           </span>
                         </span>
                       </div>
-                      <div className="casino-nation-book text-center"></div>
+                      <div className="casino-nation-book text-center">
+                      <span
+                        className={`${
+                          blackExposure && blackExposure[0]?.pnl < 0
+                            ? "text-danger"
+                            : "text-success"
+                        }`}
+                      >
+                         {blackExposure ? blackExposure[0]?.pnl:null}
+                      </span>
+                    </div>
                     </div>
                   </div>
                 </div>
@@ -296,8 +612,33 @@ const Lucky7 = () => {
 
                 <div className="casino-table-box mt-3">
                   <div className="lucky7cards">
-                    <div className="casino-odds w-100 text-center">{data[3]?.runners[0]?.back[0]?.price}</div>
-                    <div className="card-odd-box-container">
+                    <div className="casino-odds w-100 text-center">
+                      {data[3]?.runners[0]?.back[0]?.price}
+                    </div>
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[3]?.runners[0]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[3]?.runners[0]?.id,
+                          btype: data[3]?.btype,
+                          eventTypeId: data[3]?.eventTypeId,
+                          betDelay: data[3]?.betDelay,
+                          marketId: data[3]?.id,
+                          back: true,
+                          name: data[3]?.runners[0]?.name,
+                          isWeak: data[3]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[3]?.status === "OPEN" &&
+                        data[3]?.runners[0]?.status === "ACTIVE"
+                          ? "card-odd-box-container"
+                          : "card-odd-box-container suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <div className="card-odd-box">
                         <div className="">
@@ -315,11 +656,46 @@ const Lucky7 = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="casino-nation-book text-center w-100"></div>
+                    <div className="casino-nation-book text-center  w-100">
+                      <span
+                        className={`${
+                          a23Exposure && a23Exposure[0]?.pnl < 0
+                            ? "text-danger"
+                            : "text-success"
+                        }`}
+                      >
+                         { a23Exposure ? a23Exposure[0]?.pnl:null}
+                      </span>
+                    </div>
                   </div>
                   <div className="lucky7cards">
-                    <div className="casino-odds w-100 text-center">{data[3]?.runners[1]?.back[0]?.price}</div>
-                    <div className="card-odd-box-container">
+                    <div className="casino-odds w-100 text-center">
+                      {data[3]?.runners[1]?.back[0]?.price}
+                    </div>
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[3]?.runners[1]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[3]?.runners[1]?.id,
+                          btype: data[3]?.btype,
+                          eventTypeId: data[3]?.eventTypeId,
+                          betDelay: data[3]?.betDelay,
+                          marketId: data[3]?.id,
+                          back: true,
+                          name: data[3]?.runners[1]?.name,
+                          isWeak: data[3]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[3]?.status === "OPEN" &&
+                        data[3]?.runners[1]?.status === "ACTIVE"
+                          ? "card-odd-box-container"
+                          : "card-odd-box-container suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <div className="card-odd-box">
                         <div className="">
@@ -337,11 +713,46 @@ const Lucky7 = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="casino-nation-book text-center w-100"></div>
+                    <div className="casino-nation-book text-center  w-100">
+                      <span
+                        className={`${
+                          four56Exposure && four56Exposure[0]?.pnl < 0
+                            ? "text-danger"
+                            : "text-success"
+                        }`}
+                      >
+                         { four56Exposure ? four56Exposure[0]?.pnl:null}
+                      </span>
+                    </div>
                   </div>
                   <div className="lucky7cards">
-                    <div className="casino-odds w-100 text-center">{data[3]?.runners[2]?.back[0]?.price}</div>
-                    <div className="card-odd-box-container">
+                    <div className="casino-odds w-100 text-center">
+                      {data[3]?.runners[2]?.back[0]?.price}
+                    </div>
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[3]?.runners[2]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[3]?.runners[2]?.id,
+                          btype: data[3]?.btype,
+                          eventTypeId: data[3]?.eventTypeId,
+                          betDelay: data[3]?.betDelay,
+                          marketId: data[3]?.id,
+                          back: true,
+                          name: data[3]?.runners[2]?.name,
+                          isWeak: data[3]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[3]?.status === "OPEN" &&
+                        data[3]?.runners[2]?.status === "ACTIVE"
+                          ? "card-odd-box-container"
+                          : "card-odd-box-container suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <div className="card-odd-box">
                         <div className="">
@@ -359,11 +770,46 @@ const Lucky7 = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="casino-nation-book text-center w-100"></div>
+                    <div className="casino-nation-book text-center  w-100">
+                      <span
+                        className={`${
+                          eight910Exposure && eight910Exposure[0]?.pnl < 0
+                            ? "text-danger"
+                            : "text-success"
+                        }`}
+                      >
+                         { eight910Exposure ? eight910Exposure[0]?.pnl:null}
+                      </span>
+                    </div>
                   </div>
                   <div className="lucky7cards">
-                    <div className="casino-odds w-100 text-center">{data[3]?.runners[3]?.back[0]?.price}</div>
-                    <div className="card-odd-box-container">
+                    <div className="casino-odds w-100 text-center">
+                      {data[3]?.runners[3]?.back[0]?.price}
+                    </div>
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[3]?.runners[3]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[3]?.runners[3]?.id,
+                          btype: data[3]?.btype,
+                          eventTypeId: data[3]?.eventTypeId,
+                          betDelay: data[3]?.betDelay,
+                          marketId: data[3]?.id,
+                          back: true,
+                          name: data[3]?.runners[3]?.name,
+                          isWeak: data[3]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[3]?.status === "OPEN" &&
+                        data[3]?.runners[3]?.status === "ACTIVE"
+                          ? "card-odd-box-container"
+                          : "card-odd-box-container suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <div className="card-odd-box">
                         <div className="">
@@ -381,7 +827,17 @@ const Lucky7 = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="casino-nation-book text-center w-100"></div>
+                    <div className="casino-nation-book text-center  w-100">
+                      <span
+                        className={`${
+                         jqkExposure && jqkExposure[0]?.pnl < 0
+                            ? "text-danger"
+                            : "text-success"
+                        }`}
+                      >
+                         { jqkExposure ? jqkExposure[0]?.pnl:null}
+                      </span>
+                    </div>
                   </div>
                 </div>
                 {/* 
@@ -390,93 +846,394 @@ const Lucky7 = () => {
                       <!-- card  market start --> */}
 
                 <div className="casino-table-full-box lucky7acards mt-3">
-                  <div className="casino-odds w-100 text-center">12</div>
+                  <div className="casino-odds w-100 text-center">
+                    {data[4]?.runners[0]?.back[0]?.price}
+                  </div>
                   <div className="card-odd-box">
-                    <div className="">
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[4]?.runners[0]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[4]?.runners[0]?.id,
+                          btype: data[4]?.btype,
+                          eventTypeId: data[4]?.eventTypeId,
+                          betDelay: data[4]?.betDelay,
+                          marketId: data[4]?.id,
+                          back: true,
+                          name: data[4]?.runners[0]?.name,
+                          isWeak: data[4]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[4]?.status === "OPEN" &&
+                        data[4]?.runners[0]?.status === "ACTIVE"
+                          ? ""
+                          : "suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <img src={A} />
                     </div>
                     <div className="casino-nation-book"></div>
                   </div>
                   <div className="card-odd-box">
-                    <div className="">
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[4]?.runners[1]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[4]?.runners[1]?.id,
+                          btype: data[4]?.btype,
+                          eventTypeId: data[4]?.eventTypeId,
+                          betDelay: data[4]?.betDelay,
+                          marketId: data[4]?.id,
+                          back: true,
+                          name: data[4]?.runners[1]?.name,
+                          isWeak: data[4]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[4]?.status === "OPEN" &&
+                        data[4]?.runners[1]?.status === "ACTIVE"
+                          ? ""
+                          : "suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <img src={two} />
                     </div>
                     <div className="casino-nation-book"></div>
                   </div>
                   <div className="card-odd-box">
-                    <div className="">
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[4]?.runners[2]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[4]?.runners[2]?.id,
+                          btype: data[4]?.btype,
+                          eventTypeId: data[4]?.eventTypeId,
+                          betDelay: data[4]?.betDelay,
+                          marketId: data[4]?.id,
+                          back: true,
+                          name: data[4]?.runners[2]?.name,
+                          isWeak: data[4]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[4]?.status === "OPEN" &&
+                        data[4]?.runners[2]?.status === "ACTIVE"
+                          ? ""
+                          : "suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <img src={three} />
                     </div>
                     <div className="casino-nation-book"></div>
                   </div>
                   <div className="card-odd-box">
-                    <div className="">
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[4]?.runners[3]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[4]?.runners[3]?.id,
+                          btype: data[4]?.btype,
+                          eventTypeId: data[4]?.eventTypeId,
+                          betDelay: data[4]?.betDelay,
+                          marketId: data[4]?.id,
+                          back: true,
+                          name: data[4]?.runners[3]?.name,
+                          isWeak: data[4]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[4]?.status === "OPEN" &&
+                        data[4]?.runners[3]?.status === "ACTIVE"
+                          ? ""
+                          : "suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <img src={four} />
                     </div>
                     <div className="casino-nation-book"></div>
                   </div>
                   <div className="card-odd-box">
-                    <div className="">
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[4]?.runners[4]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[4]?.runners[4]?.id,
+                          btype: data[4]?.btype,
+                          eventTypeId: data[4]?.eventTypeId,
+                          betDelay: data[4]?.betDelay,
+                          marketId: data[4]?.id,
+                          back: true,
+                          name: data[4]?.runners[4]?.name,
+                          isWeak: data[4]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[4]?.status === "OPEN" &&
+                        data[4]?.runners[4]?.status === "ACTIVE"
+                          ? ""
+                          : "suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <img src={five} />
                     </div>
                     <div className="casino-nation-book"></div>
                   </div>
                   <div className="card-odd-box">
-                    <div className="">
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[4]?.runners[5]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[4]?.runners[5]?.id,
+                          btype: data[4]?.btype,
+                          eventTypeId: data[4]?.eventTypeId,
+                          betDelay: data[4]?.betDelay,
+                          marketId: data[4]?.id,
+                          back: true,
+                          name: data[4]?.runners[5]?.name,
+                          isWeak: data[4]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[4]?.status === "OPEN" &&
+                        data[4]?.runners[5]?.status === "ACTIVE"
+                          ? ""
+                          : "suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <img src={six} />
                     </div>
                     <div className="casino-nation-book"></div>
                   </div>
                   <div className="card-odd-box">
-                    <div className="">
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[4]?.runners[6]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[4]?.runners[6]?.id,
+                          btype: data[4]?.btype,
+                          eventTypeId: data[4]?.eventTypeId,
+                          betDelay: data[4]?.betDelay,
+                          marketId: data[4]?.id,
+                          back: true,
+                          name: data[4]?.runners[6]?.name,
+                          isWeak: data[4]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[4]?.status === "OPEN" &&
+                        data[4]?.runners[6]?.status === "ACTIVE"
+                          ? ""
+                          : "suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <img src={seven} />
                     </div>
                     <div className="casino-nation-book"></div>
                   </div>
                   <div className="card-odd-box">
-                    <div className="">
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[4]?.runners[7]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[4]?.runners[7]?.id,
+                          btype: data[4]?.btype,
+                          eventTypeId: data[4]?.eventTypeId,
+                          betDelay: data[4]?.betDelay,
+                          marketId: data[4]?.id,
+                          back: true,
+                          name: data[4]?.runners[7]?.name,
+                          isWeak: data[4]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[4]?.status === "OPEN" &&
+                        data[4]?.runners[7]?.status === "ACTIVE"
+                          ? ""
+                          : "suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <img src={eight} />
                     </div>
                     <div className="casino-nation-book"></div>
                   </div>
                   <div className="card-odd-box">
-                    <div className="">
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[4]?.runners[8]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[4]?.runners[8]?.id,
+                          btype: data[4]?.btype,
+                          eventTypeId: data[4]?.eventTypeId,
+                          betDelay: data[4]?.betDelay,
+                          marketId: data[4]?.id,
+                          back: true,
+                          name: data[4]?.runners[8]?.name,
+                          isWeak: data[4]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[4]?.status === "OPEN" &&
+                        data[4]?.runners[8]?.status === "ACTIVE"
+                          ? ""
+                          : "suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <img src={nine} />
                     </div>
                     <div className="casino-nation-book"></div>
                   </div>
                   <div className="card-odd-box">
-                    <div className="">
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[4]?.runners[9]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[4]?.runners[9]?.id,
+                          btype: data[4]?.btype,
+                          eventTypeId: data[4]?.eventTypeId,
+                          betDelay: data[4]?.betDelay,
+                          marketId: data[4]?.id,
+                          back: true,
+                          name: data[4]?.runners[9]?.name,
+                          isWeak: data[4]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[4]?.status === "OPEN" &&
+                        data[4]?.runners[9]?.status === "ACTIVE"
+                          ? ""
+                          : "suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <img src={ten} />
                     </div>
                     <div className="casino-nation-book"></div>
                   </div>
                   <div className="card-odd-box">
-                    <div className="">
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[4]?.runners[10]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[4]?.runners[10]?.id,
+                          btype: data[4]?.btype,
+                          eventTypeId: data[4]?.eventTypeId,
+                          betDelay: data[4]?.betDelay,
+                          marketId: data[4]?.id,
+                          back: true,
+                          name: data[4]?.runners[10]?.name,
+                          isWeak: data[4]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[4]?.status === "OPEN" &&
+                        data[4]?.runners[10]?.status === "ACTIVE"
+                          ? ""
+                          : "suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <img src={j} />
                     </div>
                     <div className="casino-nation-book"></div>
                   </div>
                   <div className="card-odd-box">
-                    <div className="">
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[4]?.runners[11]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[4]?.runners[11]?.id,
+                          btype: data[4]?.btype,
+                          eventTypeId: data[4]?.eventTypeId,
+                          betDelay: data[4]?.betDelay,
+                          marketId: data[4]?.id,
+                          back: true,
+                          name: data[4]?.runners[11]?.name,
+                          isWeak: data[4]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[4]?.status === "OPEN" &&
+                        data[4]?.runners[11]?.status === "ACTIVE"
+                          ? ""
+                          : "suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <img src={q} />
                     </div>
                     <div className="casino-nation-book"></div>
                   </div>
                   <div className="card-odd-box">
-                    <div className="">
+                    <div
+                      onClick={() => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: data[4]?.runners[12]?.back[0]?.price,
+                          side: 0,
+                          selectionId: data[4]?.runners[12]?.id,
+                          btype: data[4]?.btype,
+                          eventTypeId: data[4]?.eventTypeId,
+                          betDelay: data[4]?.betDelay,
+                          marketId: data[4]?.id,
+                          back: true,
+                          name: data[4]?.runners[12]?.name,
+                          isWeak: data[4]?.isWeak,
+                        });
+                      }}
+                      className={`${
+                        data[4]?.status === "OPEN" &&
+                        data[4]?.runners[12]?.status === "ACTIVE"
+                          ? ""
+                          : "suspended-box"
+                      }`}
+                    >
                       {/* <!-- suspended-box --> */}
                       <img src={k} />
                     </div>
@@ -532,12 +1289,24 @@ const Lucky7 = () => {
         </div>
       </div>
       <div className="sidebar right-sidebar casino-right-sidebar">
+        {/* Place bet start */}
+        {showBets && window.innerWidth > 1199 && (
+          <PlaceBets
+            placeBetValue={placeBetValue}
+            showBets={showBets}
+            setShowBets={setShowBets}
+            refetchCurrentBets={refetchCurrentBets}
+            refetchExposure={refetchExposure}
+          />
+        )}
+        {/* Place bet end */}
         <div className="sidebar-box my-bet-container">
           <div className="sidebar-title">
             <h4>My Bet</h4>
           </div>
+
           <div className="my-bets">
-            <div className="table-responsive">
+            <div className="table-responsive ">
               <table className="table">
                 <thead>
                   <tr>
@@ -546,7 +1315,23 @@ const Lucky7 = () => {
                     <th className="text-end">Stake</th>
                   </tr>
                 </thead>
-                <tbody></tbody>
+
+                {myBets.length > 0 && Array.isArray(myBets) && (
+                  <tbody>
+                    {myBets?.map(({ nation, userRate, amount, betType }, i) => {
+                      return (
+                        <tr
+                          key={i}
+                          className={`${betType === "Lay" ? "lay" : "back "}`}
+                        >
+                          <td>{nation}</td>
+                          <td className="text-end">{userRate}</td>
+                          <td className="text-end">{amount}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                )}
               </table>
             </div>
           </div>

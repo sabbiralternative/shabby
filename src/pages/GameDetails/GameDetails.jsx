@@ -1312,7 +1312,23 @@ const GameDetails = () => {
                           </button>
                         </div>
                         <div className="col-4 text-center pt-2">
-                          <span>188</span>
+                          <span>
+                          {price &&
+                  totalSize &&
+                  placeBetValue?.back &&
+                  placeBetValue?.btype !== "FANCY"
+                    ? profit
+                    : null}
+                  {price &&
+                  totalSize &&
+                  placeBetValue?.lay &&
+                  placeBetValue?.btype !== "FANCY"
+                    ? totalSize
+                    : null}
+                  {price && totalSize && placeBetValue?.btype == "FANCY"
+                    ? 0
+                    : null}
+                          </span>
                         </div>
                       </div>
                       <div className="place-bet-buttons mt-2">
