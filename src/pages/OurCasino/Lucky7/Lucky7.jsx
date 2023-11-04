@@ -132,8 +132,8 @@ const Lucky7 = () => {
       }
     };
     getGameDetails();
-    // const intervalId = setInterval(getGameDetails, interval);
-    // return () => clearInterval(intervalId);
+    const intervalId = setInterval(getGameDetails, interval);
+    return () => clearInterval(intervalId);
   }, [token, oddsApi, eventTypeId, eventId, interval]);
 
   /* Get exposure data */
@@ -847,7 +847,7 @@ const Lucky7 = () => {
 
 
 
-                      
+
                       <!-- card  market start --> */}
 
                 <div className="casino-table-full-box lucky7acards mt-3">
