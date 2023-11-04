@@ -167,6 +167,7 @@ const Lucky7 = () => {
           if (data.success) {
             setMyBets(data?.result);
             console.log(data);
+           
           }
         });
     },
@@ -238,15 +239,15 @@ const Lucky7 = () => {
                         ) : (
                           <div className="flip-card-front">
                             <img
-                              src={`/src/static/front/img/cards/${data[0]?.indexCard}.jpg`}
+                              src={`/cards/${data[0]?.indexCard[0]}.jpg`}
                               alt={`Card`}
                             />
                           </div>
                         )}
 
-                        <div className="flip-card-back">
+                        {/* <div className="flip-card-back">
                           <img src={`../../../static/front/img/cards/1.jpg`} />
-                        </div>
+                        </div> */}
 
                         {/* <!-- card html end --> */}
                       </div>
@@ -858,6 +859,7 @@ const Lucky7 = () => {
                     const pnl = pnlBySelection?.filter(
                       (pnl) => pnl?.RunnerId === runner?.id
                     );
+                  
                     return (
                       <div key={i} className="card-odd-box">
                         <div
@@ -886,7 +888,7 @@ const Lucky7 = () => {
                         >
                           {/* <!-- suspended-box --> */}
                           <img
-                            src={`/src/static/front/img/cards/${runner?.name}.png`}
+                            src={`/cards/${runner?.name}.png`}
                           />
                         </div>
 
