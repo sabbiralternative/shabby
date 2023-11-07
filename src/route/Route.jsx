@@ -18,7 +18,7 @@ import LiveCasino from '../pages/LiveCasino/LiveCasino'
 import OurVirtual from '../pages/OurVirtual/OurVirtual'
 import SlotGames from '../pages/SlotGames/SlotGames'
 import OurCasino from '../pages/OurCasino/OurCasino'
-import Lucky7 from '../pages/OurCasino/Lucky7/Lucky7.jsx'
+import PlaceBetDiamond from '../pages/OurCasino/PlaceBetDiamond/PlaceBetDiamond'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -93,8 +93,8 @@ const router = createBrowserRouter([
         element: <OurCasino />,
       },
       {
-        path: "/diamond/:eventTypeId/:eventId",
-        element: <Lucky7 />,
+        path: "/our-casino/:slug",
+        element: <PlaceBetDiamond />,
       },
     ],
   },

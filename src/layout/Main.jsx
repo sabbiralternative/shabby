@@ -38,7 +38,7 @@ const Main = () => {
               ? "list-page slot-page"
               : ""
           } 
-        ${relativeURL.includes("/diamond/") ? "casino-page" : ""}
+        ${relativeURL.includes("/our-casino/") ? "casino-page" : ""} report-page
           `}
         >
           <Outlet />

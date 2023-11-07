@@ -21,7 +21,6 @@ const OurCasino = () => {
     getAuraCasino();
   }, [diamondCasinoUrl, token]);
 
-
   return (
     <div className="center-container">
       <div className="casino-tab-list d-xl-none">
