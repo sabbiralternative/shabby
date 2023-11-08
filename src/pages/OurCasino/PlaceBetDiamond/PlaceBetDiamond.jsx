@@ -32,6 +32,8 @@ import DiamondHeader from "../DiamondHeader/DiamondHeader.jsx";
 import Card from "../Card/Card.jsx";
 import DragonOneDay from "../DragonOneDay/DragonOneDay.jsx";
 import DTL20 from "../DTL20/DTL20.jsx";
+import OneCardOneDay from "../OneCardOneDay/OneCardOneDay.jsx";
+import OneCard20 from "../OneCard20/OneCard20.jsx";
 
 const PlaceBetDiamond = () => {
   const getSingleCasinoApi = config?.result?.endpoint?.accessToken;
@@ -80,20 +82,88 @@ const PlaceBetDiamond = () => {
   const [eight910Exposure, setEight910Exposure] = useState([]);
   /* data[3]?.runners[3] exposure */
   const [jqkExposure, setJqkExposure] = useState([]);
-    /* data[4]?.runners[0] exposure */
+  /* data[4]?.runners[0] exposure */
   const [fourIndexZeroRunnersEx, setFourIndexZeroEx] = useState([]);
-    /* data[4]?.runners[1] exposure */
+  /* data[4]?.runners[1] exposure */
   const [fourIndexOneRunnersEx, setFourIndexOneEx] = useState([]);
-    /* data[5]?.runners[0] exposure */
+  /* data[5]?.runners[0] exposure */
   const [fiveIndexZeroRunnersEx, setFiveIndexZeroEx] = useState([]);
-    /* data[5]?.runners[1] exposure */
+  /* data[5]?.runners[1] exposure */
   const [fiveIndexOneRunnersEx, setFiveIndexOneEx] = useState([]);
-    /* data[6]?.runners[0] exposure */
+  /* data[6]?.runners[0] exposure */
   const [sixIndexZeroRunnersEx, setSixIndexZeroEx] = useState([]);
-    /* data[6]?.runners[0] exposure */
+  /* data[6]?.runners[0] exposure */
   const [sixIndexOneRunnersEx, setSixIndexOneEx] = useState([]);
-    /* data[7]?.runners[0] exposure */
+  /* data[7]?.runners[0] exposure */
   const [sevenIndexZeroRunnersEx, setSevenIndexZeroEx] = useState([]);
+  /* data[7]?.runners[1] exposure */
+  const [sevenIndexOneRunnersEx, setSevenIndexOneEx] = useState([]);
+  /* data[7]?.runners[2] exposure */
+  const [sevenIndexTwoRunnersEx, setSevenIndexTwoEx] = useState([]);
+  /* data[7]?.runners[3] exposure */
+  const [sevenIndexThreeRunnersEx, setSevenIndexThreeEx] = useState([]);
+  /* data[7]?.runners[4] exposure */
+  const [sevenIndexFourRunnersEx, setSevenIndexFourEx] = useState([]);
+  /* data[7]?.runners[5] exposure */
+  const [sevenIndexFiveRunnersEx, setSevenIndexFiveEx] = useState([]);
+  /* data[7]?.runners[6] exposure */
+  const [sevenIndexSixRunnersEx, setSevenIndexSixEx] = useState([]);
+  /* data[7]?.runners[7] exposure */
+  const [sevenIndexSevenRunnersEx, setSevenIndexSevenEx] = useState([]);
+  /* data[7]?.runners[8] exposure */
+  const [sevenIndexEightRunnersEx, setSevenIndexEightEx] = useState([]);
+  /* data[7]?.runners[9] exposure */
+  const [sevenIndexNineRunnersEx, setSevenIndexNineEx] = useState([]);
+  /* data[7]?.runners[10] exposure */
+  const [sevenIndexTenRunnersEx, setSevenIndexTenEx] = useState([]);
+  /* data[7]?.runners[11] exposure */
+  const [sevenIndexElevenRunnersEx, setSevenIndexElevenEx] = useState([]);
+  /* data[7]?.runners[12] exposure */
+  const [sevenIndexTwelveRunnersEx, setSevenIndexTwelveEx] = useState([]);
+  /* data[8]?.runners[0] exposure */
+  const [eightIndexZeroRunnersEx, setEightIndexZeroEx] = useState([]);
+  /* data[8]?.runners[1] exposure */
+  const [eightIndexOneRunnersEx, setEightIndexOneEx] = useState([]);
+  /* data[8]?.runners[2] exposure */
+  const [eightIndexTwoRunnersEx, setEightIndexTwoEx] = useState([]);
+
+  /* data[8]?.runners[2] exposure */
+  const [eightIndexThreeRunnersEx, setEightIndexThreeEx] = useState([]);
+  /* data[8]?.runners[2] exposure */
+  const [eightIndexFourRunnersEx, setEightIndexFourEx] = useState([]);
+
+  /* data[8]?.runners[2] exposure */
+  const [eightIndexFiveRunnersEx, setEightIndexFiveEx] = useState([]);
+  /* data[8]?.runners[2] exposure */
+  const [eightIndexSixRunnersEx, setEightIndexSixEx] = useState([]);
+  /* data[8]?.runners[2] exposure */
+  const [eightIndexSevenRunnersEx, setEightIndexSevenEx] = useState([]);
+  /* data[8]?.runners[2] exposure */
+  const [eightIndexEightRunnersEx, setEightIndexEightEx] = useState([]);
+  /* data[8]?.runners[2] exposure */
+  const [eightIndexNineRunnersEx, setEightIndexNineEx] = useState([]);
+  /* data[8]?.runners[2] exposure */
+  const [eightIndexTenRunnersEx, setEightIndexTenEx] = useState([]);
+  /* data[8]?.runners[2] exposure */
+  const [eightIndexElevenRunnersEx, setEightIndexElevenEx] = useState([]);
+  /* data[8]?.runners[2] exposure */
+  const [eightIndexTwelveRunnersEx, setEightIndexTwelveEx] = useState([]);
+  /* data[9]?.runners[0] exposure */
+  const [nineIndexZeroRunnersEx, setNineIndexZeroEx] = useState([]);
+  /* data[9]?.runners[1] exposure */
+  const [nineIndexOneRunnersEx, setNineIndexOneEx] = useState([]);
+  /* data[9]?.runners[2] exposure */
+  const [nineIndexTwoRunnersEx, setNineIndexTwoEx] = useState([]);
+  const [nineIndexThreeRunnersEx, setNineIndexThreeEx] = useState([]);
+  const [nineIndexFourRunnersEx, setNineIndexFourEx] = useState([]);
+  const [nineIndexFiveRunnersEx, setNineIndexFiveEx] = useState([]);
+  const [nineIndexSixRunnersEx, setNineIndexSixEx] = useState([]);
+  const [nineIndexSevenRunnersEx, setNineIndexSevenEx] = useState([]);
+  const [nineIndexEightRunnersEx, setNineIndexEightEx] = useState([]);
+  const [nineIndexNineRunnersEx, setNineIndexNineEx] = useState([]);
+  const [nineIndexTenRunnersEx, setNineIndexTenEx] = useState([]);
+  const [nineIndexElevenRunnersEx, setNineIndexElevenEx] = useState([]);
+  const [nineIndexTwelveRunnersEx, setNineIndexTwelveEx] = useState([]);
 
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
@@ -101,6 +171,7 @@ const PlaceBetDiamond = () => {
     pnlBySelection = Object?.values(obj);
   }
 
+  console.log(pnlBySelection);
   useEffect(() => {
     /* data[0]?.runners[0] exposure */
     const low = pnlBySelection?.filter(
@@ -186,44 +257,225 @@ const PlaceBetDiamond = () => {
     );
     setJqkExposure(jqk);
 
-       /* data[4]?.runners[0] exposure */
-       const fourIndexZeroExp = pnlBySelection?.filter(
-        (pnl) => pnl?.RunnerId == data[4]?.runners[0]?.id
-      );
-      setFourIndexZeroEx(fourIndexZeroExp);
+    /* data[4]?.runners[0] exposure */
+    const fourIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[4]?.runners[0]?.id
+    );
+    setFourIndexZeroEx(fourIndexZeroExp);
 
-       /* data[4]?.runners[1] exposure */
-       const fourIndexOneExp = pnlBySelection?.filter(
-        (pnl) => pnl?.RunnerId == data[4]?.runners[1]?.id
-      );
-      setFourIndexOneEx(fourIndexOneExp);
+    /* data[4]?.runners[1] exposure */
+    const fourIndexOneExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[4]?.runners[1]?.id
+    );
+    setFourIndexOneEx(fourIndexOneExp);
 
-       /* data[5]?.runners[0] exposure */
-       const fiveIndexZeroExp = pnlBySelection?.filter(
-        (pnl) => pnl?.RunnerId == data[5]?.runners[0]?.id
-      );
-      setFiveIndexZeroEx(fiveIndexZeroExp);
+    /* data[5]?.runners[0] exposure */
+    const fiveIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[5]?.runners[0]?.id
+    );
+    setFiveIndexZeroEx(fiveIndexZeroExp);
 
-       /* data[5]?.runners[1] exposure */
-       const fiveIndexOneExp = pnlBySelection?.filter(
-        (pnl) => pnl?.RunnerId == data[5]?.runners[1]?.id
-      );
-      setFiveIndexOneEx(fiveIndexOneExp);
-       /* data[6]?.runners[0] exposure */
-       const sixIndexZeroExp = pnlBySelection?.filter(
-        (pnl) => pnl?.RunnerId == data[6]?.runners[0]?.id
-      );
-      setSixIndexZeroEx(sixIndexZeroExp);
-       /* data[6]?.runners[1] exposure */
-       const sixIndexOneExp = pnlBySelection?.filter(
-        (pnl) => pnl?.RunnerId == data[6]?.runners[1]?.id
-      );
-      setSixIndexOneEx(sixIndexOneExp);
-       /* data[7]?.runners[0] exposure */
-       const sevenIndexZeroExp = pnlBySelection?.filter(
-        (pnl) => pnl?.RunnerId == data[7]?.runners[0]?.id
-      );
-      setSevenIndexZeroEx(sevenIndexZeroExp);
+    /* data[5]?.runners[1] exposure */
+    const fiveIndexOneExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[5]?.runners[1]?.id
+    );
+    setFiveIndexOneEx(fiveIndexOneExp);
+
+    /* data[6]?.runners[0] exposure */
+    const sixIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[6]?.runners[0]?.id
+    );
+    setSixIndexZeroEx(sixIndexZeroExp);
+    /* data[6]?.runners[1] exposure */
+    const sixIndexOneExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[6]?.runners[1]?.id
+    );
+    setSixIndexOneEx(sixIndexOneExp);
+
+    /* data 7 index start */
+    /* data[7]?.runners[0] exposure */
+    const sevenIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[7]?.runners[0]?.id
+    );
+    setSevenIndexZeroEx(sevenIndexZeroExp);
+    /* data[7]?.runners[1] exposure */
+    const sevenIndexOneExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[7]?.runners[1]?.id
+    );
+    setSevenIndexOneEx(sevenIndexOneExp);
+    /* data[7]?.runners[2] exposure */
+    const sevenIndexTwoExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[7]?.runners[2]?.id
+    );
+    setSevenIndexTwoEx(sevenIndexTwoExp);
+    /* data[7]?.runners[3] exposure */
+    const sevenIndexThreeExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[7]?.runners[3]?.id
+    );
+    setSevenIndexThreeEx(sevenIndexThreeExp);
+    /* data[7]?.runners[3] exposure */
+    const sevenIndexFourExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[7]?.runners[4]?.id
+    );
+    setSevenIndexFourEx(sevenIndexFourExp);
+    /* data[7]?.runners[3] exposure */
+    const sevenIndexFiveExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[7]?.runners[5]?.id
+    );
+    setSevenIndexFiveEx(sevenIndexFiveExp);
+    /* data[7]?.runners[3] exposure */
+    const sevenIndexSixExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[7]?.runners[6]?.id
+    );
+    setSevenIndexSixEx(sevenIndexSixExp);
+    /* data[7]?.runners[3] exposure */
+    const sevenIndexSevenExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[7]?.runners[7]?.id
+    );
+    setSevenIndexSevenEx(sevenIndexSevenExp);
+
+    const sevenIndexEightExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[7]?.runners[8]?.id
+    );
+    setSevenIndexEightEx(sevenIndexEightExp);
+    /*  */
+    const sevenIndexNineExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[7]?.runners[9]?.id
+    );
+    setSevenIndexNineEx(sevenIndexNineExp);
+    /*  */
+    const sevenIndexTenExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[7]?.runners[10]?.id
+    );
+    setSevenIndexTenEx(sevenIndexTenExp);
+    /*  */
+    const sevenIndexElevenExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[7]?.runners[11]?.id
+    );
+    setSevenIndexElevenEx(sevenIndexElevenExp);
+    /*  */
+    const sevenIndexTwelveExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[7]?.runners[12]?.id
+    );
+    setSevenIndexTwelveEx(sevenIndexTwelveExp);
+    /* data 7 index end */
+
+    /* data[8]?.runners[0] exposure */
+    const eightIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[8]?.runners[0]?.id
+    );
+    setEightIndexZeroEx(eightIndexZeroExp);
+
+    /* data[8]?.runners[1] exposure */
+    const eightIndexOneExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[8]?.runners[1]?.id
+    );
+    setEightIndexOneEx(eightIndexOneExp);
+    /* data[8]?.runners[2] exposure */
+    const eightIndexTwoExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[8]?.runners[2]?.id
+    );
+    setEightIndexTwoEx(eightIndexTwoExp);
+    /* data[8]?.runners[2] exposure */
+    const eightIndexThreeExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[8]?.runners[3]?.id
+    );
+    setEightIndexThreeEx(eightIndexThreeExp);
+    /* data[8]?.runners[2] exposure */
+    const eightIndexFourExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[8]?.runners[4]?.id
+    );
+    setEightIndexFourEx(eightIndexFourExp);
+    const eightIndexFiveExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[8]?.runners[5]?.id
+    );
+    setEightIndexFiveEx(eightIndexFiveExp);
+    const eightIndexSixExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[8]?.runners[6]?.id
+    );
+    setEightIndexSixEx(eightIndexSixExp);
+
+    const eightIndexSevenExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[8]?.runners[7]?.id
+    );
+    setEightIndexSevenEx(eightIndexSevenExp);
+
+    const eightIndexEightExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[8]?.runners[8]?.id
+    );
+    setEightIndexEightEx(eightIndexEightExp);
+    const eightIndexNineExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[8]?.runners[9]?.id
+    );
+    setEightIndexNineEx(eightIndexNineExp);
+    const eightIndexTenExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[8]?.runners[10]?.id
+    );
+    setEightIndexTenEx(eightIndexTenExp);
+    const eightIndexElevenExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[8]?.runners[11]?.id
+    );
+    setEightIndexElevenEx(eightIndexElevenExp);
+    const eightIndexTwelveExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[8]?.runners[11]?.id
+    );
+    setEightIndexTwelveEx(eightIndexTwelveExp);
+    /* data[9]?.runners[0] exposure */
+    const nineIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[9]?.runners[0]?.id
+    );
+    setNineIndexZeroEx(nineIndexZeroExp);
+    /* data[9]?.runners[1] exposure */
+    const nineIndexOneExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[9]?.runners[1]?.id
+    );
+    setNineIndexOneEx(nineIndexOneExp);
+    /* data[9]?.runners[2] exposure */
+    const nineIndexTwoExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[9]?.runners[2]?.id
+    );
+    setNineIndexTwoEx(nineIndexTwoExp);
+    //  /* data[9]?.runners[2] exposure */
+    const nineIndexThreeExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[9]?.runners[3]?.id
+    );
+    setNineIndexThreeEx(nineIndexThreeExp);
+    const nineIndexFourExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[9]?.runners[4]?.id
+    );
+    setNineIndexFourEx(nineIndexFourExp);
+    const nineIndexFiveExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[9]?.runners[5]?.id
+    );
+    setNineIndexFiveEx(nineIndexFiveExp);
+    const nineIndexSixExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[9]?.runners[6]?.id
+    );
+    setNineIndexSixEx(nineIndexSixExp);
+    const nineIndexSevenExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[9]?.runners[7]?.id
+    );
+    setNineIndexSevenEx(nineIndexSevenExp);
+    const nineIndexEightExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[9]?.runners[8]?.id
+    );
+    setNineIndexEightEx(nineIndexEightExp);
+    const nineIndexNineExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[9]?.runners[9]?.id
+    );
+    setNineIndexNineEx(nineIndexNineExp);
+    const nineIndexTenExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[9]?.runners[10]?.id
+    );
+    setNineIndexTenEx(nineIndexTenExp);
+    const nineIndexElevenExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[9]?.runners[11]?.id
+    );
+    setNineIndexElevenEx(nineIndexElevenExp);
+    const nineIndexTwelveExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[9]?.runners[12]?.id
+    );
+    setNineIndexTwelveEx(nineIndexTwelveExp);
   }, [data]);
 
   /* Get video */
@@ -327,12 +579,14 @@ const PlaceBetDiamond = () => {
         ${slug == "btable" ? "bollywood" : ""} 
         ${slug == "dt6" ? "dt1day" : ""} 
         ${slug == "dtl20" ? "dtl20" : ""} 
+        ${slug == "teen1" ? "onecard1day" : ""} 
+        ${slug == "teen120" ? "onecard20" : ""} 
    
         `}
         >
           {/* DiamondHeader start */}
-         <DiamondHeader data={data} myBets={myBets}/>
-            {/* DiamondHeader start */}
+          <DiamondHeader data={data} myBets={myBets} />
+          {/* DiamondHeader start */}
           <div className="">
             <div className="casino-video">
               <div className="video-box-container">
@@ -347,67 +601,123 @@ const PlaceBetDiamond = () => {
               </div>
               <div className="casino-video-cards">
                 {/* Card start */}
-                <Card data={data} one={one} slug={slug}/>
-               {/* Card end */}
+                <Card data={data} one={one} slug={slug} />
+                {/* Card end */}
               </div>
               {/* Clock start */}
               <Clock />
-                {/* Clock end */}
+              {/* Clock end */}
             </div>
 
             <div className="casino-detail">
+              {slug == "teen120" ? (
+                <OneCard20
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  highExposure={highExposure}
+                  lowExposure={lowExposure}
+                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                  evenExposure={evenExposure}
+                />
+              ) : null}
+              {slug == "teen1" ? (
+                <OneCardOneDay
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  blackExposure={blackExposure}
+                  evenExposure={evenExposure}
+                  oddExposure={oddExposure}
+                  redExposure={redExposure}
+                />
+              ) : null}
 
-              {
-                slug == "dtl20" ? (
-<DTL20
-  data={data}
-  setPlaceBetValue={setPlaceBetValue}
-  setShowBets={setShowBets}
-  lowExposure={lowExposure}
-  highExposure={highExposure}
-  evenExposure={evenExposure}
-  blackExposure={blackExposure}
-  redExposure={redExposure}
-  a23Exposure={a23Exposure}
-  four56Exposure={four56Exposure}
-  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-  fourIndexOneRunnersEx={fourIndexOneRunnersEx}
-  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
-  fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
-  pnlBySelection={pnlBySelection}
-  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
-  sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
-  sixIndexOneRunnersEx={sixIndexOneRunnersEx}
-  sevenIndexZeroRunnersEx={sevenIndexZeroRunnersEx}
-/>
-                ):null
-              }
-
-
+              {slug == "dtl20" ? (
+                <DTL20
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  evenExposure={evenExposure}
+                  blackExposure={blackExposure}
+                  redExposure={redExposure}
+                  a23Exposure={a23Exposure}
+                  four56Exposure={four56Exposure}
+                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                  fourIndexOneRunnersEx={fourIndexOneRunnersEx}
+                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                  fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
+                  pnlBySelection={pnlBySelection}
+                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                  sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
+                  sixIndexOneRunnersEx={sixIndexOneRunnersEx}
+                  sevenIndexZeroRunnersEx={sevenIndexZeroRunnersEx}
+                  eightIndexZeroRunnersEx={eightIndexZeroRunnersEx}
+                  nineIndexZeroRunnersEx={nineIndexZeroRunnersEx}
+                  sevenIndexOneRunnersEx={sevenIndexOneRunnersEx}
+                  eightIndexOneRunnersEx={eightIndexOneRunnersEx}
+                  nineIndexOneRunnersEx={nineIndexOneRunnersEx}
+                  sevenIndexTwoRunnersEx={sevenIndexTwoRunnersEx}
+                  eightIndexTwoRunnersEx={eightIndexTwoRunnersEx}
+                  nineIndexTwoRunnersEx={nineIndexTwoRunnersEx}
+                  sevenIndexThreeRunnersEx={sevenIndexThreeRunnersEx}
+                  eightIndexThreeRunnersEx={eightIndexThreeRunnersEx}
+                  sevenIndexFourRunnersEx={sevenIndexFourRunnersEx}
+                  sevenIndexFiveRunnersEx={sevenIndexFiveRunnersEx}
+                  sevenIndexSixRunnersEx={sevenIndexSixRunnersEx}
+                  sevenIndexSevenRunnersEx={sevenIndexSevenRunnersEx}
+                  sevenIndexEightRunnersEx={sevenIndexEightRunnersEx}
+                  sevenIndexNineRunnersEx={sevenIndexNineRunnersEx}
+                  sevenIndexTenRunnersEx={sevenIndexTenRunnersEx}
+                  sevenIndexElevenRunnersEx={sevenIndexElevenRunnersEx}
+                  sevenIndexTwelveRunnersEx={sevenIndexTwelveRunnersEx}
+                  eightIndexFourRunnersEx={eightIndexFourRunnersEx}
+                  eightIndexFiveRunnersEx={eightIndexFiveRunnersEx}
+                  eightIndexSixRunnersEx={eightIndexSixRunnersEx}
+                  eightIndexSevenRunnersEx={eightIndexSevenRunnersEx}
+                  eightIndexEightRunnersEx={eightIndexEightRunnersEx}
+                  eightIndexNineRunnersEx={eightIndexNineRunnersEx}
+                  eightIndexTenRunnersEx={eightIndexTenRunnersEx}
+                  eightIndexElevenRunnersEx={eightIndexElevenRunnersEx}
+                  eightIndexTwelveRunnersEx={eightIndexTwelveRunnersEx}
+                  nineIndexThreeRunnersEx={nineIndexThreeRunnersEx}
+                  nineIndexFourRunnersEx={nineIndexFourRunnersEx}
+                  nineIndexFiveRunnersEx={nineIndexFiveRunnersEx}
+                  nineIndexSixRunnersEx={nineIndexSixRunnersEx}
+                  nineIndexSevenRunnersEx={nineIndexSevenRunnersEx}
+                  nineIndexEightRunnersEx={nineIndexEightRunnersEx}
+                  nineIndexNineRunnersEx={nineIndexNineRunnersEx}
+                  nineIndexTenRunnersEx={nineIndexTenRunnersEx}
+                  nineIndexElevenRunnersEx={nineIndexElevenRunnersEx}
+                  nineIndexTwelveRunnersEx={nineIndexTwelveRunnersEx}
+                  oddExposure={oddExposure}
+                />
+              ) : null}
 
               {/* Dragon tiger one day  */}
-              {
-                slug == 'dt6' ? (
+              {slug == "dt6" ? (
                 <DragonOneDay
-                data={data}
-                setPlaceBetValue={setPlaceBetValue}
-                setShowBets={setShowBets}
-                lowExposure={lowExposure}
-                highExposure={highExposure}
-                evenExposure={evenExposure}
-                blackExposure={blackExposure}
-                redExposure={redExposure}
-                a23Exposure={a23Exposure}
-                four56Exposure={four56Exposure}
-                fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-                fourIndexOneRunnersEx={fourIndexOneRunnersEx}
-                fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
-                fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
-                pnlBySelection={pnlBySelection}
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  evenExposure={evenExposure}
+                  blackExposure={blackExposure}
+                  redExposure={redExposure}
+                  a23Exposure={a23Exposure}
+                  four56Exposure={four56Exposure}
+                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                  fourIndexOneRunnersEx={fourIndexOneRunnersEx}
+                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                  fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
+                  pnlBySelection={pnlBySelection}
                 />
-                ):null
-              }
-
+              ) : null}
 
               {/* Bollywood casino */}
               {slug == "btable" ? (
@@ -503,17 +813,15 @@ const PlaceBetDiamond = () => {
                   fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
                   a23Exposure={a23Exposure}
                   four56Exposure={four56Exposure}
-
                 />
               ) : null}
 
               {/* Last result */}
               <LastResult />
-
             </div>
             {/* End casino details */}
           </div>
-        <MatchBets/>
+          <MatchBets />
         </div>
       </div>
       <div className="sidebar right-sidebar casino-right-sidebar">
