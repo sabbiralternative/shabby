@@ -34,6 +34,9 @@ import DragonOneDay from "../DragonOneDay/DragonOneDay.jsx";
 import DTL20 from "../DTL20/DTL20.jsx";
 import OneCardOneDay from "../OneCardOneDay/OneCardOneDay.jsx";
 import OneCard20 from "../OneCard20/OneCard20.jsx";
+import TeenPattiOneDay from "../TeenPattiOneday/TeenPattiOneday.jsx";
+import TeenPatti20 from "../TeenPatti20/TeenPatti20.jsx";
+import InstantTeenPatti from "../InstantTeenPatti/InstantTeenPatti.jsx";
 
 const PlaceBetDiamond = () => {
   const getSingleCasinoApi = config?.result?.endpoint?.accessToken;
@@ -581,6 +584,8 @@ const PlaceBetDiamond = () => {
         ${slug == "dtl20" ? "dtl20" : ""} 
         ${slug == "teen1" ? "onecard1day" : ""} 
         ${slug == "teen120" ? "onecard20" : ""} 
+        ${slug == "teen" || slug == 'teen3' || slug == 'teen32' ? "teenpatti1day" : ""} 
+        ${slug == "teen20" ? "teenpatti20" : ""} 
    
         `}
         >
@@ -610,6 +615,53 @@ const PlaceBetDiamond = () => {
             </div>
 
             <div className="casino-detail">
+              {
+                slug == 'teen3' || slug == 'teen32' ? <InstantTeenPatti data={data}
+                setPlaceBetValue={setPlaceBetValue}
+                setShowBets={setShowBets}
+                lowExposure={lowExposure}
+                highExposure={highExposure}
+                />:null
+              }
+              {slug == "teen20" ? <TeenPatti20 
+             data={data}
+             setPlaceBetValue={setPlaceBetValue}
+             setShowBets={setShowBets}
+             lowExposure={lowExposure}
+             highExposure={highExposure}
+             evenExposure={evenExposure}
+             redExposure={redExposure}
+             a23Exposure={a23Exposure}
+             four56Exposure={four56Exposure}
+             fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+             fourIndexOneRunnersEx={fourIndexOneRunnersEx}
+             fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+             fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
+             sixIndexOneRunnersEx={sixIndexOneRunnersEx}
+             sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
+              /> : null}
+              {slug == "teen" ? (
+                <TeenPattiOneDay
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  evenExposure={evenExposure}
+                  redExposure={redExposure}
+                  a23Exposure={a23Exposure}
+                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                  fourIndexOneRunnersEx={fourIndexOneRunnersEx}
+                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                  fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
+                  sevenIndexZeroRunnersEx={sevenIndexZeroRunnersEx}
+                  eightIndexZeroRunnersEx={eightIndexZeroRunnersEx}
+                  sevenIndexOneRunnersEx={sevenIndexOneRunnersEx}
+                  eightIndexOneRunnersEx={eightIndexOneRunnersEx}
+                  sixIndexOneRunnersEx={sixIndexOneRunnersEx}
+                  sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
+                />
+              ) : null}
               {slug == "teen120" ? (
                 <OneCard20
                   data={data}
@@ -836,9 +888,8 @@ const PlaceBetDiamond = () => {
           />
         )}
         {/* Place bet end */}
-        <div className="sidebar-box my-bet-container">
-          <MyBets myBets={myBets} />
-        </div>
+
+        <MyBets myBets={myBets} slug={slug} />
       </div>
     </>
   );

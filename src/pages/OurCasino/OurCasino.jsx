@@ -6,7 +6,8 @@ const OurCasino = () => {
   const diamondCasinoUrl = config?.result?.endpoint?.diamondCasino;
   const token = localStorage.getItem("token");
   const [casino_list, setCasino_list] = useState([]);
-
+// const c = casino_list.find(c => c.slug == 'patti2')
+// console.log(c);
   useEffect(() => {
     const getAuraCasino = async () => {
       const res = await axios.get(diamondCasinoUrl, {
