@@ -1,37 +1,36 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { config } from "../../utils/config";
 
 const CasinoList = ({ casino }) => {
   const navigate = useNavigate();
-  const getSingleCasinoApi = config?.result?.endpoint?.accessToken;
-  const token = localStorage.getItem("token");
+  const isAuraCasino = config?.result?.settings?.casino;
+
   let name = casino.name;
   name = name.replace(/ /g, "");
+  const auraEventId = {
+    eventId: casino?.eventId,
+    eventTypeId: casino?.eventTypeId,
+  };
+  const diamondCasino = {
+    eventId: casino?.eventId,
+    eventTypeId: casino?.eventTypeId,
+    casinoSlug: casino?.slug,
+  };
 
-  const getCasinoVideo = async () => {
-    const res = await axios.post(
-      getSingleCasinoApi,
-      {
-        eventId: casino.eventId,
-        eventTypeId: casino.eventTypeId,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    const link = res?.data?.result?.url;
-    if (link) {
-      localStorage.removeItem("casinoUrl");
-      localStorage.setItem("casinoUrl", link);
+  const navigateToCasinoDetails = () => {
+    if (isAuraCasino == "aura") {
+      localStorage.removeItem("auraEventId");
+      localStorage.setItem("auraEventId", JSON.stringify(auraEventId));
       navigate(`/casino/${name}`);
+    } else if (isAuraCasino == "diamond") {
+      localStorage.removeItem("diamondCasino");
+      localStorage.setItem("diamondCasino", JSON.stringify(diamondCasino));
+      navigate(`/our-casino/${casino?.slug}`);
     }
   };
 
   return (
-    <div onClick={getCasinoVideo} className="casino-list-item">
+    <div onClick={navigateToCasinoDetails} className="casino-list-item">
       <div
         className="casino-list-item-banner"
         style={{

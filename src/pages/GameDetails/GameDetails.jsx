@@ -40,7 +40,14 @@ const GameDetails = () => {
   const [myBets, setMyBets] = useState([]);
   const [profit, setProfit] = useState("");
   const [loader, setLoader] = useState(false);
+  const [oddStake, setOddStake] = useState("");
+  const [oddStakeLay, setOddStakeLay] = useState("");
 
+  const oppositionName = placeBetValue?.oppositionName?.filter(
+    (name) => name !== placeBetValue?.name
+  );
+
+  console.log(oppositionName);
   /* Set price */
   useEffect(() => {
     setPrice(placeBetValue?.price);
@@ -240,6 +247,19 @@ const GameDetails = () => {
       setPrice(parseFloat(price) - 1);
     }
   };
+
+  useEffect(() => {
+    if (placeBetValue?.back) {
+      const multiply = price * totalSize;
+      const total = multiply - totalSize;
+      setOddStake(total);
+      setOddStakeLay(-1 * totalSize);
+    } else if (placeBetValue?.lay) {
+      const total = -1 * (price * totalSize - totalSize);
+      setOddStake(total);
+      setOddStakeLay(totalSize);
+    }
+  }, [price, totalSize, placeBetValue]);
 
   return (
     <>
@@ -1313,21 +1333,23 @@ const GameDetails = () => {
                         </div>
                         <div className="col-4 text-center pt-2">
                           <span>
-                          {price &&
-                  totalSize &&
-                  placeBetValue?.back &&
-                  placeBetValue?.btype !== "FANCY"
-                    ? profit
-                    : null}
-                  {price &&
-                  totalSize &&
-                  placeBetValue?.lay &&
-                  placeBetValue?.btype !== "FANCY"
-                    ? totalSize
-                    : null}
-                  {price && totalSize && placeBetValue?.btype == "FANCY"
-                    ? 0
-                    : null}
+                            {price &&
+                            totalSize &&
+                            placeBetValue?.back &&
+                            placeBetValue?.btype !== "FANCY"
+                              ? profit
+                              : null}
+                            {price &&
+                            totalSize &&
+                            placeBetValue?.lay &&
+                            placeBetValue?.btype !== "FANCY"
+                              ? totalSize
+                              : null}
+                            {price &&
+                            totalSize &&
+                            placeBetValue?.btype == "FANCY"
+                              ? 0
+                              : null}
                           </span>
                         </div>
                       </div>
@@ -1356,37 +1378,79 @@ const GameDetails = () => {
                       >
                         <button className="btn btn-info">Edit</button>
                       </div>
-                      <div className="row mt-2">
-                        <div className="col-4">
-                          <span>Lazio</span>
-                        </div>
-                        <div className="col-4 text-center">
-                          <span className="text-success">188</span>
-                        </div>
-                        <div className="col-4 text-end">
-                          <span className="text-success">376</span>
-                        </div>
-                      </div>
+
                       <div className="row mt-2">
                         <div className="col-4">
                           <span>{placeBetValue?.name}</span>
                         </div>
                         <div className="col-4 text-center">
-                          <span className="text-danger">-100</span>
+                          <span className="text-danger"></span>
                         </div>
                         <div className="col-4 text-end">
-                          <span className="text-danger">-200</span>
+                          <span
+                            className={`${
+                              oddStake > 0 ? "text-success" : "text-danger"
+                            }`}
+                          >
+                            {oddStake !== 0 && oddStake}
+                          </span>
                         </div>
                       </div>
+
                       <div className="row mt-2">
                         <div className="col-4">
-                          <span>The Draw</span>
+                          <span>
+                            {oppositionName?.length > 0
+                              ? oppositionName[0]
+                              : null}
+                          </span>
                         </div>
                         <div className="col-4 text-center">
-                          <span className="text-danger">-100</span>
+                          <span className="text-center"></span>
                         </div>
                         <div className="col-4 text-end">
-                          <span className="text-danger">-200</span>
+                          <span
+                            className={`${
+                              oddStakeLay > 0 ? "text-success" : "text-danger"
+                            }`}
+                          >
+                            {placeBetValue?.back &&
+                              totalSize != 0 &&
+                              oddStakeLay}
+
+                            {placeBetValue?.lay &&
+                              totalSize != 0 &&
+                              oddStakeLay}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="row mt-2">
+                        <div className="col-4">
+                          <span>
+                            {oppositionName?.length > 1
+                              ? oppositionName[1]
+                              : null}
+                          </span>
+                        </div>
+                        <div className="col-4 text-center">
+                          <span className="text-center"></span>
+                        </div>
+                        <div className="col-4 text-end">
+                          <span
+                            className={`${
+                              oddStakeLay > 0 ? "text-success" : "text-danger"
+                            }`}
+                          >
+                            {placeBetValue?.back && oppositionName?.length > 1 &&
+                              totalSize != 0 &&
+                              oddStakeLay}
+
+                            {placeBetValue?.lay &&
+                            oppositionName?.length > 1 &&
+                              totalSize != 0 &&
+                              oddStakeLay}
+                          </span>
                         </div>
                       </div>
                     </div>

@@ -11,25 +11,31 @@ import BetTable from "../../components/BetTable/BetTable";
 const HomePage = () => {
   const isCasino = config?.result?.settings.casino;
   const auraCasinoApi = config?.result?.endpoint?.auraCasino;
+  const diamondCasinoApi = config?.result?.endpoint?.diamondCasino;
   const token = localStorage.getItem("token");
   const [casino_list, setCasino_list] = useState([]);
   const { sports } = UseState();
   const [data, setData] = useState([]);
   const cricketApi = config?.result?.endpoint?.group;
-  const interval = config?.result?.settings?.interval
+  const interval = config?.result?.settings?.interval;
 
   useEffect(() => {
     const getAuraCasino = async () => {
-      const res = await axios.get(auraCasinoApi, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(
+        `${isCasino == "aura" ? auraCasinoApi : ""} ${
+          isCasino == "diamond" ? diamondCasinoApi : ""
+        }`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const data = res.data;
       setCasino_list(data);
     };
     getAuraCasino();
-  }, [auraCasinoApi, token]);
+  }, [auraCasinoApi, diamondCasinoApi, isCasino, token]);
 
   useEffect(() => {
     const gameData = async () => {
@@ -49,7 +55,7 @@ const HomePage = () => {
       const intervalId = setInterval(gameData, interval);
       return () => clearInterval(intervalId);
     }
-  }, [sports, cricketApi, token,interval]);
+  }, [sports, cricketApi, token, interval]);
 
   return (
     <div className="center-container">
@@ -176,13 +182,11 @@ const HomePage = () => {
         </div>
       </div>
 
-      {isCasino === "aura" && (
-        <div className="casino-list mt-2">
-          {casino_list.map((casino, i) => (
-            <CasinoList key={i} casino={casino} />
-          ))}
-        </div>
-      )}
+      <div className="casino-list mt-2">
+        {casino_list.map((casino, i) => (
+          <CasinoList key={i} casino={casino} />
+        ))}
+      </div>
     </div>
   );
 };

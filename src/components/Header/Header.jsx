@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import RulesModal from "./RulesModal";
 import UseState from "../../hooks/UseState";
+import SearchBox from "./SearchBox";
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [dropDown, setDropDown] = useState(false);
@@ -19,18 +20,17 @@ const Header = () => {
   const [showBalance, setShowBalance] = useState(0);
   const [showExp, setShowExp] = useState(0);
   const [showNotification, setShowNotification] = useState("");
-  const {buttonValue, SetButtonValue} = UseState()
+  const { buttonValue, SetButtonValue } = UseState();
   const [ruleModal, setRuleModal] = useState(false);
   const buttonGameValue = JSON.parse(localStorage.getItem("buttonValue"));
   const navigate = useNavigate();
   const modalRef = useRef(null);
-  const openModalRef = useRef()
+  const openModalRef = useRef();
 
- 
   /* Close modalRef modal click outside the modal */
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if ( !modalRef.current.contains(e.target)) {
+      if (!modalRef.current.contains(e.target)) {
         setDropDown(false);
       }
     };
@@ -40,10 +40,9 @@ const Header = () => {
     };
   }, []);
 
-
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if ( !openModalRef.current.contains(e.target)) {
+      if (!openModalRef.current.contains(e.target)) {
         setOpen(false);
       }
     };
@@ -124,8 +123,8 @@ const Header = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("loginName");
     localStorage.removeItem("hasModalBeenShown");
-    localStorage.removeItem('modal')
-    localStorage.removeItem('buttonValue')
+    localStorage.removeItem("modal");
+    localStorage.removeItem("buttonValue");
     navigate("/login");
   };
 
@@ -280,16 +279,7 @@ const Header = () => {
 
           <div className="user-details">
             <div className="search-box-container d-none d-xl-block">
-              <div className="search-box">
-                <input
-                  type="search"
-                  placeholder="Search here"
-                  className="form-control"
-                />
-                <Link>
-                  <i className="fas fa-search-plus"></i>
-                </Link>
-              </div>
+              <SearchBox />
             </div>
             <div
               onClick={() => setRuleModal(!ruleModal)}
@@ -639,10 +629,7 @@ const Header = () => {
                   </>
                 )}
 
-                <div
-                  ref={openModalRef}
-                  className="dropdown"
-                >
+                <div ref={openModalRef} className="dropdown">
                   <div
                     onClick={() => setOpen(!open)}
                     className="user-name ms-1 ms-xl-3 d-inline-block d-xl-none dropdown-toggle"
@@ -674,10 +661,10 @@ const Header = () => {
                         }}
                       >
                         <div className="d-xl-none d-flex justify-content-center"></div>
-                        <Link to="/account-statement"
-                        onClick={()=> setOpen(!open)}
+                        <Link
+                          to="/account-statement"
+                          onClick={() => setOpen(!open)}
                         >
-                          
                           <li
                             data-rr-ui-dropdown-item=""
                             className="dropdown-item"
@@ -825,8 +812,9 @@ const Header = () => {
                     }}
                   >
                     <div className="d-xl-none d-flex justify-content-center"></div>
-                    <Link to="/account-statement"
-                    onClick={()=> setDropDown(!dropDown)}
+                    <Link
+                      to="/account-statement"
+                      onClick={() => setDropDown(!dropDown)}
                     >
                       <li data-rr-ui-dropdown-item="" className="dropdown-item">
                         Account Statement
@@ -919,16 +907,7 @@ const Header = () => {
           </div>
 
           <div className="search-box-container d-xl-none">
-            <div className="search-box">
-              <input
-                type="search"
-                placeholder="Search here"
-                className="form-control"
-              />
-              <Link>
-                <i className="fas fa-search-plus"></i>
-              </Link>
-            </div>
+            <SearchBox />
           </div>
           <div className="news">
             {/* ToDO scrollAmount="3" */}

@@ -17,7 +17,7 @@
       "siteTitle": "WINBUZZ365",
       "recaptcha": "6Lc4UB8dAAAAAJkIpe063dHBO_o19nUYe7hqkVHb",
       "interval": "600",
-      "casino": "aura"
+      "casino": "diamond"
     },
     "endpoint": {
       "login": "https://api7.live/api/account/diamond/login",
@@ -57,8 +57,8 @@
       "ipDetails": "https://api7.live/api/exchange/diamond/ipDetails",
       "accountStatement": "https://api7.live/api/exchange/diamond/accountStatement",
       "settledBets": "https://api7.live/api/exchange/diamond/settledBets",
-      "exposure": "https://api7.live/api/exchange/diamond/exposure"
-    
+      "exposure": "https://api7.live/api/exchange/diamond/exposure",
+      "searchEvent": "https://api7.live/api/exchange/diamond/searchEvent"
     }
   },
   "success": true

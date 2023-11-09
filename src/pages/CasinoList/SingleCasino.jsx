@@ -1,12 +1,33 @@
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { useState } from "react";
+import { config } from "../../utils/config";
 
 const SingleCasino = () => {
   const [url, setUrl] = useState(null);
-  useEffect(() => {
-    setTimeout(() => {
-      setUrl(localStorage.getItem("casinoUrl"));
-    }, 100);
-  }, []);
+  const getSingleCasinoApi = config?.result?.endpoint?.accessToken;
+  const { eventId, eventTypeId } = JSON.parse(
+    localStorage.getItem("auraEventId")
+  );
+  const token = localStorage.getItem("token");
+  const navigateToCasinoDetails = async () => {
+    const res = await axios.post(
+      getSingleCasinoApi,
+      {
+        eventId: eventId,
+        eventTypeId: eventTypeId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const link = res?.data?.result?.url;
+    if (link) {
+      setUrl(link);
+    }
+  };
+  navigateToCasinoDetails();
   return (
     <>
       <iframe

@@ -10,6 +10,7 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
   const { setPlaceBetValue } = UseState();
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
+
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -33,29 +34,29 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
 
   useEffect(() => {
     const newChangedPrices = {};
-    match_odds.forEach((item, index) => {
-      item.runners.forEach((runner, runnerIndex) => {
-        const previousRunner = previousData[index].runners[runnerIndex];
-        runner.back.forEach((backItem, backIndex) => {
-          const previousBackItem = previousRunner.back[backIndex];
+    match_odds?.forEach((item, index) => {
+      item?.runners?.forEach((runner, runnerIndex) => {
+        const previousRunner = previousData[index]?.runners[runnerIndex];
+        runner?.back?.forEach((backItem, backIndex) => {
+          const previousBackItem = previousRunner?.back[backIndex];
 
-          if (backItem.price !== previousBackItem.price) {
-            newChangedPrices[`back-${runner.id}-${backIndex}`] = true;
+          if (backItem?.price !== previousBackItem?.price) {
+            newChangedPrices[`back-${runner?.id}-${backIndex}`] = true;
             setChangedPrices({ ...newChangedPrices });
             setTimeout(() => {
-              newChangedPrices[`back-${runner.id}-${backIndex}`] = false;
+              newChangedPrices[`back-${runner?.id}-${backIndex}`] = false;
 
               setChangedPrices({ ...newChangedPrices });
             }, 300);
           }
         });
-        runner.lay.forEach((layItem, layIndex) => {
-          const previousLayItem = previousRunner.lay[layIndex];
-          if (layItem.price !== previousLayItem.price) {
-            newChangedPrices[`lay-${runner.id}-${layIndex}`] = true;
+        runner?.lay?.forEach((layItem, layIndex) => {
+          const previousLayItem = previousRunner?.lay[layIndex];
+          if (layItem?.price !== previousLayItem?.price) {
+            newChangedPrices[`lay-${runner?.id}-${layIndex}`] = true;
             setChangedPrices({ ...newChangedPrices });
             setTimeout(() => {
-              newChangedPrices[`lay-${runner.id}-${layIndex}`] = false;
+              newChangedPrices[`lay-${runner?.id}-${layIndex}`] = false;
               setChangedPrices({ ...newChangedPrices });
             }, 300);
           }
@@ -236,6 +237,7 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
                             marketId: item?.id,
                             back: true,
                             name: runner?.name,
+                            oppositionName:item.runners.map(runner => runner.name),
                             isWeak: item?.isWeak,
                           });
                         };
@@ -286,6 +288,7 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
                           betDelay: item?.betDelay,
                           marketId: item?.id,
                           lay: true,
+                          oppositionName:item.runners.map(runner => runner.name),
                           name: runner?.name,
                           isWeak: item?.isWeak,
                         });
