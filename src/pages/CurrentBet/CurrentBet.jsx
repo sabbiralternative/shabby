@@ -2,15 +2,20 @@ import { config } from "../../utils/config";
 import { useForm } from "react-hook-form";
 import BetTable from "./BetTable";
 import { useEffect, useState } from "react";
+import Notification from "../../components/Notification/Notification";
 const CurrentBet = () => {
   const currentBetsApi = config?.result?.endpoint?.currentBets;
   const { register, handleSubmit } = useForm();
   const token = localStorage.getItem("token");
   const [sports, setSports] = useState([]);
-  const [filteredData,setFilteredData] = useState([])
+  const [filteredData, setFilteredData] = useState([]);
   const [sportsRef, setSportsRef] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = ({ sportsType }) => {
+    if (sportsType == "none") {
+      setErrorMessage("Select Report Type !");
+    }
     if (sportsType) {
       fetch(`${currentBetsApi}/${sportsType}`, {
         headers: {
@@ -19,9 +24,10 @@ const CurrentBet = () => {
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           if (data.result) {
             setSports(data.result);
-            setFilteredData(data.result)
+            setFilteredData(data.result);
           }
         });
     }
@@ -37,8 +43,6 @@ const CurrentBet = () => {
     }
   }, [sportsRef, sports]);
 
- 
-
   /* Get total amount */
   let totalAmount = 0;
   for (const sport of filteredData) {
@@ -47,6 +51,13 @@ const CurrentBet = () => {
 
   return (
     <div className="center-container">
+      {errorMessage && (
+        <Notification
+          message="Select Report Type !"
+          success={false}
+          setMessage={setErrorMessage}
+        />
+      )}
       <div className="card">
         <div className="card-header">
           <h4 className="card-title">Current Bets</h4>
@@ -61,7 +72,7 @@ const CurrentBet = () => {
                     className="form-select"
                     name="sportsType"
                   >
-                    <option value="" disabled="">
+                    <option value="none" disabled="">
                       Select Report Type
                     </option>
                     <option value="sports">Sports</option>
@@ -127,8 +138,9 @@ const CurrentBet = () => {
               </div>
               <div className="col-lg-3 col-md-6 text-center">
                 <div>
-                  Total Bets: <span className="me-2">{filteredData.length}</span>{" "}
-                  Total Amount: <span className="me-2">{totalAmount}</span>
+                  Total Bets:{" "}
+                  <span className="me-2">{filteredData.length}</span> Total
+                  Amount: <span className="me-2">{totalAmount}</span>
                 </div>
               </div>
               <div className="col-lg-2 col-6">
@@ -212,23 +224,21 @@ const CurrentBet = () => {
                 </tbody>
               </table>
             </div>
-          {
-            sports.length > 0 && (
-                <div className="custom-pagination mt-2">
-              <div disabled="">First</div>
-              <div disabled="">Previous</div>
-              <div disabled="">Next</div>
-              <div disabled="">Last</div>
-              <div>
-                <span className="me-2">
-                  Page <b>1 of 1</b>
-                </span>
-                <span className="me-2">| Go to Page</span>
-                <input className="form-control" type="number" />
+            {sports.length > 0 && (
+              <div className="custom-pagination mt-2">
+                <div disabled="">First</div>
+                <div disabled="">Previous</div>
+                <div disabled="">Next</div>
+                <div disabled="">Last</div>
+                <div>
+                  <span className="me-2">
+                    Page <b>1 of 1</b>
+                  </span>
+                  <span className="me-2">| Go to Page</span>
+                  <input className="form-control" type="number" />
+                </div>
               </div>
-            </div>
-            )
-          }
+            )}
           </div>
         </div>
       </div>

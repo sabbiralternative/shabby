@@ -2,11 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import loginBanner from "../../static/front/img/logo.png";
 import { config } from "../../utils/config";
+import { useState } from "react";
+import Notification from "../Notification/Notification";
 
 const Login = () => {
   const navigate = useNavigate();
-
   const loginApi = config?.result?.endpoint?.login;
+  const [errorLogin, setErrorLogin] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -14,23 +17,19 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = ({ username, password }) => {
-    if (username !== "demo") {
-      return;
-    } else if (password !== "1234") {
-      return;
-    } else if (username === "demo" && password === "1234") {
-      fetch(loginApi, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
+    fetch(loginApi, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
           localStorage.setItem("token", data.result.token);
           localStorage.setItem("loginName", data.result.loginName);
           const buttonValue = JSON.stringify(data.result.buttonValue.game);
@@ -46,8 +45,10 @@ const Login = () => {
           ) {
             navigate("/");
           }
-        });
-    }
+        } else {
+          setErrorLogin(data?.error);
+        }
+      });
   };
 
   const loginWithDemo = () => {
@@ -80,8 +81,10 @@ const Login = () => {
         }
       });
   };
+
   return (
     <div className="login-page">
+      {errorLogin && <Notification message={errorLogin} success={false} setMessage={setErrorLogin} />}
       <div className="login-box">
         <div className="logo-login">
           <img src={loginBanner} />

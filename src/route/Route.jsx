@@ -19,6 +19,8 @@ import OurVirtual from '../pages/OurVirtual/OurVirtual'
 import SlotGames from '../pages/SlotGames/SlotGames'
 import OurCasino from '../pages/OurCasino/OurCasino'
 import PlaceBetDiamond from '../pages/OurCasino/PlaceBetDiamond/PlaceBetDiamond'
+import LiveCasinoVideo from "../pages/LiveCasino/LiveCasinoVideo.jsx";
+import SlotGamesVideo from "../pages/SlotGames/SlotGamesVideo.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -81,12 +83,20 @@ const router = createBrowserRouter([
         element: <LiveCasino />,
       },
       {
+        path: "/live-casino/:eventId/:providerId",
+        element: <LiveCasinoVideo />,
+      },
+      {
         path: "/our-virtual",
         element: <OurVirtual />,
       },
       {
         path: "/slot-games",
         element: <SlotGames />,
+      },
+      {
+        path: "/slot-games/:eventId/:providerId",
+        element: <SlotGamesVideo />,
       },
       {
         path: "/our-casino",

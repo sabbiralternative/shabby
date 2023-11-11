@@ -1,31 +1,33 @@
+import { NavLink } from "react-router-dom";
+
 const Category = () => {
   return (
     <>
       <ul className="nav nav-tabs d-xl-none menu-tabs">
         <li className="nav-item">
-          <a aria-current="page" className="nav-link active" href="/home">
+          <NavLink aria-current="page" className="nav-link" to="/">
             Sports
-          </a>
+          </NavLink>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/casino-list">
+          <NavLink className="nav-link" to="/our-casino">
             Our Casino
-          </a>
+          </NavLink>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/live-casino-list">
+          <NavLink className="nav-link" to="/live-casino">
             Live Casino
-          </a>
+          </NavLink>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/slot-list">
+          <NavLink className="nav-link" to="/slot-games">
             Slots
-          </a>
+          </NavLink>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/fantasy-list">
+          <NavLink className="nav-link" to="/fantasy-games">
             Fantasy
-          </a>
+          </NavLink>
         </li>
       </ul>
     </>

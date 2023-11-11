@@ -58,7 +58,11 @@
       "accountStatement": "https://api7.live/api/exchange/diamond/accountStatement",
       "settledBets": "https://api7.live/api/exchange/diamond/settledBets",
       "exposure": "https://api7.live/api/exchange/diamond/exposure",
-      "searchEvent": "https://api7.live/api/exchange/diamond/searchEvent"
+      "searchEvent": "https://api7.live/api/exchange/diamond/searchEvent",
+      "virtualCasino": " https://cache.api7.live/api/exchange/diamond/virtualCasino",
+      "slotCasino": " https://cache.api7.live/api/exchange/diamond/slotCasino",
+      "liveCasinoIframe": " https://api7.live/api/livecasino/iframe",
+      "liveCasino": " https://cache.api7.live/api/exchange/diamond/liveCasino"
     }
   },
   "success": true

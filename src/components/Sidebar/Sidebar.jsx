@@ -25,7 +25,7 @@ const Sidebar = () => {
   return (
     <>
       <div className="accordion">
-        <div className="accordion-item">
+        {/* <div className="accordion-item">
           <h2 className="sidebar-title accordion-header">
             <button
               type="button"
@@ -67,7 +67,7 @@ const Sidebar = () => {
               </ul>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="accordion">
         <div className="accordion-item">

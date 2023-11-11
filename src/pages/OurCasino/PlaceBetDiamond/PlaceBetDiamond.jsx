@@ -37,6 +37,7 @@ import OneCard20 from "../OneCard20/OneCard20.jsx";
 import TeenPattiOneDay from "../TeenPattiOneday/TeenPattiOneday.jsx";
 import TeenPatti20 from "../TeenPatti20/TeenPatti20.jsx";
 import InstantTeenPatti from "../InstantTeenPatti/InstantTeenPatti.jsx";
+import Notification from "../../../components/Notification/Notification.jsx";
 
 const PlaceBetDiamond = () => {
   const getSingleCasinoApi = config?.result?.endpoint?.accessToken;
@@ -167,6 +168,8 @@ const PlaceBetDiamond = () => {
   const [nineIndexTenRunnersEx, setNineIndexTenEx] = useState([]);
   const [nineIndexElevenRunnersEx, setNineIndexElevenEx] = useState([]);
   const [nineIndexTwelveRunnersEx, setNineIndexTwelveEx] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage,setSuccessMessage] = useState('')
 
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
@@ -174,7 +177,7 @@ const PlaceBetDiamond = () => {
     pnlBySelection = Object?.values(obj);
   }
 
-  console.log(pnlBySelection);
+
   useEffect(() => {
     /* data[0]?.runners[0] exposure */
     const low = pnlBySelection?.filter(
@@ -557,10 +560,20 @@ const PlaceBetDiamond = () => {
         });
     },
   });
-  console.log(data);
+console.log(successMessage);
   return (
     <>
       <div className="center-container">
+      {
+        errorMessage && (
+          <Notification message={errorMessage} success={false} setMessage={setErrorMessage}/>
+        )
+       }
+       {
+        successMessage && (
+          <Notification message={successMessage} success={true} setMessage={setSuccessMessage}/>
+        )
+       }
         {showBets && window.innerWidth < 1200 && (
           <PlaceBetModal
             placeBetValue={placeBetValue}
@@ -568,6 +581,8 @@ const PlaceBetDiamond = () => {
             refetchExposure={refetchExposure}
             setShowBets={setShowBets}
             showBets={showBets}
+            setSuccessMessage={setSuccessMessage}
+            setErrorMessage={setErrorMessage}
           />
         )}
         <div
@@ -885,6 +900,8 @@ const PlaceBetDiamond = () => {
             setShowBets={setShowBets}
             refetchCurrentBets={refetchCurrentBets}
             refetchExposure={refetchExposure}
+            setErrorMessage={setErrorMessage} 
+            setSuccessMessage={setSuccessMessage}
           />
         )}
         {/* Place bet end */}

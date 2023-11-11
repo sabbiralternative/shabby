@@ -10,6 +10,7 @@ import OverByOver from "./OverByOver";
 import FancyOne from "./FancyOne";
 import UseState from "../../hooks/UseState";
 import { useQuery } from "@tanstack/react-query";
+import Notification from "../../components/Notification/Notification";
 
 const GameDetails = () => {
   const { id, eventId } = useParams();
@@ -42,12 +43,13 @@ const GameDetails = () => {
   const [loader, setLoader] = useState(false);
   const [oddStake, setOddStake] = useState("");
   const [oddStakeLay, setOddStakeLay] = useState("");
+  const [errorMessage,setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
 
   const oppositionName = placeBetValue?.oppositionName?.filter(
     (name) => name !== placeBetValue?.name
   );
 
-  console.log(oppositionName);
   /* Set price */
   useEffect(() => {
     setPrice(placeBetValue?.price);
@@ -159,6 +161,7 @@ const GameDetails = () => {
 
   /* Handle bets */
   const handleOrderBets = () => {
+  
     setLoader(true);
     fetch(orderApi, {
       method: "POST",
@@ -180,11 +183,22 @@ const GameDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        refetchExposure();
-        refetchCurrentBets();
-        console.log(data);
-        setLoader(false);
-        setShowBets(false);
+        if(data?.success){
+          refetchExposure();
+          refetchCurrentBets();
+          console.log(data);
+          setLoader(false);
+          setShowBets(false);
+          setSuccessMessage("Bet Place Successfully !")
+        }else{
+          setErrorMessage(data?.error?.status[0]?.description)
+          setLoader(false);
+          setShowBets(false);
+          refetchExposure();
+          refetchCurrentBets();
+          console.log(data);
+        }
+        
       });
   };
 
@@ -264,6 +278,16 @@ const GameDetails = () => {
   return (
     <>
       <div className="center-container">
+       {
+        errorMessage && (
+          <Notification message={errorMessage} success={false} setMessage={setErrorMessage}/>
+        )
+       }
+       {
+        successMessage && (
+          <Notification message={successMessage} success={true} setMessage={setSuccessMessage}/>
+        )
+       }
         <div className="detail-page-container">
           <div className="game-header">
             <span>{data[0]?.eventName}</span>
@@ -1442,12 +1466,13 @@ const GameDetails = () => {
                               oddStakeLay > 0 ? "text-success" : "text-danger"
                             }`}
                           >
-                            {placeBetValue?.back && oppositionName?.length > 1 &&
+                            {placeBetValue?.back &&
+                              oppositionName?.length > 1 &&
                               totalSize != 0 &&
                               oddStakeLay}
 
                             {placeBetValue?.lay &&
-                            oppositionName?.length > 1 &&
+                              oppositionName?.length > 1 &&
                               totalSize != 0 &&
                               oddStakeLay}
                           </span>

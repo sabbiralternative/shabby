@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { config } from "../../utils/config";
 import SettleBetsModal from "./SettleBetsModal";
+import Notification from "../../components/Notification/Notification";
 const AccountStatement = () => {
   const { register, handleSubmit } = useForm();
   const accountStatementApi = config?.result?.endpoint?.accountStatement;
@@ -11,8 +12,11 @@ const AccountStatement = () => {
   const [showModal, setShowModal] = useState(false);
   const [stateMentData, setStateMentData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-
+  const [errorMessage, setErrorMessage] = useState("");
   const onSubmit = ({ toDate, fromDate, reportType }) => {
+    if(reportType == 'none'){
+      setErrorMessage("Select Report Type !")
+    }
     fetch(accountStatementApi, {
       method: "POST",
       headers: {
@@ -50,6 +54,13 @@ const AccountStatement = () => {
   return (
     <>
       <div className="center-container">
+      {errorMessage && (
+        <Notification
+          message={errorMessage}
+          success={false}
+          setMessage={setErrorMessage}
+        />
+      )}
         {showModal && (
           <SettleBetsModal
             showModal={showModal}
@@ -110,7 +121,7 @@ const AccountStatement = () => {
                       {...register("reportType", { required: true })}
                       name="reportType"
                     >
-                      <option value="" disabled="">
+                      <option value="none" disabled="">
                         Select Report Type
                       </option>
                       <option value="ALL">All Reports</option>

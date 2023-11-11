@@ -3,7 +3,8 @@ import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
 
 
-const PlaceBets = ({ showBets, placeBetValue, setShowBets,refetchCurrentBets,refetchExposure }) => {
+const PlaceBets = ({ showBets, placeBetValue, setShowBets,refetchCurrentBets,refetchExposure,  setSuccessMessage,
+  setErrorMessage }) => {
   const [price, setPrice] = useState("");
   const [totalSize, setTotalSize] = useState("");
   const [profit, setProfit] = useState("");
@@ -55,11 +56,21 @@ const PlaceBets = ({ showBets, placeBetValue, setShowBets,refetchCurrentBets,ref
     })
       .then((res) => res.json())
       .then((data) => {
-        refetchExposure();
-        refetchCurrentBets();
-        console.log(data);
-        setLoader(false);
-        setShowBets(false);
+        if(data?.success){
+          refetchExposure();
+          refetchCurrentBets();
+          console.log(data);
+          setLoader(false);
+          setShowBets(false);
+          setSuccessMessage("Bet Place Successfully !")
+        }else{
+          setErrorMessage(data?.error?.status[0]?.description)
+          setLoader(false);
+          setShowBets(false);
+          refetchExposure();
+          refetchCurrentBets();
+          console.log(data);
+        }
       });
   };
 

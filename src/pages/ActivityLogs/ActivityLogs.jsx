@@ -2,13 +2,18 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { config } from "../../utils/config";
 import ActivityTable from "./ActivityTable";
+import Notification from "../../components/Notification/Notification";
 const ActivityLogs = () => {
   const [activityLogs, setActivityLogs] = useState([]);
   const { register, handleSubmit } = useForm();
   const activityLogApi = config?.result?.endpoint?.activityLogs;
   const token = localStorage.getItem("token");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = ({ toDate, fromDate, logType }) => {
+    if(logType == 'none'){
+      setErrorMessage("Select Log Type !")
+    }
     fetch(activityLogApi, {
       method: "POST",
       headers: {
@@ -30,6 +35,13 @@ const ActivityLogs = () => {
 
   return (
     <div className="center-container">
+       {errorMessage && (
+        <Notification
+          message={errorMessage}
+          success={false}
+          setMessage={setErrorMessage}
+        />
+      )}
       <div className="card">
         <div className="card-header">
           <h4 className="card-title">Activity Log</h4>
@@ -79,7 +91,7 @@ const ActivityLogs = () => {
                     className="form-select"
                     name="logType"
                   >
-                    <option value="">Select Log Type</option>
+                    <option value="none">Select Log Type</option>
                     <option value="login">Login</option>
                     <option value="password">Change Password</option>
                   </select>

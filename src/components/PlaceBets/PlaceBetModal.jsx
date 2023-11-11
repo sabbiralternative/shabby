@@ -8,6 +8,8 @@ const PlaceBetModal = ({
   setShowBets,
   refetchCurrentBets,
   refetchExposure,
+  setSuccessMessage,
+  setErrorMessage
 }) => {
 
   const [price, setPrice] = useState("");
@@ -60,11 +62,21 @@ const PlaceBetModal = ({
     })
       .then((res) => res.json())
       .then((data) => {
-        refetchExposure();
-        refetchCurrentBets();
-        console.log(data);
-        setLoader(false);
-        setShowBets(false);
+        if(data?.success){
+          refetchExposure();
+          refetchCurrentBets();
+          console.log(data);
+          setLoader(false);
+          setShowBets(false);
+          setSuccessMessage("Bet Place Successfully !")
+        }else{
+          setErrorMessage(data?.error?.status[0]?.description)
+          setLoader(false);
+          setShowBets(false);
+          refetchExposure();
+          refetchCurrentBets();
+          console.log(data);
+        }
       });
   };
 

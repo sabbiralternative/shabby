@@ -1,8 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { config } from "../../utils/config";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import Notification from "../../components/Notification/Notification";
 const ChangePassword = () => {
   const ChangePasswordApi = config?.result?.endpoint?.changePassword;
+  const [errorMessage, setErrorMessage] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -26,12 +30,21 @@ const ChangePassword = () => {
       .then((data) => {
         if (data.success) {
           navigate("/");
+        } else {
+          setErrorMessage(data?.error?.oldPassword[0]?.description);
         }
       });
   };
 
   return (
     <div className="center-container">
+      {errorMessage && (
+        <Notification
+          message={errorMessage}
+          success={false}
+          setMessage={setErrorMessage}
+        />
+      )}
       <div className="card">
         <div className="card-header">
           <h4 className="card-title">Change Password</h4>

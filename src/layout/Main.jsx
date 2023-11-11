@@ -38,7 +38,15 @@ const Main = () => {
               ? "list-page slot-page"
               : ""
           } 
-        ${relativeURL.includes("/our-casino/") ? "casino-page" : ""} report-page
+          } ${
+            relativeURL == "/current-bet" ||
+            relativeURL == "/activity-logs" ||
+            relativeURL == "/change-password" ||
+            relativeURL == "/account-statement"
+              ? "report-page"
+              : ""
+          } 
+        ${relativeURL.includes("/our-casino/") ? "casino-page" : ""} 
           `}
         >
           <Outlet />
