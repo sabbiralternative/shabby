@@ -153,6 +153,8 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
               <div className="market-odd-box no-border"></div>
             </div>
 
+
+
             <div
               className={`market-body ${
                 item?.status !== "OPEN" ? "suspended-row" : " "
@@ -332,6 +334,19 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
                 );
               })}
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            
           </div>
         );
       })}

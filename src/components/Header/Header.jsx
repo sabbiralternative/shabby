@@ -26,6 +26,7 @@ const Header = () => {
   const navigate = useNavigate();
   const modalRef = useRef(null);
   const openModalRef = useRef();
+  const { setFilterGames } = UseState();
 
   /* Close modalRef modal click outside the modal */
   useEffect(() => {
@@ -947,27 +948,57 @@ const Header = () => {
                   Table Tennis
                 </Link>
               </li>
-              <li className="nav-item">
+              <li
+                onClick={() => {
+                  navigate("our-casino");
+                  setFilterGames("Baccarat");
+                }}
+                className="nav-item"
+              >
                 <Link className="nav-link" to="/baccarat">
                   Baccarat
                 </Link>
               </li>
-              <li className="nav-item">
+              <li
+                onClick={() => {
+                  navigate("our-casino");
+                  setFilterGames("32 Cards");
+                }}
+                className="nav-item"
+              >
                 <Link className="nav-link" to="/32-cards">
                   32 Cards
                 </Link>
               </li>
-              <li className="nav-item">
+              <li
+                onClick={() => {
+                  navigate("our-casino");
+                  setFilterGames("Teen Patti");
+                }}
+                className="nav-item"
+              >
                 <Link className="nav-link" to="/teenpatti">
                   Teenpatti
                 </Link>
               </li>
-              <li className="nav-item">
+              <li
+                onClick={() => {
+                  navigate("our-casino");
+                  setFilterGames("Poker");
+                }}
+                className="nav-item"
+              >
                 <Link className="nav-link" to="/poker">
                   Poker
                 </Link>
               </li>
-              <li className="nav-item">
+              <li
+                onClick={() => {
+                  navigate("our-casino");
+                  setFilterGames("Lucky 7");
+                }}
+                className="nav-item"
+              >
                 <Link className="nav-link" to="/lucky-7">
                   Lucky 7
                 </Link>

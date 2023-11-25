@@ -24,51 +24,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="accordion">
-        {/* <div className="accordion-item">
-          <h2 className="sidebar-title accordion-header">
-            <button
-              type="button"
-              aria-expanded="true"
-              className="accordion-button"
-            >
-              Racing Sports
-            </button>
-          </h2>
-          <div className="accordion-collapse collapse show">
-            <div className="racing-sport accordion-body">
-              <ul>
-                <div className="nav-item dropdown">
-                  <a
-                    id="horse-dropdown"
-                    aria-expanded="false"
-                    role="button"
-                    className="dropdown-toggle nav-link"
-                    tabIndex="0"
-                    href="#"
-                  >
-                    Horse Racing
-                  </a>
-                </div>
-              </ul>
-              <ul>
-                <div className="nav-item dropdown">
-                  <a
-                    id="horse-dropdown"
-                    aria-expanded="false"
-                    role="button"
-                    className="dropdown-toggle nav-link"
-                    tabIndex="0"
-                    href="#"
-                  >
-                    Greyhound Racing
-                  </a>
-                </div>
-              </ul>
-            </div>
-          </div>
-        </div> */}
-      </div>
+      <div className="accordion"></div>
       <div className="accordion">
         <div className="accordion-item">
           <h2 className="sidebar-title accordion-header">

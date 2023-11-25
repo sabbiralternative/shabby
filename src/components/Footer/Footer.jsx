@@ -56,7 +56,7 @@ const Footer = () => {
               <div className="modal-content">
                 <div className="modal-header">
                   <div className="modal-title h4">
-               {modal[1].bannerTitle}
+               {modal && modal[1].bannerTitle}
                   </div>
                   <button
                     onClick={closeModal}
@@ -67,7 +67,7 @@ const Footer = () => {
                 </div>
                 <div className="p-0 modal-body">
                   <img
-                    src={modal[0].banner}
+                    src={modal && modal[0].banner}
                     className="img-fluid"
                     style={{
                       width:'100%',
