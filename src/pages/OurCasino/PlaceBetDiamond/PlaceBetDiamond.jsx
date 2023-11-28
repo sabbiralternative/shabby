@@ -560,7 +560,7 @@ const PlaceBetDiamond = () => {
         });
     },
   });
-console.log(successMessage);
+
   return (
     <>
       <div className="center-container">

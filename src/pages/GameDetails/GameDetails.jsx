@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { config } from "../../utils/config";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -31,20 +31,21 @@ const GameDetails = () => {
   const [overByOver, setOverByOver] = useState([]);
   const [showTv, setShowTv] = useState(false);
   const [videoUrl, setVideoUrl] = useState();
-  const [exposer, setExposer] = useState([]);
   const [showMobileTv, setShowMobileTv] = useState(false);
   const [showBets, setShowBets] = useState(false);
   const { buttonValue, SetButtonValue } = UseState();
   const { placeBetValue } = UseState();
   const [price, setPrice] = useState("");
   const [totalSize, setTotalSize] = useState("");
-  const [myBets, setMyBets] = useState([]);
   const [profit, setProfit] = useState("");
   const [loader, setLoader] = useState(false);
   const [oddStake, setOddStake] = useState("");
-  const [oddStakeLay, setOddStakeLay] = useState("");
-  const [errorMessage,setErrorMessage] = useState('')
-  const [successMessage, setSuccessMessage] = useState('')
+  const [oddStakeLay1, setOddStakeLay1] = useState("");
+  const [oddStakeLay2, setOddStakeLay2] = useState("");
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [tabs, setTabs] = useState("odds");
 
   const oppositionName = placeBetValue?.oppositionName?.filter(
     (name) => name !== placeBetValue?.name
@@ -88,32 +89,32 @@ const GameDetails = () => {
 
   /* Filtered all the game  */
   useEffect(() => {
-    const filterMatch_odds = data.filter(
+    const filterMatch_odds = data?.filter(
       (match_odd) => match_odd.btype === "MATCH_ODDS"
     );
     setMatch_odds(filterMatch_odds);
 
-    const bookmarkerFilter = data.filter(
+    const bookmarkerFilter = data?.filter(
       (bookmarker) => bookmarker.btype === "BOOKMAKER"
     );
     setBookmarker(bookmarkerFilter);
 
-    const filterBookmarker2 = data.filter(
+    const filterBookmarker2 = data?.filter(
       (bookmarker2) => bookmarker2.btype === "BOOKMAKER2"
     );
     setBookmarker2(filterBookmarker2);
 
-    const normalFilter = data.filter(
+    const normalFilter = data?.filter(
       (normal) => normal.btype === "FANCY" && normal.tabGroupName === "Normal"
     );
     setNormal(normalFilter);
 
-    const fancy1Filter = data.filter(
+    const fancy1Filter = data?.filter(
       (fancy1) => fancy1.btype === "ODDS" && fancy1.tabGroupName === "Fancy1"
     );
     setFancy1(fancy1Filter);
 
-    const overByOverFilter = data.filter(
+    const overByOverFilter = data?.filter(
       (overByOver) =>
         overByOver.btype === "FANCY" &&
         overByOver.tabGroupName === "Over By Over"
@@ -143,7 +144,7 @@ const GameDetails = () => {
   }, [eventId, id, showTv, token, accessTokenApi, showMobileTv]);
 
   /* Get exposure data */
-  const { refetch: refetchExposure } = useQuery({
+  const { data: exposer = [], refetch: refetchExposure } = useQuery({
     queryKey: ["exposure"],
     queryFn: async () => {
       const res = await axios.get(`${exposerApi}/${eventId}`, {
@@ -154,14 +155,13 @@ const GameDetails = () => {
       const data = res.data;
 
       if (data.success) {
-        setExposer(data.result);
+        return data.result;
       }
     },
   });
 
   /* Handle bets */
   const handleOrderBets = () => {
-  
     setLoader(true);
     fetch(orderApi, {
       method: "POST",
@@ -183,40 +183,43 @@ const GameDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if(data?.success){
+        if (data?.success) {
           refetchExposure();
           refetchCurrentBets();
           console.log(data);
           setLoader(false);
           setShowBets(false);
-          setSuccessMessage("Bet Place Successfully !")
-        }else{
-          setErrorMessage(data?.error?.status[0]?.description)
+          setSuccessMessage("Bet Place Successfully !");
+        } else {
+          setErrorMessage(data?.error?.status[0]?.description);
           setLoader(false);
           setShowBets(false);
           refetchExposure();
           refetchCurrentBets();
           console.log(data);
         }
-        
       });
   };
 
   /* Fetch Current Bets */
-  const { refetch: refetchCurrentBets } = useQuery({
+  const { data: myBets = [], refetch: refetchCurrentBets } = useQuery({
     queryKey: ["currentBets"],
-    queryFn: () => {
-      fetch(`${currentBetsApi}/${eventId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            setMyBets(data?.result);
-          }
+    queryFn: async () => {
+      try {
+        const response = await fetch(`${currentBetsApi}/${eventId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
+
+        const data = await response.json();
+
+        if (data.success) {
+          return data.result;
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     },
   });
 
@@ -262,59 +265,128 @@ const GameDetails = () => {
     }
   };
 
+  const pnl1 =
+    placeBetValue?.pnl && placeBetValue?.pnl[0] ? placeBetValue?.pnl[0] : 0;
+  const pnl2 =
+    placeBetValue?.pnl && placeBetValue?.pnl[1] ? placeBetValue?.pnl[1] : 0;
+
+  const pnl3 =
+    placeBetValue?.pnl && placeBetValue?.pnl[2] ? placeBetValue?.pnl[2] : 0;
+
   useEffect(() => {
     if (placeBetValue?.back) {
       const multiply = price * totalSize;
       const total = multiply - totalSize;
-      setOddStake(total);
-      setOddStakeLay(-1 * totalSize);
+      setOddStake(total + pnl1);
+      setOddStakeLay1(-1 * totalSize + pnl2);
+      setOddStakeLay2(-1 * totalSize + pnl3);
+
     } else if (placeBetValue?.lay) {
       const total = -1 * (price * totalSize - totalSize);
-      setOddStake(total);
-      setOddStakeLay(totalSize);
+      setOddStake(total + pnl1);
+      setOddStakeLay1(totalSize + pnl2);
+      setOddStakeLay2(totalSize + pnl3);
+   
     }
-  }, [price, totalSize, placeBetValue]);
+  }, [price, totalSize, placeBetValue, pnl1, pnl2, pnl3]);
 
   return (
     <>
       <div className="center-container">
-       {
-        errorMessage && (
-          <Notification message={errorMessage} success={false} setMessage={setErrorMessage}/>
-        )
-       }
-       {
-        successMessage && (
-          <Notification message={successMessage} success={true} setMessage={setSuccessMessage}/>
-        )
-       }
+        {errorMessage && (
+          <Notification
+            message={errorMessage}
+            success={false}
+            setMessage={setErrorMessage}
+          />
+        )}
+        {successMessage && (
+          <Notification
+            message={successMessage}
+            success={true}
+            setMessage={setSuccessMessage}
+          />
+        )}
         <div className="detail-page-container">
           <div className="game-header">
-            <span>{data[0]?.eventName}</span>
-            <span className="float-right">{data[0]?.openDate}</span>
+            <span>{data?.length > 0 && data[0]?.eventName}</span>
+            <span className="float-right">
+              {data?.length > 0 && data[0]?.openDate}
+            </span>
           </div>
           <ul className="nav nav-tabs d-xl-none menu-tabs">
-            <li className="nav-item">
-              <a className="nav-link active" data-bs-toggle="tab">
+            <li
+              onClick={() => setTabs("odds")}
+              className="nav-item"
+              style={{ cursor: "pointer" }}
+            >
+              <a
+                className={`nav-link ${tabs === "odds" ? "active" : ""}`}
+                data-bs-toggle="tab"
+              >
                 Odds
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" data-bs-toggle="tab">
+
+            <li
+              onClick={() => setTabs("matchBets")}
+              className="nav-item"
+              style={{ cursor: "pointer" }}
+            >
+              <a
+                className={`nav-link ${tabs === "matchBets" ? "active" : ""}`}
+                data-bs-toggle="tab"
+              >
                 Matched Bet ({myBets?.length})
               </a>
             </li>
 
-            {match_odds[0]?.hasVideo && (
-              <li onClick={() => setShowTv(!showTv)} className="nav-item">
-                <Link className="nav-link">
+            {match_odds?.length > 0 && match_odds[0]?.hasVideo && (
+              <li
+                onClick={() => {
+                  setShowTv(!showTv);
+                  setTabs("tv");
+                }}
+                style={{ cursor: "pointer" }}
+                className="nav-item"
+              >
+                <a className={`nav-link ${tabs === "tv" ? "active" : ""}`}>
                   <i className="fas fa-tv"></i>
-                </Link>
+                </a>
               </li>
             )}
           </ul>
 
-          {showTv && (
+          {tabs === "matchBets" && (
+            <div className="table-responsive w-100">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Matched Bet</th>
+                    <th className="text-end">Odds</th>
+                    <th className="text-end">Stake</th>
+                  </tr>
+                </thead>
+                {myBets.length > 0 && Array.isArray(myBets) && (
+                  <tbody>
+                    {myBets?.map(({ nation, userRate, amount, betType }, i) => {
+                      return (
+                        <tr
+                          key={i}
+                          className={`${betType === "Lay" ? "lay" : "back"}`}
+                        >
+                          <td>{nation}</td>
+                          <td className="text-end">{userRate}</td>
+                          <td className="text-end">{amount}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                )}
+              </table>
+            </div>
+          )}
+          {showTv && tabs === "tv" && (
             <div className="live-tv d-xl-none">
               <iframe
                 src={videoUrl?.url}
@@ -327,7 +399,10 @@ const GameDetails = () => {
             </div>
           )}
 
-          {match_odds[0]?.score?.length !== 0 && (
+          {(match_odds?.length > 0 &&
+            match_odds[0]?.score?.length !== 0 &&
+            tabs === "odds") ||
+          tabs === "tv" ? (
             <div className="scorecard">
               {match_odds[0]?.score?.map((scoreInfo, i) => {
                 return (
@@ -391,10 +466,11 @@ const GameDetails = () => {
                 );
               })}
             </div>
-          )}
+          ) : null}
 
           {/* Match odds */}
-          {match_odds && match_odds?.length > 0 && (
+          {(match_odds && match_odds?.length > 0 && tabs === "odds") ||
+          tabs === "tv" ? (
             <MatchOddsSection
               match_odds={match_odds}
               exposer={exposer}
@@ -403,876 +479,61 @@ const GameDetails = () => {
               id={id}
               eventId={eventId}
             />
-          )}
+          ) : null}
 
           {/* Bookmarker section  */}
-          {bookmarker && bookmarker?.length > 0 && (
+          {(bookmarker && bookmarker?.length > 0 && tabs === "odds") ||
+          tabs === "tv" ? (
             <BookmarkerSection
               bookmarker={bookmarker}
               exposer={exposer}
               showBets={showBets}
               setShowBets={setShowBets}
             />
-          )}
+          ) : null}
 
           {/* Bookmarker 2 section  */}
-          {bookmarker2 && bookmarker2?.length > 0 && (
+          {(bookmarker2 && bookmarker2?.length > 0 && tabs === "odds") ||
+          tabs === "tv" ? (
             <BookmarkerTwoSection
               bookmarker2={bookmarker2}
               exposer={exposer}
               showBets={showBets}
               setShowBets={setShowBets}
             />
-          )}
+          ) : null}
 
           {/* Normal section */}
-          {normal && normal?.length > 0 && (
+          {(normal && normal?.length > 0 && tabs === "odds") ||
+          tabs === "tv" ? (
             <NormalSection
               normal={normal}
               exposer={exposer}
               showBets={showBets}
               setShowBets={setShowBets}
             />
-          )}
-
-          {/* Tie Match */}
-          {/* <div className="game-market market-2 width30">
-            <div className="market-title">
-              <span>Tied Match</span>
-            </div>
-            <div className="market-header">
-              <div className="market-nation-detail">
-                <span className="market-nation-name">
-                  Min: 100&nbsp; Max: 1L
-                </span>
-              </div>
-              <div className="market-odd-box back">
-                <b>Back</b>
-              </div>
-              <div className="market-odd-box lay">
-                <b>Lay</b>
-              </div>
-            </div>
-            <div className="market-body" data-title="SUSPENDED">
-              <div className="market-row suspended-row" data-title="SUSPENDED">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">YES</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">-</span>
-                </div>
-                <div className="market-odd-box lay">
-                  <span className="market-odd">-</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="ACTIVE">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">NO</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">1</span>
-                  <span className="market-volume">100000</span>
-                </div>
-                <div className="market-odd-box lay">
-                  <span className="market-odd">1.5</span>
-                  <span className="market-volume">100000</span>
-                </div>
-              </div>
-            </div>
-            <div className="market-row">
-              <marquee className="market-remark">
-                ICC Cricket World Cup 2023 Bets Started In Our Exchange
-              </marquee>
-            </div>
-          </div> */}
+          ) : null}
 
           {/* Over by over */}
-          {overByOver && overByOver.length > 0 && (
+          {(overByOver && overByOver?.length > 0 && tabs === "odds") ||
+          tabs === "tv" ? (
             <OverByOver
               overByOver={overByOver}
               exposer={exposer}
               showBets={showBets}
               setShowBets={setShowBets}
             />
-          )}
-
-          {/* Ball by ball */}
-          {/* <div className="game-market market-6">
-            <div className="market-title">
-              <span>Ball By Ball</span>
-            </div>
-            <div className="row row10">
-              <div className="col-md-6">
-                <div className="market-header">
-                  <div className="market-nation-detail"></div>
-                  <div className="market-odd-box lay">
-                    <b>No</b>
-                  </div>
-                  <div className="market-odd-box back">
-                    <b>Yes</b>
-                  </div>
-                  <div className="fancy-min-max-box"></div>
-                </div>
-              </div>
-              <div className="col-md-6 d-none d-xl-block">
-                <div className="market-header">
-                  <div className="market-nation-detail"></div>
-                  <div className="market-odd-box lay">
-                    <b>No</b>
-                  </div>
-                  <div className="market-odd-box back">
-                    <b>Yes</b>
-                  </div>
-                  <div className="fancy-min-max-box"></div>
-                </div>
-              </div>
-            </div>
-            <div className="market-body" data-title="OPEN">
-              <div className="row row10">
-                <div className="col-md-6">
-                  <div className="fancy-market" data-title="">
-                    <div className="market-row">
-                      <div className="market-nation-detail">
-                        <span className="market-nation-name">
-                          3.1 ball run IND
-                        </span>
-                      </div>
-                      <div className="market-odd-box lay">
-                        <span className="market-odd">23</span>
-                        <span className="market-volume">250</span>
-                      </div>
-                      <div className="market-odd-box back">
-                        <span className="market-odd">23</span>
-                        <span className="market-volume">150</span>
-                      </div>
-                      <div className="fancy-min-max-box">
-                        <div className="fancy-min-max">
-                          <span className="w-100 d-block">Min: 100</span>
-                          <span className="w-100 d-block">Max: 2L</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div
-                    className="fancy-market suspended-row"
-                    data-title="SUSPENDED"
-                  >
-                    <div className="market-row">
-                      <div className="market-nation-detail">
-                        <span className="market-nation-name">
-                          3.2 ball run IND
-                        </span>
-                      </div>
-                      <div className="market-odd-box lay">
-                        <span className="market-odd">-</span>
-                      </div>
-                      <div className="market-odd-box back">
-                        <span className="market-odd">-</span>
-                      </div>
-                      <div className="fancy-min-max-box">
-                        <div className="fancy-min-max">
-                          <span className="w-100 d-block">Min: 100</span>
-                          <span className="w-100 d-block">Max: 2L</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div
-                    className="fancy-market suspended-row"
-                    data-title="SUSPENDED"
-                  >
-                    <div className="market-row">
-                      <div className="market-nation-detail">
-                        <span className="market-nation-name">
-                          3.3 ball run IND
-                        </span>
-                      </div>
-                      <div className="market-odd-box lay">
-                        <span className="market-odd">-</span>
-                      </div>
-                      <div className="market-odd-box back">
-                        <span className="market-odd">-</span>
-                      </div>
-                      <div className="fancy-min-max-box">
-                        <div className="fancy-min-max">
-                          <span className="w-100 d-block">Min: 100</span>
-                          <span className="w-100 d-block">Max: 2L</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div
-                    className="fancy-market suspended-row"
-                    data-title="SUSPENDED"
-                  >
-                    <div className="market-row">
-                      <div className="market-nation-detail">
-                        <span className="market-nation-name">
-                          3.4 ball run IND
-                        </span>
-                      </div>
-                      <div className="market-odd-box lay">
-                        <span className="market-odd">-</span>
-                      </div>
-                      <div className="market-odd-box back">
-                        <span className="market-odd">-</span>
-                      </div>
-                      <div className="fancy-min-max-box">
-                        <div className="fancy-min-max">
-                          <span className="w-100 d-block">Min: 100</span>
-                          <span className="w-100 d-block">Max: 2L</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div
-                    className="fancy-market suspended-row"
-                    data-title="SUSPENDED"
-                  >
-                    <div className="market-row">
-                      <div className="market-nation-detail">
-                        <span className="market-nation-name">
-                          3.5 ball run IND
-                        </span>
-                      </div>
-                      <div className="market-odd-box lay">
-                        <span className="market-odd">-</span>
-                      </div>
-                      <div className="market-odd-box back">
-                        <span className="market-odd">-</span>
-                      </div>
-                      <div className="fancy-min-max-box">
-                        <div className="fancy-min-max">
-                          <span className="w-100 d-block">Min: 100</span>
-                          <span className="w-100 d-block">Max: 2L</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
+          ) : null}
 
           {/* Fancy1 section */}
-          {fancy1 && fancy1.length > 0 && (
+          {(fancy1 && fancy1.length > 0 && tabs === "odds") || tabs === "tv" ? (
             <FancyOne
               fancy1={fancy1}
               exposer={exposer}
               showBets={showBets}
               setShowBets={setShowBets}
             />
-          )}
-
-          {/* Meter section */}
-          {/* <div className="game-market market-6">
-            <div className="market-title">
-              <span>meter</span>
-            </div>
-            <div className="row row10">
-              <div className="col-md-6">
-                <div className="market-header">
-                  <div className="market-nation-detail"></div>
-                  <div className="market-odd-box lay">
-                    <b>No</b>
-                  </div>
-                  <div className="market-odd-box back">
-                    <b>Yes</b>
-                  </div>
-                  <div className="fancy-min-max-box"></div>
-                </div>
-              </div>
-              <div className="col-md-6 d-none d-xl-block">
-                <div className="market-header">
-                  <div className="market-nation-detail"></div>
-                  <div className="market-odd-box lay">
-                    <b>No</b>
-                  </div>
-                  <div className="market-odd-box back">
-                    <b>Yes</b>
-                  </div>
-                  <div className="fancy-min-max-box"></div>
-                </div>
-              </div>
-            </div>
-            <div className="market-body" data-title="OPEN">
-              <div className="row row10">
-                <div className="col-md-6">
-                  <div className="fancy-market" data-title="">
-                    <div className="market-row">
-                      <div className="market-nation-detail">
-                        <span className="market-nation-name">
-                          Fall of 1st wkt meter IND adv
-                        </span>
-                      </div>
-                      <div className="market-odd-box lay">
-                        <span className="market-odd">70</span>
-                        <span className="market-volume">100</span>
-                      </div>
-                      <div className="market-odd-box back">
-                        <span className="market-odd">73</span>
-                        <span className="market-volume">100</span>
-                      </div>
-                      <div className="fancy-min-max-box">
-                        <div className="fancy-min-max">
-                          <span className="w-100 d-block">Min: 10</span>
-                          <span className="w-100 d-block">Max: 3K</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="fancy-market" data-title="">
-                    <div className="market-row">
-                      <div className="market-nation-detail">
-                        <span className="market-nation-name">
-                          S Gill meter adv
-                        </span>
-                      </div>
-                      <div className="market-odd-box lay">
-                        <span className="market-odd">50</span>
-                        <span className="market-volume">100</span>
-                      </div>
-                      <div className="market-odd-box back">
-                        <span className="market-odd">53</span>
-                        <span className="market-volume">100</span>
-                      </div>
-                      <div className="fancy-min-max-box">
-                        <div className="fancy-min-max">
-                          <span className="w-100 d-block">Min: 10</span>
-                          <span className="w-100 d-block">Max: 5K</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="fancy-market" data-title="">
-                    <div className="market-row">
-                      <div className="market-nation-detail">
-                        <span className="market-nation-name">
-                          R Sharma meter adv
-                        </span>
-                      </div>
-                      <div className="market-odd-box lay">
-                        <span className="market-odd">63</span>
-                        <span className="market-volume">100</span>
-                      </div>
-                      <div className="market-odd-box back">
-                        <span className="market-odd">66</span>
-                        <span className="market-volume">100</span>
-                      </div>
-                      <div className="fancy-min-max-box">
-                        <div className="fancy-min-max">
-                          <span className="w-100 d-block">Min: 10</span>
-                          <span className="w-100 d-block">Max: 5K</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
-          {/* Odd even section */}
-          {/*
-              <div className="game-market market-6">
-              <div className="market-title">
-                <span>{oddsEven[0]?.tabGroupName}</span>
-              </div>
-              <div className="market-body" data-title="OPEN">
-                <div className="row row10">
-                  <div className="col-md-6">
-                    <div
-                      className="fancy-market suspended-row"
-                      data-title="SUSPENDED"
-                    >
-                      <div className="market-row">
-                        <div className="market-nation-detail">
-                          <span className="market-nation-name">
-                            2nd inn 5 over even run bhav(IND vs NZ)adv
-                          </span>
-                          <div className="market-nation-book"></div>
-                        </div>
-                        <div className="market-odd-box back">
-                          <span className="market-odd">-</span>
-                        </div>
-                        <div className="market-odd-box back">
-                          <span className="market-odd">-</span>
-                        </div>
-                        <div className="fancy-min-max-box">
-                          <div className="fancy-min-max">
-                            <span className="w-100 d-block">Min: 10</span>
-                            <span className="w-100 d-block">Max: 1L</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="fancy-market" data-title="">
-                      <div className="market-row">
-                        <div className="market-nation-detail">
-                          <span className="market-nation-name">
-                            2nd inn 10 over odd run bhav(IND vs NZ)adv
-                          </span>
-                          <div className="market-nation-book"></div>
-                        </div>
-                        <div className="market-odd-box back">
-                          <span className="market-odd">1.98</span>
-                          <span className="market-volume">500000</span>
-                        </div>
-                        <div className="market-odd-box back">
-                          <span className="market-odd">-</span>
-                        </div>
-                        <div className="fancy-min-max-box">
-                          <div className="fancy-min-max">
-                            <span className="w-100 d-block">Min: 10</span>
-                            <span className="w-100 d-block">Max: 1L</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-  
-  
-               
-               
-             
-             
-                
-                
-               
-             
-             
-                  <div className="col-md-6">
-                    <div className="fancy-market" data-title="">
-                      <div className="market-row">
-                        <div className="market-nation-detail">
-                          <span className="market-nation-name">
-                            2nd inn 25 over odd run bhav(IND vs NZ)adv
-                          </span>
-                          <div className="market-nation-book"></div>
-                        </div>
-                        <div className="market-odd-box back">
-                          <span className="market-odd">1.98</span>
-                          <span className="market-volume">500000</span>
-                        </div>
-                        <div className="market-odd-box back">
-                          <span className="market-odd">-</span>
-                        </div>
-                        <div className="fancy-min-max-box">
-                          <div className="fancy-min-max">
-                            <span className="w-100 d-block">Min: 10</span>
-                            <span className="w-100 d-block">Max: 1L</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="fancy-market" data-title="">
-                      <div className="market-row">
-                        <div className="market-nation-detail">
-                          <span className="market-nation-name">
-                            2nd inn 25 over even run bhav(IND vs NZ)adv
-                          </span>
-                          <div className="market-nation-book"></div>
-                        </div>
-                        <div className="market-odd-box back">
-                          <span className="market-odd">-</span>
-                        </div>
-                        <div className="market-odd-box back">
-                          <span className="market-odd">1.98</span>
-                          <span className="market-volume">500000</span>
-                        </div>
-                        <div className="fancy-min-max-box">
-                          <div className="fancy-min-max">
-                            <span className="w-100 d-block">Min: 100</span>
-                            <span className="w-100 d-block">Max: 1L</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="fancy-market" data-title="">
-                      <div className="market-row">
-                        <div className="market-nation-detail">
-                          <span className="market-nation-name">
-                            2nd inn 30 over odd run bhav(IND vs NZ)adv
-                          </span>
-                          <div className="market-nation-book"></div>
-                        </div>
-                        <div className="market-odd-box back">
-                          <span className="market-odd">1.98</span>
-                          <span className="market-volume">500000</span>
-                        </div>
-                        <div className="market-odd-box back">
-                          <span className="market-odd">-</span>
-                        </div>
-                        <div className="fancy-min-max-box">
-                          <div className="fancy-min-max">
-                            <span className="w-100 d-block">Min: 10</span>
-                            <span className="w-100 d-block">Max: 1L</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="fancy-market" data-title="">
-                      <div className="market-row">
-                        <div className="market-nation-detail">
-                          <span className="market-nation-name">
-                            2nd inn 30 over even run bhav(IND vs NZ)adv
-                          </span>
-                          <div className="market-nation-book"></div>
-                        </div>
-                        <div className="market-odd-box back">
-                          <span className="market-odd">-</span>
-                        </div>
-                        <div className="market-odd-box back">
-                          <span className="market-odd">1.98</span>
-                          <span className="market-volume">500000</span>
-                        </div>
-                        <div className="fancy-min-max-box">
-                          <div className="fancy-min-max">
-                            <span className="w-100 d-block">Min: 10</span>
-                            <span className="w-100 d-block">Max: 1L</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-         */}
-
-          {/* <div className="game-market market-9">
-            <div className="market-title">
-              <span>2ND INN 10 OVER IND VS NZ</span>
-            </div>
-            <div className="market-header">
-              <div className="market-nation-detail">
-                <span className="market-nation-name">Min: 100 Max: 25K</span>
-              </div>
-              <div className="market-odd-box back">
-                <b>Back</b>
-              </div>
-            </div>
-            <div className="market-body" data-title="OPEN">
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">0 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">1 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">2 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">3 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">4 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">5 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">6 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">7 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">8 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">9 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="game-market market-9">
-            <div className="market-title">
-              <span>2ND INN 20 OVER IND VS NZ</span>
-            </div>
-            <div className="market-header">
-              <div className="market-nation-detail">
-                <span className="market-nation-name">Min: 100 Max: 25K</span>
-              </div>
-              <div className="market-odd-box back">
-                <b>Back</b>
-              </div>
-            </div>
-            <div className="market-body" data-title="OPEN">
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">0 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">1 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">2 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">3 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">4 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">5 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">6 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">7 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">8 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">9 Number</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">9.5</span>
-                  <span className="market-volume">100</span>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
-          {/* TIED_MATCH */}
-          {/* <div className="game-market market-4">
-            <div className="market-title">
-              <span>TIED_MATCH</span>
-            </div>
-            <div className="market-header">
-              <div className="market-nation-detail">
-                <span className="market-nation-name">Max: 1</span>
-              </div>
-              <div className="market-odd-box no-border d-none d-md-block"></div>
-              <div className="market-odd-box no-border d-none d-md-block"></div>
-              <div className="market-odd-box back">
-                <b>Back</b>
-              </div>
-              <div className="market-odd-box lay">
-                <b>Lay</b>
-              </div>
-              <div className="market-odd-box"></div>
-              <div className="market-odd-box no-border"></div>
-            </div>
-            <div className="market-body" data-title="OPEN">
-              <div className="market-row" data-title="ACTIVE">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">Yes</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back2">
-                  <span className="market-odd">90</span>
-                  <span className="market-volume">46.39</span>
-                </div>
-                <div className="market-odd-box back1">
-                  <span className="market-odd">95</span>
-                  <span className="market-volume">52.63</span>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">100</span>
-                  <span className="market-volume">277.37</span>
-                </div>
-                <div className="market-odd-box lay">
-                  <span className="market-odd">140</span>
-                  <span className="market-volume">32</span>
-                </div>
-                <div className="market-odd-box lay1">
-                  <span className="market-odd">160</span>
-                  <span className="market-volume">1</span>
-                </div>
-                <div className="market-odd-box lay2">
-                  <span className="market-odd">180</span>
-                  <span className="market-volume">3.56</span>
-                </div>
-              </div>
-              <div className="market-row" data-title="ACTIVE">
-                <div className="market-nation-detail">
-                  <span className="market-nation-name">No</span>
-                  <div className="market-nation-book"></div>
-                </div>
-                <div className="market-odd-box back2">
-                  <span className="market-odd">-</span>
-                </div>
-                <div className="market-odd-box back1">
-                  <span className="market-odd">-</span>
-                </div>
-                <div className="market-odd-box back">
-                  <span className="market-odd">-</span>
-                </div>
-                <div className="market-odd-box lay">
-                  <span className="market-odd">1.01</span>
-                  <span className="market-volume">14513.61</span>
-                </div>
-                <div className="market-odd-box lay1">
-                  <span className="market-odd">1.02</span>
-                  <span className="market-volume">71997.97</span>
-                </div>
-                <div className="market-odd-box lay2">
-                  <span className="market-odd">1.03</span>
-                  <span className="market-volume">13397.81</span>
-                </div>
-              </div>
-            </div>
-          </div> */}
+          ) : null}
         </div>
 
         {/* Mobile place bet starts */}
@@ -1403,81 +664,135 @@ const GameDetails = () => {
                         <button className="btn btn-info">Edit</button>
                       </div>
 
-                      <div className="row mt-2">
-                        <div className="col-4">
-                          <span>{placeBetValue?.name}</span>
-                        </div>
-                        <div className="col-4 text-center">
-                          <span className="text-danger"></span>
-                        </div>
-                        <div className="col-4 text-end">
-                          <span
-                            className={`${
-                              oddStake > 0 ? "text-success" : "text-danger"
-                            }`}
-                          >
-                            {oddStake !== 0 && oddStake}
-                          </span>
-                        </div>
-                      </div>
+                      {placeBetValue?.btype === "MATCH_ODDS" || placeBetValue?.btype === 'BOOKMAKER' || placeBetValue?.btype === 'BOOKMAKER2' ? (
+                        <>
+                          <div className="row mt-2">
+                            <div className="col-4">
+                              <span>{placeBetValue?.name}</span>
+                            </div>
 
-                      <div className="row mt-2">
-                        <div className="col-4">
-                          <span>
-                            {oppositionName?.length > 0
-                              ? oppositionName[0]
-                              : null}
-                          </span>
-                        </div>
-                        <div className="col-4 text-center">
-                          <span className="text-center"></span>
-                        </div>
-                        <div className="col-4 text-end">
-                          <span
-                            className={`${
-                              oddStakeLay > 0 ? "text-success" : "text-danger"
-                            }`}
-                          >
-                            {placeBetValue?.back &&
-                              totalSize != 0 &&
-                              oddStakeLay}
+                            {placeBetValue?.pnl?.length > 0 && (
+                              <div className="col-4 text-center">
+                                <span
+                                  className={`${
+                                    placeBetValue?.pnl &&
+                                    placeBetValue?.pnl[0] > 0
+                                      ? "text-success"
+                                      : "text-danger"
+                                  }`}
+                                >
+                                  {placeBetValue?.pnl[0]}
+                                </span>
+                              </div>
+                            )}
 
-                            {placeBetValue?.lay &&
-                              totalSize != 0 &&
-                              oddStakeLay}
-                          </span>
-                        </div>
-                      </div>
+                            <div className="col-4 text-end">
+                              <span
+                                className={`${
+                                  oddStake > 0 ? "text-success" : "text-danger"
+                                }`}
+                              >
+                                {oddStake !== 0 && oddStake}
+                              </span>
+                            </div>
+                          </div>
 
-                      <div className="row mt-2">
-                        <div className="col-4">
-                          <span>
-                            {oppositionName?.length > 1
-                              ? oppositionName[1]
-                              : null}
-                          </span>
-                        </div>
-                        <div className="col-4 text-center">
-                          <span className="text-center"></span>
-                        </div>
-                        <div className="col-4 text-end">
-                          <span
-                            className={`${
-                              oddStakeLay > 0 ? "text-success" : "text-danger"
-                            }`}
-                          >
-                            {placeBetValue?.back &&
-                              oppositionName?.length > 1 &&
-                              totalSize != 0 &&
-                              oddStakeLay}
+                          <div className="row mt-2">
+                            <div className="col-4">
+                              <span>
+                                {oppositionName?.length > 0
+                                  ? oppositionName[0]
+                                  : null}
+                              </span>
+                            </div>
 
-                            {placeBetValue?.lay &&
-                              oppositionName?.length > 1 &&
-                              totalSize != 0 &&
-                              oddStakeLay}
-                          </span>
-                        </div>
-                      </div>
+                            {placeBetValue?.pnl?.length > 1 && (
+                              <div className="col-4 text-center">
+                                <span
+                                  className={`${
+                                    placeBetValue?.pnl &&
+                                    placeBetValue?.pnl[1] > 0
+                                      ? "text-success"
+                                      : "text-danger"
+                                  }`}
+                                >
+                                  {placeBetValue?.pnl[1]}
+                                </span>
+                              </div>
+                            )}
+
+                            <div className="col-4 text-end">
+                              <span
+                                className={`${
+                                  oddStakeLay1 > 0
+                                    ? "text-success"
+                                    : "text-danger"
+                                }`}
+                              >
+                                {placeBetValue?.back &&
+                                  totalSize != 0 &&
+                                  oddStakeLay1}
+
+                                {placeBetValue?.lay &&
+                                  totalSize != 0 &&
+                                  oddStakeLay1}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="row mt-2">
+                            <div className="col-4">
+                              <span>
+                                {oppositionName?.length > 1
+                                  ? oppositionName[1]
+                                  : null}
+                              </span>
+                            </div>
+
+                            {placeBetValue?.pnl?.length > 0 && (
+                              <div className="col-4 text-center">
+                                <span
+                                  className={`${
+                                    placeBetValue?.pnl &&
+                                    placeBetValue?.pnl[2] > 0
+                                      ? "text-success"
+                                      : "text-danger"
+                                  }`}
+                                >
+                                  {placeBetValue?.pnl[2]}
+                                </span>
+                              </div>
+                            )}
+
+                            <div className="col-4 text-end">
+                              <span
+                                className={`${
+                                  oddStakeLay2 > 0
+                                    ? "text-success"
+                                    : "text-danger"
+                                }`}
+                              >
+                                {placeBetValue?.back &&
+                                  oppositionName?.length > 1 &&
+                                  totalSize != 0 &&
+                                  oddStakeLay2}
+
+                                {placeBetValue?.lay &&
+                                  oppositionName?.length > 1 &&
+                                  totalSize != 0 &&
+                                  oddStakeLay2}
+                              </span>
+                            </div>
+                          </div>
+                        </>
+                      ):null}
+
+                      {
+                        placeBetValue?.btype === 'FANCY' && (
+                          <p>Range: {placeBetValue?.minLiabilityPerBet} to {placeBetValue?.maxLiabilityPerBet
+                          }</p>
+                        )
+                      }
                     </div>
                   </div>
                 </div>
@@ -1489,7 +804,7 @@ const GameDetails = () => {
       </div>
 
       <div className="sidebar right-sidebar">
-        {match_odds[0]?.hasVideo && (
+        {match_odds?.length > 0 && match_odds[0]?.hasVideo && (
           <div
             style={{
               cursor: "pointer",
@@ -1647,7 +962,7 @@ const GameDetails = () => {
                     <th className="text-end">Stake</th>
                   </tr>
                 </thead>
-                {myBets.length > 0 && Array.isArray(myBets) && (
+                {myBets?.length > 0 && Array.isArray(myBets) && (
                   <tbody>
                     {myBets?.map(({ nation, userRate, amount, betType }, i) => {
                       return (

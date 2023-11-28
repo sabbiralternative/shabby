@@ -17,7 +17,7 @@
       "siteTitle": "WINBUZZ365",
       "recaptcha": "6Lc4UB8dAAAAAJkIpe063dHBO_o19nUYe7hqkVHb",
       "interval": "600",
-      "casino": "aura"
+      "casino": "diamond"
     },
     "endpoint": {
       "login": "https://api7.live/api/account/diamond/login",
@@ -42,7 +42,7 @@
       "reportTransfer": "https://api7.live/api/account/reports/transfer",
       "pastEvents": "https://cache.api7.live/api/exchange/diamond/pastevents",
       "history": "https://cache.api7.live/api/exchange/diamond/history/event",
-      "changePassword": "https://api7.live/api/exchange/diamond/password.php",
+      "changePassword": "https://api7.live/api/exchange/diamond/changePassword",
       "buttonValue": "https://api7.live/api/exchange/diamond/buttonValue.php",
       "serverTime": "https://cache.api7.live/api/exchnage/diamond/serverTime",
       "approveRules": "https://api7.live/api/approved-rules",

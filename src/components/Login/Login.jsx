@@ -41,7 +41,14 @@ const Login = () => {
           localStorage.setItem("modal", JSON.stringify(modal));
           if (
             localStorage.getItem("token") &&
-            localStorage.getItem("loginName")
+            localStorage.getItem("loginName") &&
+            data?.result?.changePassword === true
+          ) {
+            navigate("/change-password-login");
+          } else if (
+            localStorage.getItem("token") &&
+            localStorage.getItem("loginName") &&
+            data?.result?.changePassword === false
           ) {
             navigate("/");
           }
@@ -75,16 +82,31 @@ const Login = () => {
         localStorage.setItem("modal", JSON.stringify(modal));
         if (
           localStorage.getItem("token") &&
-          localStorage.getItem("loginName")
+          localStorage.getItem("loginName") &&
+          data?.result?.changePassword === true
+        ) {
+          navigate("/change-password-login");
+        } else if (
+          localStorage.getItem("token") &&
+          localStorage.getItem("loginName") &&
+          data?.result?.changePassword === false
         ) {
           navigate("/");
+        } else {
+          setErrorLogin(data?.error);
         }
       });
   };
 
   return (
     <div className="login-page">
-      {errorLogin && <Notification message={errorLogin} success={false} setMessage={setErrorLogin} />}
+      {errorLogin && (
+        <Notification
+          message={errorLogin}
+          success={false}
+          setMessage={setErrorLogin}
+        />
+      )}
       <div className="login-box">
         <div className="logo-login">
           <img src={loginBanner} />

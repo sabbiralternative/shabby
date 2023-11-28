@@ -17,6 +17,17 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
     pnlBySelection = Object?.values(obj);
   }
 
+  const updatedPnl = [];
+
+  match_odds?.forEach((item) => {
+    item?.runners?.forEach((runner) => {
+      const pnl = pnlBySelection?.find((p) => p?.RunnerId === runner?.id);
+      if (pnl) {
+        updatedPnl.push(pnl?.pnl);
+      }
+    });
+  });
+
   const handleLader = (marketId) => {
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {
@@ -153,8 +164,6 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
               <div className="market-odd-box no-border"></div>
             </div>
 
-
-
             <div
               className={`market-body ${
                 item?.status !== "OPEN" ? "suspended-row" : " "
@@ -239,11 +248,14 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
                             marketId: item?.id,
                             back: true,
                             name: runner?.name,
-                            oppositionName:item.runners.map(runner => runner.name),
+                            pnl: updatedPnl,
+                            oppositionName: item.runners.map(
+                              (runner) => runner.name
+                            ),
                             isWeak: item?.isWeak,
                           });
                         };
-                   
+
                         return (
                           <div
                             onClick={handlePlaceBackBet}
@@ -289,8 +301,11 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
                           eventTypeId: item?.eventTypeId,
                           betDelay: item?.betDelay,
                           marketId: item?.id,
+                          pnl: updatedPnl,
                           lay: true,
-                          oppositionName:item.runners.map(runner => runner.name),
+                          oppositionName: item.runners.map(
+                            (runner) => runner.name
+                          ),
                           name: runner?.name,
                           isWeak: item?.isWeak,
                         });
@@ -334,19 +349,6 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
                 );
               })}
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-            
           </div>
         );
       })}

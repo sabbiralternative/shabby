@@ -8,7 +8,8 @@ import Cricket from "../pages/Cricket/Cricket";
 import Football from "../pages/Football/Football";
 import Tennis from "../pages/Tennis/Tennis.jsx";
 import TableTennis from "../pages/TableTennis/TableTennis";
-import ChangePassword from "../pages/ChangePassword/ChangePassword.jsx";
+import ChangePassword from "../pages/ChangePassword/ChangePassword";
+import ChangePasswordLogin from "../pages/ChangePasswordLogin/ChangePasswordLogin";
 import ActivityLogs from "../pages/ActivityLogs/ActivityLogs";
 import CurrentBet from "../pages/CurrentBet/CurrentBet";
 import AccountStatement from "../pages/AccountStatement/AccountStatement";
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/change-Password-login",
+    element: <ChangePasswordLogin />,
   },
 ]);
 

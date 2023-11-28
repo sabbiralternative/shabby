@@ -15,6 +15,7 @@ const NormalSection = ({ normal, setShowBets, exposer }) => {
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
+
   const handleLadder = (marketId) => {
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {
@@ -64,7 +65,7 @@ const NormalSection = ({ normal, setShowBets, exposer }) => {
       setPreviousData(normal);
     }
   }, [normal, previousData]);
- 
+
   return (
     <>
       {showLadder && (
@@ -176,7 +177,6 @@ const NormalSection = ({ normal, setShowBets, exposer }) => {
                     }`}
                   >
                     <div className="market-row">
-
                       <div className="market-nation-detail">
                         <span className="market-nation-name">
                           {fancyGame?.name}
@@ -215,10 +215,9 @@ const NormalSection = ({ normal, setShowBets, exposer }) => {
                               lay: true,
                               name: runner?.name,
                               isWeak: fancyGame?.isWeak,
-            
                             });
                           };
-                     
+
                           return (
                             <div
                               onClick={handlePlaceLayBet}
@@ -238,6 +237,7 @@ const NormalSection = ({ normal, setShowBets, exposer }) => {
 
                       {fancyGame?.runners?.map((runner) =>
                         runner.back.map((back, i) => {
+                  
                           const handlePlaceBackBets = () => {
                             setShowBets(true);
                             setPlaceBetValue({});
@@ -247,6 +247,9 @@ const NormalSection = ({ normal, setShowBets, exposer }) => {
                               selectionId: runner?.id,
                               btype: fancyGame?.btype,
                               eventTypeId: fancyGame?.eventTypeId,
+                              maxLiabilityPerBet: fancyGame?.maxLiabilityPerBet,
+                              minLiabilityPerBet: fancyGame?.minLiabilityPerBet,
+
                               betDelay: fancyGame?.betDelay,
                               marketId: fancyGame?.id,
                               back: true,
@@ -279,7 +282,7 @@ const NormalSection = ({ normal, setShowBets, exposer }) => {
                             Min: {fancyGame?.minLiabilityPerBet}
                           </span>
                           <span className="w-100 d-block">
-                            Max: {fancyGame?.maxLiabilityPerMarket}
+                            Max: {fancyGame?.maxLiabilityPerBet}
                           </span>
                         </div>
                       </div>

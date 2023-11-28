@@ -38,7 +38,7 @@ const Main = () => {
               ? "list-page slot-page"
               : ""
           } 
-          } ${
+           ${
             relativeURL == "/current-bet" ||
             relativeURL == "/activity-logs" ||
             relativeURL == "/change-password" ||
@@ -47,7 +47,7 @@ const Main = () => {
               : ""
           } 
         ${relativeURL.includes("/our-casino/") ? "casino-page" : ""} 
-          `}
+        home-page `}
         >
           <Outlet />
         </div>

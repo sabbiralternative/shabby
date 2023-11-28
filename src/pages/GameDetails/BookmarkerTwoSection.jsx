@@ -16,6 +16,17 @@ const BookmarkerTwoSection = ({ bookmarker2, exposer, setShowBets }) => {
     pnlBySelection = Object?.values(obj);
   }
 
+  const updatedPnl = [];
+
+  bookmarker2?.forEach((item) => {
+    item?.runners?.forEach((runner) => {
+      const pnl = pnlBySelection?.find((p) => p?.RunnerId === runner?.id);
+      if (pnl) {
+        updatedPnl.push(pnl?.pnl);
+      }
+    });
+  });
+
   const handleLader = (marketId) => {
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {
@@ -214,6 +225,10 @@ const BookmarkerTwoSection = ({ bookmarker2, exposer, setShowBets }) => {
                             eventTypeId: bookmaker?.eventTypeId,
                             betDelay: bookmaker?.betDelay,
                             marketId: bookmaker?.id,
+                            pnl: updatedPnl,
+                          oppositionName: bookmaker.runners.map(
+                            (runner) => runner.name
+                          ),
                             back: true,
                             name:runner?.name,
                             isWeak:bookmaker?.isWeak
@@ -261,6 +276,10 @@ const BookmarkerTwoSection = ({ bookmarker2, exposer, setShowBets }) => {
                           eventTypeId: bookmaker?.eventTypeId,
                           betDelay: bookmaker?.betDelay,
                           marketId: bookmaker?.id,
+                          pnl: updatedPnl,
+                          oppositionName: bookmaker.runners.map(
+                            (runner) => runner.name
+                          ),
                           lay: true,
                           name:runner?.name,
                           isWeak:bookmaker?.isWeak

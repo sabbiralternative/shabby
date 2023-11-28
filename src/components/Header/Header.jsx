@@ -27,6 +27,7 @@ const Header = () => {
   const modalRef = useRef(null);
   const openModalRef = useRef();
   const { setFilterGames } = UseState();
+  const role = localStorage.getItem('loginName')
 
   /* Close modalRef modal click outside the modal */
   useEffect(() => {
@@ -637,7 +638,7 @@ const Header = () => {
                     id="react-aria2236598939-1"
                     aria-expanded="false"
                   >
-                    Demo<i className="fas fa-chevron-down ms-1"></i>
+                    {role}<i className="fas fa-chevron-down ms-1"></i>
                   </div>
                   {open && (
                     <div className="show dropdown ">
@@ -794,7 +795,7 @@ const Header = () => {
                 id="react-aria2236598939-2"
                 aria-expanded="false"
               >
-                Demo<i className="fas fa-chevron-down ms-1"></i>
+                {role}<i className="fas fa-chevron-down ms-1"></i>
               </div>
 
               {dropDown && (
@@ -921,11 +922,6 @@ const Header = () => {
               <li className="nav-item">
                 <Link className="nav-link" to="/">
                   Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/lottery">
-                  Lottery
                 </Link>
               </li>
               <li onClick={cricketEndpoint} className="nav-item">

@@ -25,6 +25,7 @@ const TableTennis = () => {
   }, [group, gamesApi, token]);
 
   return (
+    <div className="center-container">
     <div className="tab-content mt-1">
       <div className="tab-pane active">
         <div className="bet-table">
@@ -56,6 +57,7 @@ const TableTennis = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

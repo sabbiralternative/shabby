@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
 
-const BookmarkerSection = ({ bookmarker,exposer,setShowBets }) => {
+const BookmarkerSection = ({ bookmarker, exposer, setShowBets }) => {
   const token = localStorage.getItem("token");
   const laderApi = config?.result?.endpoint?.ladder;
   const [showLadder, setShowLadder] = useState(false);
@@ -15,6 +15,17 @@ const BookmarkerSection = ({ bookmarker,exposer,setShowBets }) => {
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
+
+  const updatedPnl = [];
+
+  bookmarker?.forEach((item) => {
+    item?.runners?.forEach((runner) => {
+      const pnl = pnlBySelection?.find((p) => p?.RunnerId === runner?.id);
+      if (pnl) {
+        updatedPnl.push(pnl?.pnl);
+      }
+    });
+  });
 
   const handleLader = (marketId) => {
     setShowLadder(!showLadder);
@@ -30,7 +41,6 @@ const BookmarkerSection = ({ bookmarker,exposer,setShowBets }) => {
         }
       });
   };
-
 
   useEffect(() => {
     const newChangedPrices = {};
@@ -67,7 +77,7 @@ const BookmarkerSection = ({ bookmarker,exposer,setShowBets }) => {
   }, [bookmarker, previousData]);
   return (
     <>
-     {showLadder && (
+      {showLadder && (
         <>
           <div className="fade modal-backdrop show"></div>
           <div
@@ -174,14 +184,15 @@ const BookmarkerSection = ({ bookmarker,exposer,setShowBets }) => {
                     <div className="market-nation-detail">
                       <span className="market-nation-name">{runner.name} </span>
                       <div className="market-nation-book">
-                        {pnl?.map(({ pnl,MarketId }, i) => {
+                        {pnl?.map(({ pnl, MarketId }, i) => {
                           return (
                             <span
-                            onClick={() => handleLader(MarketId)}
+                              onClick={() => handleLader(MarketId)}
                               key={i}
                               className={`market-book ${
                                 pnl > 0 ? "text-success" : "text-danger"
-                              }`} style={{cursor:'pointer'}}
+                              }`}
+                              style={{ cursor: "pointer" }}
                             >
                               {pnl}
                             </span>
@@ -214,21 +225,23 @@ const BookmarkerSection = ({ bookmarker,exposer,setShowBets }) => {
                             btype: bookmark?.btype,
                             eventTypeId: bookmark?.eventTypeId,
                             betDelay: bookmark?.betDelay,
+                            pnl: updatedPnl,
+                            oppositionName: bookmark.runners.map(
+                              (runner) => runner.name
+                            ),
                             marketId: bookmark?.id,
-                            back:true,
-                            name:runner?.name,
-                            isWeak:bookmark?.isWeak
+                            back: true,
+                            name: runner?.name,
+                            isWeak: bookmark?.isWeak,
                           });
                         };
                         return (
                           <div
-                          onClick={handlePlaceBackBet}
+                            onClick={handlePlaceBackBet}
                             key={i}
                             className={`market-odd-box ${
-                              i === 0 ? "back" : ""
-                            } ${i === 1 ? "back1" : ""} ${
-                              i === 2 ? "back2" : ""
-                            }
+                              i === 0 ? "back2" : ""
+                            } ${i === 1 ? "back1" : ""} ${i === 2 ? "back" : ""}
                         ${
                           changedPrices[`back-${runner?.id}-${i}`]
                             ? "blink"
@@ -253,25 +266,29 @@ const BookmarkerSection = ({ bookmarker,exposer,setShowBets }) => {
                       })}
 
                     {runner.lay.map((lay, i) => {
-                         const handlePlaceLayBets = () => {
-                          setShowBets(true);
-                          setPlaceBetValue({});
-                          setPlaceBetValue({
-                            price: lay?.price,
-                            side: 1,
-                            selectionId: runner?.id,
-                            btype: bookmark?.btype,
-                            eventTypeId: bookmark?.eventTypeId,
-                            betDelay: bookmark?.betDelay,
-                            marketId: bookmark?.id,
-                            lay:true,
-                            name:runner?.name,
-                            isWeak:bookmark?.isWeak
-                          });
-                        };
+                      const handlePlaceLayBets = () => {
+                        setShowBets(true);
+                        setPlaceBetValue({});
+                        setPlaceBetValue({
+                          price: lay?.price,
+                          side: 1,
+                          selectionId: runner?.id,
+                          btype: bookmark?.btype,
+                          eventTypeId: bookmark?.eventTypeId,
+                          betDelay: bookmark?.betDelay,
+                          marketId: bookmark?.id,
+                          pnl: updatedPnl,
+                          oppositionName: bookmark.runners.map(
+                            (runner) => runner.name
+                          ),
+                          lay: true,
+                          name: runner?.name,
+                          isWeak: bookmark?.isWeak,
+                        });
+                      };
                       return (
                         <div
-                        onClick={handlePlaceLayBets}
+                          onClick={handlePlaceLayBets}
                           key={i}
                           className={`market-odd-box ${i === 0 ? "lay" : ""} ${
                             i === 1 ? "lay1" : ""
