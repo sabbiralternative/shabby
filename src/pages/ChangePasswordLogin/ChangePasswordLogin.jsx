@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import loginBanner from "../../static/front/img/logo.png";
 import { config } from "../../utils/config";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Notification from "../../components/Notification/Notification";
 
 const ChangePasswordLogin = () => {
@@ -10,12 +10,17 @@ const ChangePasswordLogin = () => {
   const token = localStorage.getItem("token");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const pageTitle = config?.result?.settings?.siteTitle;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = pageTitle;
+  }, [pageTitle]);
 
   const onSubmit = ({ password, newPassword, newPasswordConfirm }) => {
     fetch(changePasswordLogin, {

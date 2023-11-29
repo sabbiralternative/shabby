@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import Category from "../components/Category/Category";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { config } from "../utils/config";
 
 const Main = () => {
   const params = useParams();
@@ -12,6 +13,7 @@ const Main = () => {
   const currentURL = window.location.href;
   const baseUrl = window.location.origin;
   const navigate = useNavigate();
+  const pageTitle = config?.result?.settings?.siteTitle;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -19,14 +21,15 @@ const Main = () => {
     const expirationTime = decodedToken.exp;
     const isTokenExpired = expirationTime < Date.now() / 1000;
 
-  
     if (isTokenExpired) {
       localStorage.clear();
       navigate("/login");
     }
   }, [navigate]);
 
-
+  useEffect(() => {
+    document.title = pageTitle;
+  }, [pageTitle]);
 
   useEffect(() => {
     const relativeURL = currentURL.replace(baseUrl, "");

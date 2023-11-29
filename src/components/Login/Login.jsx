@@ -2,19 +2,24 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import loginBanner from "../../static/front/img/logo.png";
 import { config } from "../../utils/config";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Notification from "../Notification/Notification";
 
 const Login = () => {
   const navigate = useNavigate();
   const loginApi = config?.result?.endpoint?.login;
   const [errorLogin, setErrorLogin] = useState("");
-
+  const pageTitle = config?.result?.settings?.siteTitle;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+
+  useEffect(() => {
+    document.title = pageTitle;
+  }, [pageTitle]);
 
   const onSubmit = ({ username, password }) => {
     fetch(loginApi, {
