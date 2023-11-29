@@ -1,18 +1,34 @@
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Category from "../components/Category/Category";
 import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 const Main = () => {
   const params = useParams();
   const [relativeURL, setRelativeURL] = useState("");
   const currentURL = window.location.href;
   const baseUrl = window.location.origin;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Subtract the base URL from the full URL to get the relative URL
+    const token = localStorage.getItem("token");
+    const decodedToken = jwtDecode(token);
+    const expirationTime = decodedToken.exp;
+    const isTokenExpired = expirationTime < Date.now() / 1000;
+
+  
+    if (isTokenExpired) {
+      localStorage.clear();
+      navigate("/login");
+    }
+  }, [navigate]);
+
+
+
+  useEffect(() => {
     const relativeURL = currentURL.replace(baseUrl, "");
     setRelativeURL(relativeURL);
   }, [baseUrl, currentURL]);
@@ -39,13 +55,13 @@ const Main = () => {
               : ""
           } 
            ${
-            relativeURL == "/current-bet" ||
-            relativeURL == "/activity-logs" ||
-            relativeURL == "/change-password" ||
-            relativeURL == "/account-statement"
-              ? "report-page"
-              : ""
-          } 
+             relativeURL == "/current-bet" ||
+             relativeURL == "/activity-logs" ||
+             relativeURL == "/change-password" ||
+             relativeURL == "/account-statement"
+               ? "report-page"
+               : ""
+           } 
         ${relativeURL.includes("/our-casino/") ? "casino-page" : ""} 
         home-page `}
         >

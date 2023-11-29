@@ -27,7 +27,7 @@ const Header = () => {
   const modalRef = useRef(null);
   const openModalRef = useRef();
   const { setFilterGames } = UseState();
-  const role = localStorage.getItem('loginName')
+  const role = localStorage.getItem("loginName");
 
   /* Close modalRef modal click outside the modal */
   useEffect(() => {
@@ -98,14 +98,19 @@ const Header = () => {
           },
         })
         .then((res) => {
-          setShowBalance(res?.data?.result?.creditLimit);
-          setShowExp(res?.data?.result?.deductedExposure);
+          if (res?.data?.success === false) {
+            localStorage.clear();
+            navigate("/login");
+          } else {
+            setShowBalance(res?.data?.result?.creditLimit);
+            setShowExp(res?.data?.result?.deductedExposure);
+          }
         });
     };
     fetchBalanceExp();
     const intervalId = setInterval(fetchBalanceExp, 5000);
     return () => clearInterval(intervalId);
-  }, [balanceApi, token]);
+  }, [balanceApi, token, navigate]);
 
   /* Get marquee notification */
   useEffect(() => {
@@ -638,7 +643,8 @@ const Header = () => {
                     id="react-aria2236598939-1"
                     aria-expanded="false"
                   >
-                    {role}<i className="fas fa-chevron-down ms-1"></i>
+                    {role}
+                    <i className="fas fa-chevron-down ms-1"></i>
                   </div>
                   {open && (
                     <div className="show dropdown ">
@@ -693,22 +699,6 @@ const Header = () => {
                             Activity Logs
                           </li>
                         </Link>
-                        <Link href="/casino-results">
-                          <li
-                            data-rr-ui-dropdown-item=""
-                            className="dropdown-item"
-                          >
-                            Casino Results
-                          </li>
-                        </Link>
-                        <Link href="/live-casino-bets">
-                          <li
-                            data-rr-ui-dropdown-item=""
-                            className="dropdown-item"
-                          >
-                            Live Casino Bets
-                          </li>
-                        </Link>
 
                         <div
                           onClick={() => {
@@ -719,7 +709,7 @@ const Header = () => {
                           <li className="dropdown-item">Set Button Values</li>
                         </div>
 
-                        <Link href="/secure-auth">
+                        <Link to="/secure-auth" onClick={() => setOpen(!open)}>
                           <li
                             data-rr-ui-dropdown-item=""
                             className="dropdown-item"
@@ -795,7 +785,8 @@ const Header = () => {
                 id="react-aria2236598939-2"
                 aria-expanded="false"
               >
-                {role}<i className="fas fa-chevron-down ms-1"></i>
+                {role}
+                <i className="fas fa-chevron-down ms-1"></i>
               </div>
 
               {dropDown && (
@@ -838,16 +829,6 @@ const Header = () => {
                         Activity Logs
                       </li>
                     </Link>
-                    <Link href="/casino-results">
-                      <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                        Casino Results
-                      </li>
-                    </Link>
-                    <Link href="/live-casino-bets">
-                      <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                        Live Casino Bets
-                      </li>
-                    </Link>
 
                     <div
                       onClick={() => {
@@ -858,7 +839,10 @@ const Header = () => {
                       <li className="dropdown-item">Set Button Values</li>
                     </div>
 
-                    <Link href="/secure-auth">
+                    <Link
+                      to="/secure-auth"
+                      onClick={() => setDropDown(!dropDown)}
+                    >
                       <li data-rr-ui-dropdown-item="" className="dropdown-item">
                         Security Auth Verification
                       </li>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
 
-const BookmarkerTwoSection = ({ bookmarker2, exposer, setShowBets }) => {
+const BookmarkerTwoSection = ({ bookmarker2, exposer, setShowBets, setTotalSize }) => {
   const [previousData, setPreviousData] = useState(bookmarker2);
   const [changedPrices, setChangedPrices] = useState({});
   const { setPlaceBetValue } = UseState();
@@ -215,6 +215,7 @@ const BookmarkerTwoSection = ({ bookmarker2, exposer, setShowBets }) => {
                       .reverse()
                       .map((back, i) => {
                         const handlePlaceBackBet = () => {
+                          setTotalSize('')
                           setShowBets(true);
                           setPlaceBetValue({});
                           setPlaceBetValue({
@@ -266,6 +267,7 @@ const BookmarkerTwoSection = ({ bookmarker2, exposer, setShowBets }) => {
 
                     {runner?.lay?.map((lay, i) => {
                       const handlePlaceLayBets = () => {
+                        setTotalSize('')
                         setShowBets(true);
                         setPlaceBetValue({});
                         setPlaceBetValue({

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
 
-const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
+const MatchOddsSection = ({ match_odds, exposer, setShowBets, setTotalSize }) => {
   const token = localStorage.getItem("token");
   const laderApi = config?.result?.endpoint?.ladder;
   const [previousData, setPreviousData] = useState(match_odds);
@@ -236,6 +236,7 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
                       ?.reverse()
                       ?.map((back, i) => {
                         const handlePlaceBackBet = () => {
+                          setTotalSize('')
                           setShowBets(true);
                           setPlaceBetValue({});
                           setPlaceBetValue({
@@ -291,6 +292,7 @@ const MatchOddsSection = ({ match_odds, exposer, setShowBets }) => {
 
                     {runner?.lay?.map((lay, i) => {
                       const handlePlaceLayBets = () => {
+                        setTotalSize('')
                         setShowBets(true);
                         setPlaceBetValue({});
                         setPlaceBetValue({

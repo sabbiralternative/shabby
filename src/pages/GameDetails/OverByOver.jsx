@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { config } from "../../utils/config";
 import UseState from "../../hooks/UseState";
 
-const OverByOver = ({ overByOver,setShowBets, exposer }) => {
+const OverByOver = ({ overByOver,setShowBets, exposer, setTotalSize }) => {
+
   const [previousData, setPreviousData] = useState(overByOver);
   const [changedPrices, setChangedPrices] = useState({});
   const laderApi = config?.result?.endpoint?.ladder;
@@ -200,6 +201,7 @@ const OverByOver = ({ overByOver,setShowBets, exposer }) => {
                     {over?.runners.map((runner) =>
                       runner.lay.map((lay, i) => {
                         const handlePlaceLayBet = () => {
+                          setTotalSize('')
                           setShowBets(true);
                           setPlaceBetValue({});
                           setPlaceBetValue({
@@ -209,6 +211,8 @@ const OverByOver = ({ overByOver,setShowBets, exposer }) => {
                             btype: over?.btype,
                             eventTypeId: over?.eventTypeId,
                             betDelay: over?.betDelay,
+                            maxLiabilityPerBet: over?.maxLiabilityPerBet,
+                            minLiabilityPerBet: over?.minLiabilityPerBet,
                             marketId: over?.id,
                             lay: true,
                             name: runner?.name,
@@ -235,6 +239,7 @@ const OverByOver = ({ overByOver,setShowBets, exposer }) => {
                     {over?.runners?.map((runner) =>
                       runner.back.map((back, i) => {
                         const handlePlaceBackBets = () => {
+                          setTotalSize('')
                           setShowBets(true);
                           setPlaceBetValue({});
                           setPlaceBetValue({
@@ -245,6 +250,8 @@ const OverByOver = ({ overByOver,setShowBets, exposer }) => {
                             eventTypeId: over?.eventTypeId,
                             betDelay: over?.betDelay,
                             marketId: over?.id,
+                            maxLiabilityPerBet: over?.maxLiabilityPerBet,
+                            minLiabilityPerBet: over?.minLiabilityPerBet,
                             back: true,
                             name: runner?.name,
                             isWeak: over?.isWeak,
@@ -273,7 +280,7 @@ const OverByOver = ({ overByOver,setShowBets, exposer }) => {
                           Min: {over?.minLiabilityPerBet}
                         </span>
                         <span className="w-100 d-block">
-                          Max: {over?.maxLiabilityPerMarket}
+                          Max: {over?.maxLiabilityPerBet}
                         </span>
                       </div>
                     </div>

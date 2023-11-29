@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
 
-const FancyOne = ({ fancy1, setShowBets, exposer }) => {
+const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
   const [previousData, setPreviousData] = useState(fancy1);
   const [changedPrices, setChangedPrices] = useState({});
   const token = localStorage.getItem("token");
@@ -197,6 +197,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer }) => {
                       {odd?.runners.map((runner) =>
                         runner.lay.map((lay, i) => {
                           const handlePlaceLayBet = () => {
+                            setTotalSize('')
                             setShowBets(true);
                             setPlaceBetValue({});
                             setPlaceBetValue({
@@ -206,6 +207,8 @@ const FancyOne = ({ fancy1, setShowBets, exposer }) => {
                               btype: odd?.btype,
                               eventTypeId: odd?.eventTypeId,
                               betDelay: odd?.betDelay,
+                              maxLiabilityPerBet: odd?.maxLiabilityPerBet,
+                              minLiabilityPerBet: odd?.minLiabilityPerBet,
                               marketId: odd?.id,
                               lay: true,
                               name: runner?.name,
@@ -232,6 +235,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer }) => {
                       {odd?.runners?.map((runner) =>
                         runner.back.map((back, i) => {
                           const handlePlaceBackBets = () => {
+                            setTotalSize('')
                             setShowBets(true);
                             setPlaceBetValue({});
                             setPlaceBetValue({
@@ -241,6 +245,8 @@ const FancyOne = ({ fancy1, setShowBets, exposer }) => {
                               btype: odd?.btype,
                               eventTypeId: odd?.eventTypeId,
                               betDelay: odd?.betDelay,
+                              maxLiabilityPerBet: odd?.maxLiabilityPerBet,
+                              minLiabilityPerBet: odd?.minLiabilityPerBet,
                               marketId: odd?.id,
                               back: true,
                               name: runner?.name,

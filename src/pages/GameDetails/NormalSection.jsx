@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
 
-const NormalSection = ({ normal, setShowBets, exposer }) => {
+const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
   const token = localStorage.getItem("token");
   const [previousData, setPreviousData] = useState(normal);
   const [changedPrices, setChangedPrices] = useState({});
@@ -202,6 +202,7 @@ const NormalSection = ({ normal, setShowBets, exposer }) => {
                       {fancyGame?.runners.map((runner) =>
                         runner.lay.map((lay, i) => {
                           const handlePlaceLayBet = () => {
+                            setTotalSize('')
                             setShowBets(true);
                             setPlaceBetValue({});
                             setPlaceBetValue({
@@ -210,6 +211,8 @@ const NormalSection = ({ normal, setShowBets, exposer }) => {
                               selectionId: runner?.id,
                               btype: fancyGame?.btype,
                               eventTypeId: fancyGame?.eventTypeId,
+                              maxLiabilityPerBet: fancyGame?.maxLiabilityPerBet,
+                              minLiabilityPerBet: fancyGame?.minLiabilityPerBet,
                               betDelay: fancyGame?.betDelay,
                               marketId: fancyGame?.id,
                               lay: true,
@@ -237,8 +240,9 @@ const NormalSection = ({ normal, setShowBets, exposer }) => {
 
                       {fancyGame?.runners?.map((runner) =>
                         runner.back.map((back, i) => {
-                  
+     
                           const handlePlaceBackBets = () => {
+                            setTotalSize('')
                             setShowBets(true);
                             setPlaceBetValue({});
                             setPlaceBetValue({
@@ -249,7 +253,6 @@ const NormalSection = ({ normal, setShowBets, exposer }) => {
                               eventTypeId: fancyGame?.eventTypeId,
                               maxLiabilityPerBet: fancyGame?.maxLiabilityPerBet,
                               minLiabilityPerBet: fancyGame?.minLiabilityPerBet,
-
                               betDelay: fancyGame?.betDelay,
                               marketId: fancyGame?.id,
                               back: true,

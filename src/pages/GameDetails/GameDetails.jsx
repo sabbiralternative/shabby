@@ -50,7 +50,7 @@ const GameDetails = () => {
   const oppositionName = placeBetValue?.oppositionName?.filter(
     (name) => name !== placeBetValue?.name
   );
-
+console.log(placeBetValue);
   /* Set price */
   useEffect(() => {
     setPrice(placeBetValue?.price);
@@ -478,6 +478,7 @@ const GameDetails = () => {
               setShowBets={setShowBets}
               id={id}
               eventId={eventId}
+              setTotalSize={setTotalSize}
             />
           ) : null}
 
@@ -489,6 +490,7 @@ const GameDetails = () => {
               exposer={exposer}
               showBets={showBets}
               setShowBets={setShowBets}
+              setTotalSize={setTotalSize}
             />
           ) : null}
 
@@ -500,6 +502,7 @@ const GameDetails = () => {
               exposer={exposer}
               showBets={showBets}
               setShowBets={setShowBets}
+              setTotalSize={setTotalSize}
             />
           ) : null}
 
@@ -511,6 +514,7 @@ const GameDetails = () => {
               exposer={exposer}
               showBets={showBets}
               setShowBets={setShowBets}
+              setTotalSize={setTotalSize}
             />
           ) : null}
 
@@ -522,6 +526,7 @@ const GameDetails = () => {
               exposer={exposer}
               showBets={showBets}
               setShowBets={setShowBets}
+              setTotalSize={setTotalSize}
             />
           ) : null}
 
@@ -532,6 +537,7 @@ const GameDetails = () => {
               exposer={exposer}
               showBets={showBets}
               setShowBets={setShowBets}
+              setTotalSize={setTotalSize}
             />
           ) : null}
         </div>
@@ -692,7 +698,7 @@ const GameDetails = () => {
                                   oddStake > 0 ? "text-success" : "text-danger"
                                 }`}
                               >
-                                {oddStake !== 0 && oddStake}
+                                {oddStake !== 0 && totalSize?.length > 0 && oddStake}
                               </span>
                             </div>
                           </div>
@@ -730,10 +736,10 @@ const GameDetails = () => {
                                 }`}
                               >
                                 {placeBetValue?.back &&
-                                  totalSize != 0 &&
+                                  totalSize != 0  && totalSize?.length > 0 &&
                                   oddStakeLay1}
 
-                                {placeBetValue?.lay &&
+                                {placeBetValue?.lay  && totalSize?.length > 0 &&
                                   totalSize != 0 &&
                                   oddStakeLay1}
                               </span>
@@ -774,11 +780,11 @@ const GameDetails = () => {
                               >
                                 {placeBetValue?.back &&
                                   oppositionName?.length > 1 &&
-                                  totalSize != 0 &&
+                                  totalSize != 0  && totalSize?.length > 0 && 
                                   oddStakeLay2}
 
                                 {placeBetValue?.lay &&
-                                  oppositionName?.length > 1 &&
+                                  oppositionName?.length > 1  && totalSize?.length > 0 &&
                                   totalSize != 0 &&
                                   oddStakeLay2}
                               </span>
