@@ -394,7 +394,7 @@ console.log(placeBetValue);
                   width: "100%",
                   border: "0px",
                 }}
-                referrerPolicy={videoUrl?.ref === false ? "no-referrer" : ""}
+                referrerPolicy={videoUrl?.ref === false ? "no-referrer" : "no-referrer"}
               ></iframe>
             </div>
           )}
@@ -825,7 +825,7 @@ console.log(placeBetValue);
               <div className="live-tv">
                 <iframe
                   src={videoUrl?.url}
-                  referrerPolicy={videoUrl?.ref === false ? "no-referrer" : ""}
+                  referrerPolicy={videoUrl?.ref === false ? "no-referrer" : "no-referrer"}
                   style={{
                     width: "100%",
                     border: "0px",
