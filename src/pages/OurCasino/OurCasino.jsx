@@ -14,6 +14,7 @@ const OurCasino = () => {
   const [casino_list, setCasino_list] = useState([]);
   const [categories, setCategories] = useState([]);
   const { filterGames, setFilterGames } = UseState();
+  const [active, setActive] = useState("ourCasino");
 
   useEffect(() => {
     const getAuraCasino = async () => {
@@ -43,9 +44,11 @@ const OurCasino = () => {
 
   useEffect(() => {
     if (filterGames == "all") {
-      setCasino_list(data);
+      setCasino_list(data.filter((d) => d.visible === true));
     } else {
-      setCasino_list(data.filter((game) => game.category === filterGames));
+      const category = data.filter((game) => game.category === filterGames);
+      console.log(category);
+      setCasino_list(category.filter((d) => d.visible === true));
     }
   }, [data, filterGames]);
 
@@ -54,13 +57,21 @@ const OurCasino = () => {
       <div className="center-container">
         <div className="casino-tab-list d-xl-none">
           <ul className="nav nav-pills casino-tab" id="casino-tab">
-            <li className="nav-item">
-              <Link className="nav-link active" href="/casino-list/LC/4">
+            <li onClick={() => setActive("ourCasino")} className="nav-item">
+              <Link
+                className={`nav-link ${active === "ourCasino" ? "active" : ""}`}
+                to="/our-casino"
+              >
                 <span>Our Casino</span>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link">
+            <li onClick={() => setActive("ourVirtual")} className="nav-item">
+              <Link
+                to="/our-virtual"
+                className={`nav-link ${
+                  active === "ourVirtual" ? "active" : ""
+                }`}
+              >
                 <span>Our Virtual</span>
               </Link>
             </li>

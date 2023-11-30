@@ -71,7 +71,7 @@ const Login = () => {
       },
       body: JSON.stringify({
         username: "demo",
-        password: 1234,
+        password: '',
       }),
     })
       .then((res) => res.json())
@@ -97,6 +97,7 @@ const Login = () => {
           data?.result?.changePassword === false
         ) {
           navigate("/");
+         
         } else {
           setErrorLogin(data?.error);
         }

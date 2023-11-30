@@ -5,12 +5,13 @@ const DiamondCasinoList = ({ casino }) => {
     eventId: casino?.eventId,
     eventTypeId: casino?.eventTypeId,
     casinoSlug: casino?.slug,
+    type:'ourCasino'
   };
 
   const navigate = useNavigate();
   const handleNavigate = () => {
-      localStorage.removeItem("diamondCasino");
-      localStorage.setItem("diamondCasino", JSON.stringify(diamondCasino));
+      localStorage.removeItem("casino");
+      localStorage.setItem("casino", JSON.stringify(diamondCasino));
       navigate(`/our-casino/${casino?.slug}`);
   };
   return (

@@ -157,7 +157,10 @@ const Card = ({ slug, data, one }) => {
           </div>
         ) : null}
       </div>
-      {slug == "teen" || slug == 'teen20' || slug == 'teen3' || slug == 'teen32' ? (
+      {slug == "teen" ||
+      slug == "teen20" ||
+      slug == "teen3" ||
+      slug == "teen32" ? (
         <>
           <div className="">
             <h5 className="">Player A</h5>
@@ -261,6 +264,29 @@ const Card = ({ slug, data, one }) => {
           </div>
         </>
       ) : null}
+      {slug === "vlucky7" && (
+        <div>
+          <div className="flip-card-container">
+            <div className="flip-card">
+              <div className="flip-card-inner flip">
+                <div className="flip-card-back">
+                  {data[0]?.indexCard?.length > 0 ? (
+                    <div className="flip-card-front">
+                      <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
+                      {/*    <!-- key0 >> indexCard0 --> */}
+                    </div>
+                  ) : (
+                    <div className="flip-card-front">
+                      <img src={one} />
+                      {/*    <!-- key0 >> indexCard0 --> */}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

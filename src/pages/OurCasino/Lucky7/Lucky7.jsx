@@ -634,5 +634,3 @@ const Lucky7 = ({
 };
 
 export default Lucky7;
-
-

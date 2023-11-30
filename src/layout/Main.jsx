@@ -65,7 +65,7 @@ const Main = () => {
                ? "report-page"
                : ""
            } 
-        ${relativeURL.includes("/our-casino/") ? "casino-page" : ""} 
+        ${relativeURL.includes("/our-casino/") || relativeURL.includes("/our-virtual/") ? "casino-page" : ""} 
         home-page `}
         >
           <Outlet />

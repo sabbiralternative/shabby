@@ -23,8 +23,8 @@ const CasinoList = ({ casino }) => {
       localStorage.setItem("auraEventId", JSON.stringify(auraEventId));
       navigate(`/casino/${name}`);
     } else if (isAuraCasino == "diamond") {
-      localStorage.removeItem("diamondCasino");
-      localStorage.setItem("diamondCasino", JSON.stringify(diamondCasino));
+      localStorage.removeItem("casino");
+      localStorage.setItem("casino", JSON.stringify(diamondCasino));
       navigate(`/our-casino/${casino?.slug}`);
     }
   };

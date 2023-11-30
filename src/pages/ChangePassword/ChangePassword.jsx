@@ -6,6 +6,7 @@ import Notification from "../../components/Notification/Notification";
 const ChangePassword = () => {
   const ChangePasswordApi = config?.result?.endpoint?.changePassword;
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const {
     register,
@@ -29,7 +30,11 @@ const ChangePassword = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          navigate("/");
+          setSuccessMessage(data?.result?.message);
+          setTimeout(() => {
+            localStorage.clear();
+            navigate("/login");
+          }, 1000);
         } else {
           setErrorMessage(data?.error?.oldPassword[0]?.description);
         }
@@ -43,6 +48,13 @@ const ChangePassword = () => {
           message={errorMessage}
           success={false}
           setMessage={setErrorMessage}
+        />
+      )}
+      {successMessage && (
+        <Notification
+          message={successMessage}
+          success={true}
+          setMessage={setSuccessMessage}
         />
       )}
       <div className="card">

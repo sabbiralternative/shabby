@@ -50,7 +50,7 @@ const GameDetails = () => {
   const oppositionName = placeBetValue?.oppositionName?.filter(
     (name) => name !== placeBetValue?.name
   );
-console.log(placeBetValue);
+  console.log(placeBetValue);
   /* Set price */
   useEffect(() => {
     setPrice(placeBetValue?.price);
@@ -280,13 +280,11 @@ console.log(placeBetValue);
       setOddStake(total + pnl1);
       setOddStakeLay1(-1 * totalSize + pnl2);
       setOddStakeLay2(-1 * totalSize + pnl3);
-
     } else if (placeBetValue?.lay) {
       const total = -1 * (price * totalSize - totalSize);
       setOddStake(total + pnl1);
       setOddStakeLay1(totalSize + pnl2);
       setOddStakeLay2(totalSize + pnl3);
-   
     }
   }, [price, totalSize, placeBetValue, pnl1, pnl2, pnl3]);
 
@@ -394,7 +392,9 @@ console.log(placeBetValue);
                   width: "100%",
                   border: "0px",
                 }}
-                referrerPolicy={videoUrl?.ref === false ? "no-referrer" : "no-referrer"}
+                referrerPolicy={
+                  videoUrl?.ref === false ? "no-referrer" : "no-referrer"
+                }
               ></iframe>
             </div>
           )}
@@ -670,7 +670,9 @@ console.log(placeBetValue);
                         <button className="btn btn-info">Edit</button>
                       </div>
 
-                      {placeBetValue?.btype === "MATCH_ODDS" || placeBetValue?.btype === 'BOOKMAKER' || placeBetValue?.btype === 'BOOKMAKER2' ? (
+                      {placeBetValue?.btype === "MATCH_ODDS" ||
+                      placeBetValue?.btype === "BOOKMAKER" ||
+                      placeBetValue?.btype === "BOOKMAKER2" ? (
                         <>
                           <div className="row mt-2">
                             <div className="col-4">
@@ -698,7 +700,9 @@ console.log(placeBetValue);
                                   oddStake > 0 ? "text-success" : "text-danger"
                                 }`}
                               >
-                                {oddStake !== 0 && totalSize?.length > 0 && oddStake}
+                                {oddStake !== 0 &&
+                                  totalSize?.length > 0 &&
+                                  oddStake}
                               </span>
                             </div>
                           </div>
@@ -736,10 +740,12 @@ console.log(placeBetValue);
                                 }`}
                               >
                                 {placeBetValue?.back &&
-                                  totalSize != 0  && totalSize?.length > 0 &&
+                                  totalSize != 0 &&
+                                  totalSize?.length > 0 &&
                                   oddStakeLay1}
 
-                                {placeBetValue?.lay  && totalSize?.length > 0 &&
+                                {placeBetValue?.lay &&
+                                  totalSize?.length > 0 &&
                                   totalSize != 0 &&
                                   oddStakeLay1}
                               </span>
@@ -780,25 +786,27 @@ console.log(placeBetValue);
                               >
                                 {placeBetValue?.back &&
                                   oppositionName?.length > 1 &&
-                                  totalSize != 0  && totalSize?.length > 0 && 
+                                  totalSize != 0 &&
+                                  totalSize?.length > 0 &&
                                   oddStakeLay2}
 
                                 {placeBetValue?.lay &&
-                                  oppositionName?.length > 1  && totalSize?.length > 0 &&
+                                  oppositionName?.length > 1 &&
+                                  totalSize?.length > 0 &&
                                   totalSize != 0 &&
                                   oddStakeLay2}
                               </span>
                             </div>
                           </div>
                         </>
-                      ):null}
+                      ) : null}
 
-                      {
-                        placeBetValue?.btype === 'FANCY' && (
-                          <p>Range: {placeBetValue?.minLiabilityPerBet} to {placeBetValue?.maxLiabilityPerBet
-                          }</p>
-                        )
-                      }
+                      {placeBetValue?.btype === "FANCY" && (
+                        <p>
+                          Range: {placeBetValue?.minLiabilityPerBet} to{" "}
+                          {placeBetValue?.maxLiabilityPerBet}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -825,7 +833,9 @@ console.log(placeBetValue);
               <div className="live-tv">
                 <iframe
                   src={videoUrl?.url}
-                  referrerPolicy={videoUrl?.ref === false ? "no-referrer" : "no-referrer"}
+                  referrerPolicy={
+                    videoUrl?.ref === false ? "no-referrer" : "no-referrer"
+                  }
                   style={{
                     width: "100%",
                     border: "0px",

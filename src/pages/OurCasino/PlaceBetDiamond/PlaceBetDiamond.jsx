@@ -1,20 +1,6 @@
 import { useEffect, useState } from "react";
-import { config } from "../../../utils/config.js";
 import axios from "axios";
-import one from "../../../static/front/img/virtual-casino/1.jpg";
-import seven from "../../../static/front/img/cards/7.png";
-import A from "../../../static/front/img/cards/A.png";
-import two from "../../../static/front/img/cards/2.png";
-import three from "../../../static/front/img/cards/3.png";
-import four from "../../../static/front/img/cards/4.png";
-import five from "../../../static/front/img/cards/5.png";
-import six from "../../../static/front/img/cards/6.png";
-import eight from "../../../static/front/img/cards/8.png";
-import nine from "../../../static/front/img/cards/9.png";
-import ten from "../../../static/front/img/cards/10.png";
-import j from "../../../static/front/img/cards/J.png";
-import q from "../../../static/front/img/cards/Q.png";
-import k from "../../../static/front/img/cards/K.png";
+import { picture } from "./Utils.jsx";
 import UseState from "../../../hooks/UseState.jsx";
 import PlaceBets from "../../../components/PlaceBets/PlaceBets.jsx";
 import { useQuery } from "@tanstack/react-query";
@@ -38,145 +24,156 @@ import TeenPattiOneDay from "../TeenPattiOneday/TeenPattiOneday.jsx";
 import TeenPatti20 from "../TeenPatti20/TeenPatti20.jsx";
 import InstantTeenPatti from "../InstantTeenPatti/InstantTeenPatti.jsx";
 import Notification from "../../../components/Notification/Notification.jsx";
+import {
+  currentBetsApi,
+  exposerApi,
+  getSingleCasinoApi,
+  interval,
+  oddsApi,
+  token,
+} from "../../../utils/Utils.jsx";
+import VLucky7 from "../VLucky7/VLucky7.jsx";
 
 const PlaceBetDiamond = () => {
-  const getSingleCasinoApi = config?.result?.endpoint?.accessToken;
-  const interval = config?.result?.settings?.interval;
-  const oddsApi = config?.result?.endpoint?.odds;
-  const token = localStorage.getItem("token");
-  const { eventTypeId, eventId } = JSON.parse(
-    localStorage.getItem("diamondCasino")
+  const { eventTypeId, eventId, type } = JSON.parse(
+    localStorage.getItem("casino")
   );
   const { slug } = useParams();
-
   const [url, setUrl] = useState("");
   const [data, setData] = useState([]);
   const [showBets, setShowBets] = useState(false);
-  const { setPlaceBetValue, placeBetValue } = UseState();
+  const {
+    setPlaceBetValue,
+    placeBetValue,
+    lowExposure,
+    setLowExposure,
+    nineIndexTwelveRunnersEx,
+    setNineIndexTwelveEx,
+    nineIndexElevenRunnersEx,
+    setNineIndexElevenEx,
+    nineIndexTenRunnersEx,
+    setNineIndexTenEx,
+    nineIndexNineRunnersEx,
+    setNineIndexNineEx,
+    nineIndexEightRunnersEx,
+    setNineIndexEightEx,
+    nineIndexSevenRunnersEx,
+    setNineIndexSevenEx,
+    nineIndexSixRunnersEx,
+    setNineIndexSixEx,
+    nineIndexFiveRunnersEx,
+    setNineIndexFiveEx,
+    nineIndexFourRunnersEx,
+    setNineIndexFourEx,
+    nineIndexThreeRunnersEx,
+    setNineIndexThreeEx,
+    nineIndexTwoRunnersEx,
+    setNineIndexTwoEx,
+    nineIndexOneRunnersEx,
+    setNineIndexOneEx,
+    nineIndexZeroRunnersEx,
+    setNineIndexZeroEx,
+    eightIndexTwelveRunnersEx,
+    setEightIndexTwelveEx,
+    eightIndexElevenRunnersEx,
+    setEightIndexElevenEx,
+    eightIndexTenRunnersEx,
+    setEightIndexTenEx,
+    eightIndexNineRunnersEx,
+    setEightIndexNineEx,
+    eightIndexEightRunnersEx,
+    setEightIndexEightEx,
+    eightIndexSevenRunnersEx,
+    setEightIndexSevenEx,
+    eightIndexSixRunnersEx,
+    setEightIndexSixEx,
+    eightIndexFiveRunnersEx,
+    setEightIndexFiveEx,
+    eightIndexFourRunnersEx,
+    setEightIndexFourEx,
+    eightIndexThreeRunnersEx,
+    setEightIndexThreeEx,
+    eightIndexTwoRunnersEx,
+    setEightIndexTwoEx,
+    eightIndexOneRunnersEx,
+    setEightIndexOneEx,
+    eightIndexZeroRunnersEx,
+    setEightIndexZeroEx,
+    sevenIndexTwelveRunnersEx,
+    setSevenIndexTwelveEx,
+    sevenIndexElevenRunnersEx,
+    setSevenIndexElevenEx,
+    sevenIndexTenRunnersEx,
+    setSevenIndexTenEx,
+    sevenIndexNineRunnersEx,
+    setSevenIndexNineEx,
+    sevenIndexEightRunnersEx,
+    setSevenIndexEightEx,
+    sevenIndexSevenRunnersEx,
+    setSevenIndexSevenEx,
+    sevenIndexSixRunnersEx,
+    setSevenIndexSixEx,
+    sevenIndexFiveRunnersEx,
+    setSevenIndexFiveEx,
+    sevenIndexFourRunnersEx,
+    setSevenIndexFourEx,
+    sevenIndexThreeRunnersEx,
+    setSevenIndexThreeEx,
+    sevenIndexTwoRunnersEx,
+    setSevenIndexTwoEx,
+    sevenIndexOneRunnersEx,
+    setSevenIndexOneEx,
+    sevenIndexZeroRunnersEx,
+    setSevenIndexZeroEx,
+    sixIndexOneRunnersEx,
+    setSixIndexOneEx,
+    sixIndexZeroRunnersEx,
+    setSixIndexZeroEx,
+    fiveIndexOneRunnersEx,
+    setFiveIndexOneEx,
+    fiveIndexZeroRunnersEx,
+    setFiveIndexZeroEx,
+    fourIndexOneRunnersEx,
+    setFourIndexOneEx,
+    fourIndexZeroRunnersEx,
+    setFourIndexZeroEx,
+    jqkExposure,
+    setJqkExposure,
+    eight910Exposure,
+    setEight910Exposure,
+    four56Exposure,
+    setFour56Exposure,
+    a23Exposure,
+    setA23Exposure,
+    blackExposure,
+    setBlackExposure,
+    redExposure,
+    setRedExposure,
+    oddExposure,
+    setOddExposure,
+    evenExposure,
+    setEvenExposure,
+    zeroIndexFiveRunnersEx,
+    setZeroIndexFiveEx,
+    zeroIndexFourRunnersEx,
+    setZeroIndexFourEx,
+    zeroIndexThreeRunnersEx,
+    setZeroIndexThreeEx,
+    zeroIndexTwoRunnersEx,
+    setZeroIndexTwoEx,
+    highExposure,
+    setHighExposure,
+  } = UseState();
   const [exposer, setExposer] = useState([]);
   const [myBets, setMyBets] = useState([]);
-  const exposerApi = config?.result?.endpoint?.exposure;
-  const currentBetsApi = config?.result?.endpoint?.currentBets;
-  /* data[0]?.runners[0] exposure */
-  const [lowExposure, setLowExposure] = useState([]);
-  /* data[0]?.runners[1] exposure */
-  const [highExposure, setHighExposure] = useState([]);
-  /* data[0]?.runners[2] exposure */
-  const [zeroIndexTwoRunnersEx, setZeroIndexTwoEx] = useState([]);
-  /* data[0]?.runners[3] exposure */
-  const [zeroIndexThreeRunnersEx, setZeroIndexThreeEx] = useState([]);
-  /* data[0]?.runners[4] exposure */
-  const [zeroIndexFourRunnersEx, setZeroIndexFourEx] = useState([]);
-  /* data[0]?.runners[4] exposure */
-  const [zeroIndexFiveRunnersEx, setZeroIndexFiveEx] = useState([]);
-
-  /* data[1]?.runners[0] exposure */
-  const [evenExposure, setEvenExposure] = useState([]);
-  /* data[1]?.runners[1] exposure */
-  const [oddExposure, setOddExposure] = useState([]);
-  /* data[2]?.runners[2] exposure */
-  const [redExposure, setRedExposure] = useState([]);
-  /* data[2]?.runners[1] exposure */
-  const [blackExposure, setBlackExposure] = useState([]);
-  /* data[3]?.runners[0] exposure */
-  const [a23Exposure, setA23Exposure] = useState([]);
-  /* data[3]?.runners[1] exposure */
-  const [four56Exposure, setFour56Exposure] = useState([]);
-  /* data[3]?.runners[2] exposure */
-  const [eight910Exposure, setEight910Exposure] = useState([]);
-  /* data[3]?.runners[3] exposure */
-  const [jqkExposure, setJqkExposure] = useState([]);
-  /* data[4]?.runners[0] exposure */
-  const [fourIndexZeroRunnersEx, setFourIndexZeroEx] = useState([]);
-  /* data[4]?.runners[1] exposure */
-  const [fourIndexOneRunnersEx, setFourIndexOneEx] = useState([]);
-  /* data[5]?.runners[0] exposure */
-  const [fiveIndexZeroRunnersEx, setFiveIndexZeroEx] = useState([]);
-  /* data[5]?.runners[1] exposure */
-  const [fiveIndexOneRunnersEx, setFiveIndexOneEx] = useState([]);
-  /* data[6]?.runners[0] exposure */
-  const [sixIndexZeroRunnersEx, setSixIndexZeroEx] = useState([]);
-  /* data[6]?.runners[0] exposure */
-  const [sixIndexOneRunnersEx, setSixIndexOneEx] = useState([]);
-  /* data[7]?.runners[0] exposure */
-  const [sevenIndexZeroRunnersEx, setSevenIndexZeroEx] = useState([]);
-  /* data[7]?.runners[1] exposure */
-  const [sevenIndexOneRunnersEx, setSevenIndexOneEx] = useState([]);
-  /* data[7]?.runners[2] exposure */
-  const [sevenIndexTwoRunnersEx, setSevenIndexTwoEx] = useState([]);
-  /* data[7]?.runners[3] exposure */
-  const [sevenIndexThreeRunnersEx, setSevenIndexThreeEx] = useState([]);
-  /* data[7]?.runners[4] exposure */
-  const [sevenIndexFourRunnersEx, setSevenIndexFourEx] = useState([]);
-  /* data[7]?.runners[5] exposure */
-  const [sevenIndexFiveRunnersEx, setSevenIndexFiveEx] = useState([]);
-  /* data[7]?.runners[6] exposure */
-  const [sevenIndexSixRunnersEx, setSevenIndexSixEx] = useState([]);
-  /* data[7]?.runners[7] exposure */
-  const [sevenIndexSevenRunnersEx, setSevenIndexSevenEx] = useState([]);
-  /* data[7]?.runners[8] exposure */
-  const [sevenIndexEightRunnersEx, setSevenIndexEightEx] = useState([]);
-  /* data[7]?.runners[9] exposure */
-  const [sevenIndexNineRunnersEx, setSevenIndexNineEx] = useState([]);
-  /* data[7]?.runners[10] exposure */
-  const [sevenIndexTenRunnersEx, setSevenIndexTenEx] = useState([]);
-  /* data[7]?.runners[11] exposure */
-  const [sevenIndexElevenRunnersEx, setSevenIndexElevenEx] = useState([]);
-  /* data[7]?.runners[12] exposure */
-  const [sevenIndexTwelveRunnersEx, setSevenIndexTwelveEx] = useState([]);
-  /* data[8]?.runners[0] exposure */
-  const [eightIndexZeroRunnersEx, setEightIndexZeroEx] = useState([]);
-  /* data[8]?.runners[1] exposure */
-  const [eightIndexOneRunnersEx, setEightIndexOneEx] = useState([]);
-  /* data[8]?.runners[2] exposure */
-  const [eightIndexTwoRunnersEx, setEightIndexTwoEx] = useState([]);
-
-  /* data[8]?.runners[2] exposure */
-  const [eightIndexThreeRunnersEx, setEightIndexThreeEx] = useState([]);
-  /* data[8]?.runners[2] exposure */
-  const [eightIndexFourRunnersEx, setEightIndexFourEx] = useState([]);
-
-  /* data[8]?.runners[2] exposure */
-  const [eightIndexFiveRunnersEx, setEightIndexFiveEx] = useState([]);
-  /* data[8]?.runners[2] exposure */
-  const [eightIndexSixRunnersEx, setEightIndexSixEx] = useState([]);
-  /* data[8]?.runners[2] exposure */
-  const [eightIndexSevenRunnersEx, setEightIndexSevenEx] = useState([]);
-  /* data[8]?.runners[2] exposure */
-  const [eightIndexEightRunnersEx, setEightIndexEightEx] = useState([]);
-  /* data[8]?.runners[2] exposure */
-  const [eightIndexNineRunnersEx, setEightIndexNineEx] = useState([]);
-  /* data[8]?.runners[2] exposure */
-  const [eightIndexTenRunnersEx, setEightIndexTenEx] = useState([]);
-  /* data[8]?.runners[2] exposure */
-  const [eightIndexElevenRunnersEx, setEightIndexElevenEx] = useState([]);
-  /* data[8]?.runners[2] exposure */
-  const [eightIndexTwelveRunnersEx, setEightIndexTwelveEx] = useState([]);
-  /* data[9]?.runners[0] exposure */
-  const [nineIndexZeroRunnersEx, setNineIndexZeroEx] = useState([]);
-  /* data[9]?.runners[1] exposure */
-  const [nineIndexOneRunnersEx, setNineIndexOneEx] = useState([]);
-  /* data[9]?.runners[2] exposure */
-  const [nineIndexTwoRunnersEx, setNineIndexTwoEx] = useState([]);
-  const [nineIndexThreeRunnersEx, setNineIndexThreeEx] = useState([]);
-  const [nineIndexFourRunnersEx, setNineIndexFourEx] = useState([]);
-  const [nineIndexFiveRunnersEx, setNineIndexFiveEx] = useState([]);
-  const [nineIndexSixRunnersEx, setNineIndexSixEx] = useState([]);
-  const [nineIndexSevenRunnersEx, setNineIndexSevenEx] = useState([]);
-  const [nineIndexEightRunnersEx, setNineIndexEightEx] = useState([]);
-  const [nineIndexNineRunnersEx, setNineIndexNineEx] = useState([]);
-  const [nineIndexTenRunnersEx, setNineIndexTenEx] = useState([]);
-  const [nineIndexElevenRunnersEx, setNineIndexElevenEx] = useState([]);
-  const [nineIndexTwelveRunnersEx, setNineIndexTwelveEx] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage,setSuccessMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState("");
 
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
-
 
   useEffect(() => {
     /* data[0]?.runners[0] exposure */
@@ -505,7 +502,7 @@ const PlaceBetDiamond = () => {
       }
     };
     getCasinoVideo();
-  }, [eventId, eventTypeId, getSingleCasinoApi, token]);
+  }, [eventId, eventTypeId]);
 
   /* Get odds */
   useEffect(() => {
@@ -523,7 +520,7 @@ const PlaceBetDiamond = () => {
     getGameDetails();
     const intervalId = setInterval(getGameDetails, interval);
     return () => clearInterval(intervalId);
-  }, [token, oddsApi, eventTypeId, eventId, interval]);
+  }, [eventTypeId, eventId]);
 
   /* Get exposure data */
   const { refetch: refetchExposure } = useQuery({
@@ -564,16 +561,20 @@ const PlaceBetDiamond = () => {
   return (
     <>
       <div className="center-container">
-      {
-        errorMessage && (
-          <Notification message={errorMessage} success={false} setMessage={setErrorMessage}/>
-        )
-       }
-       {
-        successMessage && (
-          <Notification message={successMessage} success={true} setMessage={setSuccessMessage}/>
-        )
-       }
+        {errorMessage && (
+          <Notification
+            message={errorMessage}
+            success={false}
+            setMessage={setErrorMessage}
+          />
+        )}
+        {successMessage && (
+          <Notification
+            message={successMessage}
+            success={true}
+            setMessage={setSuccessMessage}
+          />
+        )}
         {showBets && window.innerWidth < 1200 && (
           <PlaceBetModal
             placeBetValue={placeBetValue}
@@ -599,8 +600,13 @@ const PlaceBetDiamond = () => {
         ${slug == "dtl20" ? "dtl20" : ""} 
         ${slug == "teen1" ? "onecard1day" : ""} 
         ${slug == "teen120" ? "onecard20" : ""} 
-        ${slug == "teen" || slug == 'teen3' || slug == 'teen32' ? "teenpatti1day" : ""} 
+        ${
+          slug == "teen" || slug == "teen3" || slug == "teen32"
+            ? "teenpatti1day"
+            : ""
+        } 
         ${slug == "teen20" ? "teenpatti20" : ""} 
+        ${slug == "vlucky7" ? "lucky7a vcasino" : ""} 
    
         `}
         >
@@ -612,16 +618,24 @@ const PlaceBetDiamond = () => {
               <div className="video-box-container">
                 {/* Iframe video */}
                 <div className="casino-video-box">
-                  <iframe
-                    allow="fullscreen;"
-                    src={url}
-                    style={{ widows: "100%", border: "0px" }}
-                  ></iframe>
+                  {type === "ourCasino" && (
+                    <iframe
+                      allow="fullscreen;"
+                      src={url}
+                      style={{ widows: "100%", border: "0px" }}
+                    ></iframe>
+                  )}
+                  {type === "virtual" && (
+                    <img
+                      src="/dealer-bg/vlucky7.png"
+                      className="vcasinobg"
+                    />
+                  )}
                 </div>
               </div>
               <div className="casino-video-cards">
                 {/* Card start */}
-                <Card data={data} one={one} slug={slug} />
+                <Card data={data} one={picture.one} slug={slug} />
                 {/* Card end */}
               </div>
               {/* Clock start */}
@@ -630,31 +644,63 @@ const PlaceBetDiamond = () => {
             </div>
 
             <div className="casino-detail">
-              {
-                slug == 'teen3' || slug == 'teen32' ? <InstantTeenPatti data={data}
+              {slug === "vlucky7" ? <VLucky7 
+                A={picture.A}
+                a23Exposure={a23Exposure}
+                blackExposure={blackExposure}
+                data={data}
+                eight={picture.eight}
+                eight910Exposure={eight910Exposure}
+                evenExposure={evenExposure}
+                five={picture.five}
+                four={picture.four}
+                four56Exposure={four56Exposure}
+                highExposure={highExposure}
+                j={picture.j}
+                jqkExposure={jqkExposure}
+                k={picture.k}
+                lowExposure={lowExposure}
+                nine={picture.nine}
+                oddExposure={oddExposure}
+                pnlBySelection={pnlBySelection}
+                q={picture.q}
+                redExposure={redExposure}
                 setPlaceBetValue={setPlaceBetValue}
                 setShowBets={setShowBets}
-                lowExposure={lowExposure}
-                highExposure={highExposure}
-                />:null
-              }
-              {slug == "teen20" ? <TeenPatti20 
-             data={data}
-             setPlaceBetValue={setPlaceBetValue}
-             setShowBets={setShowBets}
-             lowExposure={lowExposure}
-             highExposure={highExposure}
-             evenExposure={evenExposure}
-             redExposure={redExposure}
-             a23Exposure={a23Exposure}
-             four56Exposure={four56Exposure}
-             fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-             fourIndexOneRunnersEx={fourIndexOneRunnersEx}
-             fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
-             fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
-             sixIndexOneRunnersEx={sixIndexOneRunnersEx}
-             sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
+                seven={picture.seven}
+                six={picture.six}
+                ten={picture.ten}
+                three={picture.three}
+                two={picture.two}
               /> : null}
+              {slug == "teen3" || slug == "teen32" ? (
+                <InstantTeenPatti
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                />
+              ) : null}
+              {slug == "teen20" ? (
+                <TeenPatti20
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  evenExposure={evenExposure}
+                  redExposure={redExposure}
+                  a23Exposure={a23Exposure}
+                  four56Exposure={four56Exposure}
+                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                  fourIndexOneRunnersEx={fourIndexOneRunnersEx}
+                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                  fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
+                  sixIndexOneRunnersEx={sixIndexOneRunnersEx}
+                  sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
+                />
+              ) : null}
               {slug == "teen" ? (
                 <TeenPattiOneDay
                   data={data}
@@ -813,33 +859,33 @@ const PlaceBetDiamond = () => {
               slug === "lucky7eu2" ||
               slug === "lucky7" ? (
                 <Lucky7
-                  A={A}
+                  A={picture.A}
                   a23Exposure={a23Exposure}
                   blackExposure={blackExposure}
                   data={data}
-                  eight={eight}
+                  eight={picture.eight}
                   eight910Exposure={eight910Exposure}
                   evenExposure={evenExposure}
-                  five={five}
-                  four={four}
+                  five={picture.five}
+                  four={picture.four}
                   four56Exposure={four56Exposure}
                   highExposure={highExposure}
-                  j={j}
+                  j={picture.j}
                   jqkExposure={jqkExposure}
-                  k={k}
+                  k={picture.k}
                   lowExposure={lowExposure}
-                  nine={nine}
+                  nine={picture.nine}
                   oddExposure={oddExposure}
                   pnlBySelection={pnlBySelection}
-                  q={q}
+                  q={picture.q}
                   redExposure={redExposure}
                   setPlaceBetValue={setPlaceBetValue}
                   setShowBets={setShowBets}
-                  seven={seven}
-                  six={six}
-                  ten={ten}
-                  three={three}
-                  two={two}
+                  seven={picture.seven}
+                  six={picture.six}
+                  ten={picture.ten}
+                  three={picture.three}
+                  two={picture.two}
                 />
               ) : null}
 
@@ -900,7 +946,7 @@ const PlaceBetDiamond = () => {
             setShowBets={setShowBets}
             refetchCurrentBets={refetchCurrentBets}
             refetchExposure={refetchExposure}
-            setErrorMessage={setErrorMessage} 
+            setErrorMessage={setErrorMessage}
             setSuccessMessage={setSuccessMessage}
           />
         )}

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { config } from "../../utils/config";
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const OurVirtual = () => {
   const virtualGamesApi = config?.result?.endpoint?.virtualCasino;
   const token = localStorage.getItem("token");
@@ -10,6 +10,8 @@ const OurVirtual = () => {
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
   const [filterGames, setFilterGames] = useState("all");
+  const navigate = useNavigate();
+  const [active, setActive] = useState("ourVirtual");
 
   useEffect(() => {
     const getVirtualGames = async () => {
@@ -23,7 +25,6 @@ const OurVirtual = () => {
     getVirtualGames();
   }, [token, virtualGamesApi]);
 
-  
   useEffect(() => {
     const categories = Array.from(new Set(data.map((item) => item.category)));
 
@@ -32,9 +33,10 @@ const OurVirtual = () => {
 
   useEffect(() => {
     if (filterGames == "all") {
-      setVirtualGames(data);
+      setVirtualGames(data.filter((d) => d.visible === true));
     } else {
-      setVirtualGames(data.filter((game) => game.category === filterGames));
+      const category = data.filter((game) => game.category === filterGames);
+      setVirtualGames(category.filter((d) => d.visible === true));
     }
   }, [data, filterGames]);
 
@@ -42,15 +44,21 @@ const OurVirtual = () => {
     <div className="center-container">
       <div className="casino-tab-list d-xl-none">
         <ul className="nav nav-pills casino-tab" id="casino-tab">
-          <li className="nav-item">
-            <a className="nav-link" href="/casino-list/LC/4">
+          <li onClick={() => setActive("ourCasino")} className="nav-item">
+            <Link
+              className={`nav-link ${active === "ourCasino" ? "active" : ""}`}
+              to="/our-casino"
+            >
               <span>Our Casino</span>
-            </a>
+            </Link>
           </li>
-          <li className="nav-item">
-            <a className="nav-link active" href="/casino-list/LC/19">
+          <li onClick={() => setActive("ourVirtual")} className="nav-item">
+            <Link
+              to="/our-virtual"
+              className={`nav-link ${active === "ourVirtual" ? "active" : ""}`}
+            >
               <span>Our Virtual</span>
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
@@ -86,18 +94,33 @@ const OurVirtual = () => {
         <div className="tab-pane active" id="all-casino">
           <div className="casino-list">
             {virtualGames?.map((virtualGame, i) => {
+              const virtual = {
+                eventId: virtualGame.eventId,
+                eventTypeId: virtualGame?.eventTypeId,
+                casinoSlug: virtualGame?.slug,
+                type: "virtual",
+              };
+
+              const handleNavigate = () => {
+                localStorage.removeItem("casino");
+                localStorage.setItem("casino", JSON.stringify(virtual));
+                navigate(`/our-casino/${virtualGame?.slug}`);
+              };
+
               return (
-                <div key={i} className="casino-list-item">
-                  <Link
-                    to={`/our-virtual/${virtualGame?.eventId}/${virtualGame?.eventTypeId}`}
-                  >
+                <div
+                  onClick={handleNavigate}
+                  key={i}
+                  className="casino-list-item"
+                >
+                  <a>
                     <div
                       className="casino-list-item-banner"
                       style={{
                         backgroundImage: `url('${virtualGame?.image}')`,
                       }}
                     ></div>
-                  </Link>
+                  </a>
                 </div>
               );
             })}
