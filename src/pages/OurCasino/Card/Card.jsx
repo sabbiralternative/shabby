@@ -287,6 +287,305 @@ const Card = ({ slug, data, one }) => {
           </div>
         </div>
       )}
+      {
+        slug === 'vaaa' && (
+          <>
+           <div className="vcasinocards-playera">
+                        <h5 className="text-center">Amar</h5>
+                        <div className="flip-card-container">
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="vcasinocards-playerb">
+                        <h5 className="text-center">Akbar</h5>
+                        <div className="flip-card-container">
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="vcasinocards-playerc">
+                        <h5 className="text-center">Anthony</h5>
+                        <div className="flip-card-container">
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+          </>
+        )
+      }
+      {
+        slug === 'vbtable' && (
+          <>
+             <div className="">
+                        <h5 className="text-center">A</h5>
+                        <div className="flip-card-container">
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="">
+                        <h5 className="text-center">B</h5>
+                        <div className="flip-card-container">
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="">
+                        <h5 className="text-center">C</h5>
+                        <div className="flip-card-container">
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="">
+                        <h5 className="text-center">D</h5>
+                        <div className="flip-card-container">
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="">
+                        <h5 className="text-center">E</h5>
+                        <div className="flip-card-container">
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="">
+                        <h5 className="text-center">F</h5>
+                        <div className="flip-card-container">
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/C1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+          </>
+        )
+      }
+      {
+        slug === 'vteen20' && (
+          <>
+            <div className="vcasinocards-playera">
+                        <h5 className="text-center">Player A</h5>
+                        <div className="flip-card-container">
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="vcasinocards-playerb">
+                        <h5 className="text-center">Player B</h5>
+                        <div className="flip-card-container">
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+          </>
+        )
+      }
+      {
+        slug === 'vteenmuf' && (
+          <>
+           <div className="vcasinocards-playera">
+                        <h5 className="text-center">Player A</h5>
+                        <div className="flip-card-container">
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="vcasinocards-playerb">
+                        <h5 className="text-center">Player B</h5>
+                        <div className="flip-card-container">
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flip-card">
+                            <div className="flip-card-inner">
+                              <div className="flip-card-front">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                              <div className="flip-card-back">
+                                <img src="static/front/img/cards/1.jpg" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+          </>
+        )
+      }
     </>
   );
 };

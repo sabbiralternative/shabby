@@ -33,6 +33,10 @@ import {
   token,
 } from "../../../utils/Utils.jsx";
 import VLucky7 from "../VLucky7/VLucky7.jsx";
+import VAmarAkbarAnthony from "../VAmarAkbarAnthony/VAmarAkbarAnthony.jsx";
+import VBollywoodCasino from "../VBollywoodCasino/VBollywoodCasino.jsx";
+import VTeenPatti from "../VTeenPatti/VTeenPatti.jsx";
+import VMTeenPatti from "../VMTeenPatti/VMTeenPatti.jsx";
 
 const PlaceBetDiamond = () => {
   const { eventTypeId, eventId, type } = JSON.parse(
@@ -515,6 +519,7 @@ const PlaceBetDiamond = () => {
       const data = res.data;
       if (data.success) {
         setData(data.result);
+   
       }
     };
     getGameDetails();
@@ -607,6 +612,10 @@ const PlaceBetDiamond = () => {
         } 
         ${slug == "teen20" ? "teenpatti20" : ""} 
         ${slug == "vlucky7" ? "lucky7a vcasino" : ""} 
+        ${slug == "vaaa" ? "aaa vcasino" : ""} 
+        ${slug == "vbtable" ? "bollywood vcasino" : ""} 
+        ${slug == "vteen20" ? "teenpatti20 vcasino" : ""} 
+        ${slug == "vteenmuf" ? "teenpattimuflis vcasino" : ""} 
    
         `}
         >
@@ -626,10 +635,7 @@ const PlaceBetDiamond = () => {
                     ></iframe>
                   )}
                   {type === "virtual" && (
-                    <img
-                      src="/dealer-bg/vlucky7.png"
-                      className="vcasinobg"
-                    />
+                    <img src={`/dealer-bg/${slug}.png`} className="vcasinobg" />
                   )}
                 </div>
               </div>
@@ -644,35 +650,94 @@ const PlaceBetDiamond = () => {
             </div>
 
             <div className="casino-detail">
-              {slug === "vlucky7" ? <VLucky7 
-                A={picture.A}
-                a23Exposure={a23Exposure}
-                blackExposure={blackExposure}
-                data={data}
-                eight={picture.eight}
-                eight910Exposure={eight910Exposure}
-                evenExposure={evenExposure}
-                five={picture.five}
-                four={picture.four}
-                four56Exposure={four56Exposure}
-                highExposure={highExposure}
-                j={picture.j}
-                jqkExposure={jqkExposure}
-                k={picture.k}
-                lowExposure={lowExposure}
-                nine={picture.nine}
-                oddExposure={oddExposure}
-                pnlBySelection={pnlBySelection}
-                q={picture.q}
-                redExposure={redExposure}
-                setPlaceBetValue={setPlaceBetValue}
-                setShowBets={setShowBets}
-                seven={picture.seven}
-                six={picture.six}
-                ten={picture.ten}
-                three={picture.three}
-                two={picture.two}
-              /> : null}
+              {slug === "vlucky7" ? (
+                <VLucky7
+                  A={picture.A}
+                  a23Exposure={a23Exposure}
+                  blackExposure={blackExposure}
+                  data={data}
+                  eight={picture.eight}
+                  eight910Exposure={eight910Exposure}
+                  evenExposure={evenExposure}
+                  five={picture.five}
+                  four={picture.four}
+                  four56Exposure={four56Exposure}
+                  highExposure={highExposure}
+                  j={picture.j}
+                  jqkExposure={jqkExposure}
+                  k={picture.k}
+                  lowExposure={lowExposure}
+                  nine={picture.nine}
+                  oddExposure={oddExposure}
+                  pnlBySelection={pnlBySelection}
+                  q={picture.q}
+                  redExposure={redExposure}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  seven={picture.seven}
+                  six={picture.six}
+                  ten={picture.ten}
+                  three={picture.three}
+                  two={picture.two}
+                />
+              ) : null}
+              {slug === "vaaa" && (
+                <VAmarAkbarAnthony
+                  data={data}
+                  setShowBets={setShowBets}
+                  setPlaceBetValue={setPlaceBetValue}
+                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  evenExposure={evenExposure}
+                  oddExposure={oddExposure}
+                  redExposure={redExposure}
+                  blackExposure={blackExposure}
+                  four56Exposure={four56Exposure}
+                  pnlBySelection={pnlBySelection}
+                  a23Exposure={a23Exposure}
+                />
+              )}
+              {slug === "vbtable" && (
+                <VBollywoodCasino
+                  data={data}
+                  setShowBets={setShowBets}
+                  setPlaceBetValue={setPlaceBetValue}
+                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  evenExposure={evenExposure}
+                  oddExposure={oddExposure}
+                  redExposure={redExposure}
+                  blackExposure={blackExposure}
+                  four56Exposure={four56Exposure}
+                  pnlBySelection={pnlBySelection}
+                  a23Exposure={a23Exposure}
+                  zeroIndexFiveRunnersEx={zeroIndexFiveRunnersEx}
+                  zeroIndexFourRunnersEx={zeroIndexFourRunnersEx}
+                  zeroIndexThreeRunnersEx={zeroIndexThreeRunnersEx}
+                />
+              )}
+              {slug === "vteen20" && (
+                <VTeenPatti
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  evenExposure={evenExposure}
+                  redExposure={redExposure}
+                  a23Exposure={a23Exposure}
+                  four56Exposure={four56Exposure}
+                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                  fourIndexOneRunnersEx={fourIndexOneRunnersEx}
+                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                  fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
+                  sixIndexOneRunnersEx={sixIndexOneRunnersEx}
+                  sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
+                />
+              )}
+              {slug === "vteenmuf" && <VMTeenPatti />}
               {slug == "teen3" || slug == "teen32" ? (
                 <InstantTeenPatti
                   data={data}
@@ -930,7 +995,7 @@ const PlaceBetDiamond = () => {
               ) : null}
 
               {/* Last result */}
-              <LastResult />
+              <LastResult data={data} />
             </div>
             {/* End casino details */}
           </div>

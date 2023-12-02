@@ -14,6 +14,14 @@ const Main = () => {
   const baseUrl = window.location.origin;
   const navigate = useNavigate();
   const pageTitle = config?.result?.settings?.siteTitle;
+  const isUnauthorizedAccess = window.location.pathname === "/admin";
+
+  useEffect(() => {
+    if (isUnauthorizedAccess) {
+      localStorage.clear();
+      navigate("/login");
+    }
+  }, [navigate, isUnauthorizedAccess]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -65,7 +73,12 @@ const Main = () => {
                ? "report-page"
                : ""
            } 
-        ${relativeURL.includes("/our-casino/") || relativeURL.includes("/our-virtual/") ? "casino-page" : ""} 
+        ${
+          relativeURL.includes("/our-casino/") ||
+          relativeURL.includes("/our-virtual/")
+            ? "casino-page"
+            : ""
+        } 
         home-page `}
         >
           <Outlet />
