@@ -124,6 +124,8 @@ const router = createBrowserRouter([
     path: "/change-Password-login",
     element: <ChangePasswordLogin />,
   },
-]);
+],{
+  basename: import.meta.env.BASE_URL ?? "/"
+});
 
 export default router;
