@@ -14,8 +14,8 @@ const AccountStatement = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const onSubmit = ({ toDate, fromDate, reportType }) => {
-    if(reportType == 'none'){
-      setErrorMessage("Select Report Type !")
+    if (reportType == "none") {
+      setErrorMessage("Select Report Type !");
     }
     fetch(accountStatementApi, {
       method: "POST",
@@ -54,13 +54,13 @@ const AccountStatement = () => {
   return (
     <>
       <div className="center-container">
-      {errorMessage && (
-        <Notification
-          message={errorMessage}
-          success={false}
-          setMessage={setErrorMessage}
-        />
-      )}
+        {errorMessage && (
+          <Notification
+            message={errorMessage}
+            success={false}
+            setMessage={setErrorMessage}
+          />
+        )}
         {showModal && (
           <SettleBetsModal
             showModal={showModal}

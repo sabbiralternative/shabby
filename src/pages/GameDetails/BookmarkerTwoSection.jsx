@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
 
-const BookmarkerTwoSection = ({ bookmarker2, exposer, setShowBets, setTotalSize }) => {
+const BookmarkerTwoSection = ({
+  bookmarker2,
+  exposer,
+  setShowBets,
+  setTotalSize,
+}) => {
   const [previousData, setPreviousData] = useState(bookmarker2);
   const [changedPrices, setChangedPrices] = useState({});
   const { setPlaceBetValue } = UseState();
@@ -184,14 +189,15 @@ const BookmarkerTwoSection = ({ bookmarker2, exposer, setShowBets, setTotalSize 
                     <div className="market-nation-detail">
                       <span className="market-nation-name">{runner.name} </span>
                       <div className="market-nation-book">
-                        {pnl?.map(({ pnl,MarketId }, i) => {
+                        {pnl?.map(({ pnl, MarketId }, i) => {
                           return (
                             <span
-                            onClick={() => handleLader(MarketId)}
+                              onClick={() => handleLader(MarketId)}
                               key={i}
                               className={`market-book ${
                                 pnl > 0 ? "text-success" : "text-danger"
-                              }`} style={{cursor:'pointer'}}
+                              }`}
+                              style={{ cursor: "pointer" }}
                             >
                               {pnl}
                             </span>
@@ -215,7 +221,7 @@ const BookmarkerTwoSection = ({ bookmarker2, exposer, setShowBets, setTotalSize 
                       .reverse()
                       .map((back, i) => {
                         const handlePlaceBackBet = () => {
-                          setTotalSize('')
+                          setTotalSize("");
                           setShowBets(true);
                           setPlaceBetValue({});
                           setPlaceBetValue({
@@ -227,12 +233,12 @@ const BookmarkerTwoSection = ({ bookmarker2, exposer, setShowBets, setTotalSize 
                             betDelay: bookmaker?.betDelay,
                             marketId: bookmaker?.id,
                             pnl: updatedPnl,
-                          oppositionName: bookmaker.runners.map(
-                            (runner) => runner.name
-                          ),
+                            oppositionName: bookmaker.runners.map(
+                              (runner) => runner.name
+                            ),
                             back: true,
-                            name:runner?.name,
-                            isWeak:bookmaker?.isWeak
+                            name: runner?.name,
+                            isWeak: bookmaker?.isWeak,
                           });
                         };
                         return (
@@ -267,7 +273,7 @@ const BookmarkerTwoSection = ({ bookmarker2, exposer, setShowBets, setTotalSize 
 
                     {runner?.lay?.map((lay, i) => {
                       const handlePlaceLayBets = () => {
-                        setTotalSize('')
+                        setTotalSize("");
                         setShowBets(true);
                         setPlaceBetValue({});
                         setPlaceBetValue({
@@ -283,8 +289,8 @@ const BookmarkerTwoSection = ({ bookmarker2, exposer, setShowBets, setTotalSize 
                             (runner) => runner.name
                           ),
                           lay: true,
-                          name:runner?.name,
-                          isWeak:bookmaker?.isWeak
+                          name: runner?.name,
+                          isWeak: bookmaker?.isWeak,
                         });
                       };
                       return (

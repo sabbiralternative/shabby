@@ -179,6 +179,7 @@ const PlaceBetDiamond = () => {
     pnlBySelection = Object?.values(obj);
   }
 
+
   useEffect(() => {
     /* data[0]?.runners[0] exposure */
     const low = pnlBySelection?.filter(

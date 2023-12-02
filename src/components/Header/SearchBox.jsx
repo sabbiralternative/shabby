@@ -41,7 +41,6 @@ const SearchBox = () => {
 
   const handleHideDropdown = () => {
     localStorage.removeItem("showSearchValue");
-    
   };
 
   return (

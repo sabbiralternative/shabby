@@ -16,7 +16,6 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-
   useEffect(() => {
     document.title = pageTitle;
   }, [pageTitle]);
@@ -71,7 +70,7 @@ const Login = () => {
       },
       body: JSON.stringify({
         username: "demo",
-        password: '',
+        password: "",
       }),
     })
       .then((res) => res.json())
@@ -97,7 +96,6 @@ const Login = () => {
           data?.result?.changePassword === false
         ) {
           navigate("/");
-         
         } else {
           setErrorLogin(data?.error);
         }

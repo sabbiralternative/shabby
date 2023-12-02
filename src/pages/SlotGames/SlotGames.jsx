@@ -2,12 +2,15 @@ import { useEffect } from "react";
 import { config } from "../../utils/config";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import LiveSlotModal from "../../components/Modal/LiveSlotModal";
+
 const SlotGames = () => {
   const slotGamesApi = config?.result?.endpoint?.slotCasino;
   const token = localStorage.getItem("token");
   const [slotGames, setSlotGames] = useState([]);
-  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [casinoId, setCasinoId] = useState({});
+
   useEffect(() => {
     const getSlotCasino = async () => {
       const res = await axios.get(slotGamesApi, {
@@ -19,8 +22,12 @@ const SlotGames = () => {
     getSlotCasino();
   }, [token, slotGamesApi]);
 
-  const navigateSlotCasinoVideo = (slotGame) => {
-    navigate(`/slot-games/${slotGame?.eventId}/${slotGame?.providerId}`);
+  const navigateSlotCasinoVideo = (casino) => {
+    setShowModal(true);
+    setCasinoId({
+      eventId: casino?.eventId,
+      providerId: casino?.providerId,
+    });
   };
 
   return (
@@ -253,6 +260,9 @@ const SlotGames = () => {
           </div>
         </div>
       </div>
+      {showModal && (
+        <LiveSlotModal setShowModal={setShowModal} casinoId={casinoId} />
+      )}
     </div>
   );
 };

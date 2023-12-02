@@ -202,7 +202,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                       {fancyGame?.runners.map((runner) =>
                         runner.lay.map((lay, i) => {
                           const handlePlaceLayBet = () => {
-                            setTotalSize('')
+                            setTotalSize("");
                             setShowBets(true);
                             setPlaceBetValue({});
                             setPlaceBetValue({
@@ -240,9 +240,8 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
 
                       {fancyGame?.runners?.map((runner) =>
                         runner.back.map((back, i) => {
-     
                           const handlePlaceBackBets = () => {
-                            setTotalSize('')
+                            setTotalSize("");
                             setShowBets(true);
                             setPlaceBetValue({});
                             setPlaceBetValue({

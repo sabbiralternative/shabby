@@ -197,7 +197,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                       {odd?.runners.map((runner) =>
                         runner.lay.map((lay, i) => {
                           const handlePlaceLayBet = () => {
-                            setTotalSize('')
+                            setTotalSize("");
                             setShowBets(true);
                             setPlaceBetValue({});
                             setPlaceBetValue({
@@ -235,7 +235,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                       {odd?.runners?.map((runner) =>
                         runner.back.map((back, i) => {
                           const handlePlaceBackBets = () => {
-                            setTotalSize('')
+                            setTotalSize("");
                             setShowBets(true);
                             setPlaceBetValue({});
                             setPlaceBetValue({

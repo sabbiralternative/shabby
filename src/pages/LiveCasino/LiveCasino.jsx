@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { config } from "../../utils/config";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import LiveSlotModal from "../../components/Modal/LiveSlotModal";
 const LiveCasino = () => {
   const [liveCasinoCategory, setLiveCasinoCategory] = useState("evolution");
   const [live_casino, setLive_Casino] = useState([]);
   const liveCasinoApi = config?.result?.endpoint?.liveCasino;
   const token = localStorage.getItem("token");
-  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [casinoId, setCasinoId] = useState({});
+
   useEffect(() => {
     const getLiveCasino = async () => {
       const res = await axios.get(`${liveCasinoApi}/${liveCasinoCategory}`, {
@@ -22,7 +25,11 @@ const LiveCasino = () => {
   }, [token, liveCasinoApi, liveCasinoCategory]);
 
   const navigateLiveCasinoVideo = (casino) => {
-    navigate(`/live-casino/${casino?.eventId}/${casino?.providerId}`);
+    setShowModal(true);
+    setCasinoId({
+      eventId: casino?.eventId,
+      providerId: casino?.providerId,
+    });
   };
 
   return (
@@ -108,6 +115,9 @@ const LiveCasino = () => {
           </div>
         </div>
       </div>
+      {showModal && (
+        <LiveSlotModal setShowModal={setShowModal} casinoId={casinoId} />
+      )}
     </div>
   );
 };

@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
 
-const BookmarkerSection = ({ bookmarker, exposer, setShowBets,  setTotalSize }) => {
+const BookmarkerSection = ({
+  bookmarker,
+  exposer,
+  setShowBets,
+  setTotalSize,
+}) => {
   const token = localStorage.getItem("token");
   const laderApi = config?.result?.endpoint?.ladder;
   const [showLadder, setShowLadder] = useState(false);
@@ -216,7 +221,7 @@ const BookmarkerSection = ({ bookmarker, exposer, setShowBets,  setTotalSize }) 
                       ?.reverse()
                       ?.map((back, i) => {
                         const handlePlaceBackBet = () => {
-                          setTotalSize('')
+                          setTotalSize("");
                           setShowBets(true);
                           setPlaceBetValue({});
                           setPlaceBetValue({
@@ -268,7 +273,7 @@ const BookmarkerSection = ({ bookmarker, exposer, setShowBets,  setTotalSize }) 
 
                     {runner.lay.map((lay, i) => {
                       const handlePlaceLayBets = () => {
-                        setTotalSize('')
+                        setTotalSize("");
                         setShowBets(true);
                         setPlaceBetValue({});
                         setPlaceBetValue({

@@ -11,8 +11,8 @@ const ActivityLogs = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = ({ toDate, fromDate, logType }) => {
-    if(logType == 'none'){
-      setErrorMessage("Select Log Type !")
+    if (logType == "none") {
+      setErrorMessage("Select Log Type !");
     }
     fetch(activityLogApi, {
       method: "POST",
@@ -35,7 +35,7 @@ const ActivityLogs = () => {
 
   return (
     <div className="center-container">
-       {errorMessage && (
+      {errorMessage && (
         <Notification
           message={errorMessage}
           success={false}

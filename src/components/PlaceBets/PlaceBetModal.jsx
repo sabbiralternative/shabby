@@ -9,9 +9,8 @@ const PlaceBetModal = ({
   refetchCurrentBets,
   refetchExposure,
   setSuccessMessage,
-  setErrorMessage
+  setErrorMessage,
 }) => {
-
   const [price, setPrice] = useState("");
   const [totalSize, setTotalSize] = useState("");
   const [profit, setProfit] = useState("");
@@ -62,15 +61,15 @@ const PlaceBetModal = ({
     })
       .then((res) => res.json())
       .then((data) => {
-        if(data?.success){
+        if (data?.success) {
           refetchExposure();
           refetchCurrentBets();
           console.log(data);
           setLoader(false);
           setShowBets(false);
-          setSuccessMessage("Bet Place Successfully !")
-        }else{
-          setErrorMessage(data?.error?.status[0]?.description)
+          setSuccessMessage("Bet Place Successfully !");
+        } else {
+          setErrorMessage(data?.error?.status[0]?.description);
           setLoader(false);
           setShowBets(false);
           refetchExposure();
@@ -82,7 +81,6 @@ const PlaceBetModal = ({
 
   /* Increase price bets */
   const handleIncreasePrice = () => {
-  
     if (price == 1000 || placeBetValue?.isWeak === true) {
       return;
     } else if (price > 1.0 && price < 2) {
@@ -202,7 +200,9 @@ const PlaceBetModal = ({
                     </button>
                   </div>
                   <div className="col-4 text-center pt-2">
-                    <span>  {price &&
+                    <span>
+                      {" "}
+                      {price &&
                       totalSize &&
                       placeBetValue?.back &&
                       placeBetValue?.btype !== "FANCY"
@@ -216,7 +216,8 @@ const PlaceBetModal = ({
                         : null}
                       {price && totalSize && placeBetValue?.btype == "FANCY"
                         ? 0
-                        : null}</span>
+                        : null}
+                    </span>
                   </div>
                 </div>
                 <div className="place-bet-buttons mt-2">
@@ -249,10 +250,7 @@ const PlaceBetModal = ({
                     <span>Lazio</span>
                   </div>
                   <div className="col-4 text-center">
-                    <span className="text-success">
-                      {" "}
-                    99
-                    </span>
+                    <span className="text-success"> 99</span>
                   </div>
                   <div className="col-4 text-end">
                     <span className="text-success">376</span>
