@@ -47,6 +47,8 @@ const PlaceBetDiamond = () => {
   const [data, setData] = useState([]);
   const [showBets, setShowBets] = useState(false);
   const {
+    eventName,
+    setEventName,
     setPlaceBetValue,
     placeBetValue,
     lowExposure,
@@ -173,12 +175,18 @@ const PlaceBetDiamond = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+  useEffect(() => {
+    if (data && data?.length > 0) {
+      const eventName = data && data[0]?.eventName;
+      setEventName(eventName);
+    }
+  }, [data, setEventName, eventName]);
+
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
-
 
   useEffect(() => {
     /* data[0]?.runners[0] exposure */
@@ -520,7 +528,6 @@ const PlaceBetDiamond = () => {
       const data = res.data;
       if (data.success) {
         setData(data.result);
-   
       }
     };
     getGameDetails();

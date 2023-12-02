@@ -130,7 +130,7 @@ const Card = ({ slug, data, one }) => {
     }
   }, [data]);
 
-  console.log(data);
+
   return (
     <>
       {/* <!-- card html start --> */}
