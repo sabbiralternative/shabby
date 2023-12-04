@@ -590,8 +590,8 @@ const TeenPatti20 = ({
           >
             {/*  <!-- key5 status --> */}
             <div>
-              <img src="static/front/img/icons/spade.png" />
-              <img src="static/front/img/icons/club.png" />
+            <img src="/spade.png" />
+              <img src="/club.png" />
             </div>
             <div>
               <span className="casino-odds">
@@ -638,8 +638,8 @@ const TeenPatti20 = ({
           >
             {/*  <!-- key5 status --> */}
             <div>
-              <img src="static/front/img/icons/heart.png" />
-              <img src="static/front/img/icons/diamond.png" />
+            <img src="/diamond.png" />
+              <img src="/heart.png" />
             </div>
             <div>
               <span className="casino-odds">
@@ -685,8 +685,8 @@ const TeenPatti20 = ({
           >
             {/*  <!-- key6 status --> */}
             <div>
-              <img src="static/front/img/icons/spade.png" />
-              <img src="static/front/img/icons/club.png" />
+              <img src="/spade.png" />
+              <img src="/club.png" />
             </div>
             <div>
               <span className="casino-odds">
@@ -731,8 +731,9 @@ const TeenPatti20 = ({
           >
             {/*    <!-- key6 status --> */}
             <div>
-              <img src="static/front/img/icons/heart.png" />
-              <img src="static/front/img/icons/diamond.png" />
+              <img src="/diamond.png" />
+              <img src="/heart.png" />
+           
             </div>
             <div>
               <span className="casino-odds">

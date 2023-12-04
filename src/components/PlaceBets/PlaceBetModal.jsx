@@ -10,6 +10,7 @@ const PlaceBetModal = ({
   refetchExposure,
   setSuccessMessage,
   setErrorMessage,
+
 }) => {
   const [price, setPrice] = useState("");
   const [totalSize, setTotalSize] = useState("");
@@ -245,7 +246,7 @@ const PlaceBetModal = ({
                 >
                   <button className="btn btn-info">Edit</button>
                 </div>
-                <div className="row mt-2">
+                {/* <div className="row mt-2">
                   <div className="col-4">
                     <span>Lazio</span>
                   </div>
@@ -277,7 +278,7 @@ const PlaceBetModal = ({
                   <div className="col-4 text-end">
                     <span className="text-danger">-200</span>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

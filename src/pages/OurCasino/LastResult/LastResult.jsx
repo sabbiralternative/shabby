@@ -1,7 +1,5 @@
-import UseState from "../../../hooks/UseState";
-
 const LastResult = ({ data }) => {
-  const { eventName } = UseState();
+  const { eventId } = JSON.parse(localStorage.getItem("casino"));
 
   return (
     <>
@@ -15,131 +13,115 @@ const LastResult = ({ data }) => {
         {data &&
           data?.length > 0 &&
           data[0]?.recent_winner?.map(({ winner }, i) => {
-     
             return (
               <span
                 key={i}
                 className={`result 
        
         ${
-          eventName === "Amar Akbar Anthony" && winner.split("")[0] === "A"
+          (eventId == 10004 || eventId == 10005 || eventId == 10082) &&
+          winner.split("")[0] === "A"
             ? " result-a"
             : ""
         }
         ${
-          eventName === "Amar Akbar Anthony" && winner.split("")[0] === "B"
+          (eventId == 10004 || eventId == 10005 || eventId == 10082) &&
+          winner.split("")[0] === "B"
             ? " result-b"
             : ""
         }
         ${
-          eventName === "Amar Akbar Anthony" && winner.split("")[0] === "C"
+          (eventId == 10004 || eventId == 10005 || eventId == 10082) &&
+          winner.split("")[0] === "C"
             ? " result-c"
             : ""
         }
         ${
-          eventName === "Lucky 7A" && winner.split("")[0] === "L"
+          (eventId == 10002 ||
+            eventId == 10003 ||
+            eventId == 10001 ||
+            eventId == 10081) &&
+          winner.split("")[0] === "L"
             ? " result-a"
             : ""
         }
         ${
-          eventName === "Lucky 7A" && winner.split("")[0] === "H"
+          (eventId == 10002 ||
+            eventId == 10003 ||
+            eventId == 10001 ||
+            eventId == 10081) &&
+          winner.split("")[0] === "H"
             ? " result-b"
             : ""
         }
         ${
-          eventName === "Teenpatti Test" && winner.split("")[0] === "T"
+          (eventId == 10002 ||
+            eventId == 10003 ||
+            eventId == 10001 ||
+            eventId == 10081) &&
+          winner.split("")[0] === "T"
+            ? " result-b"
+            : ""
+        }
+        ${eventId == 10018 && winner.split("")[0] === "T" ? " result-a" : ""}
+        ${eventId == 10018 && winner.split("")[0] === "L" ? " result-b" : ""}
+        ${eventId == 10018 && winner.split("")[0] === "D" ? " result-c" : ""}
+        ${
+          (eventId == 10014 || eventId == 10015 || 10019) &&
+          winner.split("")[0] === "A"
             ? " result-a"
             : ""
         }
         ${
-          eventName === "Teenpatti Test" && winner.split("")[0] === "L"
+          (eventId == 10014 || eventId == 10015 || 10019 || eventId == 10017) &&
+          winner.split("")[0] === "B"
             ? " result-b"
             : ""
         }
         ${
-          eventName === "Teenpatti Test" && winner.split("")[0] === "D"
+          (eventId == 10012 || eventId == 10013) && winner.split("")[0] === "P"
+            ? " result-a"
+            : ""
+        }
+        ${
+          (eventId == 10012 || eventId == 10013) && winner.split("")[0] === "D"
+            ? " result-b"
+            : ""
+        }
+
+
+        ${
+          (eventId == 10010 || eventId == 10013) && winner.split("")[0] === "L"
             ? " result-c"
             : ""
         }
-
-
         ${
-          eventName === "Instant Teenpatti" ||
-          (eventName === "TP OPEN" && winner.split("")[0] === "A")
+          (eventId == 10010 || eventId == 10013) && winner.split("")[0] === "T"
+            ? " result-b"
+            : ""
+        }
+        ${
+          (eventId == 10010 || eventId == 10013) && winner.split("")[0] === "D"
+            ? " result-a"
+            : ""
+        }
+        ${eventId == 10006 || eventId == 10083 ? " result-b" : ""}
+        ${
+          (eventId == 10007 || eventId == 10008) && winner.split("")[0] === "T"
             ? " result-a"
             : ""
         }
         ${
-          eventName === "Instant Teenpatti" ||
-          (eventName === "TP OPEN" && winner.split("")[0] === "B")
+          (eventId == 10007 || eventId == 10008) && winner.split("")[0] === "D"
             ? " result-b"
             : ""
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        ${eventName === "Bollywood Casino" ? " result-b" : ""}
         `}
               >
                 {winner.split("")[0]}
               </span>
             );
           })}
-        {/* <span className="result result-a">D</span>
-        <span className="result result-a">D</span>
-        <span className="result result-b">T</span>
-        <span className="result result-a">D</span>
-        <span className="result result-b">T</span>
-        <span className="result result-b">T</span>
-        <span className="result result-b">T</span>
-        <span className="result result-b">T</span>
-        <span className="result result-b">T</span>
-        <span className="result result-b">T</span> */}
       </div>
     </>
   );

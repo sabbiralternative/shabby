@@ -13,6 +13,7 @@ const OurVirtual = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState("ourVirtual");
 
+  console.log(data);
   useEffect(() => {
     const getVirtualGames = async () => {
       const res = await axios.get(virtualGamesApi, {

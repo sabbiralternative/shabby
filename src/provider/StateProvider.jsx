@@ -6,7 +6,7 @@ const StateProvider = ({ children }) => {
   const [buttonValue, SetButtonValue] = useState(false);
   const [placeBetValue,setPlaceBetValue] = useState({})
   const [filterGames, setFilterGames] = useState("all");
-  const [eventName,setEventName] = useState('')
+
 
   /* data[0]?.runners[0] exposure */
   const [lowExposure, setLowExposure] = useState([]);
@@ -20,6 +20,7 @@ const StateProvider = ({ children }) => {
   const [zeroIndexFourRunnersEx, setZeroIndexFourEx] = useState([]);
   /* data[0]?.runners[4] exposure */
   const [zeroIndexFiveRunnersEx, setZeroIndexFiveEx] = useState([]);
+  const [zeroIndexSixRunnersEx, setZeroIndexSixEx] = useState([]);
 
   /* data[1]?.runners[0] exposure */
   const [evenExposure, setEvenExposure] = useState([]);
@@ -119,9 +120,18 @@ const StateProvider = ({ children }) => {
   const [nineIndexTenRunnersEx, setNineIndexTenEx] = useState([]);
   const [nineIndexElevenRunnersEx, setNineIndexElevenEx] = useState([]);
   const [nineIndexTwelveRunnersEx, setNineIndexTwelveEx] = useState([]);
+  const [tenIndexZeroRunnersEx, setTenIndexZeroEx] = useState([]);
+  const [elevenIndexZeroRunnersEx, setElevenIndexZeroEx] = useState([]);
+  const [twelveIndexZeroRunnersEx, setTwelveIndexZeroEx] = useState([]);
+  const [thirteenIndexZeroRunnersEx, setThirteenIndexZeroEx] = useState([]);
+  const [fourteenIndexZeroRunnersEx, setFourteenIndexZeroEx] = useState([]);
+  const [fifteenIndexZeroRunnersEx, setFifteenIndexZeroEx] = useState([]);
+  const [sixteenIndexZeroRunnersEx, setSixteenIndexZeroEx] = useState([]);
+  const [seventeenIndexZeroRunnersEx, setSeventeenIndexZeroEx] = useState([]);
+
 
   const stateInfo = {
-    sports,setSports,buttonValue, SetButtonValue,placeBetValue,setPlaceBetValue,filterGames, setFilterGames,eventName,setEventName,
+    sports,setSports,buttonValue, SetButtonValue,placeBetValue,setPlaceBetValue,filterGames, setFilterGames,
 
     lowExposure, setLowExposure,nineIndexTwelveRunnersEx, setNineIndexTwelveEx,nineIndexElevenRunnersEx, setNineIndexElevenEx,nineIndexTenRunnersEx, setNineIndexTenEx,nineIndexNineRunnersEx, setNineIndexNineEx,nineIndexEightRunnersEx, setNineIndexEightEx,nineIndexSevenRunnersEx, setNineIndexSevenEx,nineIndexSixRunnersEx, setNineIndexSixEx,nineIndexFiveRunnersEx, setNineIndexFiveEx,nineIndexFourRunnersEx, setNineIndexFourEx,nineIndexThreeRunnersEx, setNineIndexThreeEx,nineIndexTwoRunnersEx, setNineIndexTwoEx,nineIndexOneRunnersEx, setNineIndexOneEx,nineIndexZeroRunnersEx, setNineIndexZeroEx,eightIndexTwelveRunnersEx, setEightIndexTwelveEx,eightIndexElevenRunnersEx, setEightIndexElevenEx,eightIndexTenRunnersEx, setEightIndexTenEx,eightIndexNineRunnersEx, setEightIndexNineEx,eightIndexEightRunnersEx, setEightIndexEightEx,eightIndexSevenRunnersEx, setEightIndexSevenEx,
     eightIndexSixRunnersEx, setEightIndexSixEx,
@@ -162,7 +172,9 @@ const StateProvider = ({ children }) => {
     zeroIndexFourRunnersEx, setZeroIndexFourEx,
     zeroIndexThreeRunnersEx, setZeroIndexThreeEx,
     zeroIndexTwoRunnersEx, setZeroIndexTwoEx,
+    zeroIndexSixRunnersEx, setZeroIndexSixEx,
     highExposure, setHighExposure
+   ,tenIndexZeroRunnersEx, setTenIndexZeroEx,elevenIndexZeroRunnersEx, setElevenIndexZeroEx,twelveIndexZeroRunnersEx, setTwelveIndexZeroEx,thirteenIndexZeroRunnersEx, setThirteenIndexZeroEx,fourteenIndexZeroRunnersEx, setFourteenIndexZeroEx,fifteenIndexZeroRunnersEx, setFifteenIndexZeroEx,sixteenIndexZeroRunnersEx, setSixteenIndexZeroEx,seventeenIndexZeroRunnersEx, setSeventeenIndexZeroEx
     
 
   };

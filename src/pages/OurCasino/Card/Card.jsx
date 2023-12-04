@@ -12,6 +12,7 @@ const kkpkArr = ["H13", "C12", "D12", "H12"];
 const gulamArr = ["H11", "C11", "D11"];
 
 const Card = ({ slug, data, one }) => {
+
   /* Virtual amar akabar anthony */
   const [amar, setAmar] = useState(false);
   const [akbar, setAkbar] = useState(false);
@@ -130,11 +131,10 @@ const Card = ({ slug, data, one }) => {
     }
   }, [data]);
 
-
   return (
     <>
       {/* <!-- card html start --> */}
-      <div className="flip-card-container">
+      <div className={`${slug !== 'vbtable' ? 'flip-card-container':''}`}>
         {slug == "dt202" || slug == "dt20" || slug == "dt6" ? (
           <>
             <div className="flip-card">
@@ -420,7 +420,7 @@ const Card = ({ slug, data, one }) => {
         </div>
       )}
       {slug === "vaaa" && (
-        <>
+        <div className="casino-video-cards">
           <div className="vcasinocards-playera">
             <h5 className="text-center">Amar</h5>
             <div className="flip-card-container">
@@ -463,94 +463,9 @@ const Card = ({ slug, data, one }) => {
               </div>
             </div>
           </div>
-        </>
+        </div>
       )}
-      {slug === "vbtable" && (
-        <>
-          <div className="">
-            <h5 className="text-center">A</h5>
-            <div className="flip-card-container">
-              <div className="flip-card">
-                <div className="flip-card-inner">
-                  <div className="flip-card-front">
-                    {don && <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="">
-            <h5 className="text-center">B</h5>
-            <div className="flip-card-container">
-              <div className="flip-card">
-                <div className="flip-card-inner">
-                  <div className="flip-card-front">
-                    {amarAkbarAnthony && (
-                      <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="">
-            <h5 className="text-center">C</h5>
-            <div className="flip-card-container">
-              <div className="flip-card">
-                <div className="flip-card-inner">
-                  <div className="flip-card-front">
-                    {sahibBibi && (
-                      <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="">
-            <h5 className="text-center">D</h5>
-            <div className="flip-card-container">
-              <div className="flip-card">
-                <div className="flip-card-inner">
-                  <div className="flip-card-front">
-                    {dharamVeer && (
-                      <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="">
-            <h5 className="text-center">E</h5>
-            <div className="flip-card-container">
-              <div className="flip-card">
-                <div className="flip-card-inner">
-                  <div className="flip-card-front">
-                    {kkpk && (
-                      <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="">
-            <h5 className="text-center">F</h5>
-            <div className="flip-card-container">
-              <div className="flip-card">
-                <div className="flip-card-inner">
-                  <div className="flip-card-front">
-                    {gulam && (
-                      <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
+   
       {slug === "vteen20" && (
         <>
           <div className="vcasinocards-playera">
@@ -722,6 +637,337 @@ const Card = ({ slug, data, one }) => {
                   </div>
                   <div className="flip-card-back">
                     <img src="static/front/img/cards/1.jpg" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+      {slug === "poker" || slug === "poker20" ? (
+        <>
+          <div className="d-flex flex-wrap justify-content-between">
+            <div>
+              <h5>Player A</h5>
+              <div className="flip-card-container">
+                <div className="flip-card">
+                  <div className="flip-card-inner">
+                    {data[0]?.runners[0]?.card?.length > 0 ? (
+                      <div className="flip-card-front">
+                        <img
+                          src={`/cards/${data[0]?.runners[0]?.card[0]}.jpg`}
+                        />
+                        {/* <!-- key0 runner2 card--> */}
+                      </div>
+                    ) : (
+                      <div className="flip-card-front">
+                        <img src={one} />
+                        {/*     <!-- key0 runner2 card--> */}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="flip-card">
+                  <div className="flip-card-inner">
+                    {data[0]?.runners[0]?.card?.length > 1 ? (
+                      <div className="flip-card-front">
+                        <img
+                          src={`/cards/${data[0]?.runners[0]?.card[1]}.jpg`}
+                        />
+                        {/* <!-- key0 runner2 card--> */}
+                      </div>
+                    ) : (
+                      <div className="flip-card-front">
+                        <img src={one} />
+                        {/*     <!-- key0 runner2 card--> */}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h5>Player B</h5>
+              <div className="flip-card-container justify-content-end">
+                <div className="flip-card">
+                  <div className="flip-card-inner">
+                    {data[0]?.runners[1]?.card?.length > 0 ? (
+                      <div className="flip-card-front">
+                        <img
+                          src={`/cards/${data[0]?.runners[1]?.card[0]}.jpg`}
+                        />
+                        {/* <!-- key0 runner2 card--> */}
+                      </div>
+                    ) : (
+                      <div className="flip-card-front">
+                        <img src={one} />
+                        {/*     <!-- key0 runner2 card--> */}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="flip-card">
+                  <div className="flip-card-inner">
+                    {data[0]?.runners[1]?.card?.length > 1 ? (
+                      <div className="flip-card-front">
+                        <img
+                          src={`/cards/${data[0]?.runners[1]?.card[1]}.jpg`}
+                        />
+                        {/* <!-- key0 runner2 card--> */}
+                      </div>
+                    ) : (
+                      <div className="flip-card-front">
+                        <img src={one} />
+                        {/*     <!-- key0 runner2 card--> */}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-1">
+            <h5>Board</h5>
+            <div className="flip-card-container">
+              <div className="flip-card">
+                <div className="flip-card-inner">
+                  {data[0]?.indexCard?.length > 0 ? (
+                    <div className="flip-card-front">
+                      <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
+                      {/*    <!-- key0 >> indexCard0 --> */}
+                    </div>
+                  ) : (
+                    <div className="flip-card-front">
+                      <img src={one} />
+                      {/*    <!-- key0 >> indexCard0 --> */}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="flip-card">
+                <div className="flip-card-inner">
+                  {data[0]?.indexCard?.length > 1 ? (
+                    <div className="flip-card-front">
+                      <img src={`/cards/${data[0]?.indexCard[1]}.jpg`} />
+                      {/*    <!-- key0 >> indexCard0 --> */}
+                    </div>
+                  ) : (
+                    <div className="flip-card-front">
+                      <img src={one} />
+                      {/*    <!-- key0 >> indexCard0 --> */}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="flip-card">
+                <div className="flip-card-inner">
+                  {data[0]?.indexCard?.length > 2 ? (
+                    <div className="flip-card-front">
+                      <img src={`/cards/${data[0]?.indexCard[2]}.jpg`} />
+                      {/*    <!-- key0 >> indexCard0 --> */}
+                    </div>
+                  ) : (
+                    <div className="flip-card-front">
+                      <img src={one} />
+                      {/*    <!-- key0 >> indexCard0 --> */}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="flip-card">
+                <div className="flip-card-inner">
+                  {data[0]?.indexCard?.length > 3 ? (
+                    <div className="flip-card-front">
+                      <img src={`/cards/${data[0]?.indexCard[3]}.jpg`} />
+                      {/*    <!-- key0 >> indexCard0 --> */}
+                    </div>
+                  ) : (
+                    <div className="flip-card-front">
+                      <img src={one} />
+                      {/*    <!-- key0 >> indexCard0 --> */}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="flip-card">
+                <div className="flip-card-inner">
+                  {data[0]?.indexCard?.length > 4 ? (
+                    <div className="flip-card-front">
+                      <img src={`/cards/${data[0]?.indexCard[4]}.jpg`} />
+                      {/*    <!-- key0 >> indexCard0 --> */}
+                    </div>
+                  ) : (
+                    <div className="flip-card-front">
+                      <img src={one} />
+                      {/*    <!-- key0 >> indexCard0 --> */}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
+      {slug === "poker6" && (
+        <div>
+          <div className="flip-card-container">
+            <div className="flip-card">
+              <div className="flip-card-inner">
+                {data[0]?.indexCard?.length > 0 ? (
+                  <div className="flip-card-front">
+                    <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
+                    {/* <!-- key0 runner2 card--> */}
+                  </div>
+                ) : (
+                  <div className="flip-card-front">
+                    <img src={one} />
+                    {/*     <!-- key0 runner2 card--> */}
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="flip-card">
+              <div className="flip-card-inner">
+                {data[0]?.indexCard?.length > 1 ? (
+                  <div className="flip-card-front">
+                    <img src={`/cards/${data[0]?.indexCard[1]}.jpg`} />
+                    {/* <!-- key0 runner2 card--> */}
+                  </div>
+                ) : (
+                  <div className="flip-card-front">
+                    <img src={one} />
+                    {/*     <!-- key0 runner2 card--> */}
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="flip-card">
+              <div className="flip-card-inner">
+                {data[0]?.indexCard?.length > 2 ? (
+                  <div className="flip-card-front">
+                    <img src={`/cards/${data[0]?.indexCard[2]}.jpg`} />
+                    {/* <!-- key0 runner2 card--> */}
+                  </div>
+                ) : (
+                  <div className="flip-card-front">
+                    <img src={one} />
+                    {/*     <!-- key0 runner2 card--> */}
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="flip-card">
+              <div className="flip-card-inner">
+                {data[0]?.indexCard?.length > 4 ? (
+                  <div className="flip-card-front">
+                    <img src={`/cards/${data[0]?.indexCard[4]}.jpg`} />
+                    {/* <!-- key0 runner2 card--> */}
+                  </div>
+                ) : (
+                  <div className="flip-card-front">
+                    <img src={one} />
+                    {/*     <!-- key0 runner2 card--> */}
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="flip-card">
+              <div className="flip-card-inner">
+                {data[0]?.indexCard?.length > 5 ? (
+                  <div className="flip-card-front">
+                    <img src={`/cards/${data[0]?.indexCard[5]}.jpg`} />
+                    {/* <!-- key0 runner2 card--> */}
+                  </div>
+                ) : (
+                  <div className="flip-card-front">
+                    <img src={one} />
+                    {/*     <!-- key0 runner2 card--> */}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+         {slug === "vbtable" && (
+     <>
+          <div className="ggfgfgg">
+            <h5 className="text-center">A</h5>
+            <div className="flip-card-container">
+              <div className="flip-card">
+                <div className="flip-card-inner">
+                  <div className="flip-card-front">
+                    {don && <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="">
+            <h5 className="text-center">B</h5>
+            <div className="flip-card-container">
+              <div className="flip-card">
+                <div className="flip-card-inner">
+                  <div className="flip-card-front">
+                    {amarAkbarAnthony && (
+                      <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="">
+            <h5 className="text-center">C</h5>
+            <div className="flip-card-container">
+              <div className="flip-card">
+                <div className="flip-card-inner">
+                  <div className="flip-card-front">
+                    {sahibBibi && (
+                      <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="">
+            <h5 className="text-center">D</h5>
+            <div className="flip-card-container">
+              <div className="flip-card">
+                <div className="flip-card-inner">
+                  <div className="flip-card-front">
+                    {dharamVeer && (
+                      <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="">
+            <h5 className="text-center">E</h5>
+            <div className="flip-card-container">
+              <div className="flip-card">
+                <div className="flip-card-inner">
+                  <div className="flip-card-front">
+                    {kkpk && (
+                      <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="">
+            <h5 className="text-center">F</h5>
+            <div className="flip-card-container">
+              <div className="flip-card">
+                <div className="flip-card-inner">
+                  <div className="flip-card-front">
+                    {gulam && (
+                      <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
+                    )}
                   </div>
                 </div>
               </div>

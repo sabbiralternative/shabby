@@ -37,18 +37,20 @@ import VAmarAkbarAnthony from "../VAmarAkbarAnthony/VAmarAkbarAnthony.jsx";
 import VBollywoodCasino from "../VBollywoodCasino/VBollywoodCasino.jsx";
 import VTeenPatti from "../VTeenPatti/VTeenPatti.jsx";
 import VMTeenPatti from "../VMTeenPatti/VMTeenPatti.jsx";
+import PokerOneDay from "../PokerOneDay/PokerOneDay.jsx";
+import PokerSix from "../PokerSix/PokerSix.jsx";
+import PokerTwenty from "../PokerTwenty/PokerTwenty.jsx";
 
 const PlaceBetDiamond = () => {
   const { eventTypeId, eventId, type } = JSON.parse(
     localStorage.getItem("casino")
   );
+
   const { slug } = useParams();
   const [url, setUrl] = useState("");
   const [data, setData] = useState([]);
   const [showBets, setShowBets] = useState(false);
   const {
-    eventName,
-    setEventName,
     setPlaceBetValue,
     placeBetValue,
     lowExposure,
@@ -130,6 +132,8 @@ const PlaceBetDiamond = () => {
     sevenIndexOneRunnersEx,
     setSevenIndexOneEx,
     sevenIndexZeroRunnersEx,
+    zeroIndexSixRunnersEx,
+    setZeroIndexSixEx,
     setSevenIndexZeroEx,
     sixIndexOneRunnersEx,
     setSixIndexOneEx,
@@ -169,18 +173,28 @@ const PlaceBetDiamond = () => {
     setZeroIndexTwoEx,
     highExposure,
     setHighExposure,
+    tenIndexZeroRunnersEx,
+    setTenIndexZeroEx,
+    elevenIndexZeroRunnersEx,
+    setElevenIndexZeroEx,
+    twelveIndexZeroRunnersEx,
+    setTwelveIndexZeroEx,
+    thirteenIndexZeroRunnersEx,
+    setThirteenIndexZeroEx,
+    fourteenIndexZeroRunnersEx,
+    setFourteenIndexZeroEx,
+    fifteenIndexZeroRunnersEx,
+    setFifteenIndexZeroEx,
+    sixteenIndexZeroRunnersEx,
+    setSixteenIndexZeroEx,
+    seventeenIndexZeroRunnersEx,
+    setSeventeenIndexZeroEx,
   } = UseState();
   const [exposer, setExposer] = useState([]);
   const [myBets, setMyBets] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  useEffect(() => {
-    if (data && data?.length > 0) {
-      const eventName = data && data[0]?.eventName;
-      setEventName(eventName);
-    }
-  }, [data, setEventName, eventName]);
 
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
@@ -209,21 +223,25 @@ const PlaceBetDiamond = () => {
 
     /* data[0]?.runners[3] exposure */
     const zeroIndexThreeExp = pnlBySelection?.filter(
-      (pnl) => pnl?.RunnerId == data[0]?.runners[2]?.id
+      (pnl) => pnl?.RunnerId == data[0]?.runners[3]?.id
     );
     setZeroIndexThreeEx(zeroIndexThreeExp);
 
     /* data[0]?.runners[4] exposure */
     const zeroIndexFourExp = pnlBySelection?.filter(
-      (pnl) => pnl?.RunnerId == data[0]?.runners[2]?.id
+      (pnl) => pnl?.RunnerId == data[0]?.runners[4]?.id
     );
     setZeroIndexFourEx(zeroIndexFourExp);
 
     /* data[0]?.runners[5] exposure */
     const zeroIndexFiveExp = pnlBySelection?.filter(
-      (pnl) => pnl?.RunnerId == data[0]?.runners[2]?.id
+      (pnl) => pnl?.RunnerId == data[0]?.runners[5]?.id
     );
     setZeroIndexFiveEx(zeroIndexFiveExp);
+    const zeroIndexSixExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[0]?.runners[6]?.id
+    );
+    setZeroIndexSixEx(zeroIndexSixExp);
 
     /* data[1]?.runners[0] exposure */
     const even = pnlBySelection?.filter(
@@ -492,6 +510,44 @@ const PlaceBetDiamond = () => {
       (pnl) => pnl?.RunnerId == data[9]?.runners[12]?.id
     );
     setNineIndexTwelveEx(nineIndexTwelveExp);
+
+    const tenIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[10]?.runners[0]?.id
+    );
+    setTenIndexZeroEx(tenIndexZeroExp);
+
+    const elevenIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[11]?.runners[0]?.id
+    );
+    setElevenIndexZeroEx(elevenIndexZeroExp);
+
+    const twelveIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[12]?.runners[0]?.id
+    );
+    setTwelveIndexZeroEx(twelveIndexZeroExp);
+
+    const thirteenIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[13]?.runners[0]?.id
+    );
+    setThirteenIndexZeroEx(thirteenIndexZeroExp);
+
+    const fourteenIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[14]?.runners[0]?.id
+    );
+    setFourteenIndexZeroEx(fourteenIndexZeroExp);
+    const fifteenIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[15]?.runners[0]?.id
+    );
+    setFifteenIndexZeroEx(fifteenIndexZeroExp);
+    const sixteenIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[16]?.runners[0]?.id
+    );
+    setSixteenIndexZeroEx(sixteenIndexZeroExp);
+
+    const seventeenIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[17]?.runners[0]?.id
+    );
+    setSeventeenIndexZeroEx(seventeenIndexZeroExp);
   }, [data]);
 
   /* Get video */
@@ -597,6 +653,7 @@ const PlaceBetDiamond = () => {
             showBets={showBets}
             setSuccessMessage={setSuccessMessage}
             setErrorMessage={setErrorMessage}
+     
           />
         )}
         <div
@@ -624,6 +681,9 @@ const PlaceBetDiamond = () => {
         ${slug == "vbtable" ? "bollywood vcasino" : ""} 
         ${slug == "vteen20" ? "teenpatti20 vcasino" : ""} 
         ${slug == "vteenmuf" ? "teenpattimuflis vcasino" : ""} 
+        ${slug == "poker" ? "poker1day" : ""} 
+        ${slug == "poker6" ? "poker6player" : ""} 
+        ${slug == "poker20" ? "poker20" : ""} 
    
         `}
         >
@@ -658,6 +718,59 @@ const PlaceBetDiamond = () => {
             </div>
 
             <div className="casino-detail">
+              {slug === "poker20" && (
+                <PokerTwenty
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  evenExposure={evenExposure}
+                  redExposure={redExposure}
+                  a23Exposure={a23Exposure}
+                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                  fiveIndexZeroExp={fiveIndexZeroRunnersEx}
+                  sixIndexZeroExp={sixIndexZeroRunnersEx}
+                  sevenIndexZeroExp={sevenIndexZeroRunnersEx}
+                  eightIndexZeroExp={eightIndexZeroRunnersEx}
+                  nineIndexZeroExp={nineIndexZeroRunnersEx}
+                  tenIndexZeroRunnersEx={tenIndexZeroRunnersEx}
+                  elevenIndexZeroRunnersEx={elevenIndexZeroRunnersEx}
+                  twelveIndexZeroRunnersEx={twelveIndexZeroRunnersEx}
+                  thirteenIndexZeroRunnersEx={thirteenIndexZeroRunnersEx}
+                  fourteenIndexZeroRunnersEx={fourteenIndexZeroRunnersEx}
+                  fifteenIndexZeroRunnersEx={fifteenIndexZeroRunnersEx}
+                  sixteenIndexZeroRunnersEx={sixteenIndexZeroRunnersEx}
+                  seventeenIndexZeroRunnersEx={seventeenIndexZeroRunnersEx}
+                />
+              )}
+              {slug === "poker6" && (
+                <PokerSix
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  zeroIndexThreeExp={zeroIndexThreeRunnersEx}
+                  zeroIndexFourExp={zeroIndexFourRunnersEx}
+                  zeroIndexFiveRunnersEx={zeroIndexFiveRunnersEx}
+                  zeroIndexSixRunnersEx={zeroIndexSixRunnersEx}
+                />
+              )}
+              {slug === "poker" && (
+                <PokerOneDay
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  evenExposure={evenExposure}
+                  redExposure={redExposure}
+                  a23Exposure={a23Exposure}
+                  four56Exposure={four56Exposure}
+                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                />
+              )}
               {slug === "vlucky7" ? (
                 <VLucky7
                   A={picture.A}
