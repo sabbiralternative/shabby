@@ -32,6 +32,7 @@ const HomePage = () => {
         }
       );
       const data = res.data;
+
       setCasino_list(data);
     };
     getAuraCasino();
@@ -71,7 +72,7 @@ const HomePage = () => {
         ))}
       </ul>
 
-      <div className="tab-content mt-1">
+      <div className="tab-content mt-1 ">
         <div className="tab-pane active">
           <div className="bet-table">
             <div className="bet-table-header">
@@ -88,7 +89,7 @@ const HomePage = () => {
                 <b>2</b>
               </div>
             </div>
-            <div className="bet-table-body">
+            <div className="bet-table-body position-relative">
               {Object.values(data).length > 0 &&
                 sports === 4 &&
                 Object.keys(data)

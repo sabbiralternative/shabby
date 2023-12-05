@@ -40,6 +40,7 @@ import VMTeenPatti from "../VMTeenPatti/VMTeenPatti.jsx";
 import PokerOneDay from "../PokerOneDay/PokerOneDay.jsx";
 import PokerSix from "../PokerSix/PokerSix.jsx";
 import PokerTwenty from "../PokerTwenty/PokerTwenty.jsx";
+import TeenPattiTest from "../TeenPattiTest/TeenPattiTest.jsx";
 
 const PlaceBetDiamond = () => {
   const { eventTypeId, eventId, type } = JSON.parse(
@@ -194,7 +195,6 @@ const PlaceBetDiamond = () => {
   const [myBets, setMyBets] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
 
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
@@ -653,7 +653,6 @@ const PlaceBetDiamond = () => {
             showBets={showBets}
             setSuccessMessage={setSuccessMessage}
             setErrorMessage={setErrorMessage}
-     
           />
         )}
         <div
@@ -684,6 +683,8 @@ const PlaceBetDiamond = () => {
         ${slug == "poker" ? "poker1day" : ""} 
         ${slug == "poker6" ? "poker6player" : ""} 
         ${slug == "poker20" ? "poker20" : ""} 
+        ${slug == "teenmuf" ? "teenpattimuflis" : ""} 
+        ${slug == "teen9" ? "teenpattitest" : ""} 
    
         `}
         >
@@ -718,6 +719,34 @@ const PlaceBetDiamond = () => {
             </div>
 
             <div className="casino-detail">
+              {slug === "teen9" && <TeenPattiTest 
+              
+              data={data}
+              setPlaceBetValue={setPlaceBetValue}
+              setShowBets={setShowBets}
+              lowExposure={lowExposure}
+              highExposure={highExposure}
+              zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+              evenExposure={evenExposure}
+              redExposure={redExposure}
+              a23Exposure={a23Exposure}
+              fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+              fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+              sixIndexZeroExp={sixIndexZeroRunnersEx}
+              sevenIndexZeroExp={sevenIndexZeroRunnersEx}
+              eightIndexZeroExp={eightIndexZeroRunnersEx}
+              nineIndexZeroExp={nineIndexZeroRunnersEx}
+              tenIndexZeroExp={tenIndexZeroRunnersEx}
+              elevenIndexZeroExp={elevenIndexZeroRunnersEx}
+              twelveIndexZeroExp={twelveIndexZeroRunnersEx}
+              thirteenIndexZeroExp={thirteenIndexZeroRunnersEx}
+              fourteenIndexZeroExp={fourteenIndexZeroRunnersEx}
+              fifteenIndexZeroExp={fiveIndexZeroRunnersEx}
+
+          
+         
+              pnlBySelection={pnlBySelection}
+              />}
               {slug === "poker20" && (
                 <PokerTwenty
                   data={data}
@@ -858,7 +887,19 @@ const PlaceBetDiamond = () => {
                   sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
                 />
               )}
-              {slug === "vteenmuf" && <VMTeenPatti />}
+              {slug === "vteenmuf" || slug === "teenmuf" ? (
+                <VMTeenPatti
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  evenExposure={evenExposure}
+                  redExposure={redExposure}
+                  a23Exposure={a23Exposure}
+                  oddExposure={oddExposure}
+                />
+              ) : null}
               {slug == "teen3" || slug == "teen32" ? (
                 <InstantTeenPatti
                   data={data}

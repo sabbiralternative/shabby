@@ -90,7 +90,6 @@ const BetTable = ({ data, keys }) => {
                 <b>{data[keys]?.[0]?.ex?.availableToBack[0]?.price}</b>
               </span>
             </div>
-
             <div className="lay odd-box">
               <span className="bet-odd">
                 <b>{data[keys]?.[0]?.ex?.availableToLay[0]?.price}</b>
@@ -104,7 +103,6 @@ const BetTable = ({ data, keys }) => {
                 <b>{data[keys]?.[0]?.ex?.availableToBack[0]?.price}</b>
               </span>
             </div>
-
             <div className="lay odd-box ">
               <span className="bet-odd">
                 <b>{data[keys]?.[0]?.ex?.availableToLay[0]?.price}</b>
@@ -112,6 +110,7 @@ const BetTable = ({ data, keys }) => {
             </div>
           </div>
         )}
+
 
         {!data[keys][2] && sports !== 1 && (
           <div className="bet-nation-odd">
@@ -128,34 +127,37 @@ const BetTable = ({ data, keys }) => {
           </div>
         )}
 
-        {data[keys]?.status === "OPEN" && data[keys][2] && (
+        {data[keys]?.status === "OPEN" && data[keys][2] && sports === 1 &&  (
           <div className="bet-nation-odd">
             <div className="back odd-box">
               <span className="bet-odd">
-                <b>{data[keys]?.[1]?.ex?.availableToBack[0]?.price}</b>
+                <b>{data[keys]?.[2]?.ex?.availableToBack[0]?.price}</b>
               </span>
             </div>
             <div className="lay odd-box">
               <span className="bet-odd">
-                <b>{data[keys]?.[1]?.ex?.availableToLay[0]?.price}</b>
+                <b>{data[keys]?.[2]?.ex?.availableToLay[0]?.price}</b>
               </span>
             </div>
           </div>
         )}
-        {data[keys]?.status === "SUSPENDED" && sports === 1 && (
+        {data[keys]?.status === "SUSPENDED" && data[keys][2] && sports === 1 &&  (
           <div className="bet-nation-odd suspended-box">
             <div className="back odd-box">
               <span className="bet-odd">
-                <b>{data[keys]?.[1]?.ex?.availableToBack[0]?.price}</b>
+                <b>{data[keys]?.[2]?.ex?.availableToBack[0]?.price}</b>
               </span>
             </div>
             <div className="lay odd-box ">
               <span className="bet-odd">
-                <b>{data[keys]?.[1]?.ex?.availableToLay[0]?.price}</b>
+                <b>{data[keys]?.[2]?.ex?.availableToLay[0]?.price}</b>
               </span>
             </div>
           </div>
         )}
+
+
+
 
         {data[keys]?.status === "OPEN" ? (
           <div className="bet-nation-odd">
