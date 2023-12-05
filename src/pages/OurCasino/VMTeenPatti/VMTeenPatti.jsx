@@ -9,6 +9,7 @@ const VMTeenPatti = ({
   a23Exposure,
   oddExposure,
 }) => {
+  console.log(data);
   return (
     <div className="casino-table">
       <div className="casino-table-box">

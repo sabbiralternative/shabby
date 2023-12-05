@@ -20,19 +20,19 @@ const LastResult = ({ data }) => {
        
         ${
           (eventId == 10004 || eventId == 10005 || eventId == 10082) &&
-          winner.split("")[0] === "A"
+          winner?.split("")[0] === "A"
             ? " result-a"
             : ""
         }
         ${
           (eventId == 10004 || eventId == 10005 || eventId == 10082) &&
-          winner.split("")[0] === "B"
+          winner?.split("")[0] === "B"
             ? " result-b"
             : ""
         }
         ${
           (eventId == 10004 || eventId == 10005 || eventId == 10082) &&
-          winner.split("")[0] === "C"
+          winner?.split("")[0] === "C"
             ? " result-c"
             : ""
         }
@@ -41,7 +41,7 @@ const LastResult = ({ data }) => {
             eventId == 10003 ||
             eventId == 10001 ||
             eventId == 10081) &&
-          winner.split("")[0] === "L"
+          winner?.split("")[0] === "L"
             ? " result-a"
             : ""
         }
@@ -50,7 +50,7 @@ const LastResult = ({ data }) => {
             eventId == 10003 ||
             eventId == 10001 ||
             eventId == 10081) &&
-          winner.split("")[0] === "H"
+          winner?.split("")[0] === "H"
             ? " result-b"
             : ""
         }
@@ -59,66 +59,66 @@ const LastResult = ({ data }) => {
             eventId == 10003 ||
             eventId == 10001 ||
             eventId == 10081) &&
-          winner.split("")[0] === "T"
+          winner?.split("")[0] === "T"
             ? " result-b"
             : ""
         }
-        ${eventId == 10018 && winner.split("")[0] === "T" ? " result-a" : ""}
-        ${eventId == 10018 && winner.split("")[0] === "L" ? " result-b" : ""}
-        ${eventId == 10018 && winner.split("")[0] === "D" ? " result-c" : ""}
+        ${eventId == 10018 && winner?.split("")[0] === "T" ? " result-a" : ""}
+        ${eventId == 10018 && winner?.split("")[0] === "L" ? " result-b" : ""}
+        ${eventId == 10018 && winner?.split("")[0] === "D" ? " result-c" : ""}
         ${
           (eventId == 10014 || eventId == 10015 || 10019) &&
-          winner.split("")[0] === "A"
+          winner?.split("")[0] === "A"
             ? " result-a"
             : ""
         }
         ${
           (eventId == 10014 || eventId == 10015 || 10019 || eventId == 10017) &&
-          winner.split("")[0] === "B"
+          winner?.split("")[0] === "B"
             ? " result-b"
             : ""
         }
         ${
-          (eventId == 10012 || eventId == 10013) && winner.split("")[0] === "P"
+          (eventId == 10012 || eventId == 10013) && winner?.split("")[0] === "P"
             ? " result-a"
             : ""
         }
         ${
-          (eventId == 10012 || eventId == 10013) && winner.split("")[0] === "D"
+          (eventId == 10012 || eventId == 10013) && winner?.split("")[0] === "D"
             ? " result-b"
             : ""
         }
 
 
         ${
-          (eventId == 10010 || eventId == 10013) && winner.split("")[0] === "L"
+          (eventId == 10010 || eventId == 10013) && winner?.split("")[0] === "L"
             ? " result-c"
             : ""
         }
         ${
-          (eventId == 10010 || eventId == 10013) && winner.split("")[0] === "T"
+          (eventId == 10010 || eventId == 10013) && winner?.split("")[0] === "T"
             ? " result-b"
             : ""
         }
         ${
-          (eventId == 10010 || eventId == 10013) && winner.split("")[0] === "D"
+          (eventId == 10010 || eventId == 10013) && winner?.split("")[0] === "D"
             ? " result-a"
             : ""
         }
         ${eventId == 10006 || eventId == 10083 ? " result-b" : ""}
         ${
-          (eventId == 10007 || eventId == 10008) && winner.split("")[0] === "T"
+          (eventId == 10007 || eventId == 10008) && winner?.split("")[0] === "T"
             ? " result-a"
             : ""
         }
         ${
-          (eventId == 10007 || eventId == 10008) && winner.split("")[0] === "D"
+          (eventId == 10007 || eventId == 10008) && winner?.split("")[0] === "D"
             ? " result-b"
             : ""
         }
         `}
               >
-                {winner.split("")[0]}
+                {winner?.split("")[0]}
               </span>
             );
           })}
