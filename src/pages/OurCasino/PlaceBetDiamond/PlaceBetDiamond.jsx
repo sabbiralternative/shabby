@@ -41,6 +41,8 @@ import PokerOneDay from "../PokerOneDay/PokerOneDay.jsx";
 import PokerSix from "../PokerSix/PokerSix.jsx";
 import PokerTwenty from "../PokerTwenty/PokerTwenty.jsx";
 import TeenPattiTest from "../TeenPattiTest/TeenPattiTest.jsx";
+import Baccarat from "../Baccarat/Baccarat.jsx";
+import Baccarat2 from "../Baccarat2/Baccarat2.jsx";
 
 const PlaceBetDiamond = () => {
   const { eventTypeId, eventId, type } = JSON.parse(
@@ -191,6 +193,7 @@ const PlaceBetDiamond = () => {
     seventeenIndexZeroRunnersEx,
     setSeventeenIndexZeroEx,
   } = UseState();
+  const [threeIndexFourExp, setThreeIndexFour] = useState("");
   const [exposer, setExposer] = useState([]);
   const [myBets, setMyBets] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -290,6 +293,12 @@ const PlaceBetDiamond = () => {
       (pnl) => pnl?.RunnerId == data[3]?.runners[3]?.id
     );
     setJqkExposure(jqk);
+
+    /* data[3]?.runners[4] exposure */
+    const threeIndexFourEx = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[3]?.runners[4]?.id
+    );
+    setThreeIndexFour(threeIndexFourEx);
 
     /* data[4]?.runners[0] exposure */
     const fourIndexZeroExp = pnlBySelection?.filter(
@@ -685,6 +694,8 @@ const PlaceBetDiamond = () => {
         ${slug == "poker20" ? "poker20" : ""} 
         ${slug == "teenmuf" ? "teenpattimuflis" : ""} 
         ${slug == "teen9" ? "teenpattitest" : ""} 
+        ${slug == "baccarat" ? "baccarat" : ""} 
+        ${slug == "baccarat2" ? "baccarat baccarat2" : ""} 
    
         `}
         >
@@ -719,34 +730,70 @@ const PlaceBetDiamond = () => {
             </div>
 
             <div className="casino-detail">
-              {slug === "teen9" && <TeenPattiTest 
-              
-              data={data}
-              setPlaceBetValue={setPlaceBetValue}
-              setShowBets={setShowBets}
-              lowExposure={lowExposure}
-              highExposure={highExposure}
-              zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
-              evenExposure={evenExposure}
-              redExposure={redExposure}
-              a23Exposure={a23Exposure}
-              fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-              fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
-              sixIndexZeroExp={sixIndexZeroRunnersEx}
-              sevenIndexZeroExp={sevenIndexZeroRunnersEx}
-              eightIndexZeroExp={eightIndexZeroRunnersEx}
-              nineIndexZeroExp={nineIndexZeroRunnersEx}
-              tenIndexZeroExp={tenIndexZeroRunnersEx}
-              elevenIndexZeroExp={elevenIndexZeroRunnersEx}
-              twelveIndexZeroExp={twelveIndexZeroRunnersEx}
-              thirteenIndexZeroExp={thirteenIndexZeroRunnersEx}
-              fourteenIndexZeroExp={fourteenIndexZeroRunnersEx}
-              fifteenIndexZeroExp={fiveIndexZeroRunnersEx}
-
-          
-         
-              pnlBySelection={pnlBySelection}
-              />}
+              {slug == "baccarat2" && (
+                <Baccarat2
+                  data={data}
+                  four56Exposure={four56Exposure}
+                  eight910Exposure={eight910Exposure}
+                  jqkExposure={jqkExposure}
+                  threeIndexFourEx={threeIndexFourExp}
+                  one={picture.one}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                  evenExposure={evenExposure}
+                  redExposure={redExposure}
+                  a23Exposure={a23Exposure}
+                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                  sixIndexZeroExp={sixIndexZeroRunnersEx}
+                />
+              )}
+              {slug == "baccarat" ? (
+                <Baccarat
+                  one={picture.one}
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                  evenExposure={evenExposure}
+                  redExposure={redExposure}
+                  a23Exposure={a23Exposure}
+                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                  sixIndexZeroExp={sixIndexZeroRunnersEx}
+                />
+              ) : null}
+              {slug === "teen9" && (
+                <TeenPattiTest
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                  evenExposure={evenExposure}
+                  redExposure={redExposure}
+                  a23Exposure={a23Exposure}
+                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                  sixIndexZeroExp={sixIndexZeroRunnersEx}
+                  sevenIndexZeroExp={sevenIndexZeroRunnersEx}
+                  eightIndexZeroExp={eightIndexZeroRunnersEx}
+                  nineIndexZeroExp={nineIndexZeroRunnersEx}
+                  tenIndexZeroExp={tenIndexZeroRunnersEx}
+                  elevenIndexZeroExp={elevenIndexZeroRunnersEx}
+                  twelveIndexZeroExp={twelveIndexZeroRunnersEx}
+                  thirteenIndexZeroExp={thirteenIndexZeroRunnersEx}
+                  fourteenIndexZeroExp={fourteenIndexZeroRunnersEx}
+                  fifteenIndexZeroExp={fiveIndexZeroRunnersEx}
+                  pnlBySelection={pnlBySelection}
+                />
+              )}
               {slug === "poker20" && (
                 <PokerTwenty
                   data={data}

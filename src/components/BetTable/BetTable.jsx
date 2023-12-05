@@ -5,6 +5,7 @@ import game_icon from "../../static/front/img/game-icon.svg";
 import UseState from "../../hooks/UseState";
 import { useNavigate } from "react-router-dom";
 
+
 const BetTable = ({ data, keys }) => {
   const { sports } = UseState();
   const navigate = useNavigate();
@@ -171,7 +172,7 @@ const BetTable = ({ data, keys }) => {
             </div>
           )}
 
-        {!data[keys][2] && sports === 1 && (
+        {!data[keys][2] && sports === 1  ? (
           <div className="bet-nation-odd">
             <div className="back odd-box">
               <span className="bet-odd">
@@ -184,7 +185,7 @@ const BetTable = ({ data, keys }) => {
               </span>
             </div>
           </div>
-        )}
+        ):null}
 
 
         
