@@ -807,6 +807,7 @@ data[3]?.runners[0]?.status === "ACTIVE"
                   cursor: "pointer",
                 }}
               >
+          
                 {pnl}
               </span>
             );
@@ -823,3 +824,90 @@ data[3]?.runners[0]?.status === "ACTIVE"
 };
 
 export default Bollywood;
+
+
+
+
+
+
+
+
+
+// {/* 
+// <div className="flip-card">
+// <div className="flip-card-inner">
+//   {data[0]?.indexCard?.length > 0 ? (
+//     <div className="flip-card-front">
+//       <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
+//       {/*    <!-- key0 >> indexCard0 --> */}
+//     </div>
+//   ) : (
+//     <div className="flip-card-front">
+//       <img src={one} />
+//       {/*    <!-- key0 >> indexCard0 --> */}
+//     </div>
+//   )}
+// </div>
+// </div>
+// <div className="flip-card">
+// <div className="flip-card-inner">
+//   {data[0]?.indexCard?.length > 1 ? (
+//     <div className="flip-card-front">
+//       <img src={`/cards/${data[0]?.indexCard[1]}.jpg`} />
+//       {/*    <!-- key0 >> indexCard0 --> */}
+//     </div>
+//   ) : (
+//     <div className="flip-card-front">
+//       <img src={one} />
+//       {/*    <!-- key0 >> indexCard0 --> */}
+//     </div>
+//   )}
+// </div>
+// </div>
+// <div className="flip-card">
+// <div className="flip-card-inner">
+//   {data[0]?.indexCard?.length > 2 ? (
+//     <div className="flip-card-front">
+//       <img src={`/cards/${data[0]?.indexCard[2]}.jpg`} />
+//       {/*    <!-- key0 >> indexCard0 --> */}
+//     </div>
+//   ) : (
+//     <div className="flip-card-front">
+//       <img src={one} />
+//       {/*    <!-- key0 >> indexCard0 --> */}
+//     </div>
+//   )}
+// </div>
+// </div>
+// <div className="flip-card">
+// <div className="flip-card-inner">
+//   {data[0]?.indexCard?.length > 3 ? (
+//     <div className="flip-card-front">
+//       <img src={`/cards/${data[0]?.indexCard[3]}.jpg`} />
+//       {/*    <!-- key0 >> indexCard0 --> */}
+//     </div>
+//   ) : (
+//     <div className="flip-card-front">
+//       <img src={one} />
+//       {/*    <!-- key0 >> indexCard0 --> */}
+//     </div>
+//   )}
+// </div>
+// </div>
+// <div className="flip-card">
+// <div className="flip-card-inner">
+//   {data[0]?.indexCard?.length > 4 ? (
+//     <div className="flip-card-front">
+//       <img src={`/cards/${data[0]?.indexCard[4]}.jpg`} />
+//       {/*    <!-- key0 >> indexCard0 --> */}
+//     </div>
+//   ) : (
+//     <div className="flip-card-front">
+//       <img src={one} />
+//       {/*    <!-- key0 >> indexCard0 --> */}
+//     </div>
+//   )}
+// </div>
+// </div>
+
+//   */}

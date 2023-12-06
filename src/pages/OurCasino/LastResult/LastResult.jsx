@@ -1,6 +1,6 @@
 const LastResult = ({ data }) => {
   const { eventId } = JSON.parse(localStorage.getItem("casino"));
-
+console.log(eventId);
   return (
     <>
       <div className="casino-last-result-title">
@@ -113,6 +113,12 @@ const LastResult = ({ data }) => {
         }
         ${
           (eventId == 10007 || eventId == 10008) && winner?.split("")[0] === "D"
+            ? " result-b"
+            : ""
+        }
+
+        ${
+          eventId == 10019 && winner?.split("")[0] === "R"
             ? " result-b"
             : ""
         }

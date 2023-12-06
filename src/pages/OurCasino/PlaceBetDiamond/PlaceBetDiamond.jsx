@@ -43,8 +43,14 @@ import PokerTwenty from "../PokerTwenty/PokerTwenty.jsx";
 import TeenPattiTest from "../TeenPattiTest/TeenPattiTest.jsx";
 import Baccarat from "../Baccarat/Baccarat.jsx";
 import Baccarat2 from "../Baccarat2/Baccarat2.jsx";
+import TeenPattiOpen from "../TeenPattiOpen/TeenPattiOpen.jsx";
 
 const PlaceBetDiamond = () => {
+useEffect(()=>{
+  window.scrollTo(0,0)
+},[])
+
+
   const { eventTypeId, eventId, type } = JSON.parse(
     localStorage.getItem("casino")
   );
@@ -194,6 +200,12 @@ const PlaceBetDiamond = () => {
     setSeventeenIndexZeroEx,
   } = UseState();
   const [threeIndexFourExp, setThreeIndexFour] = useState("");
+  const [eighteenIndexZeroExp, setEighteenIndexZero] = useState("");
+  const [nineteenIndexZeroExp, setNineteenIndexZero] = useState("");
+  const [twentyIndexZeroExp, setTwentyIndexZero] = useState("");
+  const [twentyOneIndexZeroExp, setTwentyOneIndexZero] = useState("");
+  const [twentyTwoIndexZeroExp, setTwentyTwoIndexZero] = useState("");
+  const [twentyThreeIndexZeroExp, setTwentyThreeIndexZero] = useState("");
   const [exposer, setExposer] = useState([]);
   const [myBets, setMyBets] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -557,6 +569,33 @@ const PlaceBetDiamond = () => {
       (pnl) => pnl?.RunnerId == data[17]?.runners[0]?.id
     );
     setSeventeenIndexZeroEx(seventeenIndexZeroExp);
+
+    const eighteenIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[18]?.runners[0]?.id
+    );
+    setEighteenIndexZero(eighteenIndexZeroExp);
+    const nineteenIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[19]?.runners[0]?.id
+    );
+    setNineteenIndexZero(nineteenIndexZeroExp);
+    const twentyIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[20]?.runners[0]?.id
+    );
+    setTwentyIndexZero(twentyIndexZeroExp);
+
+
+    const twentyOneIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[21]?.runners[0]?.id
+    );
+    setTwentyOneIndexZero(twentyOneIndexZeroExp);
+    const twentyTwoIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[22]?.runners[0]?.id
+    );
+    setTwentyTwoIndexZero(twentyTwoIndexZeroExp);
+    const twentyThreeIndexZeroExp = pnlBySelection?.filter(
+      (pnl) => pnl?.RunnerId == data[23]?.runners[0]?.id
+    );
+    setTwentyThreeIndexZero(twentyThreeIndexZeroExp);
   }, [data]);
 
   /* Get video */
@@ -696,6 +735,7 @@ const PlaceBetDiamond = () => {
         ${slug == "teen9" ? "teenpattitest" : ""} 
         ${slug == "baccarat" ? "baccarat" : ""} 
         ${slug == "baccarat2" ? "baccarat baccarat2" : ""} 
+        ${slug == "teen8" ? "teenpattiopen" : ""} 
    
         `}
         >
@@ -725,11 +765,49 @@ const PlaceBetDiamond = () => {
                 {/* Card end */}
               </div>
               {/* Clock start */}
-              <Clock />
+              <Clock  data={data}/>
               {/* Clock end */}
             </div>
 
             <div className="casino-detail">
+              {
+                slug == 'teen8' && (
+                  <TeenPattiOpen
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  evenExposure={evenExposure}
+                  a23Exposure={a23Exposure}
+                  redExposure={redExposure}
+                  fourIndexZeroExp={fourIndexZeroRunnersEx}
+                  fiveIndexZeroExp={fiveIndexZeroRunnersEx}
+                  sixIndexZeroExp={sixIndexZeroRunnersEx}
+                  sevenIndexZeroExp={sevenIndexZeroRunnersEx}
+                  eightIndexZeroExp={eightIndexZeroRunnersEx}
+                  nineIndexZeroExp={nineIndexZeroRunnersEx}
+                  tenIndexZeroExp={tenIndexZeroRunnersEx}
+                  elevenIndexZeroExp={elevenIndexZeroRunnersEx}
+                  twelveIndexZeroExp={twelveIndexZeroRunnersEx}
+                  thirteenIndexZeroExp={thirteenIndexZeroRunnersEx}
+                fourteenIndexZeroExp={fourteenIndexZeroRunnersEx}
+                fifteenIndexZeroExp={fifteenIndexZeroRunnersEx}
+                sixteenIndexZeroExp={sixteenIndexZeroRunnersEx}
+                seventeenIndexZeroExp={seventeenIndexZeroRunnersEx}
+
+
+                eightTeenIndexZero={eighteenIndexZeroExp}
+                nineteenIndexZeroExp={nineteenIndexZeroExp}
+                twentyIndexZeroExp={twentyIndexZeroExp}
+                twentyOneIndexZeroExp={twentyOneIndexZeroExp}
+                twentyTwoIndexZeroExp={twentyTwoIndexZeroExp}
+                twentyThreeIndexZeroExp={twentyThreeIndexZeroExp}
+            
+
+                  
+                  />
+                )
+              }
               {slug == "baccarat2" && (
                 <Baccarat2
                   data={data}

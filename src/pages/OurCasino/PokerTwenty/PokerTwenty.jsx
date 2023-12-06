@@ -123,7 +123,7 @@ const PokerTwenty = ({
                   setShowBets(true);
                   setPlaceBetValue({});
                   setPlaceBetValue({
-                    price: data[4]?.runners[0]?.back[0]?.price,
+                    price: data[2]?.runners[0]?.back[0]?.price,
                     side: 0,
                     selectionId: data[2]?.runners[0]?.id,
                     btype: data[2]?.btype,
