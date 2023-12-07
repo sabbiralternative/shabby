@@ -220,6 +220,7 @@ const BookmarkerTwoSection = ({
                       ?.slice()
                       .reverse()
                       .map((back, i) => {
+                      
                         const handlePlaceBackBet = () => {
                           setTotalSize("");
                           setShowBets(true);
@@ -245,11 +246,22 @@ const BookmarkerTwoSection = ({
                           <div
                             onClick={handlePlaceBackBet}
                             key={i}
-                            className={`market-odd-box ${
-                              i === 0 ? "back2" : ""
-                            } ${i === 1 ? "back1" : ""} ${
+                            className={`market-odd-box
+                            
+                            ${
+                              i === 0  && runner?.back?.length !== 1 ? "back2" : ""
+                            } 
+                            ${
+                               runner?.back?.length === 1 ? "back" : ""
+                            } 
+                            
+                            
+                            
+                            ${i === 1 ? "back1" : ""} ${
                               i === 2 ? "back" : ""
-                            } ${
+                            }
+                           
+                            ${
                               changedPrices[`back-${runner.id}-${i}`]
                                 ? "blink"
                                 : ""

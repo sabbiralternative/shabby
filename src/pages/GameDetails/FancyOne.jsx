@@ -3,6 +3,7 @@ import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
 
 const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
+  console.log(fancy1);
   const [previousData, setPreviousData] = useState(fancy1);
   const [changedPrices, setChangedPrices] = useState({});
   const token = localStorage.getItem("token");
@@ -132,10 +133,10 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
           <div className="col-md-6">
             <div className="market-header">
               <div className="market-nation-detail"></div>
-              <div className="market-odd-box lay">
+              <div className="market-odd-box back">
                 <b>No</b>
               </div>
-              <div className="market-odd-box back">
+              <div className="market-odd-box lay">
                 <b>Yes</b>
               </div>
               <div className="fancy-min-max-box"></div>
@@ -144,10 +145,10 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
           <div className="col-md-6 d-none d-xl-block">
             <div className="market-header">
               <div className="market-nation-detail"></div>
-              <div className="market-odd-box lay">
+              <div className="market-odd-box back">
                 <b>No</b>
               </div>
-              <div className="market-odd-box back">
+              <div className="market-odd-box lay">
                 <b>Yes</b>
               </div>
               <div className="fancy-min-max-box"></div>
@@ -195,46 +196,8 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                       </div>
 
                       {odd?.runners.map((runner) =>
-                        runner.lay.map((lay, i) => {
-                          const handlePlaceLayBet = () => {
-                            setTotalSize("");
-                            setShowBets(true);
-                            setPlaceBetValue({});
-                            setPlaceBetValue({
-                              price: lay?.line,
-                              side: 1,
-                              selectionId: runner?.id,
-                              btype: odd?.btype,
-                              eventTypeId: odd?.eventTypeId,
-                              betDelay: odd?.betDelay,
-                              maxLiabilityPerBet: odd?.maxLiabilityPerBet,
-                              minLiabilityPerBet: odd?.minLiabilityPerBet,
-                              marketId: odd?.id,
-                              lay: true,
-                              name: runner?.name,
-                              isWeak: odd?.isWeak,
-                            });
-                          };
-                          return (
-                            <div
-                              onClick={handlePlaceLayBet}
-                              key={i}
-                              className={`market-odd-box lay ${
-                                changedPrices[`lay-${runner.id}-${i}`]
-                                  ? "blink"
-                                  : ""
-                              }`}
-                            >
-                              <span className="market-odd">{lay.line}</span>
-                              <span className="market-volume">{lay.price}</span>
-                            </div>
-                          );
-                        })
-                      )}
-
-                      {odd?.runners?.map((runner) =>
                         runner.back.map((back, i) => {
-                          const handlePlaceBackBets = () => {
+                          const handlePlaceLayBet = () => {
                             setTotalSize("");
                             setShowBets(true);
                             setPlaceBetValue({});
@@ -255,17 +218,55 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                           };
                           return (
                             <div
-                              onClick={handlePlaceBackBets}
+                              onClick={handlePlaceLayBet}
                               key={i}
                               className={`market-odd-box back ${
                                 changedPrices[`back-${runner.id}-${i}`]
                                   ? "blink"
                                   : ""
-                              }`}
+                              } `}
                             >
                               <span className="market-odd">{back.line}</span>
+                              <span className="market-volume">{back.price}</span>
+                            </div>
+                          );
+                        })
+                      )}
+
+                      {odd?.runners?.map((runner) =>
+                        runner.lay.map((lay, i) => {
+                          const handlePlaceBackBets = () => {
+                            setTotalSize("");
+                            setShowBets(true);
+                            setPlaceBetValue({});
+                            setPlaceBetValue({
+                              price: lay?.line,
+                              side: 0,
+                              selectionId: runner?.id,
+                              btype: odd?.btype,
+                              eventTypeId: odd?.eventTypeId,
+                              betDelay: odd?.betDelay,
+                              maxLiabilityPerBet: odd?.maxLiabilityPerBet,
+                              minLiabilityPerBet: odd?.minLiabilityPerBet,
+                              marketId: odd?.id,
+                              lay: true,
+                              name: runner?.name,
+                              isWeak: odd?.isWeak,
+                            });
+                          };
+                          return (
+                            <div
+                              onClick={handlePlaceBackBets}
+                              key={i}
+                              className={`market-odd-box lay  ${
+                                changedPrices[`lay-${runner.id}-${i}`]
+                                  ? "blink"
+                                  : ""
+                              }`}
+                            >
+                              <span className="market-odd">{lay.line}</span>
                               <span className="market-volume">
-                                {back.price}
+                                {lay.price}
                               </span>
                             </div>
                           );

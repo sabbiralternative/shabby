@@ -16,21 +16,23 @@ const Baccarat = ({
   return (
     <div className="casino-table">
       <div className="casino-table-full-box">
-        <div className="baccarat-graph text-center">
+      <div className="baccarat-graph text-center">
           <h4 className="">Statistics</h4>
           <div style={{ height: "160px", width: "100%" }}>
             <div
               id="reactgooglegraph-1"
               style={{ height: "160px", width: "100%" }}
             >
-              <div style={{ position: "relative" }}>
+              <div style={{position:'relative'}}>
                 <div
                   dir="ltr"
+            
                   style={{
                     position: "relative",
-                    width: "520px",
+                    width: "166px",
                     height: "160px",
                   }}
+               
                 >
                   <div
                     style={{
@@ -43,18 +45,20 @@ const Baccarat = ({
                     aria-label="A chart."
                   >
                     <svg
-                      width="520"
+                      width="166"
                       height="160"
                       aria-label="A chart."
-                      style={{ overflow: "hidden" }}
+                      style={{overflow:'hidden'}}
                     >
-                      <defs id="_ABSTRACT_RENDERER_ID_85"></defs>
+                      <defs
+                        id="_ABSTRACT_RENDERER_ID_249"
+                      ></defs>
                       <g>
                         <rect
-                          x="343"
+                          x="119"
                           y="3"
-                          width="177"
-                          height="47"
+                          width="47"
+                          height="39"
                           stroke="none"
                           strokeWidth="0"
                           fillOpacity="0"
@@ -62,10 +66,10 @@ const Baccarat = ({
                         ></rect>
                         <g id="Player">
                           <rect
-                            x="343"
+                            x="119"
                             y="3"
-                            width="177"
-                            height="11"
+                            width="47"
+                            height="9"
                             stroke="none"
                             strokeWidth="0"
                             fillOpacity="0"
@@ -74,10 +78,10 @@ const Baccarat = ({
                           <g>
                             <text
                               textAnchor="start"
-                              x="358"
-                              y="12.35"
+                              x="131"
+                              y="10.65"
                               fontFamily="Arial"
-                              fontSize="11"
+                              fontSize="9"
                               stroke="none"
                               strokeWidth="0"
                               fill="#222222"
@@ -86,9 +90,9 @@ const Baccarat = ({
                             </text>
                           </g>
                           <circle
-                            cx="348.5"
-                            cy="8.5"
-                            r="5.5"
+                            cx="123.5"
+                            cy="7.5"
+                            r="4.5"
                             stroke="none"
                             strokeWidth="0"
                             fill="#086cb8"
@@ -96,10 +100,10 @@ const Baccarat = ({
                         </g>
                         <g id="Banker">
                           <rect
-                            x="343"
-                            y="21"
-                            width="177"
-                            height="11"
+                            x="119"
+                            y="18"
+                            width="47"
+                            height="9"
                             stroke="none"
                             strokeWidth="0"
                             fillOpacity="0"
@@ -108,10 +112,10 @@ const Baccarat = ({
                           <g>
                             <text
                               textAnchor="start"
-                              x="358"
-                              y="30.35"
+                              x="131"
+                              y="25.65"
                               fontFamily="Arial"
-                              fontSize="11"
+                              fontSize="9"
                               stroke="none"
                               strokeWidth="0"
                               fill="#222222"
@@ -120,9 +124,9 @@ const Baccarat = ({
                             </text>
                           </g>
                           <circle
-                            cx="348.5"
-                            cy="26.5"
-                            r="5.5"
+                            cx="123.5"
+                            cy="22.5"
+                            r="4.5"
                             stroke="none"
                             strokeWidth="0"
                             fill="#ae2130"
@@ -130,10 +134,10 @@ const Baccarat = ({
                         </g>
                         <g id="Tie">
                           <rect
-                            x="343"
-                            y="39"
-                            width="177"
-                            height="11"
+                            x="119"
+                            y="33"
+                            width="47"
+                            height="9"
                             stroke="none"
                             strokeWidth="0"
                             fillOpacity="0"
@@ -142,10 +146,10 @@ const Baccarat = ({
                           <g>
                             <text
                               textAnchor="start"
-                              x="358"
-                              y="48.35"
+                              x="131"
+                              y="40.65"
                               fontFamily="Arial"
-                              fontSize="11"
+                              fontSize="9"
                               stroke="none"
                               strokeWidth="0"
                               fill="#222222"
@@ -154,9 +158,9 @@ const Baccarat = ({
                             </text>
                           </g>
                           <circle
-                            cx="348.5"
-                            cy="44.5"
-                            r="5.5"
+                            cx="123.5"
+                            cy="37.5"
+                            r="4.5"
                             stroke="none"
                             strokeWidth="0"
                             fill="#279532"
@@ -165,86 +169,74 @@ const Baccarat = ({
                       </g>
                       <g>
                         <path
-                          d="M245,72.3L245,87.7A77,61.6,0,0,1,209.25866321338276,139.71060021092413L209.25866321338276,124.31060021092412A77,61.6,0,0,0,245,72.3"
+                          d="M104,75L104,85A50,40,0,0,1,78.08768370508578,120.05226720175455L78.08768370508578,110.05226720175455A50,40,0,0,0,104,75"
                           stroke="#06518a"
                           strokeWidth="1"
                           fill="#06518a"
                         ></path>
                         <path
-                          d="M168,72.3L168,87.7L209.25866321338276,139.71060021092413L209.25866321338276,124.31060021092412"
+                          d="M54,75L54,85L78.08768370508578,120.05226720175455L78.08768370508578,110.05226720175455"
                           stroke="#06518a"
                           strokeWidth="1"
                           fill="#06518a"
                         ></path>
                         <path
-                          d="M168,72.3L168,10.699999999999996A77,61.6,0,0,1,209.25866321338276,124.31060021092412L168,72.3A0,0,0,0,0,168,72.3"
+                          d="M54,75L54,35A50,40,0,0,1,78.08768370508578,110.05226720175455L54,75A0,0,0,0,0,54,75"
                           stroke="#086cb8"
                           strokeWidth="1"
                           fill="#086cb8"
                         ></path>
                         <text
                           textAnchor="start"
-                          x="208.20733520295096"
-                          y="64.74421862743291"
+                          x="74.68776129694791"
+                          y="72.38663005658105"
                           fontFamily="Arial"
-                          fontSize="11"
+                          fontSize="9"
                           stroke="none"
                           strokeWidth="0"
                           fill="#ffffff"
                         >
-                          41%
+                          42%
                         </text>
                       </g>
                       <g>
                         <path
-                          d="M168,72.3L168,87.7L108.67048030626424,48.43468223148069L108.67048030626424,33.034682231480694"
+                          d="M54,75L54,85L29.9123162949142,49.947732798245475L29.9123162949142,39.947732798245475"
                           stroke="#1d7026"
                           strokeWidth="1"
                           fill="#1d7026"
                         ></path>
                         <path
-                          d="M168,72.3L108.67048030626424,33.034682231480694A77,61.6,0,0,1,168,10.699999999999996L168,72.3A0,0,0,0,0,168,72.3"
+                          d="M54,75L29.9123162949142,39.947732798245475A50,40,0,0,1,54,35L54,75A0,0,0,0,0,54,75"
                           stroke="#279532"
                           strokeWidth="1"
                           fill="#279532"
                         ></path>
-                        <text
-                          textAnchor="start"
-                          x="133.81046216949449"
-                          y="38.368454778901786"
-                          fontFamily="Arial"
-                          fontSize="11"
-                          stroke="none"
-                          strokeWidth="0"
-                          fill="#ffffff"
-                        >
-                          14%
-                        </text>
                       </g>
                       <g>
                         <path
-                          d="M209.25866321338276,124.31060021092412L209.25866321338276,139.71060021092413A77,61.6,0,0,1,91,87.70000000000002L91,72.3A77,61.6,0,0,0,209.25866321338276,124.31060021092412"
+                          d="M78.08768370508578,110.05226720175455L78.08768370508578,120.05226720175455A50,40,0,0,1,4,85L4,75A50,40,0,0,0,78.08768370508578,110.05226720175455"
                           stroke="#831924"
                           strokeWidth="1"
                           fill="#831924"
                         ></path>
                         <path
-                          d="M168,72.3L209.25866321338276,124.31060021092412A77,61.6,0,0,1,108.67048030626424,33.034682231480694L168,72.3A0,0,0,0,0,168,72.3"
+                          d="M54,75L78.08768370508578,110.05226720175455A50,40,0,0,1,29.9123162949142,39.947732798245475L54,75A0,0,0,0,0,54,75"
                           stroke="#ae2130"
                           strokeWidth="1"
                           fill="#ae2130"
                         ></path>
                         <text
                           textAnchor="start"
-                          x="117.26104647975356"
-                          y="103.0098602027878"
+                          x="18.5034734040061"
+                          y="89.16376223551248"
                           fontFamily="Arial"
-                          fontSize="11"
+                          fontSize="9"
                           stroke="none"
                           strokeWidth="0"
                           fill="#ffffff"
                         >
-                          45%
+                          50%
                         </text>
                       </g>
                       <g></g>
@@ -270,15 +262,15 @@ const Baccarat = ({
                         <tbody>
                           <tr>
                             <td>Player</td>
-                            <td>41</td>
+                            <td>42</td>
                           </tr>
                           <tr>
                             <td>Banker</td>
-                            <td>45</td>
+                            <td>50</td>
                           </tr>
                           <tr>
                             <td>Tie</td>
-                            <td>14</td>
+                            <td>8</td>
                           </tr>
                         </tbody>
                       </table>
@@ -304,15 +296,15 @@ const Baccarat = ({
                         <tbody>
                           <tr>
                             <td>Player</td>
-                            <td>41</td>
+                            <td>42</td>
                           </tr>
                           <tr>
                             <td>Banker</td>
-                            <td>45</td>
+                            <td>50</td>
                           </tr>
                           <tr>
                             <td>Tie</td>
-                            <td>14</td>
+                            <td>8</td>
                           </tr>
                         </tbody>
                       </table>
@@ -338,15 +330,15 @@ const Baccarat = ({
                         <tbody>
                           <tr>
                             <td>Player</td>
-                            <td>41</td>
+                            <td>42</td>
                           </tr>
                           <tr>
                             <td>Banker</td>
-                            <td>45</td>
+                            <td>50</td>
                           </tr>
                           <tr>
                             <td>Tie</td>
-                            <td>14</td>
+                            <td>8</td>
                           </tr>
                         </tbody>
                       </table>
@@ -372,15 +364,15 @@ const Baccarat = ({
                         <tbody>
                           <tr>
                             <td>Player</td>
-                            <td>41</td>
+                            <td>42</td>
                           </tr>
                           <tr>
                             <td>Banker</td>
-                            <td>45</td>
+                            <td>50</td>
                           </tr>
                           <tr>
                             <td>Tie</td>
-                            <td>14</td>
+                            <td>8</td>
                           </tr>
                         </tbody>
                       </table>
@@ -393,13 +385,14 @@ const Baccarat = ({
                     display: "none",
                     position: "absolute",
                     top: "170px",
-                    left: "218px",
+                    left: "176px",
                     whiteSpace: "nowrap",
                     fontFamily: "Arial",
                     fontSize: "11px",
                   }}
+                  
                 >
-                  Tie
+                  50%
                 </div>
                 <div></div>
               </div>

@@ -245,9 +245,14 @@ const BookmarkerSection = ({
                           <div
                             onClick={handlePlaceBackBet}
                             key={i}
-                            className={`market-odd-box ${
-                              i === 0 ? "back2" : ""
-                            } ${i === 1 ? "back1" : ""} ${i === 2 ? "back" : ""}
+                            className={`market-odd-box
+                            ${
+                              i === 0 && runner?.back?.length !== 1
+                                ? "back2"
+                                : ""
+                            } 
+                            ${runner?.back?.length === 1 ? "back" : ""} 
+                             ${i === 1 ? "back1" : ""} ${i === 2 ? "back" : ""}
                         ${
                           changedPrices[`back-${runner?.id}-${i}`]
                             ? "blink"

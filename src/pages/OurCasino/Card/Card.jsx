@@ -944,9 +944,9 @@ const Card = ({ slug, data, one }) => {
             </div>
             <div className="flip-card">
               <div className="flip-card-inner">
-                {data[0]?.indexCard?.length > 4 ? (
+                {data[0]?.indexCard?.length > 3 ? (
                   <div className="flip-card-front">
-                    <img src={`/cards/${data[0]?.indexCard[4]}.jpg`} />
+                    <img src={`/cards/${data[0]?.indexCard[3]}.jpg`} />
                     {/* <!-- key0 runner2 card--> */}
                   </div>
                 ) : (
@@ -959,9 +959,9 @@ const Card = ({ slug, data, one }) => {
             </div>
             <div className="flip-card">
               <div className="flip-card-inner">
-                {data[0]?.indexCard?.length > 5 ? (
+                {data[0]?.indexCard?.length > 4 ? (
                   <div className="flip-card-front">
-                    <img src={`/cards/${data[0]?.indexCard[5]}.jpg`} />
+                    <img src={`/cards/${data[0]?.indexCard[4]}.jpg`} />
                     {/* <!-- key0 runner2 card--> */}
                   </div>
                 ) : (

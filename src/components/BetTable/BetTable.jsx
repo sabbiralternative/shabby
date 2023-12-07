@@ -4,7 +4,7 @@ import ic_fancy from "../../static/front/img/ic_fancy.png";
 import game_icon from "../../static/front/img/game-icon.svg";
 import UseState from "../../hooks/UseState";
 import { useNavigate } from "react-router-dom";
-
+import { PiTelevisionBold} from 'react-icons/pi'
 
 
 const BetTable = ({ data, keys }) => {
@@ -40,7 +40,8 @@ const BetTable = ({ data, keys }) => {
 
             {data[keys]?.isTv === 1 ? (
               <div className="game-icon">
-                <i className="fas fa-tv icon-tv"></i>
+                <PiTelevisionBold size={17}/>
+                {/* <i className="fas fa-tv icon-tv"></i> */}
               </div>
             ) : (
               <div className="game-icon"></div>

@@ -141,7 +141,7 @@ useEffect(()=>{
     sevenIndexOneRunnersEx,
     setSevenIndexOneEx,
     sevenIndexZeroRunnersEx,
-    zeroIndexSixRunnersEx,
+    // zeroIndexSixRunnersEx,
     setZeroIndexSixEx,
     setSevenIndexZeroEx,
     sixIndexOneRunnersEx,
@@ -905,10 +905,11 @@ useEffect(()=>{
                   setShowBets={setShowBets}
                   lowExposure={lowExposure}
                   highExposure={highExposure}
+                  zeroIndexTwoExp={zeroIndexThreeRunnersEx}
                   zeroIndexThreeExp={zeroIndexThreeRunnersEx}
                   zeroIndexFourExp={zeroIndexFourRunnersEx}
                   zeroIndexFiveRunnersEx={zeroIndexFiveRunnersEx}
-                  zeroIndexSixRunnersEx={zeroIndexSixRunnersEx}
+            
                 />
               )}
               {slug === "poker" && (

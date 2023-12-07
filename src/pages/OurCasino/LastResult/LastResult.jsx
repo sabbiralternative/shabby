@@ -1,6 +1,6 @@
 const LastResult = ({ data }) => {
   const { eventId } = JSON.parse(localStorage.getItem("casino"));
-console.log(eventId);
+
   return (
     <>
       <div className="casino-last-result-title">

@@ -1,98 +1,44 @@
-// import $ from "jquery";
-// import { useEffect, useState } from "react";
-
 import { useEffect, useState } from "react";
 
 const Clock = ({ data }) => {
   const [zeroIndex, setZeroIndex] = useState(0);
   const [oneIndex, setOneIndex] = useState(0);
+  const [isZeroIndex, setIsZeroIndex] = useState(true);
+  const [isOneIndex, setIsOneIndex] = useState(true);
+
   useEffect(() => {
-    if (data && data[0] && (data[0]?.timer || data[0]?.timer === 0) ) {
+    if (data && data[0] && (data[0]?.timer || data[0]?.timer === 0)) {
       const timer = data[0]?.timer?.toString();
-     if(timer.length === 1){
-       const secondIndex = timer?.substring(0,1)
-       setOneIndex(secondIndex)
-       setZeroIndex(0)
-     }else{
-       const firstIndex = timer?.substring(0,1)
-       setZeroIndex( firstIndex)
-       const secondIndex = timer?.substring(1)
-       setOneIndex(secondIndex)
-     }
+      if (timer.length === 1) {
+        const secondIndex = timer?.substring(0, 1);
+        setOneIndex(secondIndex);
+        setZeroIndex(0);
+      } else {
+        const firstIndex = timer?.substring(0, 1);
+        setZeroIndex(firstIndex);
+        const secondIndex = timer?.substring(1);
+        setOneIndex(secondIndex);
+      }
     }
   }, [data]);
 
 
-  // const playInterval = 1000;
-  // const minuteInterval = 10000;
+  useEffect(() => {
+    setIsZeroIndex(false);
 
-  // useEffect(() => {
-  //   const secondInterval = setInterval(() => {
-  //     secondPlay();
-  //   }, playInterval);
+    setTimeout(() => {
+      setIsZeroIndex(true);
+    }, 10);
+  }, [zeroIndex]);
 
-  //   const minuteIntervalId = setInterval(() => {
-  //     minutePlay();
-  //   }, minuteInterval);
 
-  //   return () => {
-  //     clearInterval(secondInterval);
-  //     clearInterval(minuteIntervalId);
-  //   };
-  // }, []); // Empty dependency array ensures the effect runs only once
+  useEffect(() => {
+    setIsOneIndex(false);
+    setTimeout(() => {
+      setIsOneIndex(true);
+    }, 10);
+  }, [oneIndex]);
 
-  // const secondPlay = () => {
-  //   setMinutePlayIndex(0); // Reset minute play index
-  //   setSecondPlayIndex((prevIndex) => {
-  //     const newIndex = (prevIndex + 1) % $(".flip.play li").length;
-
-  //     $(".flip.play li").removeClass("flip-clock-before");
-
-  //     const aa = $(".flip.play li").eq(newIndex);
-
-  //     if (aa.html() === undefined) {
-  //       aa.addClass("flip-clock-before").removeClass("flip-clock-active");
-  //       $(".flip.play li").eq(0).addClass("flip-clock-active");
-  //     } else if (aa.is(":last-child")) {
-  //       aa.addClass("flip-clock-before").removeClass("flip-clock-active");
-  //       $(".flip.play li").eq(0).addClass("flip-clock-active");
-  //     } else {
-  //       aa.addClass("flip-clock-before")
-  //         .removeClass("flip-clock-active")
-  //         .next("li")
-  //         .addClass("flip-clock-active");
-  //     }
-
-  //     return newIndex;
-  //   });
-  // };
-
-  // const minutePlay = () => {
-  //   setSecondPlayIndex(0); // Reset second play index
-  //   setMinutePlayIndex((prevIndex) => {
-  //     const newIndex = (prevIndex + 1) % $(".flip.play li").length;
-
-  //     $(".flip.play li").removeClass("flip-clock-before");
-
-  //     const aa = $(".flip.play li").eq(newIndex);
-
-  //     if (aa.html() === undefined) {
-  //       aa.addClass("flip-clock-before").removeClass("flip-clock-active");
-  //       $(".flip.play li").eq(0).addClass("flip-clock-active");
-  //     } else if (aa.is(":last-child")) {
-  //       aa.addClass("flip-clock-before").removeClass("flip-clock-active");
-  //       $(".flip.play li").eq(0).addClass("flip-clock-active");
-  //     } else {
-  //       aa.addClass("flip-clock-before")
-  //         .removeClass("flip-clock-active")
-  //         .next("li")
-  //         .addClass("flip-clock-active");
-  //     }
-
-  //     return newIndex;
-  //   });
-  // };
-  // console.log(secondPlayIndex);
 
   return (
     <>
@@ -110,7 +56,7 @@ const Clock = ({ data }) => {
               </div>
             </a>
           </li>
-          <li className="flip-clock-active">
+          <li className={`${isZeroIndex ? "flip-clock-active" : ""}`}>
             <a href="#">
               <div className="up">
                 <div className="shadow"></div>
@@ -137,7 +83,7 @@ const Clock = ({ data }) => {
               </div>
             </a>
           </li>
-          <li className="flip-clock-active">
+          <li className={`${isOneIndex ? "flip-clock-active" : ""}`}>
             <a href="#">
               <div className="up">
                 <div className="shadow"></div>
@@ -156,4 +102,3 @@ const Clock = ({ data }) => {
 };
 
 export default Clock;
-undefined;
