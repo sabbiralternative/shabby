@@ -3,6 +3,7 @@ import UseState from "../../hooks/UseState";
 
 const TabPanel = ({ label, icon: Icon, id }) => {
   const { setSports, sports } = UseState();
+
   return (
     <li onClick={() => setSports(id)} className="nav-item">
       <Link className={`nav-link ${sports === id ? "active" : ""}`}>

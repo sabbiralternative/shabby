@@ -19,6 +19,7 @@ const HomePage = () => {
   const cricketApi = config?.result?.endpoint?.group;
   const interval = config?.result?.settings?.interval;
 
+ 
   useEffect(() => {
     const getAuraCasino = async () => {
       const res = await axios.get(
@@ -58,6 +59,8 @@ const HomePage = () => {
     }
   }, [sports, cricketApi, token, interval]);
 
+ 
+
   return (
     <div className="center-container">
       <ul className="nav nav-pills sports-tab">
@@ -91,89 +94,93 @@ const HomePage = () => {
             </div>
             <div className="bet-table-body position-relative">
               {Object.values(data).length > 0 &&
-                sports === 4 &&
+                sports === 4 ?
                 Object.keys(data)
                   .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                   .map((key, index) => (
                     <BetTable key={index} keys={key} data={data} />
-                  ))}
+                  )):null}
 
               {Object.values(data).length > 0 &&
-                sports === 1 &&
+                sports === 1 ?
                 Object.keys(data)
                   .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                   .map((key, index) => (
                     <BetTable key={index} keys={key} data={data} />
-                  ))}
-              {Object.values(data).length > 0 &&
-                sports === 2 &&
-                Object.keys(data)
-                  .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                  .map((key, index) => (
-                    <BetTable key={index} keys={key} data={data} />
-                  ))}
+                  )):null} 
+
 
               {Object.values(data).length > 0 &&
-                sports === 8 &&
+                sports === 2 ?
                 Object.keys(data)
                   .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                   .map((key, index) => (
                     <BetTable key={index} keys={key} data={data} />
-                  ))}
+                  )):null}
 
               {Object.values(data).length > 0 &&
-                sports === 15 &&
+                sports === 8 ?
                 Object.keys(data)
                   .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                   .map((key, index) => (
                     <BetTable key={index} keys={key} data={data} />
-                  ))}
+                  )):null}
 
               {Object.values(data).length > 0 &&
-                sports === 18 &&
+                sports === 15 ?
                 Object.keys(data)
                   .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                   .map((key, index) => (
                     <BetTable key={index} keys={key} data={data} />
-                  ))}
+                  )):null}
 
               {Object.values(data).length > 0 &&
-                sports === 59 &&
+                sports === 18 ?
                 Object.keys(data)
                   .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                   .map((key, index) => (
                     <BetTable key={index} keys={key} data={data} />
-                  ))}
+                  )):null}
 
               {Object.values(data).length > 0 &&
-                sports === 11 &&
+                sports === 59 ?
                 Object.keys(data)
                   .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                   .map((key, index) => (
                     <BetTable key={index} keys={key} data={data} />
-                  ))}
+                  )):null}
 
               {Object.values(data).length > 0 &&
-                sports === 9 &&
+                sports === 11 ?
                 Object.keys(data)
                   .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                   .map((key, index) => (
                     <BetTable key={index} keys={key} data={data} />
-                  ))}
+                  )):null}
+
               {Object.values(data).length > 0 &&
-                sports === 85 &&
+                sports === 9 ?
                 Object.keys(data)
                   .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                   .map((key, index) => (
                     <BetTable key={index} keys={key} data={data} />
-                  ))}
+                  )):null}
               {Object.values(data).length > 0 &&
-                sports === 99 &&
+                sports === 85 ?
                 Object.keys(data)
                   .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                   .map((key, index) => (
                     <BetTable key={index} keys={key} data={data} />
-                  ))}
+                  )):null}
+
+
+              {Object.values(data).length > 0 &&
+                sports === 99 ?
+                Object.keys(data)
+                  .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
+                  .map((key, index) => (
+                    <BetTable key={index} keys={key} data={data} />
+                  )):null}
 
               {Object.values(data).length < 1 && (
                 <div className="bet-table-row">No Record Found</div>

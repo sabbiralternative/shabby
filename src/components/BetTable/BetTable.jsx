@@ -6,6 +6,7 @@ import UseState from "../../hooks/UseState";
 import { useNavigate } from "react-router-dom";
 
 
+
 const BetTable = ({ data, keys }) => {
   const { sports } = UseState();
   const navigate = useNavigate();
@@ -85,6 +86,9 @@ const BetTable = ({ data, keys }) => {
           <b>2</b>
         </div>
 
+
+
+
         {/* Data 0 */}
         {data[keys]?.status === "OPEN" && data[keys][0] ? (
           <div className="bet-nation-odd">
@@ -113,21 +117,6 @@ const BetTable = ({ data, keys }) => {
             </div>
           </div>
         )}
-
-        {!data[keys][0] && (
-          <div className="bet-nation-odd">
-            <div className="back odd-box">
-              <span className="bet-odd">
-                <b>-</b>
-              </span>
-            </div>
-            <div className="lay odd-box">
-              <span className="bet-odd">
-                <b>-</b>
-              </span>
-            </div>
-          </div>
-        )}
         {/* Data 0 */}
 
 
@@ -141,7 +130,7 @@ const BetTable = ({ data, keys }) => {
 
 
         {/* Data 2 */}
-        {data[keys]?.status === "OPEN" && data[keys][2] && (sports === 1 || sports === 4) && (
+        {data[keys]?.status === "OPEN" && data[keys][2]  && (
           <div className="bet-nation-odd">
             <div className="back odd-box">
               <span className="bet-odd">
@@ -156,8 +145,7 @@ const BetTable = ({ data, keys }) => {
           </div>
         )}
         {data[keys]?.status === "SUSPENDED" &&
-          data[keys][2] &&
-          (sports === 1 || sports === 4) && (
+          data[keys][2] && (
             <div className="bet-nation-odd suspended-box">
               <div className="back odd-box">
                 <span className="bet-odd">
@@ -172,24 +160,8 @@ const BetTable = ({ data, keys }) => {
             </div>
           )}
 
-        {!data[keys][2] && sports === 1  ? (
-          <div className="bet-nation-odd">
-            <div className="back odd-box">
-              <span className="bet-odd">
-                <b>-</b>
-              </span>
-            </div>
-            <div className="lay odd-box">
-              <span className="bet-odd">
-                <b>-</b>
-              </span>
-            </div>
-          </div>
-        ):null}
-
-
-        
-        {!data[keys][2] && sports !== 1 && (
+    
+        {!data[keys][2] && (
           <div className="bet-nation-odd">
             <div className="back odd-box">
               <span className="bet-odd">
@@ -214,7 +186,7 @@ const BetTable = ({ data, keys }) => {
 
 
         {/* Data 1 */}
-        {data[keys]?.status === "OPEN" && data[keys][1] ? (
+        {data[keys]?.status === "OPEN" && data[keys][1] && sports ? (
           <div className="bet-nation-odd">
             <div className="back odd-box">
               <span className="bet-odd">
