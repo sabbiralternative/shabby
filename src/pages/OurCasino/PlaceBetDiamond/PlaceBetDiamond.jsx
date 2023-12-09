@@ -44,12 +44,14 @@ import TeenPattiTest from "../TeenPattiTest/TeenPattiTest.jsx";
 import Baccarat from "../Baccarat/Baccarat.jsx";
 import Baccarat2 from "../Baccarat2/Baccarat2.jsx";
 import TeenPattiOpen from "../TeenPattiOpen/TeenPattiOpen.jsx";
+import WorliGames from "../WorliGames/WorliGames.jsx";
+import WarGames from "../WarGames/WarGames.jsx";
+import RaceTwenty from "../RaceTwenty/RaceTwenty.jsx";
 
 const PlaceBetDiamond = () => {
-useEffect(()=>{
-  window.scrollTo(0,0)
-},[])
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const { eventTypeId, eventId, type } = JSON.parse(
     localStorage.getItem("casino")
@@ -583,7 +585,6 @@ useEffect(()=>{
     );
     setTwentyIndexZero(twentyIndexZeroExp);
 
-
     const twentyOneIndexZeroExp = pnlBySelection?.filter(
       (pnl) => pnl?.RunnerId == data[21]?.runners[0]?.id
     );
@@ -675,6 +676,7 @@ useEffect(()=>{
     },
   });
 
+  
   return (
     <>
       <div className="center-container">
@@ -736,6 +738,9 @@ useEffect(()=>{
         ${slug == "baccarat" ? "baccarat" : ""} 
         ${slug == "baccarat2" ? "baccarat baccarat2" : ""} 
         ${slug == "teen8" ? "teenpattiopen" : ""} 
+        ${slug == "worli" || slug == "worli2" ? "worli" : ""} 
+        ${slug == "war" ? "casino-war" : ""} 
+        ${slug == "race20"  ? "race20" : ""} 
    
         `}
         >
@@ -761,18 +766,57 @@ useEffect(()=>{
               </div>
               <div className="casino-video-cards">
                 {/* Card start */}
-                <Card data={data} one={picture.one} slug={slug} />
+                <Card data={data} one={picture.one} slug={slug}  />
                 {/* Card end */}
               </div>
               {/* Clock start */}
-              <Clock  data={data}/>
+              <Clock data={data} />
               {/* Clock end */}
             </div>
 
             <div className="casino-detail">
-              {
-                slug == 'teen8' && (
-                  <TeenPattiOpen
+              {slug == 'race20' && (
+                <RaceTwenty
+             
+             
+                data={data}
+                setPlaceBetValue={setPlaceBetValue}
+                setShowBets={setShowBets}
+                lowExposure={lowExposure}
+                highExposure={highExposure}
+                zeroIndexTwoExp={zeroIndexTwoRunnersEx}
+                zeroIndexThreeExp={zeroIndexThreeRunnersEx}
+                evenExposure={evenExposure}
+                oddExposure={oddExposure}
+                redExposure={redExposure}
+                blackExposure={blackExposure}
+                a23Exposure={a23Exposure}
+                four56Exposure={four56Exposure}
+                />
+              )}
+              {slug == "war" && (
+                <WarGames
+                  one={picture.one}
+                  pnlBySelection={pnlBySelection}
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                />
+              )}
+              {slug == "worli" || slug == "worli2" ? (
+                <WorliGames
+                  pnlBySelection={pnlBySelection}
+                  data={data}
+                  placeBetValue={placeBetValue}
+                  setShowBets={setShowBets}
+                  evenExposure={evenExposure}
+                  redExposure={redExposure}
+                  oddExposure={oddExposure}
+                  blackExposure={blackExposure}
+                />
+              ) : null}
+              {slug == "teen8" && (
+                <TeenPattiOpen
                   data={data}
                   setPlaceBetValue={setPlaceBetValue}
                   setShowBets={setShowBets}
@@ -790,24 +834,18 @@ useEffect(()=>{
                   elevenIndexZeroExp={elevenIndexZeroRunnersEx}
                   twelveIndexZeroExp={twelveIndexZeroRunnersEx}
                   thirteenIndexZeroExp={thirteenIndexZeroRunnersEx}
-                fourteenIndexZeroExp={fourteenIndexZeroRunnersEx}
-                fifteenIndexZeroExp={fifteenIndexZeroRunnersEx}
-                sixteenIndexZeroExp={sixteenIndexZeroRunnersEx}
-                seventeenIndexZeroExp={seventeenIndexZeroRunnersEx}
-
-
-                eightTeenIndexZero={eighteenIndexZeroExp}
-                nineteenIndexZeroExp={nineteenIndexZeroExp}
-                twentyIndexZeroExp={twentyIndexZeroExp}
-                twentyOneIndexZeroExp={twentyOneIndexZeroExp}
-                twentyTwoIndexZeroExp={twentyTwoIndexZeroExp}
-                twentyThreeIndexZeroExp={twentyThreeIndexZeroExp}
-            
-
-                  
-                  />
-                )
-              }
+                  fourteenIndexZeroExp={fourteenIndexZeroRunnersEx}
+                  fifteenIndexZeroExp={fifteenIndexZeroRunnersEx}
+                  sixteenIndexZeroExp={sixteenIndexZeroRunnersEx}
+                  seventeenIndexZeroExp={seventeenIndexZeroRunnersEx}
+                  eightTeenIndexZero={eighteenIndexZeroExp}
+                  nineteenIndexZeroExp={nineteenIndexZeroExp}
+                  twentyIndexZeroExp={twentyIndexZeroExp}
+                  twentyOneIndexZeroExp={twentyOneIndexZeroExp}
+                  twentyTwoIndexZeroExp={twentyTwoIndexZeroExp}
+                  twentyThreeIndexZeroExp={twentyThreeIndexZeroExp}
+                />
+              )}
               {slug == "baccarat2" && (
                 <Baccarat2
                   data={data}
@@ -909,7 +947,6 @@ useEffect(()=>{
                   zeroIndexThreeExp={zeroIndexThreeRunnersEx}
                   zeroIndexFourExp={zeroIndexFourRunnersEx}
                   zeroIndexFiveRunnersEx={zeroIndexFiveRunnersEx}
-            
                 />
               )}
               {slug === "poker" && (

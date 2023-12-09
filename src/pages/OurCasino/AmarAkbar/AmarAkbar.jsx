@@ -24,6 +24,8 @@ const AmarAkbar = ({
               A. Amar
               <div className="casino-nation-book d-md-none"></div>
             </div>
+
+
             <div
               onClick={() => {
                 setShowBets(true);
@@ -54,6 +56,9 @@ const AmarAkbar = ({
               </span>
               {/*  <!-- suspended-box >> key0 >> status:  key0 >> runner0 >> back >> price --> */}
             </div>
+
+
+            
             <div
               onClick={() => {
                 setShowBets(true);

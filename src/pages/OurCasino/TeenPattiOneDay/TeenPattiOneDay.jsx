@@ -309,7 +309,7 @@ const TeenPattiOneDay = ({
                     price: data[2]?.runners[0]?.lay[0]?.price,
                     side: 1,
                     selectionId: data[2]?.runners[0]?.id,
-                    btype: data[1]?.btype,
+                    btype: data[2]?.btype,
                     eventTypeId: data[2]?.eventTypeId,
                     betDelay: data[2]?.betDelay,
                     marketId: data[2]?.id,
