@@ -47,6 +47,9 @@ import TeenPattiOpen from "../TeenPattiOpen/TeenPattiOpen.jsx";
 import WorliGames from "../WorliGames/WorliGames.jsx";
 import WarGames from "../WarGames/WarGames.jsx";
 import RaceTwenty from "../RaceTwenty/RaceTwenty.jsx";
+import Card32A from "../Card32A/Card32A.jsx";
+import Baccrat29 from "../Baccrat29/Baccrat29.jsx";
+import TeenPattiTwoPointZero from "../TeenPattiTwoPointZero/TeenPattiTwoPointZero.jsx";
 
 const PlaceBetDiamond = () => {
   useEffect(() => {
@@ -212,12 +215,28 @@ const PlaceBetDiamond = () => {
   const [myBets, setMyBets] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
+  const [isSticky, setSticky] = useState(false);
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const shouldStick = scrollY > 115;
+
+      setSticky(shouldStick);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     /* data[0]?.runners[0] exposure */
@@ -675,7 +694,8 @@ const PlaceBetDiamond = () => {
         });
     },
   });
-
+console.log(data
+  );
   
   return (
     <>
@@ -741,6 +761,9 @@ const PlaceBetDiamond = () => {
         ${slug == "worli" || slug == "worli2" ? "worli" : ""} 
         ${slug == "war" ? "casino-war" : ""} 
         ${slug == "race20"  ? "race20" : ""} 
+        ${slug == "card32"  ? "cards32a" : ""} 
+        ${slug == "teensin"  ? "baccarat29" : ""} 
+        ${slug == "teen6"  ? "teenpatti2" : ""} 
    
         `}
         >
@@ -775,6 +798,46 @@ const PlaceBetDiamond = () => {
             </div>
 
             <div className="casino-detail">
+              {
+                slug == 'teen6' && (
+                  <TeenPattiTwoPointZero
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  evenExposure={evenExposure}
+                  oddExposure={oddExposure}
+                  highExposure={highExposure}
+                  redExposure={redExposure}
+                  blackExposure={blackExposure}
+                  />
+                )
+              }
+              {
+                slug == 'teensin' && (
+                  <Baccrat29
+                  data={data}
+                  pnlBySelection={pnlBySelection}
+                  setShowBets={setShowBets}
+                  placeBetValue={placeBetValue}
+                  eightIndexZeroExp={eightIndexZeroRunnersEx}
+                  />
+                )
+              }
+              {
+                slug == 'card32' && (
+                  <Card32A
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  zeroIndexTwoExp={zeroIndexTwoRunnersEx}
+                  zeroIndexThreeExp={zeroIndexThreeRunnersEx}
+               
+                  />
+                )
+              }
               {slug == 'race20' && (
                 <RaceTwenty
              
@@ -1327,7 +1390,7 @@ const PlaceBetDiamond = () => {
           <MatchBets />
         </div>
       </div>
-      <div className="sidebar right-sidebar casino-right-sidebar">
+      <div className={`sidebar right-sidebar casino-right-sidebar ${isSticky ? 'sticky' : ''}`}>
         {/* Place bet start */}
         {showBets && window.innerWidth > 1199 && (
           <PlaceBets

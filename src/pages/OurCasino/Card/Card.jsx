@@ -1045,6 +1045,7 @@ const Card = ({ slug, data, one }) => {
               </div>
             </div>
           </div>
+
           <div className="">
             <h5 className="text-center">F</h5>
             <div className="flip-card-container">
@@ -1419,6 +1420,63 @@ const Card = ({ slug, data, one }) => {
             </div>
           </div>
         </>
+      ) : null}
+
+      {slug == "card32" && (
+        <>
+          {data[0]?.runners?.map((runner, i) => {
+            return (
+              <div key={i}>
+                {runner?.card?.length > 0 && (
+                  <h5 className="">
+                    {runner?.name}:{" "}
+                    <span className="text-warning">{runner.total}</span>
+                  </h5>
+                )}
+                <div className="flip-card-container">
+                  {runner?.card?.map((image, i) => {
+                    return (
+                      <div key={i} className="flip-card">
+                        <div className="flip-card-inner">
+                          <div className="flip-card-front">
+                            <img src={`/public/cards/${image}.jpg`} />
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </>
+      )}
+
+      {slug == "teensin" || slug == "teen6" ? (
+        <div className="">
+          {data?.slice(0, slug == "teensin" ? 2 : 1).map((game, idx) =>
+            game?.runners?.map((runner, i) => {
+              return (
+                <div className={`${idx === 1 ? "mt-1" : ""}`} key={i}>
+                  <h5>{runner?.name}</h5>
+                  <div className="flip-card-container">
+                    {runner?.card?.map((image, i) => {
+                      return (
+                        <div key={i} className="flip-card">
+                          <div className="flip-card-inner ">
+                            <div className="flip-card-front">
+                              <img key={i} src={`/cards/${image}.jpg`} />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
       ) : null}
     </>
   );

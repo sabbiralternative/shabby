@@ -134,10 +134,10 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
             <div className="market-header">
               <div className="market-nation-detail"></div>
               <div className="market-odd-box back">
-                <b>No</b>
+                <b>Lay</b>
               </div>
               <div className="market-odd-box lay">
-                <b>Yes</b>
+                <b>Back</b>
               </div>
               <div className="fancy-min-max-box"></div>
             </div>
@@ -146,10 +146,10 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
             <div className="market-header">
               <div className="market-nation-detail"></div>
               <div className="market-odd-box back">
-                <b>No</b>
+                <b>Lay</b>
               </div>
               <div className="market-odd-box lay">
-                <b>Yes</b>
+                <b>Back</b>
               </div>
               <div className="fancy-min-max-box"></div>
             </div>
@@ -158,6 +158,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
         <div className="market-body" data-title="OPEN">
           <div className="row row10">
             {fancy1?.map((odd) => {
+              console.log(odd);
               const pnl = pnlBySelection?.filter(
                 (pnl) => pnl?.MarketId === fancy1?.id
               );
@@ -226,8 +227,8 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                                   : ""
                               } `}
                             >
-                              <span className="market-odd">{back.line}</span>
-                              <span className="market-volume">{back.price}</span>
+                              <span className="market-odd">{back.price}</span>
+                              <span className="market-volume"> {back.size}</span>
                             </div>
                           );
                         })
@@ -264,9 +265,9 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                                   : ""
                               }`}
                             >
-                              <span className="market-odd">{lay.line}</span>
+                              <span className="market-odd"> {lay.price}</span>
                               <span className="market-volume">
-                                {lay.price}
+                               {lay.size}
                               </span>
                             </div>
                           );
@@ -279,7 +280,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                             Min: {odd?.minLiabilityPerBet}
                           </span>
                           <span className="w-100 d-block">
-                            Max: {odd?.maxLiabilityPerMarket}
+                            Max: {odd?.maxLiabilityPerBet}
                           </span>
                         </div>
                       </div>

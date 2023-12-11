@@ -48,7 +48,40 @@ const CurrentBet = () => {
   for (const sport of filteredData) {
     totalAmount = totalAmount + sport.amount;
   }
+/* Pagination start */
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [visibleData, setVisibleData] = useState([]);
 
+  useEffect(() => {
+    setTotalPages(Math.ceil(filteredData.length / pageSize));
+    updateVisibleData();
+  }, [pageSize, currentPage, filteredData.length]);
+
+  const updateVisibleData = () => {
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+    setVisibleData(filteredData.slice(start, end));
+  };
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
+  const handlePageSizeChange = (newSize) => {
+    setCurrentPage(1);
+    setPageSize(newSize);
+  };
+  const getLastPage = () => {
+    return totalPages;
+  };
+
+  const isLastPage = currentPage === getLastPage();
+  const hasNextPage = currentPage < getLastPage();
+/* Pagination end */
   return (
     <div className="center-container">
       {errorMessage && (
@@ -90,7 +123,9 @@ const CurrentBet = () => {
               <div className="col-lg-2 col-6">
                 <div className="mb-2 input-group position-relative">
                   <span className="me-2">Show</span>
-                  <select className="form-select">
+                  <select
+                    onChange={(e) => handlePageSizeChange(e.target.value)}
+                  className="form-select">
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="30">30</option>
@@ -139,7 +174,7 @@ const CurrentBet = () => {
               <div className="col-lg-3 col-md-6 text-center">
                 <div>
                   Total Bets:{" "}
-                  <span className="me-2">{filteredData.length}</span> Total
+                  <span className="me-2">{visibleData.length}</span> Total
                   Amount: <span className="me-2">{totalAmount}</span>
                 </div>
               </div>
@@ -149,7 +184,7 @@ const CurrentBet = () => {
                   <input
                     type="search"
                     className="form-control"
-                    placeholder={`${filteredData.length} records...`}
+                    placeholder={`${visibleData.length} records...`}
                   />
                 </div>
               </div>
@@ -216,26 +251,58 @@ const CurrentBet = () => {
                 </thead>
 
                 <tbody role="rowgroup">
-                  {filteredData && filteredData.length > 0
-                    ? filteredData.map((sport, i) => (
+                  {visibleData && visibleData.length > 0
+                    ? visibleData.map((sport, i) => (
                         <BetTable key={i} data={sport} />
                       ))
                     : null}
                 </tbody>
               </table>
             </div>
-            {sports.length > 0 && (
+            {visibleData.length > 0 && (
               <div className="custom-pagination mt-2">
-                <div disabled="">First</div>
-                <div disabled="">Previous</div>
-                <div disabled="">Next</div>
-                <div disabled="">Last</div>
+                <div
+                  style={{
+                    cursor: currentPage === 1 ? "not-allowed" : "pointer",
+                  }}
+                  onClick={() => handlePageChange(1)}
+                >
+                  First
+                </div>
+                <div
+                  style={{
+                    cursor: currentPage === 1 ? "not-allowed" : "pointer",
+                  }}
+                  onClick={() => handlePageChange(currentPage - 1)}
+                >
+                  Previous
+                </div>
+                <div
+                  style={{
+                    cursor: !hasNextPage ? "not-allowed" : "pointer",
+                  }}
+                  onClick={() => handlePageChange(currentPage + 1)}
+                >
+                  Next
+                </div>
+                <div
+                  style={{
+                    cursor: isLastPage ? "not-allowed" : "pointer",
+                  }}
+                  onClick={() => handlePageChange(getLastPage())}
+                >
+                  Last
+                </div>
                 <div>
                   <span className="me-2">
-                    Page <b>1 of 1</b>
+                    {`Page ${currentPage} of ${totalPages}`}
                   </span>
                   <span className="me-2">| Go to Page</span>
-                  <input className="form-control" type="number" />
+                  <input
+                    onChange={(e) => handlePageChange(e.target.value)}
+                    className="form-control"
+                    type="number"
+                  />
                 </div>
               </div>
             )}

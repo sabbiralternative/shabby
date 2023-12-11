@@ -22,23 +22,20 @@ const Clock = ({ data }) => {
     }
   }, [data]);
 
-
   useEffect(() => {
     setIsZeroIndex(false);
 
     setTimeout(() => {
       setIsZeroIndex(true);
-    }, 10);
+    }, 100);
   }, [zeroIndex]);
-
 
   useEffect(() => {
     setIsOneIndex(false);
     setTimeout(() => {
       setIsOneIndex(true);
-    }, 10);
+    }, 100);
   }, [oneIndex]);
-
 
   return (
     <>

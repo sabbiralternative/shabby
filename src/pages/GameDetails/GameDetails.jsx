@@ -288,6 +288,22 @@ const GameDetails = () => {
     }
   }, [price, totalSize, placeBetValue, pnl1, pnl2, pnl3]);
 
+  const [isSticky, setSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const shouldStick = scrollY > 115;
+
+      setSticky(shouldStick);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <>
       <div className="center-container">
@@ -817,7 +833,7 @@ const GameDetails = () => {
         {/* Mobile place bet ends */}
       </div>
 
-      <div className="sidebar right-sidebar">
+      <div className={`sidebar right-sidebar ${isSticky ? "sticky" : ""}`}>
         {match_odds?.length > 0 && match_odds[0]?.hasVideo && (
           <div
             style={{
