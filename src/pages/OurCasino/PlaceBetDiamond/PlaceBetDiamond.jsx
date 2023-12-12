@@ -65,6 +65,8 @@ const PlaceBetDiamond = () => {
   const [data, setData] = useState([]);
   const [showBets, setShowBets] = useState(false);
   const {
+    refetchBetsExposure,
+    setRefetchBetsExposure,
     setPlaceBetValue,
     placeBetValue,
     lowExposure,
@@ -222,7 +224,6 @@ const PlaceBetDiamond = () => {
     pnlBySelection = Object?.values(obj);
   }
 
-
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -231,10 +232,10 @@ const PlaceBetDiamond = () => {
       setSticky(shouldStick);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -694,9 +695,21 @@ const PlaceBetDiamond = () => {
         });
     },
   });
-console.log(data
-  );
-  
+
+  useEffect(() => {
+    if (refetchBetsExposure === 1) {
+      refetchCurrentBets();
+      refetchExposure();
+      setRefetchBetsExposure(null);
+    }
+  }, [
+    refetchBetsExposure,
+    refetchCurrentBets,
+    refetchExposure,
+    setRefetchBetsExposure,
+  ]);
+
+
   return (
     <>
       <div className="center-container">
@@ -760,10 +773,10 @@ console.log(data
         ${slug == "teen8" ? "teenpattiopen" : ""} 
         ${slug == "worli" || slug == "worli2" ? "worli" : ""} 
         ${slug == "war" ? "casino-war" : ""} 
-        ${slug == "race20"  ? "race20" : ""} 
-        ${slug == "card32" || slug == "card32eu"  ? "cards32a" : ""} 
-        ${slug == "teensin"  ? "baccarat29" : ""} 
-        ${slug == "teen6"  ? "teenpatti2" : ""} 
+        ${slug == "race20" ? "race20" : ""} 
+        ${slug == "card32" || slug == "card32eu" ? "cards32a" : ""} 
+        ${slug == "teensin" ? "baccarat29" : ""} 
+        ${slug == "teen6" ? "teenpatti2" : ""} 
    
         `}
         >
@@ -789,7 +802,7 @@ console.log(data
               </div>
               <div className="casino-video-cards">
                 {/* Card start */}
-                <Card data={data} one={picture.one} slug={slug}  />
+                <Card data={data} one={picture.one} slug={slug} />
                 {/* Card end */}
               </div>
               {/* Clock start */}
@@ -798,9 +811,8 @@ console.log(data
             </div>
 
             <div className="casino-detail">
-              {
-                slug == 'teen6' && (
-                  <TeenPattiTwoPointZero
+              {slug == "teen6" && (
+                <TeenPattiTwoPointZero
                   data={data}
                   setPlaceBetValue={setPlaceBetValue}
                   setShowBets={setShowBets}
@@ -810,23 +822,19 @@ console.log(data
                   highExposure={highExposure}
                   redExposure={redExposure}
                   blackExposure={blackExposure}
-                  />
-                )
-              }
-              {
-                slug == 'teensin' && (
-                  <Baccrat29
+                />
+              )}
+              {slug == "teensin" && (
+                <Baccrat29
                   data={data}
                   pnlBySelection={pnlBySelection}
                   setShowBets={setShowBets}
                   placeBetValue={placeBetValue}
                   eightIndexZeroExp={eightIndexZeroRunnersEx}
-                  />
-                )
-              }
-              {
-                slug == 'card32' || slug =="card32eu" ? (
-                  <Card32A
+                />
+              )}
+              {slug == "card32" || slug == "card32eu" ? (
+                <Card32A
                   data={data}
                   setPlaceBetValue={setPlaceBetValue}
                   setShowBets={setShowBets}
@@ -834,27 +842,23 @@ console.log(data
                   highExposure={highExposure}
                   zeroIndexTwoExp={zeroIndexTwoRunnersEx}
                   zeroIndexThreeExp={zeroIndexThreeRunnersEx}
-               
-                  />
-                ):null
-              }
-              {slug == 'race20' && (
+                />
+              ) : null}
+              {slug == "race20" && (
                 <RaceTwenty
-             
-             
-                data={data}
-                setPlaceBetValue={setPlaceBetValue}
-                setShowBets={setShowBets}
-                lowExposure={lowExposure}
-                highExposure={highExposure}
-                zeroIndexTwoExp={zeroIndexTwoRunnersEx}
-                zeroIndexThreeExp={zeroIndexThreeRunnersEx}
-                evenExposure={evenExposure}
-                oddExposure={oddExposure}
-                redExposure={redExposure}
-                blackExposure={blackExposure}
-                a23Exposure={a23Exposure}
-                four56Exposure={four56Exposure}
+                  data={data}
+                  setPlaceBetValue={setPlaceBetValue}
+                  setShowBets={setShowBets}
+                  lowExposure={lowExposure}
+                  highExposure={highExposure}
+                  zeroIndexTwoExp={zeroIndexTwoRunnersEx}
+                  zeroIndexThreeExp={zeroIndexThreeRunnersEx}
+                  evenExposure={evenExposure}
+                  oddExposure={oddExposure}
+                  redExposure={redExposure}
+                  blackExposure={blackExposure}
+                  a23Exposure={a23Exposure}
+                  four56Exposure={four56Exposure}
                 />
               )}
               {slug == "war" && (
@@ -1390,7 +1394,11 @@ console.log(data
           <MatchBets />
         </div>
       </div>
-      <div className={`sidebar right-sidebar casino-right-sidebar ${isSticky ? 'sticky' : ''}`}>
+      <div
+        className={`sidebar right-sidebar casino-right-sidebar ${
+          isSticky ? "sticky" : ""
+        }`}
+      >
         {/* Place bet start */}
         {showBets && window.innerWidth > 1199 && (
           <PlaceBets

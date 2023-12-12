@@ -26,7 +26,7 @@ const Header = () => {
   const navigate = useNavigate();
   const modalRef = useRef(null);
   const openModalRef = useRef();
-  const { setFilterGames } = UseState();
+  const { setFilterGames, setRefetchBetsExposure } = UseState();
   const role = localStorage.getItem("loginName");
 
   /* Close modalRef modal click outside the modal */
@@ -102,6 +102,7 @@ const Header = () => {
             localStorage.clear();
             navigate("/login");
           } else {
+            setRefetchBetsExposure(res?.data?.result?.update);
             setShowBalance(res?.data?.result?.creditLimit);
             setShowExp(res?.data?.result?.deductedExposure);
           }
