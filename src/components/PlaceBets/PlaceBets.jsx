@@ -15,7 +15,7 @@ const PlaceBets = ({
   const [totalSize, setTotalSize] = useState("");
   const [profit, setProfit] = useState("");
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
-  const { buttonValue, SetButtonValue } = UseState();
+  const { buttonValue, SetButtonValue,generatedToken } = UseState();
   const [loader, setLoader] = useState(false);
   const orderApi = config?.result?.endpoint?.order;
   const token = localStorage.getItem("token");
@@ -56,6 +56,7 @@ const PlaceBets = ({
           selectionId: placeBetValue?.selectionId,
           side: placeBetValue?.side,
           totalSize: totalSize,
+          token:generatedToken
         },
       ]),
     })

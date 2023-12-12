@@ -3,12 +3,14 @@ import { useForm } from "react-hook-form";
 import { config } from "../../utils/config";
 import ActivityTable from "./ActivityTable";
 import Notification from "../../components/Notification/Notification";
+import UseState from "../../hooks/UseState";
 const ActivityLogs = () => {
   const [activityLogs, setActivityLogs] = useState([]);
   const { register, handleSubmit } = useForm();
   const activityLogApi = config?.result?.endpoint?.activityLogs;
   const token = localStorage.getItem("token");
   const [errorMessage, setErrorMessage] = useState("");
+  const { generatedToken } = UseState();
 
   const onSubmit = ({ toDate, fromDate, logType }) => {
     if (logType == "none") {
@@ -23,6 +25,7 @@ const ActivityLogs = () => {
         from: fromDate,
         to: toDate,
         type: logType,
+        token:generatedToken
       }),
     })
       .then((res) => res.json())

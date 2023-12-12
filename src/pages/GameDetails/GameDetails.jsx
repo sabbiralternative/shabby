@@ -34,7 +34,7 @@ const GameDetails = () => {
   const [showMobileTv, setShowMobileTv] = useState(false);
   const [showBets, setShowBets] = useState(false);
   const { buttonValue, SetButtonValue } = UseState();
-  const { placeBetValue } = UseState();
+  const { placeBetValue,generatedToken } = UseState();
   const [price, setPrice] = useState("");
   const [totalSize, setTotalSize] = useState("");
   const [profit, setProfit] = useState("");
@@ -134,6 +134,7 @@ const GameDetails = () => {
           eventTypeId: id,
           eventId: eventId,
           type: "video",
+          token:generatedToken
         }),
       })
         .then((res) => res.json())
@@ -147,7 +148,10 @@ const GameDetails = () => {
   const { data: exposer = [], refetch: refetchExposure } = useQuery({
     queryKey: ["exposure"],
     queryFn: async () => {
-      const res = await axios.get(`${exposerApi}/${eventId}`, {
+      const res = await axios.post(`${exposerApi}/${eventId}`,{
+        token:generatedToken
+      }, {
+       
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -178,6 +182,7 @@ const GameDetails = () => {
           selectionId: placeBetValue?.selectionId,
           side: placeBetValue?.side,
           totalSize: totalSize,
+          token:generatedToken
         },
       ]),
     })
@@ -207,9 +212,13 @@ const GameDetails = () => {
     queryFn: async () => {
       try {
         const response = await fetch(`${currentBetsApi}/${eventId}`, {
+          method:'POST',
           headers: {
             Authorization: `Bearer ${token}`,
           },
+         body:JSON.stringify({
+          token:generatedToken
+         })
         });
 
         const data = await response.json();

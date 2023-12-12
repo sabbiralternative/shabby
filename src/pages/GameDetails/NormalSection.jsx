@@ -6,7 +6,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
   const token = localStorage.getItem("token");
   const [previousData, setPreviousData] = useState(normal);
   const [changedPrices, setChangedPrices] = useState({});
-  const { setPlaceBetValue } = UseState();
+  const { setPlaceBetValue,generatedToken } = UseState();
   const laderApi = config?.result?.endpoint?.ladder;
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
@@ -19,9 +19,13 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
   const handleLadder = (marketId) => {
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {
+      method:'POST',
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      body:JSON.stringify({
+        token:generatedToken
+      })
     })
       .then((res) => res.json())
       .then((data) => {

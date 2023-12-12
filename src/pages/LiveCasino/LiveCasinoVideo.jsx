@@ -2,18 +2,20 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { config } from "../../utils/config";
+import UseState from "../../hooks/UseState";
 
 const LiveCasinoVideo = () => {
   const { eventId, providerId } = useParams();
   const [videoUrl, setVideoUrl] = useState("");
   const liveCasinoIframeApi = config?.result?.endpoint?.liveCasinoIframe;
   const token = localStorage.getItem("token");
+  const { generatedToken } = UseState();
 
   useEffect(() => {
     const getLiveCasinoVideo = async () => {
       const res = await axios.post(
         liveCasinoIframeApi,
-        { gameId: eventId, providerName: providerId },
+        { gameId: eventId, providerName: providerId,token:generatedToken },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const data = res.data;

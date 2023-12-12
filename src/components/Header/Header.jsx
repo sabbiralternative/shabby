@@ -20,7 +20,7 @@ const Header = () => {
   const [showBalance, setShowBalance] = useState(0);
   const [showExp, setShowExp] = useState(0);
   const [showNotification, setShowNotification] = useState("");
-  const { buttonValue, SetButtonValue } = UseState();
+  const { buttonValue, SetButtonValue, generatedToken } = UseState();
   const [ruleModal, setRuleModal] = useState(false);
   const buttonGameValue = JSON.parse(localStorage.getItem("buttonValue"));
   const navigate = useNavigate();
@@ -92,11 +92,17 @@ const Header = () => {
   useEffect(() => {
     const fetchBalanceExp = () => {
       axios
-        .get(balanceApi, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        .post(
+          balanceApi,
+          {
+            token: generatedToken,
           },
-        })
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
         .then((res) => {
           if (res?.data?.success === false) {
             localStorage.clear();

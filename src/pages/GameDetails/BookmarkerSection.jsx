@@ -14,7 +14,7 @@ const BookmarkerSection = ({
   const [ladderData, setLadderData] = useState([]);
   const [previousData, setPreviousData] = useState(bookmarker);
   const [changedPrices, setChangedPrices] = useState({});
-  const { setPlaceBetValue } = UseState();
+  const { setPlaceBetValue,generatedToken } = UseState();
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -35,9 +35,13 @@ const BookmarkerSection = ({
   const handleLader = (marketId) => {
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {
+      method:"POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      body:JSON.stringify({
+        token:generatedToken
+      })
     })
       .then((res) => res.json())
       .then((data) => {

@@ -44,6 +44,7 @@ const Main = () => {
     setRelativeURL(relativeURL);
   }, [baseUrl, currentURL]);
 
+
   return (
     <div>
       <Header />

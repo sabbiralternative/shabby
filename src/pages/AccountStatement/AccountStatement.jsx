@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { config } from "../../utils/config";
 import SettleBetsModal from "./SettleBetsModal";
 import Notification from "../../components/Notification/Notification";
+import UseState from "../../hooks/UseState";
 
 const AccountStatement = () => {
   const { register, handleSubmit } = useForm();
@@ -14,6 +15,7 @@ const AccountStatement = () => {
   const [stateMentData, setStateMentData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const { generatedToken } = UseState();
   const onSubmit = ({ toDate, fromDate, reportType }) => {
     if (reportType == "none") {
       return setErrorMessage("Select Report Type !");
@@ -27,6 +29,7 @@ const AccountStatement = () => {
         from: fromDate,
         to: toDate,
         type: reportType,
+        token:generatedToken
       }),
     })
       .then((res) => res.json())
@@ -39,9 +42,13 @@ const AccountStatement = () => {
 
   const getSettledBets = (marketId) => {
     fetch(`${settledBetsApi}/${marketId}`, {
+      method:"POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      body:JSON.stringify({
+        token:generatedToken
+      })
     })
       .then((res) => res.json())
       .then((data) => {

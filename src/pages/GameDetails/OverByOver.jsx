@@ -9,7 +9,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
   const token = localStorage.getItem("token");
-  const { setPlaceBetValue } = UseState();
+  const { setPlaceBetValue,generatedToken } = UseState();
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -19,9 +19,13 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
   const handleLadder = (marketId) => {
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {
+      method:'POST',
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      body:JSON.stringify({
+        token:generatedToken
+      })
     })
       .then((res) => res.json())
       .then((data) => {

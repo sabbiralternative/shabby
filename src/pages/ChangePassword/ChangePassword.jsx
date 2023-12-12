@@ -3,11 +3,12 @@ import { config } from "../../utils/config";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Notification from "../../components/Notification/Notification";
+import UseState from "../../hooks/UseState";
 const ChangePassword = () => {
   const ChangePasswordApi = config?.result?.endpoint?.changePassword;
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
+  const { generatedToken } = UseState();
   const {
     register,
     handleSubmit,
@@ -25,6 +26,7 @@ const ChangePassword = () => {
         oldPassword: password,
         password: newPassword,
         passVerify: newPasswordConfirm,
+        token:generatedToken
       }),
     })
       .then((res) => res.json())

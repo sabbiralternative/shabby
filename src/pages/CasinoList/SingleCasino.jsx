@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { config } from "../../utils/config";
+import UseState from "../../hooks/UseState";
 
 const SingleCasino = () => {
   const [url, setUrl] = useState(null);
@@ -9,12 +10,14 @@ const SingleCasino = () => {
     localStorage.getItem("auraEventId")
   );
   const token = localStorage.getItem("token");
+  const { generatedToken } = UseState();
   const navigateToCasinoDetails = async () => {
     const res = await axios.post(
       getSingleCasinoApi,
       {
         eventId: eventId,
         eventTypeId: eventTypeId,
+        token:generatedToken
       },
       {
         headers: {

@@ -4,6 +4,7 @@ import { config } from "../../utils/config";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Notification from "../../components/Notification/Notification";
+import UseState from "../../hooks/UseState";
 
 const ChangePasswordLogin = () => {
   const changePasswordLogin = config?.result?.endpoint?.changePassword;
@@ -11,6 +12,7 @@ const ChangePasswordLogin = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const pageTitle = config?.result?.settings?.siteTitle;
+  const { generatedToken } = UseState();
   const {
     register,
     handleSubmit,
@@ -32,6 +34,7 @@ const ChangePasswordLogin = () => {
         oldPassword: password,
         password: newPassword,
         passVerify: newPasswordConfirm,
+        token:generatedToken
       }),
     })
       .then((res) => res.json())

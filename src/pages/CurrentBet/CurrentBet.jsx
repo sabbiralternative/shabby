@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import BetTable from "./BetTable";
 import { useEffect, useState } from "react";
 import Notification from "../../components/Notification/Notification";
+import UseState from "../../hooks/UseState";
 const CurrentBet = () => {
   const currentBetsApi = config?.result?.endpoint?.currentBets;
   const { register, handleSubmit } = useForm();
@@ -11,6 +12,7 @@ const CurrentBet = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [sportsRef, setSportsRef] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const { generatedToken } = UseState();
 
   const onSubmit = ({ sportsType }) => {
     if (sportsType == "none") {
@@ -18,9 +20,13 @@ const CurrentBet = () => {
     }
     if (sportsType) {
       fetch(`${currentBetsApi}/${sportsType}`, {
+        method:"POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        body:JSON.stringify({
+          token:generatedToken
+        })
       })
         .then((res) => res.json())
         .then((data) => {

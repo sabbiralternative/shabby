@@ -12,7 +12,7 @@ const MatchOddsSection = ({
   const laderApi = config?.result?.endpoint?.ladder;
   const [previousData, setPreviousData] = useState(match_odds);
   const [changedPrices, setChangedPrices] = useState({});
-  const { setPlaceBetValue } = UseState();
+  const { setPlaceBetValue,generatedToken } = UseState();
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
 
@@ -36,9 +36,13 @@ const MatchOddsSection = ({
   const handleLader = (marketId) => {
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {
+      method:"POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      body:JSON.stringify({
+        token:generatedToken
+      })
     })
       .then((res) => res.json())
       .then((data) => {

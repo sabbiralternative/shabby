@@ -4,12 +4,14 @@ import loginBanner from "../../static/front/img/logo.png";
 import { config } from "../../utils/config";
 import { useEffect, useState } from "react";
 import Notification from "../Notification/Notification";
+import UseState from "../../hooks/UseState";
 
 const Login = () => {
   const navigate = useNavigate();
   const loginApi = config?.result?.endpoint?.login;
   const [errorLogin, setErrorLogin] = useState("");
   const pageTitle = config?.result?.settings?.siteTitle;
+  const { generatedToken } = UseState();
   const {
     register,
     handleSubmit,
@@ -29,6 +31,7 @@ const Login = () => {
       body: JSON.stringify({
         username: username,
         password: password,
+        token:generatedToken
       }),
     })
       .then((res) => res.json())
@@ -72,6 +75,7 @@ const Login = () => {
       body: JSON.stringify({
         username: "demo",
         password: "",
+        token:generatedToken
       }),
     })
       .then((res) => res.json())

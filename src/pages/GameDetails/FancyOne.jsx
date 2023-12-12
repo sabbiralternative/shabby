@@ -7,7 +7,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
   const [previousData, setPreviousData] = useState(fancy1);
   const [changedPrices, setChangedPrices] = useState({});
   const token = localStorage.getItem("token");
-  const { setPlaceBetValue } = UseState();
+  const { setPlaceBetValue,generatedToken } = UseState();
   const laderApi = config?.result?.endpoint?.ladder;
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
@@ -19,9 +19,13 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
   const handleLadder = (marketId) => {
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {
+      method:'POST',
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      body:JSON.stringify({
+        token:generatedToken
+      })
     })
       .then((res) => res.json())
       .then((data) => {

@@ -65,6 +65,7 @@ const PlaceBetDiamond = () => {
   const [data, setData] = useState([]);
   const [showBets, setShowBets] = useState(false);
   const {
+    generatedToken,
     refetchBetsExposure,
     setRefetchBetsExposure,
     setPlaceBetValue,
@@ -627,6 +628,7 @@ const PlaceBetDiamond = () => {
         {
           eventId: eventId,
           eventTypeId: eventTypeId,
+          token: generatedToken,
         },
         {
           headers: {
@@ -664,11 +666,15 @@ const PlaceBetDiamond = () => {
   const { refetch: refetchExposure } = useQuery({
     queryKey: ["exposure"],
     queryFn: async () => {
-      const res = await axios.get(`${exposerApi}/${eventId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.post(
+        `${exposerApi}/${eventId}`,
+        { token: generatedToken },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const data = res.data;
 
       if (data.success) {
@@ -682,9 +688,13 @@ const PlaceBetDiamond = () => {
     queryKey: ["currentBets"],
     queryFn: () => {
       fetch(`${currentBetsApi}/${eventId}`, {
+        method:'POST',
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        body:JSON.stringify({
+          token:generatedToken
+        })
       })
         .then((res) => res.json())
         .then((data) => {
@@ -708,7 +718,6 @@ const PlaceBetDiamond = () => {
     refetchExposure,
     setRefetchBetsExposure,
   ]);
-
 
   return (
     <>
