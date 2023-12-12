@@ -138,10 +138,10 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
             <div className="market-header">
               <div className="market-nation-detail"></div>
               <div className="market-odd-box back">
-                <b>Lay</b>
+                <b>Back</b>
               </div>
               <div className="market-odd-box lay">
-                <b>Back</b>
+                <b>Lay</b>
               </div>
               <div className="fancy-min-max-box"></div>
             </div>
@@ -150,10 +150,10 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
             <div className="market-header">
               <div className="market-nation-detail"></div>
               <div className="market-odd-box back">
-                <b>Lay</b>
+                <b>Back</b>
               </div>
               <div className="market-odd-box lay">
-                <b>Back</b>
+                <b>Lay</b>
               </div>
               <div className="fancy-min-max-box"></div>
             </div>
@@ -207,7 +207,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                             setShowBets(true);
                             setPlaceBetValue({});
                             setPlaceBetValue({
-                              price: back?.line,
+                              price: back?.price,
                               side: 0,
                               selectionId: runner?.id,
                               btype: odd?.btype,
@@ -245,7 +245,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                             setShowBets(true);
                             setPlaceBetValue({});
                             setPlaceBetValue({
-                              price: lay?.line,
+                              price: lay?.price,
                               side: 0,
                               selectionId: runner?.id,
                               btype: odd?.btype,
