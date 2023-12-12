@@ -62,7 +62,8 @@
       "virtualCasino": " https://cache.api7.live/api/exchange/diamond/virtualCasino",
       "slotCasino": " https://cache.api7.live/api/exchange/diamond/slotCasino",
       "liveCasinoIframe": " https://api7.live/api/livecasino/iframe",
-      "liveCasino": " https://cache.api7.live/api/exchange/diamond/liveCasino"
+      "liveCasino": " https://cache.api7.live/api/exchange/diamond/liveCasino",
+      "fantasyGames":"https://cache.api7.live/api/exchange/diamond/fantasyGames/"
     }
   },
   "success": true

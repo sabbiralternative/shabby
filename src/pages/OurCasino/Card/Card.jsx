@@ -1422,7 +1422,7 @@ const Card = ({ slug, data, one }) => {
         </>
       ) : null}
 
-      {slug == "card32" && (
+      {slug == "card32" || slug == "card32eu" ? (
         <>
           {data[0]?.runners?.map((runner, i) => {
             return (
@@ -1450,7 +1450,7 @@ const Card = ({ slug, data, one }) => {
             );
           })}
         </>
-      )}
+      ):null}
 
       {slug == "teensin" || slug == "teen6" ? (
         <div className="">

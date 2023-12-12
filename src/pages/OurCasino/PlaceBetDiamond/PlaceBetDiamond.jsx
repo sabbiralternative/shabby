@@ -761,7 +761,7 @@ console.log(data
         ${slug == "worli" || slug == "worli2" ? "worli" : ""} 
         ${slug == "war" ? "casino-war" : ""} 
         ${slug == "race20"  ? "race20" : ""} 
-        ${slug == "card32"  ? "cards32a" : ""} 
+        ${slug == "card32" || slug == "card32eu"  ? "cards32a" : ""} 
         ${slug == "teensin"  ? "baccarat29" : ""} 
         ${slug == "teen6"  ? "teenpatti2" : ""} 
    
@@ -825,7 +825,7 @@ console.log(data
                 )
               }
               {
-                slug == 'card32' && (
+                slug == 'card32' || slug =="card32eu" ? (
                   <Card32A
                   data={data}
                   setPlaceBetValue={setPlaceBetValue}
@@ -836,7 +836,7 @@ console.log(data
                   zeroIndexThreeExp={zeroIndexThreeRunnersEx}
                
                   />
-                )
+                ):null
               }
               {slug == 'race20' && (
                 <RaceTwenty
