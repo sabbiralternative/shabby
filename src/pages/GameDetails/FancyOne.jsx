@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
+import useTokenGenerator from "../../hooks/UseTokenGenerator";
 
 const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
   console.log(fancy1);
   const [previousData, setPreviousData] = useState(fancy1);
   const [changedPrices, setChangedPrices] = useState({});
   const token = localStorage.getItem("token");
-  const { setPlaceBetValue,generatedToken } = UseState();
+  const { setPlaceBetValue } = UseState();
+  const generatedToken  = useTokenGenerator();
   const laderApi = config?.result?.endpoint?.ladder;
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);

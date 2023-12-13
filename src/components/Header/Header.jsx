@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import RulesModal from "./RulesModal";
 import UseState from "../../hooks/UseState";
 import SearchBox from "./SearchBox";
+import useTokenGenerator from "../../hooks/UseTokenGenerator";
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [dropDown, setDropDown] = useState(false);
@@ -20,7 +21,8 @@ const Header = () => {
   const [showBalance, setShowBalance] = useState(0);
   const [showExp, setShowExp] = useState(0);
   const [showNotification, setShowNotification] = useState("");
-  const { buttonValue, SetButtonValue, generatedToken } = UseState();
+  const { buttonValue, SetButtonValue } = UseState();
+  
   const [ruleModal, setRuleModal] = useState(false);
   const buttonGameValue = JSON.parse(localStorage.getItem("buttonValue"));
   const navigate = useNavigate();
@@ -28,6 +30,10 @@ const Header = () => {
   const openModalRef = useRef();
   const { setFilterGames, setRefetchBetsExposure } = UseState();
   const role = localStorage.getItem("loginName");
+
+  const dynamicIntervalTime =5000;
+  const generatedToken  = useTokenGenerator(dynamicIntervalTime);
+
 
   /* Close modalRef modal click outside the modal */
   useEffect(() => {
@@ -117,7 +123,7 @@ const Header = () => {
     fetchBalanceExp();
     const intervalId = setInterval(fetchBalanceExp, 5000);
     return () => clearInterval(intervalId);
-  }, [balanceApi, token, navigate]);
+  }, [balanceApi, token, navigate,generatedToken,setRefetchBetsExposure]);
 
   /* Get marquee notification */
   useEffect(() => {

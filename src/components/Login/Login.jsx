@@ -4,14 +4,16 @@ import loginBanner from "../../static/front/img/logo.png";
 import { config } from "../../utils/config";
 import { useEffect, useState } from "react";
 import Notification from "../Notification/Notification";
-import UseState from "../../hooks/UseState";
+import useTokenGenerator from "../../hooks/UseTokenGenerator";
+
 
 const Login = () => {
   const navigate = useNavigate();
   const loginApi = config?.result?.endpoint?.login;
   const [errorLogin, setErrorLogin] = useState("");
   const pageTitle = config?.result?.settings?.siteTitle;
-  const { generatedToken } = UseState();
+
+  const generatedToken  = useTokenGenerator();
   const {
     register,
     handleSubmit,

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
+import useTokenGenerator from "../../hooks/UseTokenGenerator";
 
 const BookmarkerSection = ({
   bookmarker,
@@ -14,7 +15,8 @@ const BookmarkerSection = ({
   const [ladderData, setLadderData] = useState([]);
   const [previousData, setPreviousData] = useState(bookmarker);
   const [changedPrices, setChangedPrices] = useState({});
-  const { setPlaceBetValue,generatedToken } = UseState();
+  const { setPlaceBetValue } = UseState();
+  const generatedToken  = useTokenGenerator();
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;

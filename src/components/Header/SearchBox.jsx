@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { config } from "../../utils/config";
 import { Link } from "react-router-dom";
-import UseState from "../../hooks/UseState";
+import useTokenGenerator from "../../hooks/UseTokenGenerator";
 
 const SearchBox = () => {
   const [showInput, setShowInput] = useState(false);
   const [searchText, setSearchText] = useState("");
   const searchEventApi = config?.result?.endpoint?.searchEvent;
   const token = localStorage.getItem("token");
-  const { generatedToken } = UseState();
+ 
+  const generatedToken  = useTokenGenerator();
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
 

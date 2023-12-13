@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { config } from "../../utils/config";
 import UseState from "../../hooks/UseState";
+import useTokenGenerator from "../../hooks/UseTokenGenerator";
 
 const PlaceBetModal = ({
   showBets,
@@ -16,7 +17,9 @@ const PlaceBetModal = ({
   const [totalSize, setTotalSize] = useState("");
   const [profit, setProfit] = useState("");
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
-  const { buttonValue, SetButtonValue,generatedToken } = UseState();
+  const { buttonValue, SetButtonValue } = UseState();
+
+  const generatedToken  = useTokenGenerator();
   const [loader, setLoader] = useState(false);
   const orderApi = config?.result?.endpoint?.order;
   const token = localStorage.getItem("token");

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { config } from "../../utils/config";
-import UseState from "../../hooks/UseState";
+import useTokenGenerator from "../../hooks/UseTokenGenerator";
 
 const ActivityTable = ({ data }) => {
   const ipDetailApi = config?.result?.endpoint?.ipDetails;
@@ -8,7 +8,7 @@ const ActivityTable = ({ data }) => {
   const token = localStorage.getItem("token");
   const [modalData, setModalData] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const { generatedToken } = UseState();
+  const generatedToken  = useTokenGenerator();
 
   const showIpDetail = (ip) => {
     fetch(`${ipDetailApi}/${ip}`, {

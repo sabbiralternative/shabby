@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { config } from "../../utils/config";
 import SettleBetsModal from "./SettleBetsModal";
 import Notification from "../../components/Notification/Notification";
-import UseState from "../../hooks/UseState";
+import useTokenGenerator from "../../hooks/UseTokenGenerator";
 
 const AccountStatement = () => {
   const { register, handleSubmit } = useForm();
@@ -15,7 +15,7 @@ const AccountStatement = () => {
   const [stateMentData, setStateMentData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const { generatedToken } = UseState();
+  const generatedToken  = useTokenGenerator();
   const onSubmit = ({ toDate, fromDate, reportType }) => {
     if (reportType == "none") {
       return setErrorMessage("Select Report Type !");

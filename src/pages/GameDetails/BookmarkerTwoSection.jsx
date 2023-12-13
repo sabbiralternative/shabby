@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
+import useTokenGenerator from "../../hooks/UseTokenGenerator";
 
 const BookmarkerTwoSection = ({
   bookmarker2,
@@ -10,7 +11,8 @@ const BookmarkerTwoSection = ({
 }) => {
   const [previousData, setPreviousData] = useState(bookmarker2);
   const [changedPrices, setChangedPrices] = useState({});
-  const { setPlaceBetValue,generatedToken } = UseState();
+  const { setPlaceBetValue } = UseState();
+  const generatedToken  = useTokenGenerator();
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
   const token = localStorage.getItem("token");

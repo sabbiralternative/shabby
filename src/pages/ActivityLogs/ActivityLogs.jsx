@@ -3,14 +3,14 @@ import { useForm } from "react-hook-form";
 import { config } from "../../utils/config";
 import ActivityTable from "./ActivityTable";
 import Notification from "../../components/Notification/Notification";
-import UseState from "../../hooks/UseState";
+import useTokenGenerator from "../../hooks/UseTokenGenerator";
 const ActivityLogs = () => {
   const [activityLogs, setActivityLogs] = useState([]);
   const { register, handleSubmit } = useForm();
   const activityLogApi = config?.result?.endpoint?.activityLogs;
   const token = localStorage.getItem("token");
   const [errorMessage, setErrorMessage] = useState("");
-  const { generatedToken } = UseState();
+  const generatedToken  = useTokenGenerator();
 
   const onSubmit = ({ toDate, fromDate, logType }) => {
     if (logType == "none") {

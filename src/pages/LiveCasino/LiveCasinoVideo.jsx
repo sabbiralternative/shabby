@@ -2,14 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { config } from "../../utils/config";
-import UseState from "../../hooks/UseState";
+import useTokenGenerator from "../../hooks/UseTokenGenerator";
 
 const LiveCasinoVideo = () => {
   const { eventId, providerId } = useParams();
   const [videoUrl, setVideoUrl] = useState("");
   const liveCasinoIframeApi = config?.result?.endpoint?.liveCasinoIframe;
   const token = localStorage.getItem("token");
-  const { generatedToken } = UseState();
+  const generatedToken  = useTokenGenerator();
 
   useEffect(() => {
     const getLiveCasinoVideo = async () => {

@@ -50,6 +50,7 @@ import RaceTwenty from "../RaceTwenty/RaceTwenty.jsx";
 import Card32A from "../Card32A/Card32A.jsx";
 import Baccrat29 from "../Baccrat29/Baccrat29.jsx";
 import TeenPattiTwoPointZero from "../TeenPattiTwoPointZero/TeenPattiTwoPointZero.jsx";
+import useTokenGenerator from "../../../hooks/UseTokenGenerator.jsx";
 
 const PlaceBetDiamond = () => {
   useEffect(() => {
@@ -65,7 +66,6 @@ const PlaceBetDiamond = () => {
   const [data, setData] = useState([]);
   const [showBets, setShowBets] = useState(false);
   const {
-    generatedToken,
     refetchBetsExposure,
     setRefetchBetsExposure,
     setPlaceBetValue,
@@ -219,6 +219,8 @@ const PlaceBetDiamond = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isSticky, setSticky] = useState(false);
+
+  const generatedToken  = useTokenGenerator();
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;

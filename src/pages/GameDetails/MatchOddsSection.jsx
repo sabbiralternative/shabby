@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
+import useTokenGenerator from "../../hooks/UseTokenGenerator";
 
 const MatchOddsSection = ({
   match_odds,
@@ -12,9 +13,10 @@ const MatchOddsSection = ({
   const laderApi = config?.result?.endpoint?.ladder;
   const [previousData, setPreviousData] = useState(match_odds);
   const [changedPrices, setChangedPrices] = useState({});
-  const { setPlaceBetValue,generatedToken } = UseState();
+  const { setPlaceBetValue } = UseState();
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
+  const generatedToken  = useTokenGenerator();
 
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
