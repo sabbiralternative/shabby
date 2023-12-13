@@ -5,7 +5,7 @@ import { config } from "../../utils/config";
 import { useEffect, useState } from "react";
 import Notification from "../Notification/Notification";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
-
+import CryptoJS from "crypto-js";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,17 +23,25 @@ const Login = () => {
   useEffect(() => {
     document.title = pageTitle;
   }, [pageTitle]);
-
+ 
+ 
   const onSubmit = ({ username, password }) => {
+    const loginData = {
+      username: username,
+      password: password,
+      token:generatedToken
+    }
+  
+    const jsonData = JSON.stringify(loginData);
+    const encryptedData = CryptoJS.AES.encrypt(jsonData, "login-encrypt-data").toString();
+
     fetch(loginApi, {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        username: username,
-        password: password,
-        token:generatedToken
+      encryptedData
       }),
     })
       .then((res) => res.json())
