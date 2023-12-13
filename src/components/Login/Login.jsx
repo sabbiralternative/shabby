@@ -36,7 +36,7 @@ const Login = () => {
       "qz,wBm>)drq+_nE)[d|5g{s4EF:Szvf}"
     );
     const encryptedData = {
-      ct: ciphertext.toString(),
+      ct: ciphertext.toString(CryptoJS.enc.Base64),
       iv: iv.toString(),
       s: salt.toString(),
     };

@@ -6,7 +6,7 @@ const useTokenGenerator = (intervalTime) => {
   useEffect(() => {
     const getGeneratedTime = () => {
       const currentTimestamp = Math.floor(new Date().getTime() / 1000);
-      const multipliedTimestamp = currentTimestamp * 274;
+      const multipliedTimestamp = currentTimestamp * 247;
       const randomSixDigitNumber = Math.floor(100000 + Math.random() * 900000);
       const finalToken = `${randomSixDigitNumber}${multipliedTimestamp}`;
       setGeneratedToken(finalToken);
