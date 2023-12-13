@@ -13,7 +13,7 @@ const Login = () => {
   const [errorLogin, setErrorLogin] = useState("");
   const pageTitle = config?.result?.settings?.siteTitle;
 
-  const generatedToken  = useTokenGenerator();
+  const generatedToken = useTokenGenerator();
   const {
     register,
     handleSubmit,
@@ -23,26 +23,30 @@ const Login = () => {
   useEffect(() => {
     document.title = pageTitle;
   }, [pageTitle]);
- 
- 
+
   const onSubmit = ({ username, password }) => {
     const loginData = {
       username: username,
       password: password,
-      token:generatedToken
-    }
-  
+      token: generatedToken,
+    };
     const jsonData = JSON.stringify(loginData);
-    const encryptedData = CryptoJS.AES.encrypt(jsonData, "login-encrypt-data").toString();
+    const { ciphertext, iv, salt } = CryptoJS.AES.encrypt(
+      jsonData,
+      "qz,wBm>)drq+_nE)[d|5g{s4EF:Szvf}"
+    );
+    const encryptedData = {
+      ct: ciphertext.toString(),
+      iv: iv.toString(),
+      s: salt.toString(),
+    };
 
     fetch(loginApi, {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({
-      encryptedData
-      }),
+      body: JSON.stringify(encryptedData),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -85,7 +89,7 @@ const Login = () => {
       body: JSON.stringify({
         username: "demo",
         password: "",
-        token:generatedToken
+        token: generatedToken,
       }),
     })
       .then((res) => res.json())
