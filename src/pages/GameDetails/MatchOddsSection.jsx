@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 
 const MatchOddsSection = ({
   match_odds,
@@ -17,6 +18,7 @@ const MatchOddsSection = ({
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
   const generatedToken  = useTokenGenerator();
+  const encryptedData = UseEncryptData(generatedToken);
 
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
@@ -42,9 +44,7 @@ const MatchOddsSection = ({
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body:JSON.stringify({
-        token:generatedToken
-      })
+      body:JSON.stringify(encryptedData)
     })
       .then((res) => res.json())
       .then((data) => {

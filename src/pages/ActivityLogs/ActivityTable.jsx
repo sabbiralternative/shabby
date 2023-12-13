@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { config } from "../../utils/config";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 
 const ActivityTable = ({ data }) => {
   const ipDetailApi = config?.result?.endpoint?.ipDetails;
@@ -9,6 +10,7 @@ const ActivityTable = ({ data }) => {
   const [modalData, setModalData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const generatedToken  = useTokenGenerator();
+  const encryptedData = UseEncryptData(generatedToken);
 
   const showIpDetail = (ip) => {
     fetch(`${ipDetailApi}/${ip}`, {
@@ -16,9 +18,9 @@ const ActivityTable = ({ data }) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body:JSON.stringify({
-        token:generatedToken
-      })
+      body:JSON.stringify(
+        encryptedData
+      )
     })
       .then((res) => res.json())
       .then((data) => {

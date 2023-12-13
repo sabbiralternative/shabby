@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 
 const BookmarkerTwoSection = ({
   bookmarker2,
@@ -13,6 +14,7 @@ const BookmarkerTwoSection = ({
   const [changedPrices, setChangedPrices] = useState({});
   const { setPlaceBetValue } = UseState();
   const generatedToken  = useTokenGenerator();
+  const encryptedData = UseEncryptData(generatedToken);
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
   const token = localStorage.getItem("token");
@@ -42,9 +44,7 @@ const BookmarkerTwoSection = ({
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body:JSON.stringify({
-        token:generatedToken
-      })
+      body:JSON.stringify(encryptedData)
     })
       .then((res) => res.json())
       .then((data) => {

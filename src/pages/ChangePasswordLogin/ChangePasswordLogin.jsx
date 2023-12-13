@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Notification from "../../components/Notification/Notification";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 
 const ChangePasswordLogin = () => {
   const changePasswordLogin = config?.result?.endpoint?.changePassword;
@@ -25,17 +26,18 @@ const ChangePasswordLogin = () => {
   }, [pageTitle]);
 
   const onSubmit = ({ password, newPassword, newPasswordConfirm }) => {
+    const encryptedData = UseEncryptData({
+      oldPassword: password,
+      password: newPassword,
+      passVerify: newPasswordConfirm,
+      token:generatedToken
+    });
     fetch(changePasswordLogin, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        oldPassword: password,
-        password: newPassword,
-        passVerify: newPasswordConfirm,
-        token:generatedToken
-      }),
+      body: JSON.stringify(encryptedData),
     })
       .then((res) => res.json())
       .then((data) => {

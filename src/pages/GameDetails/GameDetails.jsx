@@ -11,6 +11,7 @@ import FancyOne from "./FancyOne";
 import UseState from "../../hooks/UseState";
 import { useQuery } from "@tanstack/react-query";
 import Notification from "../../components/Notification/Notification";
+import UseEncryptData from "../../hooks/UseEncryptData";
 
 const GameDetails = () => {
   const { id, eventId } = useParams();
@@ -35,6 +36,7 @@ const GameDetails = () => {
   const [showBets, setShowBets] = useState(false);
   const { buttonValue, SetButtonValue } = UseState();
   const { placeBetValue,generatedToken } = UseState();
+  const encryptedData = UseEncryptData(generatedToken);
   const [price, setPrice] = useState("");
   const [totalSize, setTotalSize] = useState("");
   const [profit, setProfit] = useState("");
@@ -50,7 +52,7 @@ const GameDetails = () => {
   const oppositionName = placeBetValue?.oppositionName?.filter(
     (name) => name !== placeBetValue?.name
   );
-  console.log(placeBetValue);
+
   /* Set price */
   useEffect(() => {
     setPrice(placeBetValue?.price);
@@ -124,33 +126,33 @@ const GameDetails = () => {
 
   /* Get video */
   useEffect(() => {
+    const encryptedVideoData = UseEncryptData({
+      eventTypeId: id,
+      eventId: eventId,
+      type: "video",
+      token:generatedToken
+    });
     if (showTv || showMobileTv) {
       fetch(accessTokenApi, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          eventTypeId: id,
-          eventId: eventId,
-          type: "video",
-          token:generatedToken
-        }),
+        body: JSON.stringify(encryptedVideoData),
       })
         .then((res) => res.json())
         .then((data) => {
           setVideoUrl(data?.result);
         });
     }
-  }, [eventId, id, showTv, token, accessTokenApi, showMobileTv]);
+  }, [eventId, id, showTv, token, accessTokenApi, showMobileTv,generatedToken]);
 
   /* Get exposure data */
-  const { data: exposer = [], refetch: refetchExposure } = useQuery({
+  const { data: exposer = [], refetch: refetchExposure } = 
+  useQuery({
     queryKey: ["exposure"],
     queryFn: async () => {
-      const res = await axios.post(`${exposerApi}/${eventId}`,{
-        token:generatedToken
-      }, {
+      const res = await axios.post(`${exposerApi}/${eventId}`,encryptedData, {
        
         headers: {
           Authorization: `Bearer ${token}`,
@@ -166,25 +168,26 @@ const GameDetails = () => {
 
   /* Handle bets */
   const handleOrderBets = () => {
+    const encryptedData = UseEncryptData([
+      {
+        betDelay: placeBetValue?.betDelay,
+        btype: placeBetValue?.btype,
+        eventTypeId: placeBetValue?.eventTypeId,
+        marketId: placeBetValue?.marketId,
+        price: price ? price : placeBetValue?.price,
+        selectionId: placeBetValue?.selectionId,
+        side: placeBetValue?.side,
+        totalSize: totalSize,
+        token:generatedToken
+      },
+    ]);
     setLoader(true);
     fetch(orderApi, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify([
-        {
-          betDelay: placeBetValue?.betDelay,
-          btype: placeBetValue?.btype,
-          eventTypeId: placeBetValue?.eventTypeId,
-          marketId: placeBetValue?.marketId,
-          price: price ? price : placeBetValue?.price,
-          selectionId: placeBetValue?.selectionId,
-          side: placeBetValue?.side,
-          totalSize: totalSize,
-          token:generatedToken
-        },
-      ]),
+      body: JSON.stringify(encryptedData),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -216,9 +219,7 @@ const GameDetails = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-         body:JSON.stringify({
-          token:generatedToken
-         })
+         body:JSON.stringify(encryptedData)
         });
 
         const data = await response.json();

@@ -8,6 +8,7 @@ import RulesModal from "./RulesModal";
 import UseState from "../../hooks/UseState";
 import SearchBox from "./SearchBox";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [dropDown, setDropDown] = useState(false);
@@ -33,6 +34,7 @@ const Header = () => {
 
   const dynamicIntervalTime =5000;
   const generatedToken  = useTokenGenerator(dynamicIntervalTime);
+  const encryptedData = UseEncryptData(generatedToken);
 
 
   /* Close modalRef modal click outside the modal */
@@ -101,7 +103,7 @@ const Header = () => {
         .post(
           balanceApi,
           {
-            token: generatedToken,
+            token: encryptedData,
           },
           {
             headers: {
@@ -123,7 +125,7 @@ const Header = () => {
     fetchBalanceExp();
     const intervalId = setInterval(fetchBalanceExp, 5000);
     return () => clearInterval(intervalId);
-  }, [balanceApi, token, navigate,generatedToken,setRefetchBetsExposure]);
+  }, [balanceApi, token, navigate,encryptedData,setRefetchBetsExposure]);
 
   /* Get marquee notification */
   useEffect(() => {

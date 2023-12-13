@@ -4,6 +4,7 @@ import BetTable from "./BetTable";
 import { useEffect, useState } from "react";
 import Notification from "../../components/Notification/Notification";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 const CurrentBet = () => {
   const currentBetsApi = config?.result?.endpoint?.currentBets;
   const { register, handleSubmit } = useForm();
@@ -13,6 +14,7 @@ const CurrentBet = () => {
   const [sportsRef, setSportsRef] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const generatedToken  = useTokenGenerator();
+  const encryptedData = UseEncryptData(generatedToken);
 
   const onSubmit = ({ sportsType }) => {
     if (sportsType == "none") {
@@ -24,9 +26,7 @@ const CurrentBet = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body:JSON.stringify({
-          token:generatedToken
-        })
+        body:JSON.stringify(encryptedData)
       })
         .then((res) => res.json())
         .then((data) => {

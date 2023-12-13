@@ -6,6 +6,7 @@ import Category from "../components/Category/Category";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { config } from "../utils/config";
+import DisableDevtool from "disable-devtool";
 
 const Main = () => {
   const params = useParams();
@@ -14,6 +15,7 @@ const Main = () => {
   const baseUrl = window.location.origin;
   const navigate = useNavigate();
   const pageTitle = config?.result?.settings?.siteTitle;
+  const isDisabledDevtools = config?.result?.settings?.disabledDevtool;
   const isUnauthorizedAccess = window.location.pathname === "/admin";
 
   useEffect(() => {
@@ -44,6 +46,11 @@ const Main = () => {
     setRelativeURL(relativeURL);
   }, [baseUrl, currentURL]);
 
+  useEffect(() => {
+    if (isDisabledDevtools) {
+      DisableDevtool();
+    }
+  }, [isDisabledDevtools]);
 
   return (
     <div>

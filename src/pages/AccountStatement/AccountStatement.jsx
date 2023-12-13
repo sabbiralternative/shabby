@@ -4,6 +4,7 @@ import { config } from "../../utils/config";
 import SettleBetsModal from "./SettleBetsModal";
 import Notification from "../../components/Notification/Notification";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 
 const AccountStatement = () => {
   const { register, handleSubmit } = useForm();
@@ -20,17 +21,18 @@ const AccountStatement = () => {
     if (reportType == "none") {
       return setErrorMessage("Select Report Type !");
     }
+    const encryptedData = UseEncryptData({
+      from: fromDate,
+      to: toDate,
+      type: reportType,
+      token:generatedToken
+    });
     fetch(accountStatementApi, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        from: fromDate,
-        to: toDate,
-        type: reportType,
-        token:generatedToken
-      }),
+      body: JSON.stringify(encryptedData),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -41,14 +43,15 @@ const AccountStatement = () => {
   };
 
   const getSettledBets = (marketId) => {
+    const encryptedData = UseEncryptData(generatedToken);
     fetch(`${settledBetsApi}/${marketId}`, {
       method:"POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body:JSON.stringify({
-        token:generatedToken
-      })
+      body:JSON.stringify(
+        encryptedData
+      )
     })
       .then((res) => res.json())
       .then((data) => {
@@ -69,7 +72,7 @@ const AccountStatement = () => {
   useEffect(() => {
     setTotalPages(Math.ceil(stateMentData.length / pageSize));
     updateVisibleData();
-  }, [pageSize, currentPage, stateMentData.length]);
+  }, [pageSize, currentPage, stateMentData]);
 
   const updateVisibleData = () => {
     const start = (currentPage - 1) * pageSize;

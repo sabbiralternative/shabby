@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { config } from "../../utils/config";
 import UseState from "../../hooks/UseState";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 
 const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
   const [previousData, setPreviousData] = useState(overByOver);
@@ -12,6 +13,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
   const token = localStorage.getItem("token");
   const { setPlaceBetValue } = UseState();
   const generatedToken  = useTokenGenerator();
+  const encryptedData = UseEncryptData(generatedToken);
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -25,9 +27,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body:JSON.stringify({
-        token:generatedToken
-      })
+      body:JSON.stringify(encryptedData)
     })
       .then((res) => res.json())
       .then((data) => {

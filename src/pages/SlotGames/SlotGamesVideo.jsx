@@ -3,25 +3,29 @@ import { useEffect, useState } from "react";
 import { config } from "../../utils/config";
 import { useParams } from "react-router-dom";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 
 const SlotGamesVideo = () => {
   const { eventId, providerId } = useParams();
   const [videoUrl, setVideoUrl] = useState("");
   const liveCasinoIframeApi = config?.result?.endpoint?.liveCasinoIframe;
   const token = localStorage.getItem("token");
-  const generatedToken  = useTokenGenerator();
+  const generatedToken = useTokenGenerator();
+  const encryptedData = UseEncryptData({
+    gameId: eventId,
+    providerName: providerId,
+    token: generatedToken,
+  });
   useEffect(() => {
     const getLiveCasinoVideo = async () => {
-      const res = await axios.post(
-        liveCasinoIframeApi,
-        { gameId: eventId, providerName: providerId,token:generatedToken },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await axios.post(liveCasinoIframeApi, encryptedData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const data = res.data;
       setVideoUrl(data?.gameUrl);
     };
     getLiveCasinoVideo();
-  }, [token, eventId, providerId, liveCasinoIframeApi]);
+  }, [token, eventId, providerId, liveCasinoIframeApi, encryptedData]);
 
   return (
     <div className="slot-iframe show">

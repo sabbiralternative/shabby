@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 
 const BookmarkerSection = ({
   bookmarker,
@@ -17,6 +18,7 @@ const BookmarkerSection = ({
   const [changedPrices, setChangedPrices] = useState({});
   const { setPlaceBetValue } = UseState();
   const generatedToken  = useTokenGenerator();
+  const encryptedData = UseEncryptData(generatedToken);
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -41,9 +43,7 @@ const BookmarkerSection = ({
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body:JSON.stringify({
-        token:generatedToken
-      })
+      body:JSON.stringify(encryptedData)
     })
       .then((res) => res.json())
       .then((data) => {

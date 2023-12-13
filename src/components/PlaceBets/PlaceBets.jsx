@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 
 const PlaceBets = ({
   showBets,
@@ -43,25 +44,26 @@ const PlaceBets = ({
 
   /* Handle bets */
   const handleOrderBets = () => {
+    const encryptedData = UseEncryptData([
+      {
+        betDelay: placeBetValue?.betDelay,
+        btype: placeBetValue?.btype,
+        eventTypeId: placeBetValue?.eventTypeId,
+        marketId: placeBetValue?.marketId,
+        price: price ? price : placeBetValue?.price,
+        selectionId: placeBetValue?.selectionId,
+        side: placeBetValue?.side,
+        totalSize: totalSize,
+        token:generatedToken
+      },
+    ]);
     setLoader(true);
     fetch(orderApi, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify([
-        {
-          betDelay: placeBetValue?.betDelay,
-          btype: placeBetValue?.btype,
-          eventTypeId: placeBetValue?.eventTypeId,
-          marketId: placeBetValue?.marketId,
-          price: price ? price : placeBetValue?.price,
-          selectionId: placeBetValue?.selectionId,
-          side: placeBetValue?.side,
-          totalSize: totalSize,
-          token:generatedToken
-        },
-      ]),
+      body: JSON.stringify(encryptedData),
     })
       .then((res) => res.json())
       .then((data) => {

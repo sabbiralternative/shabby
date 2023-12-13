@@ -4,6 +4,7 @@ import { config } from "../../utils/config";
 import ActivityTable from "./ActivityTable";
 import Notification from "../../components/Notification/Notification";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 const ActivityLogs = () => {
   const [activityLogs, setActivityLogs] = useState([]);
   const { register, handleSubmit } = useForm();
@@ -13,6 +14,12 @@ const ActivityLogs = () => {
   const generatedToken  = useTokenGenerator();
 
   const onSubmit = ({ toDate, fromDate, logType }) => {
+    const encryptedData = UseEncryptData({
+      from: fromDate,
+      to: toDate,
+      type: logType,
+      token:generatedToken
+    });
     if (logType == "none") {
     return  setErrorMessage("Select Log Type !");
     }
@@ -21,12 +28,7 @@ const ActivityLogs = () => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        from: fromDate,
-        to: toDate,
-        type: logType,
-        token:generatedToken
-      }),
+      body: JSON.stringify(encryptedData),
     })
       .then((res) => res.json())
       .then((data) => {

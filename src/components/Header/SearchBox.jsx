@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { config } from "../../utils/config";
 import { Link } from "react-router-dom";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 
 const SearchBox = () => {
   const [showInput, setShowInput] = useState(false);
@@ -10,6 +11,7 @@ const SearchBox = () => {
   const token = localStorage.getItem("token");
  
   const generatedToken  = useTokenGenerator();
+  const encryptedData = UseEncryptData(generatedToken);
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -23,7 +25,7 @@ const SearchBox = () => {
           },
           body: JSON.stringify({
             name: searchText,
-            token: generatedToken,
+            token: encryptedData,
           }),
         });
         const data = await res.json();
@@ -35,7 +37,7 @@ const SearchBox = () => {
       };
       getSearchData();
     }
-  }, [searchEventApi, searchText, token]);
+  }, [searchEventApi, searchText, token,encryptedData]);
 
   useEffect(() => {
     const categories = Array.from(new Set(data.map((item) => item.eventType)));

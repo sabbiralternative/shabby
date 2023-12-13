@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { config } from "../../utils/config";
 import UseState from "../../hooks/UseState";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 
 const PlaceBetModal = ({
   showBets,
@@ -18,7 +19,6 @@ const PlaceBetModal = ({
   const [profit, setProfit] = useState("");
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
   const { buttonValue, SetButtonValue } = UseState();
-
   const generatedToken  = useTokenGenerator();
   const [loader, setLoader] = useState(false);
   const orderApi = config?.result?.endpoint?.order;
@@ -44,25 +44,29 @@ const PlaceBetModal = ({
 
   /* Handle bets */
   const handleOrderBets = () => {
+
+    const encryptedData = UseEncryptData([
+      {
+        betDelay: placeBetValue?.betDelay,
+        btype: placeBetValue?.btype,
+        eventTypeId: placeBetValue?.eventTypeId,
+        marketId: placeBetValue?.marketId,
+        price: price ? price : placeBetValue?.price,
+        selectionId: placeBetValue?.selectionId,
+        side: placeBetValue?.side,
+        totalSize: totalSize,
+        token:generatedToken
+      },
+
+    ]);
+   
     setLoader(true);
     fetch(orderApi, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify([
-        {
-          betDelay: placeBetValue?.betDelay,
-          btype: placeBetValue?.btype,
-          eventTypeId: placeBetValue?.eventTypeId,
-          marketId: placeBetValue?.marketId,
-          price: price ? price : placeBetValue?.price,
-          selectionId: placeBetValue?.selectionId,
-          side: placeBetValue?.side,
-          totalSize: totalSize,
-          token:generatedToken
-        },
-      ]),
+      body: JSON.stringify(encryptedData),
     })
       .then((res) => res.json())
       .then((data) => {

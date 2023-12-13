@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { config } from "../../utils/config";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 
 const SingleCasino = () => {
   const [url, setUrl] = useState(null);
@@ -10,21 +11,19 @@ const SingleCasino = () => {
     localStorage.getItem("auraEventId")
   );
   const token = localStorage.getItem("token");
-  const generatedToken  = useTokenGenerator();
+  const generatedToken = useTokenGenerator();
+
   const navigateToCasinoDetails = async () => {
-    const res = await axios.post(
-      getSingleCasinoApi,
-      {
-        eventId: eventId,
-        eventTypeId: eventTypeId,
-        token:generatedToken
+    const encryptedData = UseEncryptData({
+      eventId: eventId,
+      eventTypeId: eventTypeId,
+      token: generatedToken,
+    });
+    const res = await axios.post(getSingleCasinoApi, encryptedData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    });
     const link = res?.data?.result?.url;
     if (link) {
       setUrl(link);

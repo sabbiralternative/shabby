@@ -51,6 +51,7 @@ import Card32A from "../Card32A/Card32A.jsx";
 import Baccrat29 from "../Baccrat29/Baccrat29.jsx";
 import TeenPattiTwoPointZero from "../TeenPattiTwoPointZero/TeenPattiTwoPointZero.jsx";
 import useTokenGenerator from "../../../hooks/UseTokenGenerator.jsx";
+import UseEncryptData from "../../../hooks/UseEncryptData.jsx";
 
 const PlaceBetDiamond = () => {
   useEffect(() => {
@@ -221,6 +222,8 @@ const PlaceBetDiamond = () => {
   const [isSticky, setSticky] = useState(false);
 
   const generatedToken  = useTokenGenerator();
+  const encryptedData = UseEncryptData(generatedToken);
+
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -624,14 +627,15 @@ const PlaceBetDiamond = () => {
 
   /* Get video */
   useEffect(() => {
+    const encryptedVideoData = UseEncryptData({
+      eventId: eventId,
+      eventTypeId: eventTypeId,
+      token: generatedToken,
+    });
     const getCasinoVideo = async () => {
       const res = await axios.post(
-        getSingleCasinoApi,
-        {
-          eventId: eventId,
-          eventTypeId: eventTypeId,
-          token: generatedToken,
-        },
+        getSingleCasinoApi,encryptedVideoData
+      ,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -644,7 +648,7 @@ const PlaceBetDiamond = () => {
       }
     };
     getCasinoVideo();
-  }, [eventId, eventTypeId]);
+  }, [eventId, eventTypeId,generatedToken]);
 
   /* Get odds */
   useEffect(() => {
@@ -670,7 +674,7 @@ const PlaceBetDiamond = () => {
     queryFn: async () => {
       const res = await axios.post(
         `${exposerApi}/${eventId}`,
-        { token: generatedToken },
+       encryptedData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -694,9 +698,7 @@ const PlaceBetDiamond = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body:JSON.stringify({
-          token:generatedToken
-        })
+        body:JSON.stringify(encryptedData)
       })
         .then((res) => res.json())
         .then((data) => {

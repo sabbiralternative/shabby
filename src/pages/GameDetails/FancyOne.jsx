@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
 import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
 
 const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
-  console.log(fancy1);
+
   const [previousData, setPreviousData] = useState(fancy1);
   const [changedPrices, setChangedPrices] = useState({});
   const token = localStorage.getItem("token");
   const { setPlaceBetValue } = UseState();
   const generatedToken  = useTokenGenerator();
+  const encryptedData = UseEncryptData(generatedToken);
   const laderApi = config?.result?.endpoint?.ladder;
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
@@ -25,9 +27,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body:JSON.stringify({
-        token:generatedToken
-      })
+      body:JSON.stringify(encryptedData)
     })
       .then((res) => res.json())
       .then((data) => {
@@ -164,7 +164,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
         <div className="market-body" data-title="OPEN">
           <div className="row row10">
             {fancy1?.map((odd) => {
-              console.log(odd);
+        
               const pnl = pnlBySelection?.filter(
                 (pnl) => pnl?.MarketId === fancy1?.id
               );
