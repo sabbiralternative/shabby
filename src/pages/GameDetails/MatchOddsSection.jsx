@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
-import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 
 const MatchOddsSection = ({
@@ -17,8 +17,7 @@ const MatchOddsSection = ({
   const { setPlaceBetValue } = UseState();
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
-  const generatedToken  = useTokenGenerator();
-  const encryptedData = UseEncryptData(generatedToken);
+
 
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
@@ -38,13 +37,15 @@ const MatchOddsSection = ({
   });
 
   const handleLader = (marketId) => {
+    const generatedToken = UseTokenGenerator();
+    const encryptedData = UseEncryptData(generatedToken);
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {
-      method:"POST",
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body:JSON.stringify(encryptedData)
+      body: JSON.stringify(encryptedData),
     })
       .then((res) => res.json())
       .then((data) => {

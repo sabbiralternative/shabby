@@ -15,6 +15,7 @@ import UseEncryptData from "../../hooks/UseEncryptData";
 
 const GameDetails = () => {
   const { id, eventId } = useParams();
+  
   const oddsApi = config?.result?.endpoint?.odds;
   const interval = config?.result?.settings?.interval;
   const accessTokenApi = config?.result?.endpoint?.accessToken;

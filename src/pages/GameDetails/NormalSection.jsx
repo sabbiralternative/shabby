@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
-import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 
 const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
@@ -9,8 +9,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
   const [previousData, setPreviousData] = useState(normal);
   const [changedPrices, setChangedPrices] = useState({});
   const { setPlaceBetValue } = UseState();
-  const generatedToken  = useTokenGenerator();
-  const encryptedData = UseEncryptData(generatedToken);
+
   const laderApi = config?.result?.endpoint?.ladder;
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
@@ -21,13 +20,15 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
   }
 
   const handleLadder = (marketId) => {
+    const generatedToken = UseTokenGenerator();
+    const encryptedData = UseEncryptData(generatedToken);
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {
-      method:'POST',
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body:JSON.stringify(encryptedData)
+      body: JSON.stringify(encryptedData),
     })
       .then((res) => res.json())
       .then((data) => {

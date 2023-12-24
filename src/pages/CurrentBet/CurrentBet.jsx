@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import BetTable from "./BetTable";
 import { useEffect, useState } from "react";
 import Notification from "../../components/Notification/Notification";
-import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 const CurrentBet = () => {
   const currentBetsApi = config?.result?.endpoint?.currentBets;
@@ -13,20 +13,21 @@ const CurrentBet = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [sportsRef, setSportsRef] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const generatedToken  = useTokenGenerator();
-  const encryptedData = UseEncryptData(generatedToken);
+ 
 
   const onSubmit = ({ sportsType }) => {
     if (sportsType == "none") {
       setErrorMessage("Select Report Type !");
     }
+    const generatedToken = UseTokenGenerator();
+    const encryptedData = UseEncryptData(generatedToken);
     if (sportsType) {
       fetch(`${currentBetsApi}/${sportsType}`, {
-        method:"POST",
+        method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body:JSON.stringify(encryptedData)
+        body: JSON.stringify(encryptedData),
       })
         .then((res) => res.json())
         .then((data) => {
@@ -54,7 +55,7 @@ const CurrentBet = () => {
   for (const sport of filteredData) {
     totalAmount = totalAmount + sport.amount;
   }
-/* Pagination start */
+  /* Pagination start */
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -87,7 +88,7 @@ const CurrentBet = () => {
 
   const isLastPage = currentPage === getLastPage();
   const hasNextPage = currentPage < getLastPage();
-/* Pagination end */
+  /* Pagination end */
   return (
     <div className="center-container">
       {errorMessage && (
@@ -131,7 +132,8 @@ const CurrentBet = () => {
                   <span className="me-2">Show</span>
                   <select
                     onChange={(e) => handlePageSizeChange(e.target.value)}
-                  className="form-select">
+                    className="form-select"
+                  >
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="30">30</option>
@@ -179,9 +181,8 @@ const CurrentBet = () => {
               </div>
               <div className="col-lg-3 col-md-6 text-center">
                 <div>
-                  Total Bets:{" "}
-                  <span className="me-2">{visibleData.length}</span> Total
-                  Amount: <span className="me-2">{totalAmount}</span>
+                  Total Bets: <span className="me-2">{visibleData.length}</span>{" "}
+                  Total Amount: <span className="me-2">{totalAmount}</span>
                 </div>
               </div>
               <div className="col-lg-2 col-6">

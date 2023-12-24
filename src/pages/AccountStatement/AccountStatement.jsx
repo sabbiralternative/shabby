@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { config } from "../../utils/config";
 import SettleBetsModal from "./SettleBetsModal";
 import Notification from "../../components/Notification/Notification";
-import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 
 const AccountStatement = () => {
@@ -16,16 +16,17 @@ const AccountStatement = () => {
   const [stateMentData, setStateMentData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const generatedToken  = useTokenGenerator();
+
   const onSubmit = ({ toDate, fromDate, reportType }) => {
     if (reportType == "none") {
       return setErrorMessage("Select Report Type !");
     }
+    const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData({
       from: fromDate,
       to: toDate,
       type: reportType,
-      token:generatedToken
+      token: generatedToken,
     });
     fetch(accountStatementApi, {
       method: "POST",
@@ -43,15 +44,14 @@ const AccountStatement = () => {
   };
 
   const getSettledBets = (marketId) => {
+    const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData(generatedToken);
     fetch(`${settledBetsApi}/${marketId}`, {
-      method:"POST",
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body:JSON.stringify(
-        encryptedData
-      )
+      body: JSON.stringify(encryptedData),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -61,7 +61,6 @@ const AccountStatement = () => {
         }
       });
   };
-
 
   /* Pagination  start*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -96,7 +95,7 @@ const AccountStatement = () => {
 
   const isLastPage = currentPage === getLastPage();
   const hasNextPage = currentPage < getLastPage();
-  
+
   /* Pagination  end*/
   return (
     <>

@@ -4,7 +4,7 @@ import { config } from "../../utils/config";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Notification from "../../components/Notification/Notification";
-import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 
 const ChangePasswordLogin = () => {
@@ -13,7 +13,7 @@ const ChangePasswordLogin = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const pageTitle = config?.result?.settings?.siteTitle;
-  const generatedToken  = useTokenGenerator();
+
   const {
     register,
     handleSubmit,
@@ -26,11 +26,12 @@ const ChangePasswordLogin = () => {
   }, [pageTitle]);
 
   const onSubmit = ({ password, newPassword, newPasswordConfirm }) => {
+    const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData({
       oldPassword: password,
       password: newPassword,
       passVerify: newPasswordConfirm,
-      token:generatedToken
+      token: generatedToken,
     });
     fetch(changePasswordLogin, {
       method: "POST",

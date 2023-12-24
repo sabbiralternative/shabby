@@ -15,6 +15,7 @@ const Bollywood = ({
   zeroIndexFourRunnersEx,
   a23Exposure,
 }) => {
+  console.log(data);
   return (
     <div className="casino-table">
       <div className="casino-table-box">
@@ -462,7 +463,7 @@ const Bollywood = ({
             } `}
           >
             <span className="casino-odds">
-              {data[0]?.runners[6]?.lay[0]?.price}
+              {data[0]?.runners[5]?.lay[0]?.price}
             </span>
             {/* <!-- suspended-box key0 > >status :  key0 >> runner5 >> lay >> price --> */}
           </div>

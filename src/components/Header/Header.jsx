@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import RulesModal from "./RulesModal";
 import UseState from "../../hooks/UseState";
 import SearchBox from "./SearchBox";
-import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -23,7 +23,7 @@ const Header = () => {
   const [showExp, setShowExp] = useState(0);
   const [showNotification, setShowNotification] = useState("");
   const { buttonValue, SetButtonValue } = UseState();
-  
+
   const [ruleModal, setRuleModal] = useState(false);
   const buttonGameValue = JSON.parse(localStorage.getItem("buttonValue"));
   const navigate = useNavigate();
@@ -31,11 +31,6 @@ const Header = () => {
   const openModalRef = useRef();
   const { setFilterGames, setRefetchBetsExposure } = UseState();
   const role = localStorage.getItem("loginName");
-
-  const dynamicIntervalTime =5000;
-  const generatedToken  = useTokenGenerator(dynamicIntervalTime);
-  const encryptedData = UseEncryptData(generatedToken);
-
 
   /* Close modalRef modal click outside the modal */
   useEffect(() => {
@@ -99,6 +94,8 @@ const Header = () => {
   /* Call balance anx exp api every 5 seconds */
   useEffect(() => {
     const fetchBalanceExp = () => {
+      const generatedToken = UseTokenGenerator();
+      const encryptedData = UseEncryptData(generatedToken);
       axios
         .post(
           balanceApi,
@@ -125,7 +122,7 @@ const Header = () => {
     fetchBalanceExp();
     const intervalId = setInterval(fetchBalanceExp, 5000);
     return () => clearInterval(intervalId);
-  }, [balanceApi, token, navigate,encryptedData,setRefetchBetsExposure]);
+  }, [balanceApi, token, navigate, setRefetchBetsExposure]);
 
   /* Get marquee notification */
   useEffect(() => {

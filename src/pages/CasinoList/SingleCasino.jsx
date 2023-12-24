@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { config } from "../../utils/config";
-import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 
 const SingleCasino = () => {
@@ -11,9 +11,10 @@ const SingleCasino = () => {
     localStorage.getItem("auraEventId")
   );
   const token = localStorage.getItem("token");
-  const generatedToken = useTokenGenerator();
+  
 
   const navigateToCasinoDetails = async () => {
+    const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData({
       eventId: eventId,
       eventTypeId: eventTypeId,

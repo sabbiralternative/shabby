@@ -4,7 +4,7 @@ import loginBanner from "../../static/front/img/logo.png";
 import { config } from "../../utils/config";
 import { useEffect, useState } from "react";
 import Notification from "../Notification/Notification";
-import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 
 const Login = () => {
@@ -13,7 +13,6 @@ const Login = () => {
   const [errorLogin, setErrorLogin] = useState("");
   const pageTitle = config?.result?.settings?.siteTitle;
 
-  const generatedToken = useTokenGenerator();
   const {
     register,
     handleSubmit,
@@ -24,7 +23,10 @@ const Login = () => {
     document.title = pageTitle;
   }, [pageTitle]);
 
+
+
   const onSubmit = ({ username, password }) => {
+    const generatedToken = UseTokenGenerator();
     const loginData = {
       username: username,
       password: password,
@@ -40,7 +42,7 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+    
         if (data.success) {
           localStorage.setItem("token", data.result.token);
           localStorage.setItem("loginName", data.result.loginName);
@@ -71,6 +73,7 @@ const Login = () => {
   };
 
   const loginWithDemo = () => {
+    const generatedToken = UseTokenGenerator();
     const loginData = UseEncryptData({
       username: "demo",
       password: "",
@@ -85,6 +88,7 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         localStorage.setItem("token", data.result.token);
         localStorage.setItem("loginName", data.result.loginName);
         const buttonValue = JSON.stringify(data.result.buttonValue.game);

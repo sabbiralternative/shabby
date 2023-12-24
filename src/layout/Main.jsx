@@ -46,6 +46,7 @@ const Main = () => {
     setRelativeURL(relativeURL);
   }, [baseUrl, currentURL]);
 
+  
   useEffect(() => {
     if (isDisabledDevtools) {
       DisableDevtool();

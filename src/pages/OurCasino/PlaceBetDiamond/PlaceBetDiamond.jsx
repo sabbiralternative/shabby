@@ -50,7 +50,7 @@ import RaceTwenty from "../RaceTwenty/RaceTwenty.jsx";
 import Card32A from "../Card32A/Card32A.jsx";
 import Baccrat29 from "../Baccrat29/Baccrat29.jsx";
 import TeenPattiTwoPointZero from "../TeenPattiTwoPointZero/TeenPattiTwoPointZero.jsx";
-import useTokenGenerator from "../../../hooks/UseTokenGenerator.jsx";
+import UseTokenGenerator from "../../../hooks/UseTokenGenerator.jsx";
 import UseEncryptData from "../../../hooks/UseEncryptData.jsx";
 
 const PlaceBetDiamond = () => {
@@ -220,9 +220,6 @@ const PlaceBetDiamond = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isSticky, setSticky] = useState(false);
-
-  const generatedToken  = useTokenGenerator();
-  const encryptedData = UseEncryptData(generatedToken);
 
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
@@ -627,28 +624,25 @@ const PlaceBetDiamond = () => {
 
   /* Get video */
   useEffect(() => {
+    const generatedToken = UseTokenGenerator();
     const encryptedVideoData = UseEncryptData({
       eventId: eventId,
       eventTypeId: eventTypeId,
       token: generatedToken,
     });
     const getCasinoVideo = async () => {
-      const res = await axios.post(
-        getSingleCasinoApi,encryptedVideoData
-      ,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axios.post(getSingleCasinoApi, encryptedVideoData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = res.data;
       if (data.success) {
         setUrl(data?.result?.url);
       }
     };
     getCasinoVideo();
-  }, [eventId, eventTypeId,generatedToken]);
+  }, [eventId, eventTypeId]);
 
   /* Get odds */
   useEffect(() => {
@@ -672,15 +666,13 @@ const PlaceBetDiamond = () => {
   const { refetch: refetchExposure } = useQuery({
     queryKey: ["exposure"],
     queryFn: async () => {
-      const res = await axios.post(
-        `${exposerApi}/${eventId}`,
-       encryptedData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const generatedToken = UseTokenGenerator();
+      const encryptedData = UseEncryptData(generatedToken);
+      const res = await axios.post(`${exposerApi}/${eventId}`, encryptedData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = res.data;
 
       if (data.success) {
@@ -692,21 +684,24 @@ const PlaceBetDiamond = () => {
   /* Fetch Current Bets */
   const { refetch: refetchCurrentBets } = useQuery({
     queryKey: ["currentBets"],
-    queryFn: () => {
-      fetch(`${currentBetsApi}/${eventId}`, {
-        method:'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body:JSON.stringify(encryptedData)
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            setMyBets(data?.result);
-            console.log(data);
-          }
-        });
+    queryFn: async () => {
+      const generatedToken = UseTokenGenerator();
+      const encryptedData = UseEncryptData(generatedToken);
+      const res = await axios.post(
+        `${currentBetsApi}/${eventId}`,
+        encryptedData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = res.data;
+
+      if (data.success) {
+        setMyBets(data?.result);
+        console.log(data);
+      }
     },
   });
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { config } from "../../utils/config";
 import { Link } from "react-router-dom";
-import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 
 const SearchBox = () => {
@@ -9,14 +9,14 @@ const SearchBox = () => {
   const [searchText, setSearchText] = useState("");
   const searchEventApi = config?.result?.endpoint?.searchEvent;
   const token = localStorage.getItem("token");
- 
-  const generatedToken  = useTokenGenerator();
-  const encryptedData = UseEncryptData(generatedToken);
+
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     if (searchText.length > 2) {
+      const generatedToken = UseTokenGenerator();
+      const encryptedData = UseEncryptData(generatedToken);
       const getSearchData = async () => {
         const res = await fetch(searchEventApi, {
           method: "POST",
@@ -37,7 +37,7 @@ const SearchBox = () => {
       };
       getSearchData();
     }
-  }, [searchEventApi, searchText, token,encryptedData]);
+  }, [searchEventApi, searchText, token]);
 
   useEffect(() => {
     const categories = Array.from(new Set(data.map((item) => item.eventType)));
@@ -46,6 +46,7 @@ const SearchBox = () => {
   }, [data]);
 
   const handleHideDropdown = () => {
+    setShowInput(false)
     localStorage.removeItem("showSearchValue");
   };
 

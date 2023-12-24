@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
-import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 
 const BookmarkerTwoSection = ({
@@ -13,8 +13,7 @@ const BookmarkerTwoSection = ({
   const [previousData, setPreviousData] = useState(bookmarker2);
   const [changedPrices, setChangedPrices] = useState({});
   const { setPlaceBetValue } = UseState();
-  const generatedToken  = useTokenGenerator();
-  const encryptedData = UseEncryptData(generatedToken);
+
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
   const token = localStorage.getItem("token");
@@ -38,13 +37,15 @@ const BookmarkerTwoSection = ({
   });
 
   const handleLader = (marketId) => {
+    const generatedToken = UseTokenGenerator();
+    const encryptedData = UseEncryptData(generatedToken);
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {
-      method:"POST",
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body:JSON.stringify(encryptedData)
+      body: JSON.stringify(encryptedData),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -227,7 +228,6 @@ const BookmarkerTwoSection = ({
                       ?.slice()
                       .reverse()
                       .map((back, i) => {
-                      
                         const handlePlaceBackBet = () => {
                           setTotalSize("");
                           setShowBets(true);
@@ -256,17 +256,15 @@ const BookmarkerTwoSection = ({
                             className={`market-odd-box
                             
                             ${
-                              i === 0  && runner?.back?.length !== 1 ? "back2" : ""
+                              i === 0 && runner?.back?.length !== 1
+                                ? "back2"
+                                : ""
                             } 
-                            ${
-                               runner?.back?.length === 1 ? "back" : ""
-                            } 
+                            ${runner?.back?.length === 1 ? "back" : ""} 
                             
                             
                             
-                            ${i === 1 ? "back1" : ""} ${
-                              i === 2 ? "back" : ""
-                            }
+                            ${i === 1 ? "back1" : ""} ${i === 2 ? "back" : ""}
                            
                             ${
                               changedPrices[`back-${runner.id}-${i}`]

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { config } from "../../utils/config";
 import ActivityTable from "./ActivityTable";
 import Notification from "../../components/Notification/Notification";
-import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 const ActivityLogs = () => {
   const [activityLogs, setActivityLogs] = useState([]);
@@ -11,17 +11,18 @@ const ActivityLogs = () => {
   const activityLogApi = config?.result?.endpoint?.activityLogs;
   const token = localStorage.getItem("token");
   const [errorMessage, setErrorMessage] = useState("");
-  const generatedToken  = useTokenGenerator();
+ 
 
   const onSubmit = ({ toDate, fromDate, logType }) => {
+    const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData({
       from: fromDate,
       to: toDate,
       type: logType,
-      token:generatedToken
+      token: generatedToken,
     });
     if (logType == "none") {
-    return  setErrorMessage("Select Log Type !");
+      return setErrorMessage("Select Log Type !");
     }
     fetch(activityLogApi, {
       method: "POST",
@@ -37,7 +38,7 @@ const ActivityLogs = () => {
         }
       });
   };
-/* Pagination start */
+  /* Pagination start */
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -70,7 +71,7 @@ const ActivityLogs = () => {
 
   const isLastPage = currentPage === getLastPage();
   const hasNextPage = currentPage < getLastPage();
-/* Pagination end */
+  /* Pagination end */
   return (
     <div className="center-container">
       {errorMessage && (

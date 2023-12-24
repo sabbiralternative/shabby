@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import { config } from "../../utils/config";
-import useTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 
 const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
-
   const [previousData, setPreviousData] = useState(fancy1);
   const [changedPrices, setChangedPrices] = useState({});
   const token = localStorage.getItem("token");
   const { setPlaceBetValue } = UseState();
-  const generatedToken  = useTokenGenerator();
-  const encryptedData = UseEncryptData(generatedToken);
+ 
   const laderApi = config?.result?.endpoint?.ladder;
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
@@ -21,13 +19,15 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
     pnlBySelection = Object?.values(obj);
   }
   const handleLadder = (marketId) => {
+    const generatedToken = UseTokenGenerator();
+    const encryptedData = UseEncryptData(generatedToken);
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {
-      method:'POST',
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body:JSON.stringify(encryptedData)
+      body: JSON.stringify(encryptedData),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -164,7 +164,6 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
         <div className="market-body" data-title="OPEN">
           <div className="row row10">
             {fancy1?.map((odd) => {
-        
               const pnl = pnlBySelection?.filter(
                 (pnl) => pnl?.MarketId === fancy1?.id
               );
@@ -234,7 +233,10 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                               } `}
                             >
                               <span className="market-odd">{back.price}</span>
-                              <span className="market-volume"> {back.size}</span>
+                              <span className="market-volume">
+                                {" "}
+                                {back.size}
+                              </span>
                             </div>
                           );
                         })
@@ -272,9 +274,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                               }`}
                             >
                               <span className="market-odd"> {lay.price}</span>
-                              <span className="market-volume">
-                               {lay.size}
-                              </span>
+                              <span className="market-volume">{lay.size}</span>
                             </div>
                           );
                         })
