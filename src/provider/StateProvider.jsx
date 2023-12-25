@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 
 export const StateContext = createContext(null);
 const StateProvider = ({ children }) => {
@@ -7,20 +7,6 @@ const StateProvider = ({ children }) => {
   const [placeBetValue, setPlaceBetValue] = useState({});
   const [filterGames, setFilterGames] = useState("all");
   const [refetchBetsExposure, setRefetchBetsExposure] = useState(null);
-  const [generatedToken, setGeneratedToken] = useState("");
-
-  useEffect(() => {
-    const getGeneratedTime = () => {
-      const currentTimestamp = Math.floor(new Date().getTime() / 1000);
-      const multipliedTimestamp = currentTimestamp * 274;
-      const randomSixDigitNumber = Math.floor(100000 + Math.random() * 900000);
-      const finalToken = `${randomSixDigitNumber}${multipliedTimestamp}`;
-      setGeneratedToken(finalToken);
-    };
-    getGeneratedTime();
-    const intervalId = setInterval(getGeneratedTime, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
 
   /* data[0]?.runners[0] exposure */
   const [lowExposure, setLowExposure] = useState([]);
@@ -154,7 +140,6 @@ const StateProvider = ({ children }) => {
     setFilterGames,
     refetchBetsExposure,
     setRefetchBetsExposure,
-    generatedToken,
 
     lowExposure,
     setLowExposure,

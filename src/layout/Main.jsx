@@ -16,14 +16,6 @@ const Main = () => {
   const navigate = useNavigate();
   const pageTitle = config?.result?.settings?.siteTitle;
   const isDisabledDevtools = config?.result?.settings?.disabledDevtool;
-  const isUnauthorizedAccess = window.location.pathname === "/admin";
-
-  useEffect(() => {
-    if (isUnauthorizedAccess) {
-      localStorage.clear();
-      navigate("/login");
-    }
-  }, [navigate, isUnauthorizedAccess]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");

@@ -12,10 +12,11 @@ import UseState from "../../hooks/UseState";
 import { useQuery } from "@tanstack/react-query";
 import Notification from "../../components/Notification/Notification";
 import UseEncryptData from "../../hooks/UseEncryptData";
+import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 
 const GameDetails = () => {
   const { id, eventId } = useParams();
-  
+
   const oddsApi = config?.result?.endpoint?.odds;
   const interval = config?.result?.settings?.interval;
   const accessTokenApi = config?.result?.endpoint?.accessToken;
@@ -36,8 +37,7 @@ const GameDetails = () => {
   const [showMobileTv, setShowMobileTv] = useState(false);
   const [showBets, setShowBets] = useState(false);
   const { buttonValue, SetButtonValue } = UseState();
-  const { placeBetValue,generatedToken } = UseState();
-  const encryptedData = UseEncryptData(generatedToken);
+  const { placeBetValue } = UseState();
   const [price, setPrice] = useState("");
   const [totalSize, setTotalSize] = useState("");
   const [profit, setProfit] = useState("");
@@ -127,34 +127,38 @@ const GameDetails = () => {
 
   /* Get video */
   useEffect(() => {
-    const encryptedVideoData = UseEncryptData({
-      eventTypeId: id,
-      eventId: eventId,
-      type: "video",
-      token:generatedToken
-    });
-    if (showTv || showMobileTv) {
-      fetch(accessTokenApi, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(encryptedVideoData),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setVideoUrl(data?.result);
-        });
-    }
-  }, [eventId, id, showTv, token, accessTokenApi, showMobileTv,generatedToken]);
+    const getVideo = () => {
+      const generatedToken = UseTokenGenerator();
+      const encryptedVideoData = UseEncryptData({
+        eventTypeId: id,
+        eventId: eventId,
+        type: "video",
+        token: generatedToken,
+      });
+      if (showTv || showMobileTv) {
+        fetch(accessTokenApi, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(encryptedVideoData),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setVideoUrl(data?.result);
+          });
+      }
+    };
+    getVideo();
+  }, [eventId, id, showTv, token, accessTokenApi, showMobileTv]);
 
   /* Get exposure data */
-  const { data: exposer = [], refetch: refetchExposure } = 
-  useQuery({
+  const { data: exposer = [], refetch: refetchExposure } = useQuery({
     queryKey: ["exposure"],
     queryFn: async () => {
-      const res = await axios.post(`${exposerApi}/${eventId}`,encryptedData, {
-       
+      const generatedToken = UseTokenGenerator();
+      const encryptedData = UseEncryptData(generatedToken);
+      const res = await axios.post(`${exposerApi}/${eventId}`, encryptedData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -169,6 +173,7 @@ const GameDetails = () => {
 
   /* Handle bets */
   const handleOrderBets = () => {
+    const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData([
       {
         betDelay: placeBetValue?.betDelay,
@@ -179,7 +184,7 @@ const GameDetails = () => {
         selectionId: placeBetValue?.selectionId,
         side: placeBetValue?.side,
         totalSize: totalSize,
-        token:generatedToken
+        token: generatedToken,
       },
     ]);
     setLoader(true);
@@ -215,12 +220,14 @@ const GameDetails = () => {
     queryKey: ["currentBets"],
     queryFn: async () => {
       try {
+        const generatedToken = UseTokenGenerator();
+        const encryptedData = UseEncryptData(generatedToken);
         const response = await fetch(`${currentBetsApi}/${eventId}`, {
-          method:'POST',
+          method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
           },
-         body:JSON.stringify(encryptedData)
+          body: JSON.stringify(encryptedData),
         });
 
         const data = await response.json();
