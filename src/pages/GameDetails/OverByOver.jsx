@@ -221,6 +221,8 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
                               lay: true,
                               name: runner?.name,
                               isWeak: over?.isWeak,
+                            
+                              isBettable:over?.isBettable
                             });
                           };
                           return (
@@ -259,6 +261,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
                               back: true,
                               name: runner?.name,
                               isWeak: over?.isWeak,
+                              isBettable:over?.isBettable
                             });
                           };
                           return (

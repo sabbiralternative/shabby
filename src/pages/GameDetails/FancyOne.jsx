@@ -220,6 +220,8 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                               back: true,
                               name: runner?.name,
                               isWeak: odd?.isWeak,
+                        
+                              isBettable:odd?.isBettable
                             });
                           };
                           return (
@@ -261,6 +263,8 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                               lay: true,
                               name: runner?.name,
                               isWeak: odd?.isWeak,
+                           
+                              isBettable:odd?.isBettable
                             });
                           };
                           return (

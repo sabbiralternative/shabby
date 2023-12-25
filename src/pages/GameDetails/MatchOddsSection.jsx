@@ -266,6 +266,8 @@ const MatchOddsSection = ({
                               (runner) => runner.name
                             ),
                             isWeak: item?.isWeak,
+                            maxLiabilityPerMarket:item?.maxLiabilityPerMarket,
+                            isBettable:item?.isBettable
                           });
                         };
 
@@ -303,6 +305,7 @@ const MatchOddsSection = ({
                       })}
 
                     {runner?.lay?.map((lay, i) => {
+                      console.log(item);
                       const handlePlaceLayBets = () => {
                         setTotalSize("");
                         setShowBets(true);
@@ -322,6 +325,10 @@ const MatchOddsSection = ({
                           ),
                           name: runner?.name,
                           isWeak: item?.isWeak,
+                          maxLiabilityPerMarket:item?.maxLiabilityPerMarket,
+                          isBettable:item?.isBettable
+
+
                         });
                       };
                       return (

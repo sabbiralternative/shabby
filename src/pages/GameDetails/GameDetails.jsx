@@ -16,7 +16,6 @@ import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 
 const GameDetails = () => {
   const { id, eventId } = useParams();
-
   const oddsApi = config?.result?.endpoint?.odds;
   const interval = config?.result?.settings?.interval;
   const accessTokenApi = config?.result?.endpoint?.accessToken;
@@ -185,6 +184,8 @@ const GameDetails = () => {
         side: placeBetValue?.side,
         totalSize: totalSize,
         token: generatedToken,
+        maxLiabilityPerMarket: placeBetValue?.maxLiabilityPerMarket,
+        isBettable: placeBetValue?.isBettable,
       },
     ]);
     setLoader(true);
@@ -322,6 +323,7 @@ const GameDetails = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   return (
     <>
       <div className="center-container">

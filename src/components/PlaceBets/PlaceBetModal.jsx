@@ -54,6 +54,8 @@ const PlaceBetModal = ({
         side: placeBetValue?.side,
         totalSize: totalSize,
         token: generatedToken,
+        maxLiabilityPerMarket: placeBetValue?.maxLiabilityPerMarket,
+        isBettable: placeBetValue?.isBettable,
       },
     ]);
 

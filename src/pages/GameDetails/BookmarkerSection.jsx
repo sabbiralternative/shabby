@@ -246,6 +246,8 @@ const BookmarkerSection = ({
                             back: true,
                             name: runner?.name,
                             isWeak: bookmark?.isWeak,
+                            maxLiabilityPerMarket:bookmark?.maxLiabilityPerMarket,
+                            isBettable:bookmark?.isBettable
                           });
                         };
                         return (
@@ -303,6 +305,8 @@ const BookmarkerSection = ({
                           lay: true,
                           name: runner?.name,
                           isWeak: bookmark?.isWeak,
+                          maxLiabilityPerMarket:bookmark?.maxLiabilityPerMarket,
+                          isBettable:bookmark?.isBettable
                         });
                       };
                       return (

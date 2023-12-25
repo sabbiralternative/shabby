@@ -56,6 +56,8 @@ const PlaceBets = ({
         side: placeBetValue?.side,
         totalSize: totalSize,
         token: generatedToken,
+        maxLiabilityPerMarket: placeBetValue?.maxLiabilityPerMarket,
+        isBettable: placeBetValue?.isBettable,
       },
     ]);
     setLoader(true);

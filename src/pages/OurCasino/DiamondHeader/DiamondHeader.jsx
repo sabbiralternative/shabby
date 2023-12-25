@@ -1,4 +1,4 @@
-const DiamondHeader = ({data,myBets}) => {
+const DiamondHeader = ({data,myBets,setTabs,tabs}) => {
     return (
         <>
             <div className="casino-header">
@@ -16,18 +16,28 @@ const DiamondHeader = ({data,myBets}) => {
           </div>
           <div className="casino-title-header-mobile d-xl-none">
             <ul className="nav nav-tabs menu-tabs">
-              <li className="nav-item">
-                <div className="nav-link active">Game</div>
+              <li
+              onClick={()=> setTabs('game')}
+              className="nav-item"
+              style={{cursor:'pointer'}}
+              >
+                <div className={`nav-link ${tabs === 'game' ? 'active':''}`}>Game</div>
               </li>
-              <li className="nav-item">
-                <div className="nav-link">Placed Bet ({myBets?.length})</div>
+              <li
+              onClick={()=> setTabs('placedBet')}
+              className="nav-item"
+              style={{cursor:'pointer'}}
+              >
+                <div className={`nav-link ${tabs === 'placedBet' ? 'active':''}`}>Placed Bet ({myBets?.length})</div>
               </li>
             </ul>
-            <div className="pe-2">
+     
+              <div className="pe-2">
               <span className="casino-rid">
                 Round ID: <span>{data[0]?.roundId}</span>
               </span>
             </div>
+          
           </div> 
         </>
     );

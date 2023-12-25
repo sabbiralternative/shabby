@@ -225,6 +225,8 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                               lay: true,
                               name: runner?.name,
                               isWeak: fancyGame?.isWeak,
+                             
+                              isBettable:fancyGame?.isBettable
                             });
                           };
 
@@ -264,6 +266,8 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                               back: true,
                               name: runner?.name,
                               isWeak: fancyGame?.isWeak,
+                            
+                              isBettable:fancyGame?.isBettable
                             });
                           };
                           return (

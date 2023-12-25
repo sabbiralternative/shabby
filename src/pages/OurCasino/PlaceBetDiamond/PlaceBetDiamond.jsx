@@ -220,7 +220,7 @@ const PlaceBetDiamond = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isSticky, setSticky] = useState(false);
-
+  const [tabs, setTabs] = useState("game");
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -789,619 +789,660 @@ const PlaceBetDiamond = () => {
         `}
         >
           {/* DiamondHeader start */}
-          <DiamondHeader data={data} myBets={myBets} />
+          <DiamondHeader
+            data={data}
+            myBets={myBets}
+            setTabs={setTabs}
+            tabs={tabs}
+          />
+
+          {tabs === "placedBet" && (
+            <div className="table-responsive w-100">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Matched Bet</th>
+                    <th className="text-end">Odds</th>
+                    <th className="text-end">Stake</th>
+                  </tr>
+                </thead>
+                {myBets.length > 0 && Array.isArray(myBets) && (
+                  <tbody>
+                    {myBets?.map(({ nation, userRate, amount, betType }, i) => {
+                      return (
+                        <tr
+                          key={i}
+                          className={`${betType === "Lay" ? "lay" : "back"}`}
+                        >
+                          <td>{nation}</td>
+                          <td className="text-end">{userRate}</td>
+                          <td className="text-end">{amount}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                )}
+              </table>
+            </div>
+          )}
           {/* DiamondHeader start */}
-          <div className="">
-            <div className="casino-video">
-              <div className="video-box-container">
-                {/* Iframe video */}
-                <div className="casino-video-box">
-                  {type === "ourCasino" && (
-                    <iframe
-                      allow="fullscreen;"
-                      src={url}
-                      style={{ widows: "100%", border: "0px" }}
-                    ></iframe>
-                  )}
-                  {type === "virtual" && (
-                    <img src={`/dealer-bg/${slug}.png`} className="vcasinobg" />
-                  )}
+          {tabs === "game" && (
+            <div className="">
+              <div className="casino-video">
+                <div className="video-box-container">
+                  {/* Iframe video */}
+                  <div className="casino-video-box">
+                    {type === "ourCasino" && (
+                      <iframe
+                        allow="fullscreen;"
+                        src={url}
+                        style={{ widows: "100%", border: "0px" }}
+                      ></iframe>
+                    )}
+                    {type === "virtual" && (
+                      <img
+                        src={`/dealer-bg/${slug}.png`}
+                        className="vcasinobg"
+                      />
+                    )}
+                  </div>
                 </div>
+                <div className="casino-video-cards">
+                  {/* Card start */}
+                  <Card data={data} one={picture.one} slug={slug} />
+                  {/* Card end */}
+                </div>
+                {/* Clock start */}
+                <Clock data={data} />
+                {/* Clock end */}
               </div>
-              <div className="casino-video-cards">
-                {/* Card start */}
-                <Card data={data} one={picture.one} slug={slug} />
-                {/* Card end */}
+
+              <div className="casino-detail">
+                {slug == "teen6" && (
+                  <TeenPattiTwoPointZero
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    evenExposure={evenExposure}
+                    oddExposure={oddExposure}
+                    highExposure={highExposure}
+                    redExposure={redExposure}
+                    blackExposure={blackExposure}
+                  />
+                )}
+                {slug == "teensin" && (
+                  <Baccrat29
+                    data={data}
+                    pnlBySelection={pnlBySelection}
+                    setShowBets={setShowBets}
+                    placeBetValue={placeBetValue}
+                    eightIndexZeroExp={eightIndexZeroRunnersEx}
+                  />
+                )}
+                {slug == "card32" || slug == "card32eu" ? (
+                  <Card32A
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    zeroIndexTwoExp={zeroIndexTwoRunnersEx}
+                    zeroIndexThreeExp={zeroIndexThreeRunnersEx}
+                  />
+                ) : null}
+                {slug == "race20" && (
+                  <RaceTwenty
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    zeroIndexTwoExp={zeroIndexTwoRunnersEx}
+                    zeroIndexThreeExp={zeroIndexThreeRunnersEx}
+                    evenExposure={evenExposure}
+                    oddExposure={oddExposure}
+                    redExposure={redExposure}
+                    blackExposure={blackExposure}
+                    a23Exposure={a23Exposure}
+                    four56Exposure={four56Exposure}
+                  />
+                )}
+                {slug == "war" && (
+                  <WarGames
+                    one={picture.one}
+                    pnlBySelection={pnlBySelection}
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                  />
+                )}
+                {slug == "worli" || slug == "worli2" ? (
+                  <WorliGames
+                    pnlBySelection={pnlBySelection}
+                    data={data}
+                    placeBetValue={placeBetValue}
+                    setShowBets={setShowBets}
+                    evenExposure={evenExposure}
+                    redExposure={redExposure}
+                    oddExposure={oddExposure}
+                    blackExposure={blackExposure}
+                  />
+                ) : null}
+                {slug == "teen8" && (
+                  <TeenPattiOpen
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    evenExposure={evenExposure}
+                    a23Exposure={a23Exposure}
+                    redExposure={redExposure}
+                    fourIndexZeroExp={fourIndexZeroRunnersEx}
+                    fiveIndexZeroExp={fiveIndexZeroRunnersEx}
+                    sixIndexZeroExp={sixIndexZeroRunnersEx}
+                    sevenIndexZeroExp={sevenIndexZeroRunnersEx}
+                    eightIndexZeroExp={eightIndexZeroRunnersEx}
+                    nineIndexZeroExp={nineIndexZeroRunnersEx}
+                    tenIndexZeroExp={tenIndexZeroRunnersEx}
+                    elevenIndexZeroExp={elevenIndexZeroRunnersEx}
+                    twelveIndexZeroExp={twelveIndexZeroRunnersEx}
+                    thirteenIndexZeroExp={thirteenIndexZeroRunnersEx}
+                    fourteenIndexZeroExp={fourteenIndexZeroRunnersEx}
+                    fifteenIndexZeroExp={fifteenIndexZeroRunnersEx}
+                    sixteenIndexZeroExp={sixteenIndexZeroRunnersEx}
+                    seventeenIndexZeroExp={seventeenIndexZeroRunnersEx}
+                    eightTeenIndexZero={eighteenIndexZeroExp}
+                    nineteenIndexZeroExp={nineteenIndexZeroExp}
+                    twentyIndexZeroExp={twentyIndexZeroExp}
+                    twentyOneIndexZeroExp={twentyOneIndexZeroExp}
+                    twentyTwoIndexZeroExp={twentyTwoIndexZeroExp}
+                    twentyThreeIndexZeroExp={twentyThreeIndexZeroExp}
+                  />
+                )}
+                {slug == "baccarat2" && (
+                  <Baccarat2
+                    data={data}
+                    four56Exposure={four56Exposure}
+                    eight910Exposure={eight910Exposure}
+                    jqkExposure={jqkExposure}
+                    threeIndexFourEx={threeIndexFourExp}
+                    one={picture.one}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                    evenExposure={evenExposure}
+                    redExposure={redExposure}
+                    a23Exposure={a23Exposure}
+                    fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                    fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                    sixIndexZeroExp={sixIndexZeroRunnersEx}
+                  />
+                )}
+                {slug == "baccarat" ? (
+                  <Baccarat
+                    one={picture.one}
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                    evenExposure={evenExposure}
+                    redExposure={redExposure}
+                    a23Exposure={a23Exposure}
+                    fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                    fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                    sixIndexZeroExp={sixIndexZeroRunnersEx}
+                  />
+                ) : null}
+                {slug === "teen9" && (
+                  <TeenPattiTest
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                    evenExposure={evenExposure}
+                    redExposure={redExposure}
+                    a23Exposure={a23Exposure}
+                    fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                    fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                    sixIndexZeroExp={sixIndexZeroRunnersEx}
+                    sevenIndexZeroExp={sevenIndexZeroRunnersEx}
+                    eightIndexZeroExp={eightIndexZeroRunnersEx}
+                    nineIndexZeroExp={nineIndexZeroRunnersEx}
+                    tenIndexZeroExp={tenIndexZeroRunnersEx}
+                    elevenIndexZeroExp={elevenIndexZeroRunnersEx}
+                    twelveIndexZeroExp={twelveIndexZeroRunnersEx}
+                    thirteenIndexZeroExp={thirteenIndexZeroRunnersEx}
+                    fourteenIndexZeroExp={fourteenIndexZeroRunnersEx}
+                    fifteenIndexZeroExp={fiveIndexZeroRunnersEx}
+                    pnlBySelection={pnlBySelection}
+                  />
+                )}
+                {slug === "poker20" && (
+                  <PokerTwenty
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    evenExposure={evenExposure}
+                    redExposure={redExposure}
+                    a23Exposure={a23Exposure}
+                    fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                    fiveIndexZeroExp={fiveIndexZeroRunnersEx}
+                    sixIndexZeroExp={sixIndexZeroRunnersEx}
+                    sevenIndexZeroExp={sevenIndexZeroRunnersEx}
+                    eightIndexZeroExp={eightIndexZeroRunnersEx}
+                    nineIndexZeroExp={nineIndexZeroRunnersEx}
+                    tenIndexZeroRunnersEx={tenIndexZeroRunnersEx}
+                    elevenIndexZeroRunnersEx={elevenIndexZeroRunnersEx}
+                    twelveIndexZeroRunnersEx={twelveIndexZeroRunnersEx}
+                    thirteenIndexZeroRunnersEx={thirteenIndexZeroRunnersEx}
+                    fourteenIndexZeroRunnersEx={fourteenIndexZeroRunnersEx}
+                    fifteenIndexZeroRunnersEx={fifteenIndexZeroRunnersEx}
+                    sixteenIndexZeroRunnersEx={sixteenIndexZeroRunnersEx}
+                    seventeenIndexZeroRunnersEx={seventeenIndexZeroRunnersEx}
+                  />
+                )}
+                {slug === "poker6" && (
+                  <PokerSix
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    zeroIndexTwoExp={zeroIndexThreeRunnersEx}
+                    zeroIndexThreeExp={zeroIndexThreeRunnersEx}
+                    zeroIndexFourExp={zeroIndexFourRunnersEx}
+                    zeroIndexFiveRunnersEx={zeroIndexFiveRunnersEx}
+                  />
+                )}
+                {slug === "poker" && (
+                  <PokerOneDay
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    evenExposure={evenExposure}
+                    redExposure={redExposure}
+                    a23Exposure={a23Exposure}
+                    four56Exposure={four56Exposure}
+                    fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                  />
+                )}
+                {slug === "vlucky7" ? (
+                  <VLucky7
+                    A={picture.A}
+                    a23Exposure={a23Exposure}
+                    blackExposure={blackExposure}
+                    data={data}
+                    eight={picture.eight}
+                    eight910Exposure={eight910Exposure}
+                    evenExposure={evenExposure}
+                    five={picture.five}
+                    four={picture.four}
+                    four56Exposure={four56Exposure}
+                    highExposure={highExposure}
+                    j={picture.j}
+                    jqkExposure={jqkExposure}
+                    k={picture.k}
+                    lowExposure={lowExposure}
+                    nine={picture.nine}
+                    oddExposure={oddExposure}
+                    pnlBySelection={pnlBySelection}
+                    q={picture.q}
+                    redExposure={redExposure}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    seven={picture.seven}
+                    six={picture.six}
+                    ten={picture.ten}
+                    three={picture.three}
+                    two={picture.two}
+                  />
+                ) : null}
+                {slug === "vaaa" && (
+                  <VAmarAkbarAnthony
+                    data={data}
+                    setShowBets={setShowBets}
+                    setPlaceBetValue={setPlaceBetValue}
+                    zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    evenExposure={evenExposure}
+                    oddExposure={oddExposure}
+                    redExposure={redExposure}
+                    blackExposure={blackExposure}
+                    four56Exposure={four56Exposure}
+                    pnlBySelection={pnlBySelection}
+                    a23Exposure={a23Exposure}
+                  />
+                )}
+                {slug === "vbtable" && (
+                  <VBollywoodCasino
+                    data={data}
+                    setShowBets={setShowBets}
+                    setPlaceBetValue={setPlaceBetValue}
+                    zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    evenExposure={evenExposure}
+                    oddExposure={oddExposure}
+                    redExposure={redExposure}
+                    blackExposure={blackExposure}
+                    four56Exposure={four56Exposure}
+                    pnlBySelection={pnlBySelection}
+                    a23Exposure={a23Exposure}
+                    zeroIndexFiveRunnersEx={zeroIndexFiveRunnersEx}
+                    zeroIndexFourRunnersEx={zeroIndexFourRunnersEx}
+                    zeroIndexThreeRunnersEx={zeroIndexThreeRunnersEx}
+                  />
+                )}
+                {slug === "vteen20" && (
+                  <VTeenPatti
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    evenExposure={evenExposure}
+                    redExposure={redExposure}
+                    a23Exposure={a23Exposure}
+                    four56Exposure={four56Exposure}
+                    fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                    fourIndexOneRunnersEx={fourIndexOneRunnersEx}
+                    fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                    fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
+                    sixIndexOneRunnersEx={sixIndexOneRunnersEx}
+                    sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
+                  />
+                )}
+                {slug === "vteenmuf" || slug === "teenmuf" ? (
+                  <VMTeenPatti
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    evenExposure={evenExposure}
+                    redExposure={redExposure}
+                    a23Exposure={a23Exposure}
+                    oddExposure={oddExposure}
+                  />
+                ) : null}
+                {slug == "teen3" || slug == "teen32" ? (
+                  <InstantTeenPatti
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                  />
+                ) : null}
+                {slug == "teen20" ? (
+                  <TeenPatti20
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    evenExposure={evenExposure}
+                    redExposure={redExposure}
+                    a23Exposure={a23Exposure}
+                    four56Exposure={four56Exposure}
+                    fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                    fourIndexOneRunnersEx={fourIndexOneRunnersEx}
+                    fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                    fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
+                    sixIndexOneRunnersEx={sixIndexOneRunnersEx}
+                    sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
+                  />
+                ) : null}
+                {slug == "teen" ? (
+                  <TeenPattiOneDay
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    evenExposure={evenExposure}
+                    redExposure={redExposure}
+                    a23Exposure={a23Exposure}
+                    fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                    fourIndexOneRunnersEx={fourIndexOneRunnersEx}
+                    fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                    fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
+                    sevenIndexZeroRunnersEx={sevenIndexZeroRunnersEx}
+                    eightIndexZeroRunnersEx={eightIndexZeroRunnersEx}
+                    sevenIndexOneRunnersEx={sevenIndexOneRunnersEx}
+                    eightIndexOneRunnersEx={eightIndexOneRunnersEx}
+                    sixIndexOneRunnersEx={sixIndexOneRunnersEx}
+                    sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
+                  />
+                ) : null}
+                {slug == "teen120" ? (
+                  <OneCard20
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    highExposure={highExposure}
+                    lowExposure={lowExposure}
+                    zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                    evenExposure={evenExposure}
+                  />
+                ) : null}
+                {slug == "teen1" ? (
+                  <OneCardOneDay
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    blackExposure={blackExposure}
+                    evenExposure={evenExposure}
+                    oddExposure={oddExposure}
+                    redExposure={redExposure}
+                  />
+                ) : null}
+
+                {slug == "dtl20" ? (
+                  <DTL20
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    evenExposure={evenExposure}
+                    blackExposure={blackExposure}
+                    redExposure={redExposure}
+                    a23Exposure={a23Exposure}
+                    four56Exposure={four56Exposure}
+                    fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                    fourIndexOneRunnersEx={fourIndexOneRunnersEx}
+                    fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                    fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
+                    pnlBySelection={pnlBySelection}
+                    zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                    sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
+                    sixIndexOneRunnersEx={sixIndexOneRunnersEx}
+                    sevenIndexZeroRunnersEx={sevenIndexZeroRunnersEx}
+                    eightIndexZeroRunnersEx={eightIndexZeroRunnersEx}
+                    nineIndexZeroRunnersEx={nineIndexZeroRunnersEx}
+                    sevenIndexOneRunnersEx={sevenIndexOneRunnersEx}
+                    eightIndexOneRunnersEx={eightIndexOneRunnersEx}
+                    nineIndexOneRunnersEx={nineIndexOneRunnersEx}
+                    sevenIndexTwoRunnersEx={sevenIndexTwoRunnersEx}
+                    eightIndexTwoRunnersEx={eightIndexTwoRunnersEx}
+                    nineIndexTwoRunnersEx={nineIndexTwoRunnersEx}
+                    sevenIndexThreeRunnersEx={sevenIndexThreeRunnersEx}
+                    eightIndexThreeRunnersEx={eightIndexThreeRunnersEx}
+                    sevenIndexFourRunnersEx={sevenIndexFourRunnersEx}
+                    sevenIndexFiveRunnersEx={sevenIndexFiveRunnersEx}
+                    sevenIndexSixRunnersEx={sevenIndexSixRunnersEx}
+                    sevenIndexSevenRunnersEx={sevenIndexSevenRunnersEx}
+                    sevenIndexEightRunnersEx={sevenIndexEightRunnersEx}
+                    sevenIndexNineRunnersEx={sevenIndexNineRunnersEx}
+                    sevenIndexTenRunnersEx={sevenIndexTenRunnersEx}
+                    sevenIndexElevenRunnersEx={sevenIndexElevenRunnersEx}
+                    sevenIndexTwelveRunnersEx={sevenIndexTwelveRunnersEx}
+                    eightIndexFourRunnersEx={eightIndexFourRunnersEx}
+                    eightIndexFiveRunnersEx={eightIndexFiveRunnersEx}
+                    eightIndexSixRunnersEx={eightIndexSixRunnersEx}
+                    eightIndexSevenRunnersEx={eightIndexSevenRunnersEx}
+                    eightIndexEightRunnersEx={eightIndexEightRunnersEx}
+                    eightIndexNineRunnersEx={eightIndexNineRunnersEx}
+                    eightIndexTenRunnersEx={eightIndexTenRunnersEx}
+                    eightIndexElevenRunnersEx={eightIndexElevenRunnersEx}
+                    eightIndexTwelveRunnersEx={eightIndexTwelveRunnersEx}
+                    nineIndexThreeRunnersEx={nineIndexThreeRunnersEx}
+                    nineIndexFourRunnersEx={nineIndexFourRunnersEx}
+                    nineIndexFiveRunnersEx={nineIndexFiveRunnersEx}
+                    nineIndexSixRunnersEx={nineIndexSixRunnersEx}
+                    nineIndexSevenRunnersEx={nineIndexSevenRunnersEx}
+                    nineIndexEightRunnersEx={nineIndexEightRunnersEx}
+                    nineIndexNineRunnersEx={nineIndexNineRunnersEx}
+                    nineIndexTenRunnersEx={nineIndexTenRunnersEx}
+                    nineIndexElevenRunnersEx={nineIndexElevenRunnersEx}
+                    nineIndexTwelveRunnersEx={nineIndexTwelveRunnersEx}
+                    oddExposure={oddExposure}
+                  />
+                ) : null}
+
+                {/* Dragon tiger one day  */}
+                {slug == "dt6" ? (
+                  <DragonOneDay
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    evenExposure={evenExposure}
+                    blackExposure={blackExposure}
+                    redExposure={redExposure}
+                    a23Exposure={a23Exposure}
+                    four56Exposure={four56Exposure}
+                    fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                    fourIndexOneRunnersEx={fourIndexOneRunnersEx}
+                    fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                    fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
+                    pnlBySelection={pnlBySelection}
+                  />
+                ) : null}
+
+                {/* Bollywood casino */}
+                {slug == "btable" ? (
+                  <Bollywood
+                    data={data}
+                    setShowBets={setShowBets}
+                    setPlaceBetValue={setPlaceBetValue}
+                    zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    evenExposure={evenExposure}
+                    oddExposure={oddExposure}
+                    redExposure={redExposure}
+                    blackExposure={blackExposure}
+                    four56Exposure={four56Exposure}
+                    pnlBySelection={pnlBySelection}
+                    a23Exposure={a23Exposure}
+                    zeroIndexFiveRunnersEx={zeroIndexFiveRunnersEx}
+                    zeroIndexFourRunnersEx={zeroIndexFourRunnersEx}
+                    zeroIndexThreeRunnersEx={zeroIndexThreeRunnersEx}
+                  />
+                ) : null}
+
+                {/* market start  for lucky 7--> */}
+                {slug === "lucky7eu" ||
+                slug === "lucky7eu2" ||
+                slug === "lucky7" ? (
+                  <Lucky7
+                    A={picture.A}
+                    a23Exposure={a23Exposure}
+                    blackExposure={blackExposure}
+                    data={data}
+                    eight={picture.eight}
+                    eight910Exposure={eight910Exposure}
+                    evenExposure={evenExposure}
+                    five={picture.five}
+                    four={picture.four}
+                    four56Exposure={four56Exposure}
+                    highExposure={highExposure}
+                    j={picture.j}
+                    jqkExposure={jqkExposure}
+                    k={picture.k}
+                    lowExposure={lowExposure}
+                    nine={picture.nine}
+                    oddExposure={oddExposure}
+                    pnlBySelection={pnlBySelection}
+                    q={picture.q}
+                    redExposure={redExposure}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    seven={picture.seven}
+                    six={picture.six}
+                    ten={picture.ten}
+                    three={picture.three}
+                    two={picture.two}
+                  />
+                ) : null}
+
+                {/* market start  for Bollywood--> */}
+                {slug == "aaa2" || slug == "aaa" ? (
+                  <AmarAkbar
+                    data={data}
+                    setShowBets={setShowBets}
+                    setPlaceBetValue={setPlaceBetValue}
+                    zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    evenExposure={evenExposure}
+                    oddExposure={oddExposure}
+                    redExposure={redExposure}
+                    blackExposure={blackExposure}
+                    four56Exposure={four56Exposure}
+                    pnlBySelection={pnlBySelection}
+                    a23Exposure={a23Exposure}
+                  />
+                ) : null}
+
+                {slug == "dt202" || slug == "dt20" ? (
+                  <DragonGames
+                    data={data}
+                    pnlBySelection={pnlBySelection}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    evenExposure={evenExposure}
+                    highExposure={highExposure}
+                    lowExposure={lowExposure}
+                    zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
+                    blackExposure={blackExposure}
+                    redExposure={redExposure}
+                    fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
+                    fourIndexOneRunnersEx={fourIndexOneRunnersEx}
+                    fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
+                    fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
+                    a23Exposure={a23Exposure}
+                    four56Exposure={four56Exposure}
+                  />
+                ) : null}
+
+                {/* Last result */}
+                <LastResult data={data} />
               </div>
-              {/* Clock start */}
-              <Clock data={data} />
-              {/* Clock end */}
+              {/* End casino details */}
             </div>
-
-            <div className="casino-detail">
-              {slug == "teen6" && (
-                <TeenPattiTwoPointZero
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  evenExposure={evenExposure}
-                  oddExposure={oddExposure}
-                  highExposure={highExposure}
-                  redExposure={redExposure}
-                  blackExposure={blackExposure}
-                />
-              )}
-              {slug == "teensin" && (
-                <Baccrat29
-                  data={data}
-                  pnlBySelection={pnlBySelection}
-                  setShowBets={setShowBets}
-                  placeBetValue={placeBetValue}
-                  eightIndexZeroExp={eightIndexZeroRunnersEx}
-                />
-              )}
-              {slug == "card32" || slug == "card32eu" ? (
-                <Card32A
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  zeroIndexTwoExp={zeroIndexTwoRunnersEx}
-                  zeroIndexThreeExp={zeroIndexThreeRunnersEx}
-                />
-              ) : null}
-              {slug == "race20" && (
-                <RaceTwenty
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  zeroIndexTwoExp={zeroIndexTwoRunnersEx}
-                  zeroIndexThreeExp={zeroIndexThreeRunnersEx}
-                  evenExposure={evenExposure}
-                  oddExposure={oddExposure}
-                  redExposure={redExposure}
-                  blackExposure={blackExposure}
-                  a23Exposure={a23Exposure}
-                  four56Exposure={four56Exposure}
-                />
-              )}
-              {slug == "war" && (
-                <WarGames
-                  one={picture.one}
-                  pnlBySelection={pnlBySelection}
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                />
-              )}
-              {slug == "worli" || slug == "worli2" ? (
-                <WorliGames
-                  pnlBySelection={pnlBySelection}
-                  data={data}
-                  placeBetValue={placeBetValue}
-                  setShowBets={setShowBets}
-                  evenExposure={evenExposure}
-                  redExposure={redExposure}
-                  oddExposure={oddExposure}
-                  blackExposure={blackExposure}
-                />
-              ) : null}
-              {slug == "teen8" && (
-                <TeenPattiOpen
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  evenExposure={evenExposure}
-                  a23Exposure={a23Exposure}
-                  redExposure={redExposure}
-                  fourIndexZeroExp={fourIndexZeroRunnersEx}
-                  fiveIndexZeroExp={fiveIndexZeroRunnersEx}
-                  sixIndexZeroExp={sixIndexZeroRunnersEx}
-                  sevenIndexZeroExp={sevenIndexZeroRunnersEx}
-                  eightIndexZeroExp={eightIndexZeroRunnersEx}
-                  nineIndexZeroExp={nineIndexZeroRunnersEx}
-                  tenIndexZeroExp={tenIndexZeroRunnersEx}
-                  elevenIndexZeroExp={elevenIndexZeroRunnersEx}
-                  twelveIndexZeroExp={twelveIndexZeroRunnersEx}
-                  thirteenIndexZeroExp={thirteenIndexZeroRunnersEx}
-                  fourteenIndexZeroExp={fourteenIndexZeroRunnersEx}
-                  fifteenIndexZeroExp={fifteenIndexZeroRunnersEx}
-                  sixteenIndexZeroExp={sixteenIndexZeroRunnersEx}
-                  seventeenIndexZeroExp={seventeenIndexZeroRunnersEx}
-                  eightTeenIndexZero={eighteenIndexZeroExp}
-                  nineteenIndexZeroExp={nineteenIndexZeroExp}
-                  twentyIndexZeroExp={twentyIndexZeroExp}
-                  twentyOneIndexZeroExp={twentyOneIndexZeroExp}
-                  twentyTwoIndexZeroExp={twentyTwoIndexZeroExp}
-                  twentyThreeIndexZeroExp={twentyThreeIndexZeroExp}
-                />
-              )}
-              {slug == "baccarat2" && (
-                <Baccarat2
-                  data={data}
-                  four56Exposure={four56Exposure}
-                  eight910Exposure={eight910Exposure}
-                  jqkExposure={jqkExposure}
-                  threeIndexFourEx={threeIndexFourExp}
-                  one={picture.one}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
-                  evenExposure={evenExposure}
-                  redExposure={redExposure}
-                  a23Exposure={a23Exposure}
-                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
-                  sixIndexZeroExp={sixIndexZeroRunnersEx}
-                />
-              )}
-              {slug == "baccarat" ? (
-                <Baccarat
-                  one={picture.one}
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
-                  evenExposure={evenExposure}
-                  redExposure={redExposure}
-                  a23Exposure={a23Exposure}
-                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
-                  sixIndexZeroExp={sixIndexZeroRunnersEx}
-                />
-              ) : null}
-              {slug === "teen9" && (
-                <TeenPattiTest
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
-                  evenExposure={evenExposure}
-                  redExposure={redExposure}
-                  a23Exposure={a23Exposure}
-                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
-                  sixIndexZeroExp={sixIndexZeroRunnersEx}
-                  sevenIndexZeroExp={sevenIndexZeroRunnersEx}
-                  eightIndexZeroExp={eightIndexZeroRunnersEx}
-                  nineIndexZeroExp={nineIndexZeroRunnersEx}
-                  tenIndexZeroExp={tenIndexZeroRunnersEx}
-                  elevenIndexZeroExp={elevenIndexZeroRunnersEx}
-                  twelveIndexZeroExp={twelveIndexZeroRunnersEx}
-                  thirteenIndexZeroExp={thirteenIndexZeroRunnersEx}
-                  fourteenIndexZeroExp={fourteenIndexZeroRunnersEx}
-                  fifteenIndexZeroExp={fiveIndexZeroRunnersEx}
-                  pnlBySelection={pnlBySelection}
-                />
-              )}
-              {slug === "poker20" && (
-                <PokerTwenty
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  evenExposure={evenExposure}
-                  redExposure={redExposure}
-                  a23Exposure={a23Exposure}
-                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-                  fiveIndexZeroExp={fiveIndexZeroRunnersEx}
-                  sixIndexZeroExp={sixIndexZeroRunnersEx}
-                  sevenIndexZeroExp={sevenIndexZeroRunnersEx}
-                  eightIndexZeroExp={eightIndexZeroRunnersEx}
-                  nineIndexZeroExp={nineIndexZeroRunnersEx}
-                  tenIndexZeroRunnersEx={tenIndexZeroRunnersEx}
-                  elevenIndexZeroRunnersEx={elevenIndexZeroRunnersEx}
-                  twelveIndexZeroRunnersEx={twelveIndexZeroRunnersEx}
-                  thirteenIndexZeroRunnersEx={thirteenIndexZeroRunnersEx}
-                  fourteenIndexZeroRunnersEx={fourteenIndexZeroRunnersEx}
-                  fifteenIndexZeroRunnersEx={fifteenIndexZeroRunnersEx}
-                  sixteenIndexZeroRunnersEx={sixteenIndexZeroRunnersEx}
-                  seventeenIndexZeroRunnersEx={seventeenIndexZeroRunnersEx}
-                />
-              )}
-              {slug === "poker6" && (
-                <PokerSix
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  zeroIndexTwoExp={zeroIndexThreeRunnersEx}
-                  zeroIndexThreeExp={zeroIndexThreeRunnersEx}
-                  zeroIndexFourExp={zeroIndexFourRunnersEx}
-                  zeroIndexFiveRunnersEx={zeroIndexFiveRunnersEx}
-                />
-              )}
-              {slug === "poker" && (
-                <PokerOneDay
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  evenExposure={evenExposure}
-                  redExposure={redExposure}
-                  a23Exposure={a23Exposure}
-                  four56Exposure={four56Exposure}
-                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-                />
-              )}
-              {slug === "vlucky7" ? (
-                <VLucky7
-                  A={picture.A}
-                  a23Exposure={a23Exposure}
-                  blackExposure={blackExposure}
-                  data={data}
-                  eight={picture.eight}
-                  eight910Exposure={eight910Exposure}
-                  evenExposure={evenExposure}
-                  five={picture.five}
-                  four={picture.four}
-                  four56Exposure={four56Exposure}
-                  highExposure={highExposure}
-                  j={picture.j}
-                  jqkExposure={jqkExposure}
-                  k={picture.k}
-                  lowExposure={lowExposure}
-                  nine={picture.nine}
-                  oddExposure={oddExposure}
-                  pnlBySelection={pnlBySelection}
-                  q={picture.q}
-                  redExposure={redExposure}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  seven={picture.seven}
-                  six={picture.six}
-                  ten={picture.ten}
-                  three={picture.three}
-                  two={picture.two}
-                />
-              ) : null}
-              {slug === "vaaa" && (
-                <VAmarAkbarAnthony
-                  data={data}
-                  setShowBets={setShowBets}
-                  setPlaceBetValue={setPlaceBetValue}
-                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  evenExposure={evenExposure}
-                  oddExposure={oddExposure}
-                  redExposure={redExposure}
-                  blackExposure={blackExposure}
-                  four56Exposure={four56Exposure}
-                  pnlBySelection={pnlBySelection}
-                  a23Exposure={a23Exposure}
-                />
-              )}
-              {slug === "vbtable" && (
-                <VBollywoodCasino
-                  data={data}
-                  setShowBets={setShowBets}
-                  setPlaceBetValue={setPlaceBetValue}
-                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  evenExposure={evenExposure}
-                  oddExposure={oddExposure}
-                  redExposure={redExposure}
-                  blackExposure={blackExposure}
-                  four56Exposure={four56Exposure}
-                  pnlBySelection={pnlBySelection}
-                  a23Exposure={a23Exposure}
-                  zeroIndexFiveRunnersEx={zeroIndexFiveRunnersEx}
-                  zeroIndexFourRunnersEx={zeroIndexFourRunnersEx}
-                  zeroIndexThreeRunnersEx={zeroIndexThreeRunnersEx}
-                />
-              )}
-              {slug === "vteen20" && (
-                <VTeenPatti
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  evenExposure={evenExposure}
-                  redExposure={redExposure}
-                  a23Exposure={a23Exposure}
-                  four56Exposure={four56Exposure}
-                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-                  fourIndexOneRunnersEx={fourIndexOneRunnersEx}
-                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
-                  fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
-                  sixIndexOneRunnersEx={sixIndexOneRunnersEx}
-                  sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
-                />
-              )}
-              {slug === "vteenmuf" || slug === "teenmuf" ? (
-                <VMTeenPatti
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  evenExposure={evenExposure}
-                  redExposure={redExposure}
-                  a23Exposure={a23Exposure}
-                  oddExposure={oddExposure}
-                />
-              ) : null}
-              {slug == "teen3" || slug == "teen32" ? (
-                <InstantTeenPatti
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                />
-              ) : null}
-              {slug == "teen20" ? (
-                <TeenPatti20
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  evenExposure={evenExposure}
-                  redExposure={redExposure}
-                  a23Exposure={a23Exposure}
-                  four56Exposure={four56Exposure}
-                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-                  fourIndexOneRunnersEx={fourIndexOneRunnersEx}
-                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
-                  fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
-                  sixIndexOneRunnersEx={sixIndexOneRunnersEx}
-                  sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
-                />
-              ) : null}
-              {slug == "teen" ? (
-                <TeenPattiOneDay
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  evenExposure={evenExposure}
-                  redExposure={redExposure}
-                  a23Exposure={a23Exposure}
-                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-                  fourIndexOneRunnersEx={fourIndexOneRunnersEx}
-                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
-                  fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
-                  sevenIndexZeroRunnersEx={sevenIndexZeroRunnersEx}
-                  eightIndexZeroRunnersEx={eightIndexZeroRunnersEx}
-                  sevenIndexOneRunnersEx={sevenIndexOneRunnersEx}
-                  eightIndexOneRunnersEx={eightIndexOneRunnersEx}
-                  sixIndexOneRunnersEx={sixIndexOneRunnersEx}
-                  sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
-                />
-              ) : null}
-              {slug == "teen120" ? (
-                <OneCard20
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  highExposure={highExposure}
-                  lowExposure={lowExposure}
-                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
-                  evenExposure={evenExposure}
-                />
-              ) : null}
-              {slug == "teen1" ? (
-                <OneCardOneDay
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  blackExposure={blackExposure}
-                  evenExposure={evenExposure}
-                  oddExposure={oddExposure}
-                  redExposure={redExposure}
-                />
-              ) : null}
-
-              {slug == "dtl20" ? (
-                <DTL20
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  evenExposure={evenExposure}
-                  blackExposure={blackExposure}
-                  redExposure={redExposure}
-                  a23Exposure={a23Exposure}
-                  four56Exposure={four56Exposure}
-                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-                  fourIndexOneRunnersEx={fourIndexOneRunnersEx}
-                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
-                  fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
-                  pnlBySelection={pnlBySelection}
-                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
-                  sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
-                  sixIndexOneRunnersEx={sixIndexOneRunnersEx}
-                  sevenIndexZeroRunnersEx={sevenIndexZeroRunnersEx}
-                  eightIndexZeroRunnersEx={eightIndexZeroRunnersEx}
-                  nineIndexZeroRunnersEx={nineIndexZeroRunnersEx}
-                  sevenIndexOneRunnersEx={sevenIndexOneRunnersEx}
-                  eightIndexOneRunnersEx={eightIndexOneRunnersEx}
-                  nineIndexOneRunnersEx={nineIndexOneRunnersEx}
-                  sevenIndexTwoRunnersEx={sevenIndexTwoRunnersEx}
-                  eightIndexTwoRunnersEx={eightIndexTwoRunnersEx}
-                  nineIndexTwoRunnersEx={nineIndexTwoRunnersEx}
-                  sevenIndexThreeRunnersEx={sevenIndexThreeRunnersEx}
-                  eightIndexThreeRunnersEx={eightIndexThreeRunnersEx}
-                  sevenIndexFourRunnersEx={sevenIndexFourRunnersEx}
-                  sevenIndexFiveRunnersEx={sevenIndexFiveRunnersEx}
-                  sevenIndexSixRunnersEx={sevenIndexSixRunnersEx}
-                  sevenIndexSevenRunnersEx={sevenIndexSevenRunnersEx}
-                  sevenIndexEightRunnersEx={sevenIndexEightRunnersEx}
-                  sevenIndexNineRunnersEx={sevenIndexNineRunnersEx}
-                  sevenIndexTenRunnersEx={sevenIndexTenRunnersEx}
-                  sevenIndexElevenRunnersEx={sevenIndexElevenRunnersEx}
-                  sevenIndexTwelveRunnersEx={sevenIndexTwelveRunnersEx}
-                  eightIndexFourRunnersEx={eightIndexFourRunnersEx}
-                  eightIndexFiveRunnersEx={eightIndexFiveRunnersEx}
-                  eightIndexSixRunnersEx={eightIndexSixRunnersEx}
-                  eightIndexSevenRunnersEx={eightIndexSevenRunnersEx}
-                  eightIndexEightRunnersEx={eightIndexEightRunnersEx}
-                  eightIndexNineRunnersEx={eightIndexNineRunnersEx}
-                  eightIndexTenRunnersEx={eightIndexTenRunnersEx}
-                  eightIndexElevenRunnersEx={eightIndexElevenRunnersEx}
-                  eightIndexTwelveRunnersEx={eightIndexTwelveRunnersEx}
-                  nineIndexThreeRunnersEx={nineIndexThreeRunnersEx}
-                  nineIndexFourRunnersEx={nineIndexFourRunnersEx}
-                  nineIndexFiveRunnersEx={nineIndexFiveRunnersEx}
-                  nineIndexSixRunnersEx={nineIndexSixRunnersEx}
-                  nineIndexSevenRunnersEx={nineIndexSevenRunnersEx}
-                  nineIndexEightRunnersEx={nineIndexEightRunnersEx}
-                  nineIndexNineRunnersEx={nineIndexNineRunnersEx}
-                  nineIndexTenRunnersEx={nineIndexTenRunnersEx}
-                  nineIndexElevenRunnersEx={nineIndexElevenRunnersEx}
-                  nineIndexTwelveRunnersEx={nineIndexTwelveRunnersEx}
-                  oddExposure={oddExposure}
-                />
-              ) : null}
-
-              {/* Dragon tiger one day  */}
-              {slug == "dt6" ? (
-                <DragonOneDay
-                  data={data}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  evenExposure={evenExposure}
-                  blackExposure={blackExposure}
-                  redExposure={redExposure}
-                  a23Exposure={a23Exposure}
-                  four56Exposure={four56Exposure}
-                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-                  fourIndexOneRunnersEx={fourIndexOneRunnersEx}
-                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
-                  fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
-                  pnlBySelection={pnlBySelection}
-                />
-              ) : null}
-
-              {/* Bollywood casino */}
-              {slug == "btable" ? (
-                <Bollywood
-                  data={data}
-                  setShowBets={setShowBets}
-                  setPlaceBetValue={setPlaceBetValue}
-                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  evenExposure={evenExposure}
-                  oddExposure={oddExposure}
-                  redExposure={redExposure}
-                  blackExposure={blackExposure}
-                  four56Exposure={four56Exposure}
-                  pnlBySelection={pnlBySelection}
-                  a23Exposure={a23Exposure}
-                  zeroIndexFiveRunnersEx={zeroIndexFiveRunnersEx}
-                  zeroIndexFourRunnersEx={zeroIndexFourRunnersEx}
-                  zeroIndexThreeRunnersEx={zeroIndexThreeRunnersEx}
-                />
-              ) : null}
-
-              {/* market start  for lucky 7--> */}
-              {slug === "lucky7eu" ||
-              slug === "lucky7eu2" ||
-              slug === "lucky7" ? (
-                <Lucky7
-                  A={picture.A}
-                  a23Exposure={a23Exposure}
-                  blackExposure={blackExposure}
-                  data={data}
-                  eight={picture.eight}
-                  eight910Exposure={eight910Exposure}
-                  evenExposure={evenExposure}
-                  five={picture.five}
-                  four={picture.four}
-                  four56Exposure={four56Exposure}
-                  highExposure={highExposure}
-                  j={picture.j}
-                  jqkExposure={jqkExposure}
-                  k={picture.k}
-                  lowExposure={lowExposure}
-                  nine={picture.nine}
-                  oddExposure={oddExposure}
-                  pnlBySelection={pnlBySelection}
-                  q={picture.q}
-                  redExposure={redExposure}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  seven={picture.seven}
-                  six={picture.six}
-                  ten={picture.ten}
-                  three={picture.three}
-                  two={picture.two}
-                />
-              ) : null}
-
-              {/* market start  for Bollywood--> */}
-              {slug == "aaa2" || slug == "aaa" ? (
-                <AmarAkbar
-                  data={data}
-                  setShowBets={setShowBets}
-                  setPlaceBetValue={setPlaceBetValue}
-                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
-                  lowExposure={lowExposure}
-                  highExposure={highExposure}
-                  evenExposure={evenExposure}
-                  oddExposure={oddExposure}
-                  redExposure={redExposure}
-                  blackExposure={blackExposure}
-                  four56Exposure={four56Exposure}
-                  pnlBySelection={pnlBySelection}
-                  a23Exposure={a23Exposure}
-                />
-              ) : null}
-
-              {slug == "dt202" || slug == "dt20" ? (
-                <DragonGames
-                  data={data}
-                  pnlBySelection={pnlBySelection}
-                  setPlaceBetValue={setPlaceBetValue}
-                  setShowBets={setShowBets}
-                  evenExposure={evenExposure}
-                  highExposure={highExposure}
-                  lowExposure={lowExposure}
-                  zeroIndexTwoRunnersEx={zeroIndexTwoRunnersEx}
-                  blackExposure={blackExposure}
-                  redExposure={redExposure}
-                  fourIndexZeroRunnersEx={fourIndexZeroRunnersEx}
-                  fourIndexOneRunnersEx={fourIndexOneRunnersEx}
-                  fiveIndexZeroRunnersEx={fiveIndexZeroRunnersEx}
-                  fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
-                  a23Exposure={a23Exposure}
-                  four56Exposure={four56Exposure}
-                />
-              ) : null}
-
-              {/* Last result */}
-              <LastResult data={data} />
-            </div>
-            {/* End casino details */}
-          </div>
+          )}
           <MatchBets />
         </div>
       </div>
+
       <div
         className={`sidebar right-sidebar casino-right-sidebar ${
           isSticky ? "sticky" : ""
