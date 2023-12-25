@@ -220,7 +220,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                               back: true,
                               name: runner?.name,
                               isWeak: odd?.isWeak,
-                        
+                              maxLiabilityPerMarket:odd?.maxLiabilityPerMarket,
                               isBettable:odd?.isBettable
                             });
                           };
@@ -263,8 +263,9 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                               lay: true,
                               name: runner?.name,
                               isWeak: odd?.isWeak,
-                           
-                              isBettable:odd?.isBettable
+                              maxLiabilityPerMarket:odd?.maxLiabilityPerMarket,
+                              isBettable:odd?.isBettable,
+                             
                             });
                           };
                           return (

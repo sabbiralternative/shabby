@@ -99,9 +99,7 @@ const Header = () => {
       axios
         .post(
           balanceApi,
-          {
-            token: encryptedData,
-          },
+          encryptedData,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -248,7 +248,8 @@ const BookmarkerTwoSection = ({
                             name: runner?.name,
                             isWeak: bookmaker?.isWeak,
                             maxLiabilityPerMarket:bookmaker?.maxLiabilityPerMarket,
-                            isBettable:bookmaker?.isBettable
+                            isBettable:bookmaker?.isBettable,
+                            maxLiabilityPerBet:bookmaker?.maxLiabilityPerBet
                           });
                         };
                         return (
@@ -311,7 +312,8 @@ const BookmarkerTwoSection = ({
                           name: runner?.name,
                           isWeak: bookmaker?.isWeak,
                           maxLiabilityPerMarket:bookmaker?.maxLiabilityPerMarket,
-                          isBettable:bookmaker?.isBettable
+                          isBettable:bookmaker?.isBettable,
+                          maxLiabilityPerBet:bookmaker?.maxLiabilityPerBet
                         });
                       };
                       return (

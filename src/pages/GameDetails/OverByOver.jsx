@@ -221,7 +221,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
                               lay: true,
                               name: runner?.name,
                               isWeak: over?.isWeak,
-                            
+                              maxLiabilityPerMarket:over?.maxLiabilityPerMarket,
                               isBettable:over?.isBettable
                             });
                           };
@@ -261,7 +261,8 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
                               back: true,
                               name: runner?.name,
                               isWeak: over?.isWeak,
-                              isBettable:over?.isBettable
+                              isBettable:over?.isBettable,
+                              maxLiabilityPerMarket:over?.maxLiabilityPerMarket,
                             });
                           };
                           return (

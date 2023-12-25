@@ -267,7 +267,8 @@ const MatchOddsSection = ({
                             ),
                             isWeak: item?.isWeak,
                             maxLiabilityPerMarket:item?.maxLiabilityPerMarket,
-                            isBettable:item?.isBettable
+                            isBettable:item?.isBettable,
+                            maxLiabilityPerBet:item?.maxLiabilityPerBet
                           });
                         };
 
@@ -326,7 +327,8 @@ const MatchOddsSection = ({
                           name: runner?.name,
                           isWeak: item?.isWeak,
                           maxLiabilityPerMarket:item?.maxLiabilityPerMarket,
-                          isBettable:item?.isBettable
+                          isBettable:item?.isBettable,
+                          maxLiabilityPerBet:item?.maxLiabilityPerBet
 
 
                         });

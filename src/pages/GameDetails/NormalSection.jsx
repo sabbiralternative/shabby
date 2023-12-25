@@ -225,7 +225,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                               lay: true,
                               name: runner?.name,
                               isWeak: fancyGame?.isWeak,
-                             
+                              maxLiabilityPerMarket:fancyGame?.maxLiabilityPerMarket,
                               isBettable:fancyGame?.isBettable
                             });
                           };
@@ -266,8 +266,9 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                               back: true,
                               name: runner?.name,
                               isWeak: fancyGame?.isWeak,
-                            
-                              isBettable:fancyGame?.isBettable
+                              maxLiabilityPerMarket:fancyGame?.maxLiabilityPerMarket,
+                              isBettable:fancyGame?.isBettable,
+                             
                             });
                           };
                           return (

@@ -17,7 +17,7 @@ const BookmarkerSection = ({
   const [previousData, setPreviousData] = useState(bookmarker);
   const [changedPrices, setChangedPrices] = useState({});
   const { setPlaceBetValue } = UseState();
- 
+
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -247,7 +247,10 @@ const BookmarkerSection = ({
                             name: runner?.name,
                             isWeak: bookmark?.isWeak,
                             maxLiabilityPerMarket:bookmark?.maxLiabilityPerMarket,
-                            isBettable:bookmark?.isBettable
+                            isBettable:bookmark?.isBettable,
+                            maxLiabilityPerBet:bookmark?.maxLiabilityPerBet
+
+
                           });
                         };
                         return (
@@ -306,7 +309,8 @@ const BookmarkerSection = ({
                           name: runner?.name,
                           isWeak: bookmark?.isWeak,
                           maxLiabilityPerMarket:bookmark?.maxLiabilityPerMarket,
-                          isBettable:bookmark?.isBettable
+                          isBettable:bookmark?.isBettable,
+                          maxLiabilityPerBet:bookmark?.maxLiabilityPerBet
                         });
                       };
                       return (
