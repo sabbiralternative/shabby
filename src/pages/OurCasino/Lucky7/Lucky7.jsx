@@ -50,6 +50,9 @@ const Lucky7 = ({
                   back: true,
                   name: data[0]?.runners[0]?.name,
                   isWeak: data[0]?.isWeak,
+                  maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                  isBettable:data[0]?.isBettable,
+                  maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
                 });
               }}
               className={`${
@@ -97,6 +100,9 @@ const Lucky7 = ({
                   back: true,
                   name: data[0]?.runners[1]?.name,
                   isWeak: data[0]?.isWeak,
+                  maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                  isBettable:data[0]?.isBettable,
+                  maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
                 });
               }}
               className={`${
@@ -148,6 +154,9 @@ const Lucky7 = ({
                     back: true,
                     name: data[1]?.runners[0]?.name,
                     isWeak: data[1]?.isWeak,
+                    maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
+                    isBettable:data[1]?.isBettable,
+                    maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
                   });
                 }}
                 className={`${
@@ -192,6 +201,9 @@ const Lucky7 = ({
                     back: true,
                     name: data[1]?.runners[1]?.name,
                     isWeak: data[1]?.isWeak,
+                    maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
+                    isBettable:data[1]?.isBettable,
+                    maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
                   });
                 }}
                 className={`${
@@ -241,6 +253,9 @@ const Lucky7 = ({
                     back: true,
                     name: data[2]?.runners[0]?.name,
                     isWeak: data[2]?.isWeak,
+                    maxLiabilityPerMarket:data[2]?.maxLiabilityPerMarket,
+                    isBettable:data[2]?.isBettable,
+                    maxLiabilityPerBet:data[2]?.maxLiabilityPerBet
                   });
                 }}
                 className={`${
@@ -291,6 +306,9 @@ const Lucky7 = ({
                     back: true,
                     name: data[2]?.runners[1]?.name,
                     isWeak: data[2]?.isWeak,
+                    maxLiabilityPerMarket:data[2]?.maxLiabilityPerMarket,
+                    isBettable:data[2]?.isBettable,
+                    maxLiabilityPerBet:data[2]?.maxLiabilityPerBet
                   });
                 }}
                 className={`${
@@ -349,6 +367,9 @@ const Lucky7 = ({
                   back: true,
                   name: data[3]?.runners[0]?.name,
                   isWeak: data[3]?.isWeak,
+                  maxLiabilityPerMarket:data[3]?.maxLiabilityPerMarket,
+                  isBettable:data[3]?.isBettable,
+                  maxLiabilityPerBet:data[3]?.maxLiabilityPerBet
                 });
               }}
               className={`${
@@ -406,6 +427,9 @@ const Lucky7 = ({
                   back: true,
                   name: data[3]?.runners[1]?.name,
                   isWeak: data[3]?.isWeak,
+                  maxLiabilityPerMarket:data[3]?.maxLiabilityPerMarket,
+                  isBettable:data[3]?.isBettable,
+                  maxLiabilityPerBet:data[3]?.maxLiabilityPerBet
                 });
               }}
               className={`${
@@ -463,6 +487,9 @@ const Lucky7 = ({
                   back: true,
                   name: data[3]?.runners[2]?.name,
                   isWeak: data[3]?.isWeak,
+                  maxLiabilityPerMarket:data[3]?.maxLiabilityPerMarket,
+                  isBettable:data[3]?.isBettable,
+                  maxLiabilityPerBet:data[3]?.maxLiabilityPerBet
                 });
               }}
               className={`${
@@ -520,6 +547,9 @@ const Lucky7 = ({
                   back: true,
                   name: data[3]?.runners[3]?.name,
                   isWeak: data[3]?.isWeak,
+                  maxLiabilityPerMarket:data[3]?.maxLiabilityPerMarket,
+                  isBettable:data[3]?.isBettable,
+                  maxLiabilityPerBet:data[3]?.maxLiabilityPerBet
                 });
               }}
               className={`${
@@ -593,6 +623,9 @@ const Lucky7 = ({
                       back: true,
                       name: runner?.name,
                       isWeak: data[4]?.isWeak,
+                      maxLiabilityPerMarket:data[4]?.maxLiabilityPerMarket,
+                      isBettable:data[4]?.isBettable,
+                      maxLiabilityPerBet:data[4]?.maxLiabilityPerBet
                     });
                   }}
                   className={`${

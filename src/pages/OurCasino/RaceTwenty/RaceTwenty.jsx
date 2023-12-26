@@ -36,6 +36,9 @@ const RaceTwenty = ({
                 back: true,
                 name: data[0]?.runners[0]?.name,
                 isWeak: data[0]?.isWeak,
+                maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                isBettable:data[0]?.isBettable,
+                maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
               });
             }}
             className={`casino-odds-box back  ${
@@ -68,6 +71,9 @@ const RaceTwenty = ({
                 lay: true,
                 name: data[0]?.runners[0]?.name,
                 isWeak: data[0]?.isWeak,
+                maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                isBettable:data[0]?.isBettable,
+                maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
               });
             }}
             className={`casino-odds-box lay  ${
@@ -118,6 +124,9 @@ const RaceTwenty = ({
                 back: true,
                 name: data[0]?.runners[1]?.name,
                 isWeak: data[0]?.isWeak,
+                maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                isBettable:data[0]?.isBettable,
+                maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
               });
             }}
             className={`casino-odds-box back  ${
@@ -150,6 +159,9 @@ const RaceTwenty = ({
                 lay: true,
                 name: data[0]?.runners[1]?.name,
                 isWeak: data[0]?.isWeak,
+                maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                isBettable:data[0]?.isBettable,
+                maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
               });
             }}
             className={`casino-odds-box lay  ${
@@ -200,6 +212,9 @@ const RaceTwenty = ({
                 back: true,
                 name: data[0]?.runners[2]?.name,
                 isWeak: data[0]?.isWeak,
+                maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                isBettable:data[0]?.isBettable,
+                maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
               });
             }}
             className={`casino-odds-box back  ${
@@ -232,6 +247,9 @@ const RaceTwenty = ({
                 lay: true,
                 name: data[0]?.runners[2]?.name,
                 isWeak: data[0]?.isWeak,
+                maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                isBettable:data[0]?.isBettable,
+                maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
               });
             }}
             className={`casino-odds-box lay  ${
@@ -282,6 +300,9 @@ const RaceTwenty = ({
                 back: true,
                 name: data[0]?.runners[3]?.name,
                 isWeak: data[0]?.isWeak,
+                maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                isBettable:data[0]?.isBettable,
+                maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
               });
             }}
             className={`casino-odds-box back  ${
@@ -314,6 +335,9 @@ const RaceTwenty = ({
                 lay: true,
                 name: data[0]?.runners[3]?.name,
                 isWeak: data[0]?.isWeak,
+                maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                isBettable:data[0]?.isBettable,
+                maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
               });
             }}
             className={`casino-odds-box lay  ${
@@ -365,6 +389,9 @@ const RaceTwenty = ({
                   back: true,
                   name: data[1]?.runners[0]?.name,
                   isWeak: data[1]?.isWeak,
+                  maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
+                  isBettable:data[1]?.isBettable,
+                  maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back  ${
@@ -412,6 +439,9 @@ const RaceTwenty = ({
                   back: true,
                   name: data[1]?.runners[1]?.name,
                   isWeak: data[1]?.isWeak,
+                  maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
+                  isBettable:data[1]?.isBettable,
+                  maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back  ${
@@ -460,6 +490,9 @@ const RaceTwenty = ({
                   back: true,
                   name: data[1]?.runners[2]?.name,
                   isWeak: data[1]?.isWeak,
+                  maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
+                  isBettable:data[1]?.isBettable,
+                  maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back  ${
@@ -508,6 +541,9 @@ const RaceTwenty = ({
                   back: true,
                   name: data[1]?.runners[3]?.name,
                   isWeak: data[1]?.isWeak,
+                  maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
+                  isBettable:data[1]?.isBettable,
+                  maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back  ${
@@ -556,6 +592,9 @@ const RaceTwenty = ({
                   back: true,
                   name: data[1]?.runners[4]?.name,
                   isWeak: data[1]?.isWeak,
+                  maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
+                  isBettable:data[1]?.isBettable,
+                  maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back  ${
@@ -604,6 +643,9 @@ const RaceTwenty = ({
                   back: true,
                   name: data[1]?.runners[5]?.name,
                   isWeak: data[1]?.isWeak,
+                  maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
+                  isBettable:data[1]?.isBettable,
+                  maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back  ${

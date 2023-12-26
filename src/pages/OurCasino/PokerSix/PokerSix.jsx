@@ -50,6 +50,9 @@ const PokerSix = ({
                     back: true,
                     name: data[0]?.runners[0]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                    isBettable: data[0]?.isBettable,
+                    maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -94,6 +97,9 @@ const PokerSix = ({
                     back: true,
                     name: data[0]?.runners[1]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                    isBettable: data[0]?.isBettable,
+                    maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -138,6 +144,9 @@ const PokerSix = ({
                     back: true,
                     name: data[0]?.runners[2]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                    isBettable: data[0]?.isBettable,
+                    maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -182,6 +191,9 @@ const PokerSix = ({
                     back: true,
                     name: data[0]?.runners[3]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                    isBettable: data[0]?.isBettable,
+                    maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -226,6 +238,9 @@ const PokerSix = ({
                     back: true,
                     name: data[0]?.runners[4]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                    isBettable: data[0]?.isBettable,
+                    maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -270,6 +285,9 @@ const PokerSix = ({
                     back: true,
                     name: data[0]?.runners[5]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                    isBettable: data[0]?.isBettable,
+                    maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${

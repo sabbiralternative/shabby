@@ -15,8 +15,8 @@ const Baccarat2 = ({
   jqkExposure,
   threeIndexFourEx,
 }) => {
-    return (
-      <div className="casino-table">
+  return (
+    <div className="casino-table">
       <div className="casino-table-full-box">
         <div className="baccarat-graph text-center">
           <h4 className="">Statistics</h4>
@@ -25,16 +25,14 @@ const Baccarat2 = ({
               id="reactgooglegraph-1"
               style={{ height: "160px", width: "100%" }}
             >
-              <div style={{position:'relative'}}>
+              <div style={{ position: "relative" }}>
                 <div
                   dir="ltr"
-            
                   style={{
                     position: "relative",
                     width: "166px",
                     height: "160px",
                   }}
-               
                 >
                   <div
                     style={{
@@ -50,11 +48,9 @@ const Baccarat2 = ({
                       width="166"
                       height="160"
                       aria-label="A chart."
-                      style={{overflow:'hidden'}}
+                      style={{ overflow: "hidden" }}
                     >
-                      <defs
-                        id="_ABSTRACT_RENDERER_ID_249"
-                      ></defs>
+                      <defs id="_ABSTRACT_RENDERER_ID_249"></defs>
                       <g>
                         <rect
                           x="119"
@@ -392,7 +388,6 @@ const Baccarat2 = ({
                     fontFamily: "Arial",
                     fontSize: "11px",
                   }}
-                  
                 >
                   50%
                 </div>
@@ -403,8 +398,6 @@ const Baccarat2 = ({
         </div>
         <div className="baccarat-odds-container">
           <div className="baccarat-other-odds">
-
-
             <div className="baccarat-other-odd-box-container">
               <div
                 onClick={() => {
@@ -421,6 +414,9 @@ const Baccarat2 = ({
                     back: true,
                     name: data[3]?.runners[0]?.name,
                     isWeak: data[3]?.isWeak,
+                    maxLiabilityPerMarket: data[3]?.maxLiabilityPerMarket,
+                    isBettable: data[3]?.isBettable,
+                    maxLiabilityPerBet: data[3]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`baccarat-other-odd-box   ${
@@ -448,8 +444,6 @@ const Baccarat2 = ({
               </div>
             </div>
 
-
-
             <div className="baccarat-other-odd-box-container">
               <div
                 onClick={() => {
@@ -466,6 +460,9 @@ const Baccarat2 = ({
                     back: true,
                     name: data[3]?.runners[1]?.name,
                     isWeak: data[3]?.isWeak,
+                    maxLiabilityPerMarket: data[3]?.maxLiabilityPerMarket,
+                    isBettable: data[3]?.isBettable,
+                    maxLiabilityPerBet: data[3]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`baccarat-other-odd-box   ${
@@ -493,10 +490,6 @@ const Baccarat2 = ({
               </div>
             </div>
 
-
-
-
-
             <div className="baccarat-other-odd-box-container">
               <div
                 onClick={() => {
@@ -513,6 +506,9 @@ const Baccarat2 = ({
                     back: true,
                     name: data[3]?.runners[2]?.name,
                     isWeak: data[3]?.isWeak,
+                    maxLiabilityPerMarket: data[3]?.maxLiabilityPerMarket,
+                    isBettable: data[3]?.isBettable,
+                    maxLiabilityPerBet: data[3]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`baccarat-other-odd-box   ${
@@ -540,8 +536,6 @@ const Baccarat2 = ({
               </div>
             </div>
 
-
-
             <div className="baccarat-other-odd-box-container">
               <div
                 onClick={() => {
@@ -558,6 +552,9 @@ const Baccarat2 = ({
                     back: true,
                     name: data[3]?.runners[3]?.name,
                     isWeak: data[3]?.isWeak,
+                    maxLiabilityPerMarket: data[3]?.maxLiabilityPerMarket,
+                    isBettable: data[3]?.isBettable,
+                    maxLiabilityPerBet: data[3]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`baccarat-other-odd-box   ${
@@ -585,10 +582,6 @@ const Baccarat2 = ({
               </div>
             </div>
 
-
-
-
-
             <div className="baccarat-other-odd-box-container">
               <div
                 onClick={() => {
@@ -605,6 +598,9 @@ const Baccarat2 = ({
                     back: true,
                     name: data[3]?.runners[4]?.name,
                     isWeak: data[3]?.isWeak,
+                    maxLiabilityPerMarket: data[3]?.maxLiabilityPerMarket,
+                    isBettable: data[3]?.isBettable,
+                    maxLiabilityPerBet: data[3]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`baccarat-other-odd-box   ${
@@ -631,15 +627,9 @@ const Baccarat2 = ({
                 </span>
               </div>
             </div>
-
-
-
           </div>
           <div className="baccarat-main-odds mt-3">
-
-
-          
-          <div className="player-pair-box-container">
+            <div className="player-pair-box-container">
               <div
                 onClick={() => {
                   setShowBets(true);
@@ -655,6 +645,9 @@ const Baccarat2 = ({
                     back: true,
                     name: data[1]?.runners[0]?.name,
                     isWeak: data[1]?.isWeak,
+                    maxLiabilityPerMarket: data[1]?.maxLiabilityPerMarket,
+                    isBettable: data[1]?.isBettable,
+                    maxLiabilityPerBet: data[1]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`player-pair-box   ${
@@ -682,10 +675,8 @@ const Baccarat2 = ({
               </div>
             </div>
 
-
-
             <div className="player-box-container">
-            <div
+              <div
                 onClick={() => {
                   setShowBets(true);
                   setPlaceBetValue({});
@@ -700,6 +691,9 @@ const Baccarat2 = ({
                     back: true,
                     name: data[0]?.runners[0]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                    isBettable: data[0]?.isBettable,
+                    maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`player-box   ${
@@ -709,7 +703,7 @@ const Baccarat2 = ({
                     : " suspended-box"
                 }`}
               >
-               {/*  <!-- result0 >> status --> */}
+                {/*  <!-- result0 >> status --> */}
                 <div>Player</div>
                 <div>{data[0]?.runners[0]?.back[0]?.price}</div>
                 {/* <!-- result0 >> runners0 >> back >> price --> */}
@@ -747,8 +741,6 @@ const Baccarat2 = ({
               </div>
             </div>
 
-
-
             <div className="tie-box-container">
               <div
                 onClick={() => {
@@ -765,6 +757,9 @@ const Baccarat2 = ({
                     back: true,
                     name: data[0]?.runners[2]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                    isBettable: data[0]?.isBettable,
+                    maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`tie-box   ${
@@ -792,10 +787,8 @@ const Baccarat2 = ({
               </div>
             </div>
 
-
-
             <div className="banker-box-container">
-            <div
+              <div
                 onClick={() => {
                   setShowBets(true);
                   setPlaceBetValue({});
@@ -810,6 +803,9 @@ const Baccarat2 = ({
                     back: true,
                     name: data[0]?.runners[1]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                    isBettable: data[0]?.isBettable,
+                    maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`banker-box   ${
@@ -819,12 +815,12 @@ const Baccarat2 = ({
                     : " suspended-box"
                 }`}
               >
-               {/*  <!-- result0 >> status --> */}
+                {/*  <!-- result0 >> status --> */}
                 <div>Banker</div>
                 <div>{data[0]?.runners[1]?.back[0]?.price}</div>
-               {/*  <!-- result0 >> runners1 >> back >> price --> */}
-               <div>
-               {data[0]?.runners[1]?.card?.length > 0 ? (
+                {/*  <!-- result0 >> runners1 >> back >> price --> */}
+                <div>
+                  {data[0]?.runners[1]?.card?.length > 0 ? (
                     <img src={`/cards/${data[0]?.runners[1]?.card[0]}.jpg`} />
                   ) : (
                     <img src={one} />
@@ -835,8 +831,7 @@ const Baccarat2 = ({
                     <img src={one} />
                   )}
 
-  
-                   {data[0]?.runners[1]?.card?.length > 2 && (
+                  {data[0]?.runners[1]?.card?.length > 2 && (
                     <img
                       className="l-rotate"
                       src={`/cards/${data[0]?.runners[1]?.card[2]}.jpg`}
@@ -857,12 +852,6 @@ const Baccarat2 = ({
               </div>
             </div>
 
-
-
-
-
-
-
             <div className="banker-pair-box-container">
               <div
                 onClick={() => {
@@ -879,6 +868,9 @@ const Baccarat2 = ({
                     back: true,
                     name: data[2]?.runners[0]?.name,
                     isWeak: data[2]?.isWeak,
+                    maxLiabilityPerMarket: data[2]?.maxLiabilityPerMarket,
+                    isBettable: data[2]?.isBettable,
+                    maxLiabilityPerBet: data[2]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`banker-pair-box   ${
@@ -905,20 +897,11 @@ const Baccarat2 = ({
                 </span>
               </div>
             </div>
-
-
-
-
-
-
-
-
-
           </div>
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default Baccarat2;

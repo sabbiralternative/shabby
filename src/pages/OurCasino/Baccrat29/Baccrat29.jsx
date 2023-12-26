@@ -45,6 +45,9 @@ const Baccrat29 = ({
                               back: true,
                               name: runner?.name,
                               isWeak: game?.isWeak,
+                              maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
+                              isBettable:game?.isBettable,
+                              maxLiabilityPerBet:game?.maxLiabilityPerBet
                             });
                           }}
                           key={gameIdx}
@@ -122,6 +125,9 @@ const Baccrat29 = ({
                               back: true,
                               name: runner?.name,
                               isWeak: game?.isWeak,
+                              maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
+                              isBettable:game?.isBettable,
+                              maxLiabilityPerBet:game?.maxLiabilityPerBet
                             });
                           }}
                           key={gameIdx}
@@ -179,6 +185,9 @@ const Baccrat29 = ({
                 back: true,
                 name: data[8]?.runners[0]?.name,
                 isWeak: data[8]?.isWeak,
+                maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                isBettable:data[8]?.isBettable,
+                maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
               });
             }}
             className={`casino-odds-box back ${
@@ -206,6 +215,9 @@ const Baccrat29 = ({
                 lay: true,
                 name: data[8]?.runners[0]?.name,
                 isWeak: data[8]?.isWeak,
+                maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                isBettable:data[8]?.isBettable,
+                maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
               });
             }}
             className={`casino-odds-box back ${

@@ -58,6 +58,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[0]?.runners[0]?.name,
                   isWeak: data[0]?.isWeak,
+                  maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                  isBettable:data[0]?.isBettable,
+                  maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -99,6 +102,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[8]?.runners[0]?.name,
                   isWeak: data[8]?.isWeak,
+                  maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                  isBettable:data[8]?.isBettable,
+                  maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -139,6 +145,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[16]?.runners[0]?.name,
                   isWeak: data[16]?.isWeak,
+                  maxLiabilityPerMarket:data[16]?.maxLiabilityPerMarket,
+                  isBettable:data[16]?.isBettable,
+                  maxLiabilityPerBet:data[16]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -188,6 +197,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[1]?.runners[0]?.name,
                   isWeak: data[1]?.isWeak,
+                  maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
+                  isBettable:data[1]?.isBettable,
+                  maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -229,6 +241,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[9]?.runners[0]?.name,
                   isWeak: data[9]?.isWeak,
+                  maxLiabilityPerMarket:data[9]?.maxLiabilityPerMarket,
+                  isBettable:data[9]?.isBettable,
+                  maxLiabilityPerBet:data[9]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -268,6 +283,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[17]?.runners[0]?.name,
                   isWeak: data[17]?.isWeak,
+                  maxLiabilityPerMarket:data[17]?.maxLiabilityPerMarket,
+                  isBettable:data[17]?.isBettable,
+                  maxLiabilityPerBet:data[17]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -316,6 +334,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[2]?.runners[0]?.name,
                   isWeak: data[2]?.isWeak,
+                  maxLiabilityPerMarket:data[2]?.maxLiabilityPerMarket,
+                  isBettable:data[2]?.isBettable,
+                  maxLiabilityPerBet:data[2]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -357,6 +378,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[10]?.runners[0]?.name,
                   isWeak: data[10]?.isWeak,
+                  maxLiabilityPerMarket:data[10]?.maxLiabilityPerMarket,
+                  isBettable:data[10]?.isBettable,
+                  maxLiabilityPerBet:data[10]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -396,6 +420,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[18]?.runners[0]?.name,
                   isWeak: data[18]?.isWeak,
+                  maxLiabilityPerMarket:data[18]?.maxLiabilityPerMarket,
+                  isBettable:data[18]?.isBettable,
+                  maxLiabilityPerBet:data[18]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -445,6 +472,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[3]?.runners[0]?.name,
                   isWeak: data[3]?.isWeak,
+                  maxLiabilityPerMarket:data[3]?.maxLiabilityPerMarket,
+                  isBettable:data[3]?.isBettable,
+                  maxLiabilityPerBet:data[3]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -486,6 +516,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[11]?.runners[0]?.name,
                   isWeak: data[11]?.isWeak,
+                  maxLiabilityPerMarket:data[11]?.maxLiabilityPerMarket,
+                  isBettable:data[11]?.isBettable,
+                  maxLiabilityPerBet:data[11]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -525,6 +558,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[19]?.runners[0]?.name,
                   isWeak: data[19]?.isWeak,
+                  maxLiabilityPerMarket:data[19]?.maxLiabilityPerMarket,
+                  isBettable:data[19]?.isBettable,
+                  maxLiabilityPerBet:data[19]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -574,6 +610,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[4]?.runners[0]?.name,
                   isWeak: data[4]?.isWeak,
+                  maxLiabilityPerMarket:data[4]?.maxLiabilityPerMarket,
+                  isBettable:data[4]?.isBettable,
+                  maxLiabilityPerBet:data[4]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -615,6 +654,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[12]?.runners[0]?.name,
                   isWeak: data[12]?.isWeak,
+                  maxLiabilityPerMarket:data[12]?.maxLiabilityPerMarket,
+                  isBettable:data[12]?.isBettable,
+                  maxLiabilityPerBet:data[12]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -654,6 +696,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[20]?.runners[0]?.name,
                   isWeak: data[20]?.isWeak,
+                  maxLiabilityPerMarket:data[20]?.maxLiabilityPerMarket,
+                  isBettable:data[20]?.isBettable,
+                  maxLiabilityPerBet:data[20]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -702,6 +747,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[5]?.runners[0]?.name,
                   isWeak: data[5]?.isWeak,
+                  maxLiabilityPerMarket:data[5]?.maxLiabilityPerMarket,
+                  isBettable:data[5]?.isBettable,
+                  maxLiabilityPerBet:data[5]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -743,6 +791,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[13]?.runners[0]?.name,
                   isWeak: data[13]?.isWeak,
+                  maxLiabilityPerMarket:data[13]?.maxLiabilityPerMarket,
+                  isBettable:data[13]?.isBettable,
+                  maxLiabilityPerBet:data[13]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -782,6 +833,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[21]?.runners[0]?.name,
                   isWeak: data[21]?.isWeak,
+                  maxLiabilityPerMarket:data[21]?.maxLiabilityPerMarket,
+                  isBettable:data[21]?.isBettable,
+                  maxLiabilityPerBet:data[21]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -830,6 +884,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[6]?.runners[0]?.name,
                   isWeak: data[6]?.isWeak,
+                  maxLiabilityPerMarket:data[6]?.maxLiabilityPerMarket,
+                  isBettable:data[6]?.isBettable,
+                  maxLiabilityPerBet:data[6]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -871,6 +928,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[14]?.runners[0]?.name,
                   isWeak: data[14]?.isWeak,
+                  maxLiabilityPerMarket:data[14]?.maxLiabilityPerMarket,
+                  isBettable:data[14]?.isBettable,
+                  maxLiabilityPerBet:data[14]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -910,6 +970,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[22]?.runners[0]?.name,
                   isWeak: data[22]?.isWeak,
+                  maxLiabilityPerMarket:data[22]?.maxLiabilityPerMarket,
+                  isBettable:data[22]?.isBettable,
+                  maxLiabilityPerBet:data[22]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -959,6 +1022,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[7]?.runners[0]?.name,
                   isWeak: data[7]?.isWeak,
+                  maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                  isBettable:data[7]?.isBettable,
+                  maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -1000,6 +1066,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[15]?.runners[0]?.name,
                   isWeak: data[15]?.isWeak,
+                  maxLiabilityPerMarket:data[15]?.maxLiabilityPerMarket,
+                  isBettable:data[15]?.isBettable,
+                  maxLiabilityPerBet:data[15]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${
@@ -1039,6 +1108,9 @@ const TeenPattiOpen = ({
                   back: true,
                   name: data[23]?.runners[0]?.name,
                   isWeak: data[23]?.isWeak,
+                  maxLiabilityPerMarket:data[23]?.maxLiabilityPerMarket,
+                  isBettable:data[23]?.isBettable,
+                  maxLiabilityPerBet:data[23]?.maxLiabilityPerBet
                 });
               }}
               className={`casino-odds-box back ${

@@ -51,6 +51,9 @@ const InstantTeenPatti = ({
                   back: true,
                   name: data[0]?.runners[0]?.name,
                   isWeak: data[0]?.isWeak,
+                  maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                  isBettable:data[0]?.isBettable,
+                  maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
                 });
               }}
               className="casino-odds-box back">
@@ -74,6 +77,9 @@ const InstantTeenPatti = ({
                       lay: true,
                       name: data[0]?.runners[0]?.name,
                       isWeak: data[0]?.isWeak,
+                      maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                      isBettable:data[0]?.isBettable,
+                      maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
                     });
                   }}
               className="casino-odds-box lay">
@@ -127,6 +133,9 @@ const InstantTeenPatti = ({
                       back: true,
                       name: data[0]?.runners[1]?.name,
                       isWeak: data[0]?.isWeak,
+                      maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                      isBettable:data[0]?.isBettable,
+                      maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
                     });
                   }}
               className="casino-odds-box back">
@@ -148,6 +157,9 @@ const InstantTeenPatti = ({
                       lay: true,
                       name: data[0]?.runners[1]?.name,
                       isWeak: data[0]?.isWeak,
+                      maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                      isBettable:data[0]?.isBettable,
+                      maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
                     });
                   }}
               className="casino-odds-box lay">

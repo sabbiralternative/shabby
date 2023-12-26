@@ -88,6 +88,9 @@ const DTL20 = ({
                     back: true,
                     name: data[0]?.runners[0]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                    isBettable:data[0]?.isBettable,
+                    maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -130,6 +133,9 @@ const DTL20 = ({
                     back: true,
                     name: data[0]?.runners[1]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                    isBettable:data[0]?.isBettable,
+                    maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -172,6 +178,9 @@ const DTL20 = ({
                     back: true,
                     name: data[0]?.runners[2]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                    isBettable:data[0]?.isBettable,
+                    maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -229,6 +238,9 @@ const DTL20 = ({
                     back: true,
                     name: data[1]?.runners[0]?.name,
                     isWeak: data[1]?.isWeak,
+                    maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
+                    isBettable:data[1]?.isBettable,
+                    maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -271,6 +283,9 @@ const DTL20 = ({
                     back: true,
                     name: data[2]?.runners[0]?.name,
                     isWeak: data[2]?.isWeak,
+                    maxLiabilityPerMarket:data[2]?.maxLiabilityPerMarket,
+                    isBettable:data[2]?.isBettable,
+                    maxLiabilityPerBet:data[2]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -315,6 +330,9 @@ const DTL20 = ({
                     back: true,
                     name: data[3]?.runners[0]?.name,
                     isWeak: data[3]?.isWeak,
+                    maxLiabilityPerMarket:data[3]?.maxLiabilityPerMarket,
+                    isBettable:data[3]?.isBettable,
+                    maxLiabilityPerBet:data[3]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -373,6 +391,9 @@ const DTL20 = ({
                     back: true,
                     name: data[1]?.runners[0]?.name,
                     isWeak: data[1]?.isWeak,
+                    maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
+                    isBettable:data[1]?.isBettable,
+                    maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -415,6 +436,9 @@ const DTL20 = ({
                     back: true,
                     name: data[2]?.runners[1]?.name,
                     isWeak: data[2]?.isWeak,
+                    maxLiabilityPerMarket:data[2]?.maxLiabilityPerMarket,
+                    isBettable:data[2]?.isBettable,
+                    maxLiabilityPerBet:data[2]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -456,6 +480,9 @@ const DTL20 = ({
                     back: true,
                     name: data[3]?.runners[1]?.name,
                     isWeak: data[3]?.isWeak,
+                    maxLiabilityPerMarket:data[3]?.maxLiabilityPerMarket,
+                    isBettable:data[3]?.isBettable,
+                    maxLiabilityPerBet:data[3]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -503,6 +530,9 @@ const DTL20 = ({
                     back: true,
                     name: data[4]?.runners[0]?.name,
                     isWeak: data[4]?.isWeak,
+                    maxLiabilityPerMarket:data[4]?.maxLiabilityPerMarket,
+                    isBettable:data[4]?.isBettable,
+                    maxLiabilityPerBet:data[4]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -547,6 +577,9 @@ const DTL20 = ({
                     back: true,
                     name: data[5]?.runners[0]?.name,
                     isWeak: data[5]?.isWeak,
+                    maxLiabilityPerMarket:data[5]?.maxLiabilityPerMarket,
+                    isBettable:data[5]?.isBettable,
+                    maxLiabilityPerBet:data[5]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -592,6 +625,9 @@ const DTL20 = ({
                     back: true,
                     name: data[6]?.runners[0]?.name,
                     isWeak: data[6]?.isWeak,
+                    maxLiabilityPerMarket:data[6]?.maxLiabilityPerMarket,
+                    isBettable:data[6]?.isBettable,
+                    maxLiabilityPerBet:data[6]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -641,6 +677,9 @@ const DTL20 = ({
                     back: true,
                     name: data[4]?.runners[1]?.name,
                     isWeak: data[4]?.isWeak,
+                    maxLiabilityPerMarket:data[4]?.maxLiabilityPerMarket,
+                    isBettable:data[4]?.isBettable,
+                    maxLiabilityPerBet:data[4]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -685,6 +724,9 @@ const DTL20 = ({
                     back: true,
                     name: data[5]?.runners[1]?.name,
                     isWeak: data[5]?.isWeak,
+                    maxLiabilityPerMarket:data[5]?.maxLiabilityPerMarket,
+                    isBettable:data[5]?.isBettable,
+                    maxLiabilityPerBet:data[5]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -728,6 +770,9 @@ const DTL20 = ({
                     back: true,
                     name: data[6]?.runners[1]?.name,
                     isWeak: data[6]?.isWeak,
+                    maxLiabilityPerMarket:data[6]?.maxLiabilityPerMarket,
+                    isBettable:data[6]?.isBettable,
+                    maxLiabilityPerBet:data[6]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -776,6 +821,9 @@ const DTL20 = ({
                     back: true,
                     name: data[7]?.runners[0]?.name,
                     isWeak: data[7]?.isWeak,
+                    maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                    isBettable:data[7]?.isBettable,
+                    maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -821,6 +869,9 @@ const DTL20 = ({
                     back: true,
                     name: data[8]?.runners[0]?.name,
                     isWeak: data[8]?.isWeak,
+                    maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                    isBettable:data[8]?.isBettable,
+                    maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -867,6 +918,9 @@ const DTL20 = ({
                     back: true,
                     name: data[9]?.runners[0]?.name,
                     isWeak: data[9]?.isWeak,
+                    maxLiabilityPerMarket:data[9]?.maxLiabilityPerMarket,
+                    isBettable:data[9]?.isBettable,
+                    maxLiabilityPerBet:data[9]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -919,6 +973,9 @@ const DTL20 = ({
                     back: true,
                     name: data[7]?.runners[1]?.name,
                     isWeak: data[7]?.isWeak,
+                    maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                    isBettable:data[7]?.isBettable,
+                    maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -963,6 +1020,9 @@ const DTL20 = ({
                     back: true,
                     name: data[8]?.runners[1]?.name,
                     isWeak: data[8]?.isWeak,
+                    maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                    isBettable:data[8]?.isBettable,
+                    maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1007,6 +1067,9 @@ const DTL20 = ({
                     back: true,
                     name: data[9]?.runners[1]?.name,
                     isWeak: data[9]?.isWeak,
+                    maxLiabilityPerMarket:data[9]?.maxLiabilityPerMarket,
+                    isBettable:data[9]?.isBettable,
+                    maxLiabilityPerBet:data[9]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1057,6 +1120,9 @@ const DTL20 = ({
                     back: true,
                     name: data[7]?.runners[2]?.name,
                     isWeak: data[7]?.isWeak,
+                    maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                    isBettable:data[7]?.isBettable,
+                    maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1103,6 +1169,9 @@ const DTL20 = ({
                     back: true,
                     name: data[8]?.runners[2]?.name,
                     isWeak: data[8]?.isWeak,
+                    maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                    isBettable:data[8]?.isBettable,
+                    maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1147,6 +1216,9 @@ const DTL20 = ({
                     back: true,
                     name: data[9]?.runners[2]?.name,
                     isWeak: data[9]?.isWeak,
+                    maxLiabilityPerMarket:data[9]?.maxLiabilityPerMarket,
+                    isBettable:data[9]?.isBettable,
+                    maxLiabilityPerBet:data[9]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1197,6 +1269,9 @@ const DTL20 = ({
                     back: true,
                     name: data[7]?.runners[3]?.name,
                     isWeak: data[7]?.isWeak,
+                    maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                    isBettable:data[7]?.isBettable,
+                    maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1241,6 +1316,9 @@ const DTL20 = ({
                     back: true,
                     name: data[8]?.runners[3]?.name,
                     isWeak: data[8]?.isWeak,
+                    maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                    isBettable:data[8]?.isBettable,
+                    maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1285,6 +1363,9 @@ const DTL20 = ({
                     back: true,
                     name: data[9]?.runners[3]?.name,
                     isWeak: data[9]?.isWeak,
+                    maxLiabilityPerMarket:data[9]?.maxLiabilityPerMarket,
+                    isBettable:data[9]?.isBettable,
+                    maxLiabilityPerBet:data[9]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1349,6 +1430,9 @@ const DTL20 = ({
                     back: true,
                     name: data[7]?.runners[4]?.name,
                     isWeak: data[7]?.isWeak,
+                    maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                    isBettable:data[7]?.isBettable,
+                    maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1393,6 +1477,9 @@ const DTL20 = ({
                     back: true,
                     name: data[8]?.runners[4]?.name,
                     isWeak: data[8]?.isWeak,
+                    maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                    isBettable:data[8]?.isBettable,
+                    maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1437,6 +1524,9 @@ const DTL20 = ({
                     back: true,
                     name: data[9]?.runners[4]?.name,
                     isWeak: data[9]?.isWeak,
+                    maxLiabilityPerMarket:data[9]?.maxLiabilityPerMarket,
+                    isBettable:data[9]?.isBettable,
+                    maxLiabilityPerBet:data[9]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1490,6 +1580,9 @@ const DTL20 = ({
                     back: true,
                     name: data[7]?.runners[5]?.name,
                     isWeak: data[7]?.isWeak,
+                    maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                    isBettable:data[7]?.isBettable,
+                    maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1534,6 +1627,9 @@ const DTL20 = ({
                     back: true,
                     name: data[8]?.runners[5]?.name,
                     isWeak: data[8]?.isWeak,
+                    maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                    isBettable:data[8]?.isBettable,
+                    maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1578,6 +1674,9 @@ const DTL20 = ({
                     back: true,
                     name: data[9]?.runners[6]?.name,
                     isWeak: data[9]?.isWeak,
+                    maxLiabilityPerMarket:data[9]?.maxLiabilityPerMarket,
+                    isBettable:data[9]?.isBettable,
+                    maxLiabilityPerBet:data[9]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1630,6 +1729,9 @@ const DTL20 = ({
                     back: true,
                     name: data[7]?.runners[6]?.name,
                     isWeak: data[7]?.isWeak,
+                    maxLiabilityPerMarket:data[6]?.maxLiabilityPerMarket,
+                    isBettable:data[6]?.isBettable,
+                    maxLiabilityPerBet:data[6]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1674,6 +1776,9 @@ const DTL20 = ({
                     back: true,
                     name: data[8]?.runners[6]?.name,
                     isWeak: data[8]?.isWeak,
+                    maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                    isBettable:data[8]?.isBettable,
+                    maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1718,6 +1823,9 @@ const DTL20 = ({
                     back: true,
                     name: data[9]?.runners[6]?.name,
                     isWeak: data[9]?.isWeak,
+                    maxLiabilityPerMarket:data[9]?.maxLiabilityPerMarket,
+                    isBettable:data[9]?.isBettable,
+                    maxLiabilityPerBet:data[9]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1770,6 +1878,9 @@ const DTL20 = ({
                     back: true,
                     name: data[7]?.runners[7]?.name,
                     isWeak: data[7]?.isWeak,
+                    maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                    isBettable:data[7]?.isBettable,
+                    maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1814,6 +1925,9 @@ const DTL20 = ({
                     back: true,
                     name: data[8]?.runners[7]?.name,
                     isWeak: data[8]?.isWeak,
+                    maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                    isBettable:data[8]?.isBettable,
+                    maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1858,6 +1972,9 @@ const DTL20 = ({
                     back: true,
                     name: data[9]?.runners[7]?.name,
                     isWeak: data[9]?.isWeak,
+                    maxLiabilityPerMarket:data[9]?.maxLiabilityPerMarket,
+                    isBettable:data[9]?.isBettable,
+                    maxLiabilityPerBet:data[9]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1910,6 +2027,9 @@ const DTL20 = ({
                     back: true,
                     name: data[7]?.runners[8]?.name,
                     isWeak: data[7]?.isWeak,
+                    maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                    isBettable:data[7]?.isBettable,
+                    maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1954,6 +2074,9 @@ const DTL20 = ({
                     back: true,
                     name: data[8]?.runners[8]?.name,
                     isWeak: data[8]?.isWeak,
+                    maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                    isBettable:data[8]?.isBettable,
+                    maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -1998,6 +2121,9 @@ const DTL20 = ({
                     back: true,
                     name: data[9]?.runners[8]?.name,
                     isWeak: data[9]?.isWeak,
+                    maxLiabilityPerMarket:data[9]?.maxLiabilityPerMarket,
+                    isBettable:data[9]?.isBettable,
+                    maxLiabilityPerBet:data[9]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -2050,6 +2176,9 @@ const DTL20 = ({
                     back: true,
                     name: data[7]?.runners[9]?.name,
                     isWeak: data[7]?.isWeak,
+                    maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                    isBettable:data[7]?.isBettable,
+                    maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -2094,6 +2223,9 @@ const DTL20 = ({
                     back: true,
                     name: data[8]?.runners[9]?.name,
                     isWeak: data[8]?.isWeak,
+                    maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                    isBettable:data[8]?.isBettable,
+                    maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -2138,6 +2270,9 @@ const DTL20 = ({
                     back: true,
                     name: data[9]?.runners[9]?.name,
                     isWeak: data[9]?.isWeak,
+                    maxLiabilityPerMarket:data[9]?.maxLiabilityPerMarket,
+                    isBettable:data[9]?.isBettable,
+                    maxLiabilityPerBet:data[9]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -2190,6 +2325,9 @@ const DTL20 = ({
                     back: true,
                     name: data[7]?.runners[10]?.name,
                     isWeak: data[7]?.isWeak,
+                    maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                    isBettable:data[7]?.isBettable,
+                    maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -2234,6 +2372,9 @@ const DTL20 = ({
                     back: true,
                     name: data[8]?.runners[10]?.name,
                     isWeak: data[8]?.isWeak,
+                    maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                    isBettable:data[8]?.isBettable,
+                    maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -2278,6 +2419,9 @@ const DTL20 = ({
                     back: true,
                     name: data[9]?.runners[10]?.name,
                     isWeak: data[9]?.isWeak,
+                    maxLiabilityPerMarket:data[9]?.maxLiabilityPerMarket,
+                    isBettable:data[9]?.isBettable,
+                    maxLiabilityPerBet:data[9]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -2329,6 +2473,9 @@ const DTL20 = ({
                     back: true,
                     name: data[7]?.runners[11]?.name,
                     isWeak: data[7]?.isWeak,
+                    maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                    isBettable:data[7]?.isBettable,
+                    maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -2373,6 +2520,9 @@ const DTL20 = ({
                     back: true,
                     name: data[8]?.runners[11]?.name,
                     isWeak: data[8]?.isWeak,
+                    maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                    isBettable:data[8]?.isBettable,
+                    maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -2417,6 +2567,9 @@ const DTL20 = ({
                     back: true,
                     name: data[9]?.runners[11]?.name,
                     isWeak: data[9]?.isWeak,
+                    maxLiabilityPerMarket:data[9]?.maxLiabilityPerMarket,
+                    isBettable:data[9]?.isBettable,
+                    maxLiabilityPerBet:data[9]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -2469,6 +2622,9 @@ const DTL20 = ({
                     back: true,
                     name: data[7]?.runners[12]?.name,
                     isWeak: data[7]?.isWeak,
+                    maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                    isBettable:data[7]?.isBettable,
+                    maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -2513,6 +2669,9 @@ const DTL20 = ({
                     back: true,
                     name: data[8]?.runners[12]?.name,
                     isWeak: data[8]?.isWeak,
+                    maxLiabilityPerMarket:data[8]?.maxLiabilityPerMarket,
+                    isBettable:data[8]?.isBettable,
+                    maxLiabilityPerBet:data[8]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -2557,6 +2716,9 @@ const DTL20 = ({
                     back: true,
                     name: data[9]?.runners[12]?.name,
                     isWeak: data[9]?.isWeak,
+                    maxLiabilityPerMarket:data[9]?.maxLiabilityPerMarket,
+                    isBettable:data[9]?.isBettable,
+                    maxLiabilityPerBet:data[9]?.maxLiabilityPerBet
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -2663,6 +2825,9 @@ const DTL20 = ({
                         back: true,
                         name: data[0]?.runners[0]?.name,
                         isWeak: data[0]?.isWeak,
+                        maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                        isBettable:data[0]?.isBettable,
+                        maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -2717,6 +2882,9 @@ const DTL20 = ({
                         back: true,
                         name: data[1]?.runners[0]?.name,
                         isWeak: data[1]?.isWeak,
+                        maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
+                        isBettable:data[1]?.isBettable,
+                        maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -2772,6 +2940,9 @@ const DTL20 = ({
                         back: true,
                         name: data[1]?.runners[1]?.name,
                         isWeak: data[1]?.isWeak,
+                        maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
+                        isBettable:data[1]?.isBettable,
+                        maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -2812,13 +2983,16 @@ const DTL20 = ({
                         price: data[2]?.runners[0]?.back[0]?.price,
                         side: 0,
                         selectionId: data[2]?.runners[0]?.id,
-                        btype: data[1]?.btype,
+                        btype: data[2]?.btype,
                         eventTypeId: data[2]?.eventTypeId,
                         betDelay: data[2]?.betDelay,
                         marketId: data[2]?.id,
                         back: true,
                         name: data[2]?.runners[0]?.name,
                         isWeak: data[2]?.isWeak,
+                        maxLiabilityPerMarket:data[2]?.maxLiabilityPerMarket,
+                        isBettable:data[2]?.isBettable,
+                        maxLiabilityPerBet:data[2]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -2858,13 +3032,16 @@ const DTL20 = ({
                         price: data[2]?.runners[1]?.back[0]?.price,
                         side: 0,
                         selectionId: data[2]?.runners[1]?.id,
-                        btype: data[1]?.btype,
+                        btype: data[2]?.btype,
                         eventTypeId: data[2]?.eventTypeId,
                         betDelay: data[2]?.betDelay,
                         marketId: data[2]?.id,
                         back: true,
                         name: data[2]?.runners[1]?.name,
                         isWeak: data[2]?.isWeak,
+                        maxLiabilityPerMarket:data[2]?.maxLiabilityPerMarket,
+                        isBettable:data[2]?.isBettable,
+                        maxLiabilityPerBet:data[2]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -2914,6 +3091,9 @@ const DTL20 = ({
                         back: true,
                         name: data[7]?.runners[0]?.name,
                         isWeak: data[7]?.isWeak,
+                        maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                        isBettable:data[7]?.isBettable,
+                        maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -2965,6 +3145,9 @@ const DTL20 = ({
                         back: true,
                         name: data[7]?.runners[1]?.name,
                         isWeak: data[7]?.isWeak,
+                        maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                        isBettable:data[7]?.isBettable,
+                        maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -3016,6 +3199,9 @@ const DTL20 = ({
                         back: true,
                         name: data[7]?.runners[2]?.name,
                         isWeak: data[7]?.isWeak,
+                        maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                        isBettable:data[7]?.isBettable,
+                        maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -3069,6 +3255,9 @@ const DTL20 = ({
                         back: true,
                         name: data[7]?.runners[3]?.name,
                         isWeak: data[7]?.isWeak,
+                        maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                        isBettable:data[7]?.isBettable,
+                        maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -3126,6 +3315,9 @@ const DTL20 = ({
                         back: true,
                         name: data[7]?.runners[4]?.name,
                         isWeak: data[7]?.isWeak,
+                        maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                        isBettable:data[7]?.isBettable,
+                        maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -3177,6 +3369,9 @@ const DTL20 = ({
                         back: true,
                         name: data[7]?.runners[5]?.name,
                         isWeak: data[7]?.isWeak,
+                        maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                        isBettable:data[7]?.isBettable,
+                        maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -3228,6 +3423,9 @@ const DTL20 = ({
                         back: true,
                         name: data[7]?.runners[6]?.name,
                         isWeak: data[7]?.isWeak,
+                        maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                        isBettable:data[7]?.isBettable,
+                        maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -3279,6 +3477,9 @@ const DTL20 = ({
                         back: true,
                         name: data[7]?.runners[7]?.name,
                         isWeak: data[7]?.isWeak,
+                        maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                        isBettable:data[7]?.isBettable,
+                        maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -3330,6 +3531,9 @@ const DTL20 = ({
                         back: true,
                         name: data[7]?.runners[8]?.name,
                         isWeak: data[7]?.isWeak,
+                        maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                        isBettable:data[7]?.isBettable,
+                        maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -3381,6 +3585,9 @@ const DTL20 = ({
                         back: true,
                         name: data[7]?.runners[9]?.name,
                         isWeak: data[7]?.isWeak,
+                        maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                        isBettable:data[7]?.isBettable,
+                        maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -3432,6 +3639,9 @@ const DTL20 = ({
                         back: true,
                         name: data[7]?.runners[10]?.name,
                         isWeak: data[7]?.isWeak,
+                        maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                        isBettable:data[7]?.isBettable,
+                        maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -3483,6 +3693,9 @@ const DTL20 = ({
                         back: true,
                         name: data[7]?.runners[11]?.name,
                         isWeak: data[7]?.isWeak,
+                        maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                        isBettable:data[7]?.isBettable,
+                        maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${
@@ -3534,6 +3747,9 @@ const DTL20 = ({
                         back: true,
                         name: data[7]?.runners[12]?.name,
                         isWeak: data[7]?.isWeak,
+                        maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
+                        isBettable:data[7]?.isBettable,
+                        maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
                       });
                     }}
                     className={`casino-odds-box back ${

@@ -149,6 +149,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
+                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
+                        isBettable:game?.isBettable,
+                        maxLiabilityPerBet:game?.maxLiabilityPerBet
                       });
                     }}
                     key={i}
@@ -219,6 +222,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
+                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
+                        isBettable:game?.isBettable,
+                        maxLiabilityPerBet:game?.maxLiabilityPerBet
                       });
                     }}
                     key={i}
@@ -289,6 +295,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
+                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
+                        isBettable:game?.isBettable,
+                        maxLiabilityPerBet:game?.maxLiabilityPerBet
                       });
                     }}
                     key={i}
@@ -353,6 +362,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
+                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
+                        isBettable:game?.isBettable,
+                        maxLiabilityPerBet:game?.maxLiabilityPerBet
                       });
                     }}
                     key={i}
@@ -417,6 +429,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
+                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
+                        isBettable:game?.isBettable,
+                        maxLiabilityPerBet:game?.maxLiabilityPerBet
                       });
                     }}
                     key={i}
@@ -480,6 +495,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
+                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
+                        isBettable:game?.isBettable,
+                        maxLiabilityPerBet:game?.maxLiabilityPerBet
                       });
                     }}
                     key={i}
@@ -544,6 +562,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
+                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
+                        isBettable:game?.isBettable,
+                        maxLiabilityPerBet:game?.maxLiabilityPerBet
                       });
                     }}
                     key={i}
@@ -607,6 +628,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
+                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
+                        isBettable:game?.isBettable,
+                        maxLiabilityPerBet:game?.maxLiabilityPerBet
                       });
                     }}
                     key={i}
@@ -671,6 +695,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
+                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
+                        isBettable:game?.isBettable,
+                        maxLiabilityPerBet:game?.maxLiabilityPerBet
                       });
                     }}
                     key={i}

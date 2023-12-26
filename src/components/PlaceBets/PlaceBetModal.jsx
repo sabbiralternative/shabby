@@ -56,6 +56,7 @@ const PlaceBetModal = ({
         token: generatedToken,
         maxLiabilityPerMarket: placeBetValue?.maxLiabilityPerMarket,
         isBettable: placeBetValue?.isBettable,
+        maxLiabilityPerBet:placeBetValue?.maxLiabilityPerBet
       },
     ]);
 

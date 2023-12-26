@@ -419,6 +419,9 @@ const Baccarat = ({
                     back: true,
                     name: data[3]?.runners[0]?.name,
                     isWeak: data[3]?.isWeak,
+                    maxLiabilityPerMarket:data[3]?.maxLiabilityPerMarket,
+                    isBettable:data[3]?.isBettable,
+                    maxLiabilityPerBet:data[3]?.maxLiabilityPerBet
                   });
                 }}
                 className={`baccarat-other-odd-box   ${
@@ -463,6 +466,9 @@ const Baccarat = ({
                     back: true,
                     name: data[4]?.runners[0]?.name,
                     isWeak: data[4]?.isWeak,
+                    maxLiabilityPerMarket:data[4]?.maxLiabilityPerMarket,
+                    isBettable:data[4]?.isBettable,
+                    maxLiabilityPerBet:data[4]?.maxLiabilityPerBet
                   });
                 }}
                 className={`baccarat-other-odd-box   ${
@@ -508,6 +514,9 @@ const Baccarat = ({
                     back: true,
                     name: data[5]?.runners[0]?.name,
                     isWeak: data[5]?.isWeak,
+                    maxLiabilityPerMarket:data[5]?.maxLiabilityPerMarket,
+                    isBettable:data[5]?.isBettable,
+                    maxLiabilityPerBet:data[5]?.maxLiabilityPerBet
                   });
                 }}
                 className={`baccarat-other-odd-box   ${
@@ -553,6 +562,9 @@ const Baccarat = ({
                     back: true,
                     name: data[6]?.runners[0]?.name,
                     isWeak: data[6]?.isWeak,
+                    maxLiabilityPerMarket:data[6]?.maxLiabilityPerMarket,
+                    isBettable:data[6]?.isBettable,
+                    maxLiabilityPerBet:data[6]?.maxLiabilityPerBet
                   });
                 }}
                 className={`baccarat-other-odd-box   ${
@@ -598,7 +610,9 @@ const Baccarat = ({
                     marketId: data[1]?.id,
                     back: true,
                     name: data[1]?.runners[0]?.name,
-                    isWeak: data[1]?.isWeak,
+                    isWeak: data[1]?.isWeak, maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
+                    isBettable:data[1]?.isBettable,
+                    maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
                   });
                 }}
                 className={`player-pair-box   ${
@@ -651,6 +665,9 @@ const Baccarat = ({
                     back: true,
                     name: data[0]?.runners[0]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                    isBettable:data[0]?.isBettable,
+                    maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
                   });
                 }}
                 className={`player-box   ${
@@ -714,6 +731,9 @@ const Baccarat = ({
                     back: true,
                     name: data[0]?.runners[2]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                    isBettable:data[0]?.isBettable,
+                    maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
                   });
                 }}
                 className={`tie-box   ${
@@ -757,6 +777,9 @@ const Baccarat = ({
                     back: true,
                     name: data[0]?.runners[1]?.name,
                     isWeak: data[0]?.isWeak,
+                    maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
+                    isBettable:data[0]?.isBettable,
+                    maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
                   });
                 }}
                 className={`banker-box   ${
@@ -819,6 +842,9 @@ const Baccarat = ({
                     back: true,
                     name: data[2]?.runners[0]?.name,
                     isWeak: data[2]?.isWeak,
+                    maxLiabilityPerMarket:data[2]?.maxLiabilityPerMarket,
+                    isBettable:data[2]?.isBettable,
+                    maxLiabilityPerBet:data[2]?.maxLiabilityPerBet
                   });
                 }}
                 className={`banker-pair-box   ${
