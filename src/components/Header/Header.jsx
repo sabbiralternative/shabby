@@ -110,7 +110,7 @@ const Header = () => {
           }
         )
         .then((res) => {
-          if (res?.data?.success !== false) {
+          if (res?.data?.success === false) {
             localStorage.clear();
             navigate("/login");
           } else {
