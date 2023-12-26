@@ -260,11 +260,11 @@ const MatchOddsSection = ({
                             betDelay: item?.betDelay,
                             marketId: item?.id,
                             back: true,
-                            name: runner?.name,
-                            pnl: updatedPnl,
-                            oppositionName: item.runners.map(
+                            name: item.runners.map(
                               (runner) => runner.name
                             ),
+                            pnl: updatedPnl,
+                           
                             isWeak: item?.isWeak,
                             maxLiabilityPerMarket:item?.maxLiabilityPerMarket,
                             isBettable:item?.isBettable,
@@ -306,7 +306,7 @@ const MatchOddsSection = ({
                       })}
 
                     {runner?.lay?.map((lay, i) => {
-                      console.log(item);
+                      // console.log(item);
                       const handlePlaceLayBets = () => {
                         setTotalSize("");
                         setShowBets(true);
@@ -321,10 +321,10 @@ const MatchOddsSection = ({
                           marketId: item?.id,
                           pnl: updatedPnl,
                           lay: true,
-                          oppositionName: item.runners.map(
+                       
+                          name: item.runners.map(
                             (runner) => runner.name
                           ),
-                          name: runner?.name,
                           isWeak: item?.isWeak,
                           maxLiabilityPerMarket:item?.maxLiabilityPerMarket,
                           isBettable:item?.isBettable,

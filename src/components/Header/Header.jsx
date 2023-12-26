@@ -29,7 +29,9 @@ const Header = () => {
   const navigate = useNavigate();
   const modalRef = useRef(null);
   const openModalRef = useRef();
-  const { setFilterGames, setRefetchBetsExposure } = UseState();
+  const { setFilterGames, setRefetchBetsExposure,
+    // showExp, setShowExp,showBalance, setShowBalance
+   } = UseState();
   const role = localStorage.getItem("loginName");
 
   /* Close modalRef modal click outside the modal */
@@ -96,6 +98,7 @@ const Header = () => {
     const fetchBalanceExp = () => {
       const generatedToken = UseTokenGenerator();
       const encryptedData = UseEncryptData(generatedToken);
+
       axios
         .post(
           balanceApi,
@@ -107,7 +110,7 @@ const Header = () => {
           }
         )
         .then((res) => {
-          if (res?.data?.success === false) {
+          if (res?.data?.success !== false) {
             localStorage.clear();
             navigate("/login");
           } else {

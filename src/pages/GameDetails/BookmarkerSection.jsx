@@ -239,12 +239,12 @@ const BookmarkerSection = ({
                             eventTypeId: bookmark?.eventTypeId,
                             betDelay: bookmark?.betDelay,
                             pnl: updatedPnl,
-                            oppositionName: bookmark.runners.map(
-                              (runner) => runner.name
-                            ),
+                         
                             marketId: bookmark?.id,
                             back: true,
-                            name: runner?.name,
+                            name: bookmark.runners.map(
+                              (runner) => runner.name
+                            ),
                             isWeak: bookmark?.isWeak,
                             maxLiabilityPerMarket:bookmark?.maxLiabilityPerMarket,
                             isBettable:bookmark?.isBettable,
@@ -302,11 +302,10 @@ const BookmarkerSection = ({
                           betDelay: bookmark?.betDelay,
                           marketId: bookmark?.id,
                           pnl: updatedPnl,
-                          oppositionName: bookmark.runners.map(
+                          lay: true,
+                          name: bookmark.runners.map(
                             (runner) => runner.name
                           ),
-                          lay: true,
-                          name: runner?.name,
                           isWeak: bookmark?.isWeak,
                           maxLiabilityPerMarket:bookmark?.maxLiabilityPerMarket,
                           isBettable:bookmark?.isBettable,

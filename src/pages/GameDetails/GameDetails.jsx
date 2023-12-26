@@ -44,14 +44,13 @@ const GameDetails = () => {
   const [oddStake, setOddStake] = useState("");
   const [oddStakeLay1, setOddStakeLay1] = useState("");
   const [oddStakeLay2, setOddStakeLay2] = useState("");
-
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [tabs, setTabs] = useState("odds");
 
-  const oppositionName = placeBetValue?.oppositionName?.filter(
-    (name) => name !== placeBetValue?.name
-  );
+  // const oppositionName = placeBetValue?.oppositionName?.filter(
+  //   (name) => name !== placeBetValue?.name
+  // );
 
   /* Set price */
   useEffect(() => {
@@ -713,7 +712,7 @@ const GameDetails = () => {
                         <>
                           <div className="row mt-2">
                             <div className="col-4">
-                              <span>{placeBetValue?.name}</span>
+                              <span>{placeBetValue?.name[0]}</span>
                             </div>
 
                             {placeBetValue?.pnl?.length > 0 && (
@@ -747,8 +746,8 @@ const GameDetails = () => {
                           <div className="row mt-2">
                             <div className="col-4">
                               <span>
-                                {oppositionName?.length > 0
-                                  ? oppositionName[0]
+                                {placeBetValue?.name?.length > 0
+                                  ? placeBetValue?.name[1]
                                   : null}
                               </span>
                             </div>
@@ -792,8 +791,8 @@ const GameDetails = () => {
                           <div className="row mt-2">
                             <div className="col-4">
                               <span>
-                                {oppositionName?.length > 1
-                                  ? oppositionName[1]
+                              {placeBetValue?.name?.length > 1
+                                  ? placeBetValue?.name[2]
                                   : null}
                               </span>
                             </div>
@@ -822,13 +821,13 @@ const GameDetails = () => {
                                 }`}
                               >
                                 {placeBetValue?.back &&
-                                  oppositionName?.length > 1 &&
+                                  placeBetValue?.name?.length > 1 &&
                                   totalSize != 0 &&
                                   totalSize?.length > 0 &&
                                   oddStakeLay2}
 
                                 {placeBetValue?.lay &&
-                                  oppositionName?.length > 1 &&
+                                  placeBetValue?.name?.length > 1 &&
                                   totalSize?.length > 0 &&
                                   totalSize != 0 &&
                                   oddStakeLay2}

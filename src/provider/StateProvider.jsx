@@ -7,6 +7,8 @@ const StateProvider = ({ children }) => {
   const [placeBetValue, setPlaceBetValue] = useState({});
   const [filterGames, setFilterGames] = useState("all");
   const [refetchBetsExposure, setRefetchBetsExposure] = useState(null);
+  // const [showExp, setShowExp] = useState(0);
+  // const [showBalance, setShowBalance] = useState(0);
 
   /* data[0]?.runners[0] exposure */
   const [lowExposure, setLowExposure] = useState([]);
@@ -140,6 +142,7 @@ const StateProvider = ({ children }) => {
     setFilterGames,
     refetchBetsExposure,
     setRefetchBetsExposure,
+    // showExp, setShowExp,showBalance, setShowBalance,
 
     lowExposure,
     setLowExposure,

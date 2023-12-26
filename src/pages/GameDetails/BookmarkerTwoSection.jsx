@@ -241,11 +241,11 @@ const BookmarkerTwoSection = ({
                             betDelay: bookmaker?.betDelay,
                             marketId: bookmaker?.id,
                             pnl: updatedPnl,
-                            oppositionName: bookmaker.runners.map(
+                    
+                            back: true,
+                            name: bookmaker.runners.map(
                               (runner) => runner.name
                             ),
-                            back: true,
-                            name: runner?.name,
                             isWeak: bookmaker?.isWeak,
                             maxLiabilityPerMarket:bookmaker?.maxLiabilityPerMarket,
                             isBettable:bookmaker?.isBettable,
@@ -305,11 +305,11 @@ const BookmarkerTwoSection = ({
                           betDelay: bookmaker?.betDelay,
                           marketId: bookmaker?.id,
                           pnl: updatedPnl,
-                          oppositionName: bookmaker.runners.map(
+                          
+                          lay: true,
+                          name: bookmaker.runners.map(
                             (runner) => runner.name
                           ),
-                          lay: true,
-                          name: runner?.name,
                           isWeak: bookmaker?.isWeak,
                           maxLiabilityPerMarket:bookmaker?.maxLiabilityPerMarket,
                           isBettable:bookmaker?.isBettable,
