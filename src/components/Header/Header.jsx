@@ -7,20 +7,16 @@ import { useForm } from "react-hook-form";
 import RulesModal from "./RulesModal";
 import UseState from "../../hooks/UseState";
 import SearchBox from "./SearchBox";
-import UseTokenGenerator from "../../hooks/UseTokenGenerator";
-import UseEncryptData from "../../hooks/UseEncryptData";
+import UseBalance from "../../hooks/UseBalance";
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [balance, setBalance] = useState(true);
   const [exp, setExp] = useState(true);
   const token = localStorage.getItem("token");
-  const balanceApi = config?.result?.endpoint?.balance;
   const notificationApi = config?.result?.endpoint?.notification;
   const buttonValueApi = config?.result?.endpoint?.buttonValue;
   const { register, handleSubmit } = useForm();
-  const [showBalance, setShowBalance] = useState(0);
-  const [showExp, setShowExp] = useState(0);
   const [showNotification, setShowNotification] = useState("");
   const { buttonValue, SetButtonValue } = UseState();
 
@@ -29,10 +25,9 @@ const Header = () => {
   const navigate = useNavigate();
   const modalRef = useRef(null);
   const openModalRef = useRef();
-  const { setFilterGames, setRefetchBetsExposure,
-    // showExp, setShowExp,showBalance, setShowBalance
-   } = UseState();
+  const { setFilterGames } = UseState();
   const role = localStorage.getItem("loginName");
+  const [balanceData] = UseBalance();
 
   /* Close modalRef modal click outside the modal */
   useEffect(() => {
@@ -92,38 +87,6 @@ const Header = () => {
       window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
-
-  /* Call balance anx exp api every 5 seconds */
-  useEffect(() => {
-    const fetchBalanceExp = () => {
-      const generatedToken = UseTokenGenerator();
-      const encryptedData = UseEncryptData(generatedToken);
-
-      axios
-        .post(
-          balanceApi,
-          encryptedData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          if (res?.data?.success === false) {
-            localStorage.clear();
-            navigate("/login");
-          } else {
-            setRefetchBetsExposure(res?.data?.result?.update);
-            setShowBalance(res?.data?.result?.creditLimit);
-            setShowExp(res?.data?.result?.deductedExposure);
-          }
-        });
-    };
-    fetchBalanceExp();
-    const intervalId = setInterval(fetchBalanceExp, 5000);
-    return () => clearInterval(intervalId);
-  }, [balanceApi, token, navigate, setRefetchBetsExposure]);
 
   /* Get marquee notification */
   useEffect(() => {
@@ -316,14 +279,14 @@ const Header = () => {
               {balance && (
                 <div>
                   <span>Balance:</span>
-                  <b>{showBalance}</b>
+                  <b>{balanceData?.creditLimit}</b>
                 </div>
               )}
               <div>
                 {exp && (
                   <>
                     <span>Exp:</span>
-                    <b className="pointer">{showExp}</b>
+                    <b className="pointer">{balanceData?.deductedExposure}</b>
                   </>
                 )}
 

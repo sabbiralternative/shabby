@@ -1,50 +1,48 @@
-// import { useQuery } from "@tanstack/react-query";
-// import axios from "axios";
-// import UseEncryptData from "./UseEncryptData";
-// import UseTokenGenerator from "./UseTokenGenerator";
-// import { useEffect } from "react";
-// import { config } from "../utils/config";
-// import { useNavigate } from "react-router-dom";
-// import UseState from "./UseState";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import UseEncryptData from "./UseEncryptData";
+import UseTokenGenerator from "./UseTokenGenerator";
+import { useEffect } from "react";
+import { config } from "../utils/config";
+import { useNavigate } from "react-router-dom";
+import UseState from "./UseState";
 
-// const UseBalance = () => {
-//   const balanceAPi = config?.result?.endpoint?.balance;
-//   const token = localStorage.getItem("token");
-//   const generatedToken = UseTokenGenerator();
-//   const encryptedData = UseEncryptData(generatedToken);
-//   const {  setRefetchBetsExposure, setShowExp, setShowBalance } = UseState();
-//   const navigate = useNavigate()
-//   const { data: balance, refetch: refetchBalance } = useQuery({
-//     queryKey: ["balance"],
-//     queryFn: async () => {
-//       const res = await axios.post(balanceAPi, encryptedData, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
-//       const data = res.data?.result;
-//       console.log(res);
-//       if (res?.data?.success === false) {
-//         localStorage.clear();
-//         navigate("/login");
-//       } else {
-//         setRefetchBetsExposure(res?.data?.result?.update);
-//         setShowBalance(res?.data?.result?.creditLimit);
-//         setShowExp(res?.data?.result?.deductedExposure);
-//         return data;
-//       }
-//     },
-//     staleTime: 6000,
-//   });
+const UseBalance = () => {
+  const balanceAPi = config?.result?.endpoint?.balance;
+  const token = localStorage.getItem("token");
+  const { setRefetchBetsExposure } = UseState();
+  const navigate = useNavigate();
 
-//   useEffect(() => {
-//     const intervalId = setInterval(() => {
-//       refetchBalance();
-//     }, 6000);
-//     return () => clearInterval(intervalId);
-//   }, [refetchBalance]);
+  const { data: balanceData, refetch: refetchBalance } = useQuery({
+    queryKey: ["balance"],
+    queryFn: async () => {
+      const generatedToken = UseTokenGenerator();
+      const encryptedData = UseEncryptData(generatedToken);
+      const res = await axios.post(balanceAPi, encryptedData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res?.data?.success === false) {
+        localStorage.clear();
+        navigate("/login");
+      } else if (res?.data?.success) {
+        const data = res.data?.result;
+        setRefetchBetsExposure(data?.update);
+        return data;
+      }
+    },
+    staleTime: 6000,
+  });
 
-//   return [balance, refetchBalance];
-// };
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      refetchBalance();
+    }, 6000);
+    return () => clearInterval(intervalId);
+  }, [refetchBalance]);
 
-// export default UseBalance;
+  return [balanceData, refetchBalance];
+};
+
+export default UseBalance;

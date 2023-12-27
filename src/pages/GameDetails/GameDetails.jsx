@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import Notification from "../../components/Notification/Notification";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseBalance from "../../hooks/UseBalance";
 
 const GameDetails = () => {
   const { id, eventId } = useParams();
@@ -47,7 +48,7 @@ const GameDetails = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [tabs, setTabs] = useState("odds");
-
+  const [, refetchBalance] = UseBalance();
   // const oppositionName = placeBetValue?.oppositionName?.filter(
   //   (name) => name !== placeBetValue?.name
   // );
@@ -57,18 +58,31 @@ const GameDetails = () => {
     setPrice(placeBetValue?.price);
   }, [placeBetValue]);
 
+  // console.log(data);
+
   /* Profit */
   useEffect(() => {
     if (
       price &&
       totalSize &&
       placeBetValue?.back &&
-      placeBetValue?.btype !== "FANCY"
+      placeBetValue?.btype === "MATCH_ODDS"
     ) {
       const multiply = price * totalSize;
       setProfit(multiply - totalSize);
+    } else if (
+      price &&
+      totalSize &&
+      placeBetValue?.back &&
+      (placeBetValue?.btype === "BOOKMAKER" ||
+        placeBetValue?.btype === "BOOKMAKER2")
+    ) {
+      const numberPrice = Number(price);
+      const numberTotalSize = Number(totalSize);
+      const multiply = numberPrice * numberTotalSize;
+      setProfit(multiply / numberTotalSize);
     }
-  }, [price, totalSize, placeBetValue?.back, placeBetValue?.btype]);
+  }, [price, totalSize, profit, placeBetValue, setProfit]);
 
   /* Get game details */
   useEffect(() => {
@@ -185,7 +199,7 @@ const GameDetails = () => {
         token: generatedToken,
         maxLiabilityPerMarket: placeBetValue?.maxLiabilityPerMarket,
         isBettable: placeBetValue?.isBettable,
-        maxLiabilityPerBet:placeBetValue?.maxLiabilityPerBet
+        maxLiabilityPerBet: placeBetValue?.maxLiabilityPerBet,
       },
     ]);
     setLoader(true);
@@ -201,6 +215,7 @@ const GameDetails = () => {
         if (data?.success) {
           refetchExposure();
           refetchCurrentBets();
+          refetchBalance();
           console.log(data);
           setLoader(false);
           setShowBets(false);
@@ -210,6 +225,7 @@ const GameDetails = () => {
           setLoader(false);
           setShowBets(false);
           refetchExposure();
+          refetchBalance();
           refetchCurrentBets();
           console.log(data);
         }
@@ -663,13 +679,17 @@ const GameDetails = () => {
                             {price &&
                             totalSize &&
                             placeBetValue?.back &&
-                            placeBetValue?.btype !== "FANCY"
+                            (placeBetValue?.btype === "MATCH_ODDS" ||
+                              placeBetValue?.btype === "BOOKMAKER" ||
+                              placeBetValue?.btype === "BOOKMAKER2")
                               ? profit
                               : null}
                             {price &&
                             totalSize &&
                             placeBetValue?.lay &&
-                            placeBetValue?.btype !== "FANCY"
+                            (placeBetValue?.btype === "MATCH_ODDS" ||
+                              placeBetValue?.btype === "BOOKMAKER" ||
+                              placeBetValue?.btype === "BOOKMAKER2")
                               ? totalSize
                               : null}
                             {price &&
@@ -791,7 +811,7 @@ const GameDetails = () => {
                           <div className="row mt-2">
                             <div className="col-4">
                               <span>
-                              {placeBetValue?.name?.length > 1
+                                {placeBetValue?.name?.length > 1
                                   ? placeBetValue?.name[2]
                                   : null}
                               </span>
@@ -945,13 +965,17 @@ const GameDetails = () => {
                   {price &&
                   totalSize &&
                   placeBetValue?.back &&
-                  placeBetValue?.btype !== "FANCY"
+                  (placeBetValue?.btype === "MATCH_ODDS" ||
+                    placeBetValue?.btype === "BOOKMAKER" ||
+                    placeBetValue?.btype === "BOOKMAKER2")
                     ? profit
                     : null}
                   {price &&
                   totalSize &&
                   placeBetValue?.lay &&
-                  placeBetValue?.btype !== "FANCY"
+                  (placeBetValue?.btype === "MATCH_ODDS" ||
+                    placeBetValue?.btype === "BOOKMAKER" ||
+                    placeBetValue?.btype === "BOOKMAKER2")
                     ? totalSize
                     : null}
                   {price && totalSize && placeBetValue?.btype == "FANCY"
