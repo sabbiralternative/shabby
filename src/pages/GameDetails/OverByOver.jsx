@@ -219,7 +219,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
                               minLiabilityPerBet: over?.minLiabilityPerBet,
                               marketId: over?.id,
                               lay: true,
-                              name: runner?.name,
+                              selectedBetName:runner?.name,
                               isWeak: over?.isWeak,
                               maxLiabilityPerMarket:over?.maxLiabilityPerMarket,
                               isBettable:over?.isBettable
@@ -259,7 +259,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
                               maxLiabilityPerBet: over?.maxLiabilityPerBet,
                               minLiabilityPerBet: over?.minLiabilityPerBet,
                               back: true,
-                              name: runner?.name,
+                              selectedBetName:runner?.name,
                               isWeak: over?.isWeak,
                               isBettable:over?.isBettable,
                               maxLiabilityPerMarket:over?.maxLiabilityPerMarket,

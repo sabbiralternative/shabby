@@ -221,7 +221,8 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                               name: runner?.name,
                               isWeak: odd?.isWeak,
                               maxLiabilityPerMarket:odd?.maxLiabilityPerMarket,
-                              isBettable:odd?.isBettable
+                              isBettable:odd?.isBettable,
+                              selectedBetName:runner?.name,
                             });
                           };
                           return (
@@ -265,7 +266,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                               isWeak: odd?.isWeak,
                               maxLiabilityPerMarket:odd?.maxLiabilityPerMarket,
                               isBettable:odd?.isBettable,
-                             
+                              selectedBetName:runner?.name,
                             });
                           };
                           return (

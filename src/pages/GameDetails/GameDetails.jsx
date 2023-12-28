@@ -49,6 +49,7 @@ const GameDetails = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [tabs, setTabs] = useState("odds");
   const [, refetchBalance] = UseBalance();
+  const [booksValue, setBooksValue] = useState([]);
   // const oppositionName = placeBetValue?.oppositionName?.filter(
   //   (name) => name !== placeBetValue?.name
   // );
@@ -315,16 +316,26 @@ const GameDetails = () => {
       setOddStake(total + pnl1);
       setOddStakeLay1(-1 * totalSize + pnl2);
       setOddStakeLay2(-1 * totalSize + pnl3);
+      setBooksValue([
+        total + pnl1,
+        -1 * totalSize + pnl2,
+        -1 * totalSize + pnl3,
+      ]);
     } else if (placeBetValue?.lay) {
-      const total = -1 * (price * totalSize - totalSize);
-      setOddStake(total + pnl1);
-      setOddStakeLay1(totalSize + pnl2);
-      setOddStakeLay2(totalSize + pnl3);
+      const total =
+        -1 * (Number(price) * Number(totalSize) - Number(totalSize));
+      const oddStakeFirstLay = Number(total) + Number(pnl1);
+      const oddStakeSecondLay = Number(totalSize) + Number(pnl2);
+      const oddStakeThirdLay = Number(totalSize) + Number(pnl3);
+      setOddStake(oddStakeFirstLay);
+      setOddStakeLay1(oddStakeSecondLay);
+      setOddStakeLay2(oddStakeThirdLay);
+      setBooksValue([oddStakeFirstLay, oddStakeSecondLay, oddStakeThirdLay]);
     }
   }, [price, totalSize, placeBetValue, pnl1, pnl2, pnl3]);
 
   const [isSticky, setSticky] = useState(false);
-
+  // console.log(booksValue);
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -531,6 +542,7 @@ const GameDetails = () => {
               id={id}
               eventId={eventId}
               setTotalSize={setTotalSize}
+              booksValue={booksValue}
             />
           ) : null}
 
@@ -928,7 +940,7 @@ const GameDetails = () => {
               </div>
               <div className="place-bet-box-body">
                 <div className="place-bet-for">
-                  <span>{placeBetValue?.name}</span>
+                  <span>{placeBetValue?.selectedBetName}</span>
                 </div>
                 <div className="place-bet-odds">
                   <input

@@ -239,7 +239,7 @@ const BookmarkerSection = ({
                             eventTypeId: bookmark?.eventTypeId,
                             betDelay: bookmark?.betDelay,
                             pnl: updatedPnl,
-                         
+                            selectedBetName:runner?.name,
                             marketId: bookmark?.id,
                             back: true,
                             name: bookmark.runners.map(
@@ -306,6 +306,7 @@ const BookmarkerSection = ({
                           name: bookmark.runners.map(
                             (runner) => runner.name
                           ),
+                          selectedBetName:runner?.name,
                           isWeak: bookmark?.isWeak,
                           maxLiabilityPerMarket:bookmark?.maxLiabilityPerMarket,
                           isBettable:bookmark?.isBettable,

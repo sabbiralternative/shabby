@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { config } from "../../utils/config";
 AOS.init();
 
 const Footer = () => {
   const [showModal, setShowModal] = useState(false);
   const modal = JSON.parse(localStorage.getItem('modal'))
+  const siteTitle = config?.result?.settings?.siteTitle
 
   useEffect(() => {
     const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
@@ -115,7 +117,7 @@ const Footer = () => {
       <div className="footer-text">
         <p></p>
         <p className="text-center">
-          © Copyright 2023. All Rights Reserved. Powered by SHABBY247.
+          © Copyright {new Date().getFullYear()}. All Rights Reserved. Powered by {siteTitle}.
         </p>
       </div>
     </>

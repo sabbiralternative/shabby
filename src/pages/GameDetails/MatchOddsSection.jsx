@@ -9,6 +9,7 @@ const MatchOddsSection = ({
   exposer,
   setShowBets,
   setTotalSize,
+  // booksValue,
 }) => {
   const token = localStorage.getItem("token");
   const laderApi = config?.result?.endpoint?.ladder;
@@ -17,7 +18,6 @@ const MatchOddsSection = ({
   const { setPlaceBetValue } = UseState();
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
-
 
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
@@ -227,6 +227,17 @@ const MatchOddsSection = ({
                               </span>
                             );
                           })}
+                          {/* {booksValue &&
+                            booksValue.map((value, i) => {
+                              return (
+                                <span
+                                  key={i}
+                                  className="market-live-book d-none d-xl-block  text-danger"
+                                >
+                                  {value}
+                                </span>
+                              );
+                            })} */}
                         </div>
                       )}
                     </div>
@@ -260,15 +271,14 @@ const MatchOddsSection = ({
                             betDelay: item?.betDelay,
                             marketId: item?.id,
                             back: true,
-                            name: item.runners.map(
-                              (runner) => runner.name
-                            ),
+                            name: item.runners.map((runner) => runner.name),
+                            selectedBetName: runner?.name,
                             pnl: updatedPnl,
-                           
+
                             isWeak: item?.isWeak,
-                            maxLiabilityPerMarket:item?.maxLiabilityPerMarket,
-                            isBettable:item?.isBettable,
-                            maxLiabilityPerBet:item?.maxLiabilityPerBet
+                            maxLiabilityPerMarket: item?.maxLiabilityPerMarket,
+                            isBettable: item?.isBettable,
+                            maxLiabilityPerBet: item?.maxLiabilityPerBet,
                           });
                         };
 
@@ -306,7 +316,7 @@ const MatchOddsSection = ({
                       })}
 
                     {runner?.lay?.map((lay, i) => {
-                      // console.log(item);
+                      // console.log(runner);
                       const handlePlaceLayBets = () => {
                         setTotalSize("");
                         setShowBets(true);
@@ -321,16 +331,12 @@ const MatchOddsSection = ({
                           marketId: item?.id,
                           pnl: updatedPnl,
                           lay: true,
-                       
-                          name: item.runners.map(
-                            (runner) => runner.name
-                          ),
+                          selectedBetName: runner?.name,
+                          name: item.runners.map((runner) => runner.name),
                           isWeak: item?.isWeak,
-                          maxLiabilityPerMarket:item?.maxLiabilityPerMarket,
-                          isBettable:item?.isBettable,
-                          maxLiabilityPerBet:item?.maxLiabilityPerBet
-
-
+                          maxLiabilityPerMarket: item?.maxLiabilityPerMarket,
+                          isBettable: item?.isBettable,
+                          maxLiabilityPerBet: item?.maxLiabilityPerBet,
                         });
                       };
                       return (

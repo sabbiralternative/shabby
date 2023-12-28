@@ -223,7 +223,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                               betDelay: fancyGame?.betDelay,
                               marketId: fancyGame?.id,
                               lay: true,
-                              name: runner?.name,
+                              selectedBetName:runner?.name,
                               isWeak: fancyGame?.isWeak,
                               maxLiabilityPerMarket:fancyGame?.maxLiabilityPerMarket,
                               isBettable:fancyGame?.isBettable
@@ -264,7 +264,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                               betDelay: fancyGame?.betDelay,
                               marketId: fancyGame?.id,
                               back: true,
-                              name: runner?.name,
+                              selectedBetName:runner?.name,
                               isWeak: fancyGame?.isWeak,
                               maxLiabilityPerMarket:fancyGame?.maxLiabilityPerMarket,
                               isBettable:fancyGame?.isBettable,

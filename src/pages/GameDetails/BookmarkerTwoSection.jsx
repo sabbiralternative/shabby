@@ -241,7 +241,7 @@ const BookmarkerTwoSection = ({
                             betDelay: bookmaker?.betDelay,
                             marketId: bookmaker?.id,
                             pnl: updatedPnl,
-                    
+                            selectedBetName:runner?.name,
                             back: true,
                             name: bookmaker.runners.map(
                               (runner) => runner.name
@@ -305,7 +305,7 @@ const BookmarkerTwoSection = ({
                           betDelay: bookmaker?.betDelay,
                           marketId: bookmaker?.id,
                           pnl: updatedPnl,
-                          
+                          selectedBetName:runner?.name,
                           lay: true,
                           name: bookmaker.runners.map(
                             (runner) => runner.name
