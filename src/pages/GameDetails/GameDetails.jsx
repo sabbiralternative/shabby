@@ -352,7 +352,7 @@ const GameDetails = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-// console.log(data);
+// console.log(placeBetValue);
   return (
     <>
       <div className="center-container">
