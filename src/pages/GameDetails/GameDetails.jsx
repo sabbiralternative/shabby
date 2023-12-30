@@ -14,6 +14,8 @@ import Notification from "../../components/Notification/Notification";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseBalance from "../../hooks/UseBalance";
+import MobilePlaceBet from "./MobilePlaceBet";
+import DesktopPlaceBet from "./DesktopPlaceBet";
 
 const GameDetails = () => {
   const { id, eventId } = useParams();
@@ -464,7 +466,7 @@ const GameDetails = () => {
 
           {(match_odds?.length > 0 &&
             match_odds[0]?.score?.length !== 0 &&
-            tabs === "odds") ||
+            tabs === "odds" && id == '4') ||
           tabs === "tv" ? (
             <div className="scorecard">
               {match_odds[0]?.score?.map((scoreInfo, i) => {
@@ -607,281 +609,27 @@ const GameDetails = () => {
         </div>
 
         {/* Mobile place bet starts */}
-        {showBets && window.innerWidth < 1200 && (
-          <>
-            <div className="fade modal-backdrop show"></div>
-            <div
-              role="dialog"
-              aria-modal="true"
-              className="fade modal show"
-              tabIndex="-1"
-              style={{
-                paddingRight: "17px",
-                display: "block",
-              }}
-            >
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <div className="modal-title h4">Place Bet</div>
-                    <button
-                      onClick={() => setShowBets(false)}
-                      type="button"
-                      className="btn-close"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                    <div
-                      className={`place-bet-modal  ${
-                        placeBetValue?.back ? "back" : ""
-                      } ${placeBetValue?.lay ? "lay" : ""}`}
-                    >
-                      {loader && (
-                        <div id="loader-section">
-                          <div id="load-inner">
-                            <i className="fa fa-spinner fa-spin"></i>
-                          </div>
-                        </div>
-                      )}
-                      <div className="row align-items-end">
-                        <div className="col-6">
-                          <b>{placeBetValue?.name}</b>
-                        </div>
-                        <div className="col-6">
-                          <div className="float-end">
-                            <button
-                              onClick={handleDecreasePrice}
-                              className="stakeactionminus btn"
-                            >
-                              <span className="fa fa-minus"></span>
-                            </button>
-                            <input
-                              onChange={(e) => setPrice(e.target.value)}
-                              type="text"
-                              className="stakeinput"
-                              disabled=""
-                              value={price}
-                            />
-                            <button
-                              onClick={handleIncreasePrice}
-                              className="stakeactionminus btn"
-                            >
-                              <span className="fa fa-plus"></span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row mt-2">
-                        <div className="col-4">
-                          <input
-                            onChange={(e) => setTotalSize(e.target.value)}
-                            type="number"
-                            className="stakeinput w-100"
-                            value={totalSize}
-                          />
-                        </div>
-                        <div onClick={handleOrderBets} className="col-4 d-grid">
-                          <button className="btn btn-primary btn-block">
-                            Submit
-                          </button>
-                        </div>
-                        <div className="col-4 text-center pt-2">
-                          <span>
-                            {price &&
-                            totalSize &&
-                            placeBetValue?.back &&
-                            (placeBetValue?.btype === "MATCH_ODDS" ||
-                              placeBetValue?.btype === "BOOKMAKER" ||
-                              placeBetValue?.btype === "BOOKMAKER2")
-                              ? profit
-                              : null}
-                            {price &&
-                            totalSize &&
-                            placeBetValue?.lay &&
-                            (placeBetValue?.btype === "MATCH_ODDS" ||
-                              placeBetValue?.btype === "BOOKMAKER" ||
-                              placeBetValue?.btype === "BOOKMAKER2")
-                              ? totalSize
-                              : null}
-                            {price &&
-                            totalSize &&
-                            placeBetValue?.btype == "FANCY"
-                              ? 0
-                              : null}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="place-bet-buttons mt-2">
-                        {buttonValues?.map((buttonVal, i) => {
-                          const handleButtonValue = (val) => {
-                            setTotalSize(val.value);
-                          };
-                          return (
-                            <button
-                              key={i}
-                              onClick={() => handleButtonValue(buttonVal)}
-                              className="btn btn-place-bet"
-                            >
-                              {buttonVal?.label}
-                            </button>
-                          );
-                        })}
-                      </div>
-                      <div
-                        onClick={() => {
-                          setShowBets(!showBets);
-                          SetButtonValue(!buttonValue);
-                        }}
-                        className="mt-3 d-flex justify-content-between align-items-center"
-                      >
-                        <button className="btn btn-info">Edit</button>
-                      </div>
+        <MobilePlaceBet
+          showBets={showBets}
+          setShowBets={setShowBets}
+          placeBetValue={placeBetValue}
+          loader={loader}
+          handleDecreasePrice={handleDecreasePrice}
+          setPrice={setPrice}
+          price={price}
+          handleIncreasePrice={handleIncreasePrice}
+          totalSize={totalSize}
+          setTotalSize={setTotalSize}
+          handleOrderBets={handleOrderBets}
+          profit={profit}
+          buttonValues={buttonValues}
+          SetButtonValue={SetButtonValue}
+          buttonValue={buttonValue}
+          oddStake={oddStake}
+          oddStakeLay1={oddStakeLay1}
+          oddStakeLay2={oddStakeLay2}
+        />
 
-                      {placeBetValue?.btype === "MATCH_ODDS" ||
-                      placeBetValue?.btype === "BOOKMAKER" ||
-                      placeBetValue?.btype === "BOOKMAKER2" ? (
-                        <>
-                          <div className="row mt-2">
-                            <div className="col-4">
-                              <span>{placeBetValue?.name[0]}</span>
-                            </div>
-
-                            {placeBetValue?.pnl?.length > 0 && (
-                              <div className="col-4 text-center">
-                                <span
-                                  className={`${
-                                    placeBetValue?.pnl &&
-                                    placeBetValue?.pnl[0] > 0
-                                      ? "text-success"
-                                      : "text-danger"
-                                  }`}
-                                >
-                                  {placeBetValue?.pnl[0]}
-                                </span>
-                              </div>
-                            )}
-
-                            <div className="col-4 text-end">
-                              <span
-                                className={`${
-                                  oddStake > 0 ? "text-success" : "text-danger"
-                                }`}
-                              >
-                                {oddStake !== 0 &&
-                                  totalSize?.length > 0 &&
-                                  oddStake}
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="row mt-2">
-                            <div className="col-4">
-                              <span>
-                                {placeBetValue?.name?.length > 0
-                                  ? placeBetValue?.name[1]
-                                  : null}
-                              </span>
-                            </div>
-
-                            {placeBetValue?.pnl?.length > 1 && (
-                              <div className="col-4 text-center">
-                                <span
-                                  className={`${
-                                    placeBetValue?.pnl &&
-                                    placeBetValue?.pnl[1] > 0
-                                      ? "text-success"
-                                      : "text-danger"
-                                  }`}
-                                >
-                                  {placeBetValue?.pnl[1]}
-                                </span>
-                              </div>
-                            )}
-
-                            <div className="col-4 text-end">
-                              <span
-                                className={`${
-                                  oddStakeLay1 > 0
-                                    ? "text-success"
-                                    : "text-danger"
-                                }`}
-                              >
-                                {placeBetValue?.back &&
-                                  totalSize != 0 &&
-                                  totalSize?.length > 0 &&
-                                  oddStakeLay1}
-
-                                {placeBetValue?.lay &&
-                                  totalSize?.length > 0 &&
-                                  totalSize != 0 &&
-                                  oddStakeLay1}
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="row mt-2">
-                            <div className="col-4">
-                              <span>
-                                {placeBetValue?.name?.length > 1
-                                  ? placeBetValue?.name[2]
-                                  : null}
-                              </span>
-                            </div>
-
-                            {placeBetValue?.pnl?.length > 0 && (
-                              <div className="col-4 text-center">
-                                <span
-                                  className={`${
-                                    placeBetValue?.pnl &&
-                                    placeBetValue?.pnl[2] > 0
-                                      ? "text-success"
-                                      : "text-danger"
-                                  }`}
-                                >
-                                  {placeBetValue?.pnl[2]}
-                                </span>
-                              </div>
-                            )}
-
-                            <div className="col-4 text-end">
-                              <span
-                                className={`${
-                                  oddStakeLay2 > 0
-                                    ? "text-success"
-                                    : "text-danger"
-                                }`}
-                              >
-                                {placeBetValue?.back &&
-                                  placeBetValue?.name?.length > 1 &&
-                                  totalSize != 0 &&
-                                  totalSize?.length > 0 &&
-                                  oddStakeLay2}
-
-                                {placeBetValue?.lay &&
-                                  placeBetValue?.name?.length > 1 &&
-                                  totalSize?.length > 0 &&
-                                  totalSize != 0 &&
-                                  oddStakeLay2}
-                              </span>
-                            </div>
-                          </div>
-                        </>
-                      ) : null}
-
-                      {placeBetValue?.btype === "FANCY" && (
-                        <p>
-                          Range: {placeBetValue?.minLiabilityPerBet} to{" "}
-                          {placeBetValue?.maxLiabilityPerBet}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
         {/* Mobile place bet ends */}
       </div>
 
@@ -915,126 +663,24 @@ const GameDetails = () => {
         )}
 
         {/* Place bet start */}
-        {showBets && window.innerWidth > 1199 && (
-          <div className="sidebar-box place-bet-container">
-            <div className="sidebar-title">
-              <h4>Place Bet</h4>
-            </div>
-            <div
-              className={`place-bet-box position-relative ${
-                placeBetValue?.back ? "back" : ""
-              } ${placeBetValue?.lay ? "lay" : ""}`}
-            >
-              {loader && (
-                <div id="loader-section">
-                  <div id="load-inner">
-                    <i className="fa fa-spinner fa-spin"></i>
-                  </div>
-                </div>
-              )}
-              <div className="place-bet-box-header">
-                <div className="place-bet-for">(Bet for)</div>
-                <div className="place-bet-odds">Odds</div>
-                <div className="place-bet-stake">Stake</div>
-                <div className="place-bet-profit">Profit</div>
-              </div>
-              <div className="place-bet-box-body">
-                <div className="place-bet-for">
-                  <span>{placeBetValue?.selectedBetName}</span>
-                </div>
-                <div className="place-bet-odds">
-                  <input
-                    onChange={(e) => setPrice(e.target.value)}
-                    type="text"
-                    className="form-control"
-                    disabled=""
-                    value={price}
-                  />
-                  <div className="spinner-buttons input-group-btn btn-group-vertical">
-                    <button
-                      onClick={handleIncreasePrice}
-                      className="btn-default"
-                    >
-                      <i className="fa fa-angle-up"></i>
-                    </button>
-                    <button
-                      onClick={handleDecreasePrice}
-                      className="btn-default"
-                    >
-                      <i className="fa fa-angle-down"></i>
-                    </button>
-                  </div>
-                </div>
-                <div className="place-bet-stake">
-                  <input
-                    onChange={(e) => setTotalSize(e.target.value)}
-                    type="number"
-                    className="form-control"
-                    value={totalSize}
-                  />
-                </div>
-                <div className="place-bet-profit">
-                  {price &&
-                  totalSize &&
-                  placeBetValue?.back &&
-                  (placeBetValue?.btype === "MATCH_ODDS" ||
-                    placeBetValue?.btype === "BOOKMAKER" ||
-                    placeBetValue?.btype === "BOOKMAKER2")
-                    ? profit
-                    : null}
-                  {price &&
-                  totalSize &&
-                  placeBetValue?.lay &&
-                  (placeBetValue?.btype === "MATCH_ODDS" ||
-                    placeBetValue?.btype === "BOOKMAKER" ||
-                    placeBetValue?.btype === "BOOKMAKER2")
-                    ? totalSize
-                    : null}
-                  {price && totalSize && placeBetValue?.btype == "FANCY"
-                    ? 0
-                    : null}
-                </div>
-              </div>
-              <div className="place-bet-buttons">
-                {buttonValues?.map((buttonVal) => {
-                  const handleButtonValue = (val) => {
-                    setTotalSize(val.value);
-                  };
-                  return (
-                    <>
-                      <button
-                        onClick={() => handleButtonValue(buttonVal)}
-                        className="btn btn-place-bet"
-                      >
-                        {buttonVal?.label}
-                      </button>
-                    </>
-                  );
-                })}
-              </div>
-              <div className="place-bet-action-buttons">
-                <div onClick={() => SetButtonValue(!buttonValue)}>
-                  <button className="btn btn-info">Edit</button>
-                </div>
-                <div>
-                  <button
-                    onClick={() => setShowBets(!showBets)}
-                    className="btn btn-danger me-1"
-                  >
-                    Reset
-                  </button>
-                  <button
-                    onClick={handleOrderBets}
-                    className="btn btn-success"
-                    disabled=""
-                  >
-                    Submit
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+       <DesktopPlaceBet
+       showBets={showBets}
+       placeBetValue={placeBetValue}
+       loader={loader}
+       setPrice={setPrice}
+       price={price}
+       handleDecreasePrice={handleDecreasePrice}
+       handleIncreasePrice={handleIncreasePrice}
+       setTotalSize={setTotalSize}
+       totalSize={totalSize}
+       profit={profit}
+       buttonValue={buttonValue}
+       SetButtonValue={SetButtonValue}
+       buttonValues={buttonValues}
+       setShowBets={setShowBets}
+       handleOrderBets={handleOrderBets}
+       
+       />
         {/* Place bet end */}
         <div className="sidebar-box my-bet-container">
           <div className="sidebar-title">
