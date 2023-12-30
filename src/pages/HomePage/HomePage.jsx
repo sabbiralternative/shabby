@@ -50,6 +50,7 @@ const HomePage = () => {
         });
         const data = res.data;
         setData(data);
+      
       }
     };
     gameData();

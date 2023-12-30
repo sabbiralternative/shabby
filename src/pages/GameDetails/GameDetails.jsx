@@ -352,7 +352,7 @@ const GameDetails = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
+// console.log(data);
   return (
     <>
       <div className="center-container">

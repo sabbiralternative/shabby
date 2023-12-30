@@ -60,7 +60,7 @@ const MobilePlaceBet = ({
                     )}
                     <div className="row align-items-end">
                       <div className="col-6">
-                        <b>{placeBetValue?.name}</b>
+                        <b>{placeBetValue?.selectedBetName}</b>
                       </div>
                       <div className="col-6">
                         <div className="float-end">
