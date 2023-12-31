@@ -1065,16 +1065,16 @@ const GameDetails = () => {
       const total = -1 * price * totalSize - totalSize;
       if (selectionId && selectionId.includes(".1")) {
         setOddStake(total + pnl1);
-        setOddStakeLay1(Number(totalSize) + Number(pnl2));
-        setOddStakeLay2(Number(totalSize) + Number(pnl3));
+        setOddStakeLay1(totalSize - pnl2);
+        setOddStakeLay2(totalSize - pnl3);
       } else if (selectionId && selectionId.includes(".2")) {
-        setOddStake(Number(total) + Number(pnl2));
-        setOddStakeLay1(Number(totalSize) + Number(pnl1));
-        setOddStakeLay2(Number(totalSize) + Number(pnl3));
+        setOddStake(total - pnl2);
+        setOddStakeLay1(totalSize - pnl1);
+        setOddStakeLay2(totalSize - pnl3);
       } else {
-        setOddStake(Number(total) + Number(pnl3));
-        setOddStakeLay1(-1 * totalSize + pnl1);
-        setOddStakeLay2(-1 * totalSize + pnl2);
+        setOddStake(total + pnl3);
+        setOddStakeLay1(-1 * totalSize - pnl1);
+        setOddStakeLay2(-1 * totalSize - pnl2);
       }
 
       // setBooksValue([oddStakeFirstLay, oddStakeSecondLay, oddStakeThirdLay]);
