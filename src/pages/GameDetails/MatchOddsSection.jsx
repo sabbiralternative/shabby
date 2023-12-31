@@ -11,6 +11,7 @@ const MatchOddsSection = ({
   setTotalSize,
   // booksValue,
 }) => {
+  // console.log(match_odds);
   const token = localStorage.getItem("token");
   const laderApi = config?.result?.endpoint?.ladder;
   const [previousData, setPreviousData] = useState(match_odds);
@@ -25,16 +26,38 @@ const MatchOddsSection = ({
     pnlBySelection = Object?.values(obj);
   }
 
-  const updatedPnl = [];
 
-  match_odds?.forEach((item) => {
-    item?.runners?.forEach((runner) => {
-      const pnl = pnlBySelection?.find((p) => p?.RunnerId === runner?.id);
-      if (pnl) {
-        updatedPnl.push(pnl?.pnl);
-      }
-    });
+const updatedPnl = [];
+match_odds?.forEach((item) => {
+  item?.runners?.forEach((runner) => {
+    // console.log(runner);
+    const pnl = pnlBySelection?.find((p) => p?.RunnerId === runner?.id);
+    if (pnl) {
+      // updatedPnl.push({ pnl: pnl?.pnl, name: runner.name });
+      updatedPnl.push(pnl?.pnl);
+    }
   });
+});
+// console.log(updatedPnl);
+
+  // const updatedPnl = [];
+
+  // match_odds?.forEach((item) => {
+  //   item?.runners?.forEach((runner) => {
+  //     const pnl = pnlBySelection?.find((p) => p?.RunnerId === runner?.id);
+  //     const names = item.runners.map((runner) => runner.name);
+
+  //     if (pnl && names) {
+  //       // Dynamically create objects based on the length of pnl array
+  //       pnl.forEach((pnlValue, index) => {
+  //         updatedPnl.push({
+  //           pnl: pnlValue,
+  //           names: names[index],
+  //         });
+  //       });
+  //     }
+  //   });
+  // });
 
   const handleLader = (marketId) => {
     const generatedToken = UseTokenGenerator();
@@ -186,7 +209,7 @@ const MatchOddsSection = ({
                 const pnl = pnlBySelection?.filter(
                   (pnl) => pnl?.RunnerId === runner?.id
                 );
-
+// console.log(pnl);
                 return (
                   <div
                     key={runner?.id}

@@ -19,7 +19,9 @@ const MobilePlaceBet = ({
   oddStake,
   oddStakeLay1,
   oddStakeLay2,
+  selectionId,
 }) => {
+  // console.log(oddStake);
   const updateElementClass = (elementId) => {
     const element = document.getElementById(elementId);
     if (element) {
@@ -196,15 +198,33 @@ const MobilePlaceBet = ({
 
                           <div className="col-4 text-end">
                             <span id="oddOne">
-                              {oddStake !== 0 &&
+                              { placeBetValue?.back && oddStake !== 0 &&
                                 totalSize?.length > 0 &&
-                                placeBetValue?.selectedBetName ===
-                                  placeBetValue?.name[0] &&
+                                selectionId.includes(".1") &&
                                 oddStake}
-                              {oddStake !== 0 &&
+
+                              { placeBetValue?.back && oddStake !== 0 &&
                                 totalSize?.length > 0 &&
-                                placeBetValue?.selectedBetName !==
-                                  placeBetValue?.name[0] &&
+                                selectionId.includes(".2") &&
+                                oddStakeLay2}
+
+                              {  placeBetValue?.back && oddStake !== 0 &&
+                                totalSize?.length > 0 &&
+                                selectionId.includes(".3") &&
+                                oddStakeLay1}
+                              { placeBetValue?.lay && oddStake !== 0 &&
+                                totalSize?.length > 0 &&
+                                selectionId.includes(".1") &&
+                                oddStake}
+
+                              { placeBetValue?.lay && oddStake !== 0 &&
+                                totalSize?.length > 0 &&
+                                selectionId.includes(".2") &&
+                                oddStakeLay2}
+
+                              {  placeBetValue?.lay && oddStake !== 0 &&
+                                totalSize?.length > 0 &&
+                                selectionId.includes(".3") &&
                                 oddStakeLay1}
                             </span>
                           </div>
@@ -239,30 +259,37 @@ const MobilePlaceBet = ({
                               {placeBetValue?.back &&
                                 oddStake !== 0 &&
                                 totalSize?.length > 0 &&
-                                placeBetValue?.selectedBetName ===
-                                  placeBetValue?.name[1] &&
-                                oddStake}
+                                selectionId.includes(".1") &&
+                                oddStakeLay1}
 
                               {placeBetValue?.back &&
                                 oddStake !== 0 &&
                                 totalSize?.length > 0 &&
-                                placeBetValue?.selectedBetName !==
-                                  placeBetValue?.name[1] &&
-                                oddStakeLay1}
-
-                              {placeBetValue?.lay &&
-                                oddStake !== 0 &&
-                                totalSize?.length > 0 &&
-                                placeBetValue?.selectedBetName ===
-                                  placeBetValue?.name[1] &&
+                                selectionId.includes(".2") &&
                                 oddStake}
+                              {placeBetValue?.back &&
+                                oddStake !== 0 &&
+                                totalSize?.length > 0 &&
+                                selectionId.includes(".3") &&
+                                oddStakeLay2}
 
                               {placeBetValue?.lay &&
                                 oddStake !== 0 &&
                                 totalSize?.length > 0 &&
-                                placeBetValue?.selectedBetName !==
-                                  placeBetValue?.name[1] &&
+                                selectionId.includes(".1") &&
                                 oddStakeLay1}
+
+                              {placeBetValue?.lay &&
+                                oddStake !== 0 &&
+                                totalSize?.length > 0 &&
+                                selectionId.includes(".2") &&
+                                oddStake}
+                                
+                              {placeBetValue?.lay &&
+                                oddStake !== 0 &&
+                                totalSize?.length > 0 &&
+                                selectionId.includes(".3") &&
+                                oddStakeLay2}
                             </span>
                           </div>
                         </div>
@@ -297,30 +324,37 @@ const MobilePlaceBet = ({
                                 {placeBetValue?.back &&
                                   oddStake !== 0 &&
                                   totalSize?.length > 0 &&
-                                  placeBetValue?.selectedBetName ===
-                                    placeBetValue?.name[1] &&
-                                  oddStake}
+                                  selectionId.includes(".1") &&
+                                  oddStakeLay2}
 
                                 {placeBetValue?.back &&
                                   oddStake !== 0 &&
                                   totalSize?.length > 0 &&
-                                  placeBetValue?.selectedBetName !==
-                                    placeBetValue?.name[1] &&
-                                  oddStakeLay2}
+                                  selectionId.includes(".2") &&
+                                  oddStakeLay1}
 
-                                {placeBetValue?.lay &&
+                                {placeBetValue?.back &&
                                   oddStake !== 0 &&
                                   totalSize?.length > 0 &&
-                                  placeBetValue?.selectedBetName ===
-                                    placeBetValue?.name[1] &&
+                                  selectionId.includes(".3") &&
                                   oddStake}
+                                {placeBetValue?.lay &&
+                                  oddStake !== 0 &&
+                                  totalSize?.length > 0 &&
+                                  selectionId.includes(".1") &&
+                                  oddStakeLay2}
 
                                 {placeBetValue?.lay &&
                                   oddStake !== 0 &&
                                   totalSize?.length > 0 &&
-                                  placeBetValue?.selectedBetName !==
-                                    placeBetValue?.name[1] &&
-                                  oddStakeLay2}
+                                  selectionId.includes(".2") &&
+                                  oddStakeLay1}
+
+                                {placeBetValue?.lay &&
+                                  oddStake !== 0 &&
+                                  totalSize?.length > 0 &&
+                                  selectionId.includes(".3") &&
+                                  oddStake}
                               </span>
                             </div>
                           </div>
