@@ -9,6 +9,8 @@ const BookmarkerSection = ({
   exposer,
   setShowBets,
   setTotalSize,
+  booksValue,
+  totalSize,
 }) => {
   const token = localStorage.getItem("token");
   const laderApi = config?.result?.endpoint?.ladder;
@@ -24,16 +26,9 @@ const BookmarkerSection = ({
     pnlBySelection = Object?.values(obj);
   }
 
-  const updatedPnl = [];
 
-  bookmarker?.forEach((item) => {
-    item?.runners?.forEach((runner) => {
-      const pnl = pnlBySelection?.find((p) => p?.RunnerId === runner?.id);
-      if (pnl) {
-        updatedPnl.push(pnl?.pnl);
-      }
-    });
-  });
+
+
 
   const handleLader = (marketId) => {
     const generatedToken = UseTokenGenerator();
@@ -181,6 +176,9 @@ const BookmarkerSection = ({
                 const pnl = pnlBySelection?.filter(
                   (pnl) => pnl?.RunnerId === runner?.id
                 );
+                const oddValues = booksValue?.filter(
+                  (val) => val?.id === runner?.id
+                );
                 return (
                   <div
                     key={runner.id}
@@ -210,6 +208,18 @@ const BookmarkerSection = ({
                             </span>
                           );
                         })}
+                         {oddValues?.map(({ odd, id }) => {
+                          return (
+                            <span
+                              key={id}
+                              className={`market-live-book d-none d-xl-block  ${
+                                odd > 0 ? "text-success" : "text-danger"
+                              }`}
+                            >
+                              {totalSize != 0 && odd}
+                            </span>
+                          );
+                        })}
                       </div>
                     </div>
                     {runner.back.length === 1 && (
@@ -228,6 +238,15 @@ const BookmarkerSection = ({
                       ?.reverse()
                       ?.map((back, i) => {
                         const handlePlaceBackBet = () => {
+                          const updatedPnl = [];
+                          bookmark?.runners?.forEach((runner) => {
+                            const pnl = pnlBySelection?.find(
+                              (p) => p?.RunnerId === runner?.id
+                            );
+                            if (pnl) {
+                              updatedPnl.push(pnl?.pnl);
+                            }
+                          });
                           setTotalSize("");
                           setShowBets(true);
                           setPlaceBetValue({});
@@ -245,6 +264,7 @@ const BookmarkerSection = ({
                             name: bookmark.runners.map(
                               (runner) => runner.name
                             ),
+                            runnerId: bookmark.runners.map((runner) => runner.id),
                             isWeak: bookmark?.isWeak,
                             maxLiabilityPerMarket:bookmark?.maxLiabilityPerMarket,
                             isBettable:bookmark?.isBettable,
@@ -290,12 +310,22 @@ const BookmarkerSection = ({
 
                     {runner.lay.map((lay, i) => {
                       const handlePlaceLayBets = () => {
+                        const updatedPnl = [];
+                        bookmark?.runners?.forEach((runner) => {
+                          const pnl = pnlBySelection?.find(
+                            (p) => p?.RunnerId === runner?.id
+                          );
+                          if (pnl) {
+                            updatedPnl.push(pnl?.pnl);
+                          }
+                        });
                         setTotalSize("");
                         setShowBets(true);
                         setPlaceBetValue({});
                         setPlaceBetValue({
                           price: lay?.price,
                           side: 1,
+                          runnerId: bookmark.runners.map((runner) => runner.id),
                           selectionId: runner?.id,
                           btype: bookmark?.btype,
                           eventTypeId: bookmark?.eventTypeId,

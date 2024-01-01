@@ -9,9 +9,9 @@ const MatchOddsSection = ({
   exposer,
   setShowBets,
   setTotalSize,
-  // booksValue,
+  booksValue,
+  totalSize,
 }) => {
-  // console.log(match_odds);
   const token = localStorage.getItem("token");
   const laderApi = config?.result?.endpoint?.ladder;
   const [previousData, setPreviousData] = useState(match_odds);
@@ -19,7 +19,7 @@ const MatchOddsSection = ({
   const { setPlaceBetValue } = UseState();
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
-
+  console.log(booksValue);
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -78,7 +78,7 @@ const MatchOddsSection = ({
     });
     setPreviousData(match_odds);
   }, [match_odds, previousData]);
-
+  // console.log(match_odds);
   return (
     <>
       {showLadder && (
@@ -176,6 +176,9 @@ const MatchOddsSection = ({
                 const pnl = pnlBySelection?.filter(
                   (pnl) => pnl?.RunnerId === runner?.id
                 );
+                const oddValues = booksValue?.filter(
+                  (val) => val?.id === runner?.id
+                );
 
                 return (
                   <div
@@ -199,9 +202,10 @@ const MatchOddsSection = ({
                       <span className="market-nation-name">
                         {runner?.name}{" "}
                       </span>
-                      {pnl && (
-                        <div className="market-nation-book">
-                          {pnl?.map(({ pnl, MarketId }, i) => {
+                      <div className="market-nation-book">
+                        {pnl &&
+                          pnl?.map(({ pnl, MarketId }, i) => {
+                            // console.log(pnl);
                             return (
                               <span
                                 onClick={() => handleLader(MarketId)}
@@ -217,19 +221,19 @@ const MatchOddsSection = ({
                               </span>
                             );
                           })}
-                          {/* {booksValue &&
-                            booksValue.map((value, i) => {
-                              return (
-                                <span
-                                  key={i}
-                                  className="market-live-book d-none d-xl-block  text-danger"
-                                >
-                                  {value}
-                                </span>
-                              );
-                            })} */}
-                        </div>
-                      )}
+                        {oddValues?.map(({ odd, id }) => {
+                          return (
+                            <span
+                              key={id}
+                              className={`market-live-book d-none d-xl-block  ${
+                                odd > 0 ? "text-success" : "text-danger"
+                              }`}
+                            >
+                              {totalSize != 0 && odd}
+                            </span>
+                          );
+                        })}
+                      </div>
                     </div>
 
                     {runner.back.length === 1 && (
@@ -272,6 +276,7 @@ const MatchOddsSection = ({
                             marketId: item?.id,
                             back: true,
                             name: item.runners.map((runner) => runner.name),
+                            runnerId: item.runners.map((runner) => runner.id),
                             selectedBetName: runner?.name,
                             pnl: updatedPnl,
                             isWeak: item?.isWeak,
@@ -341,6 +346,7 @@ const MatchOddsSection = ({
                           lay: true,
                           selectedBetName: runner?.name,
                           name: item.runners.map((runner) => runner.name),
+                          runnerId: item.runners.map((runner) => runner.id),
                           isWeak: item?.isWeak,
                           maxLiabilityPerMarket: item?.maxLiabilityPerMarket,
                           isBettable: item?.isBettable,

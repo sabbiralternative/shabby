@@ -52,16 +52,12 @@ const GameDetails = () => {
   const [tabs, setTabs] = useState("odds");
   const [, refetchBalance] = UseBalance();
   const [booksValue, setBooksValue] = useState([]);
-  // const oppositionName = placeBetValue?.oppositionName?.filter(
-  //   (name) => name !== placeBetValue?.name
-  // );
+  const [isSticky, setSticky] = useState(false);
 
   /* Set price */
   useEffect(() => {
     setPrice(placeBetValue?.price);
   }, [placeBetValue]);
-
-
 
   /* Profit */
   useEffect(() => {
@@ -72,7 +68,7 @@ const GameDetails = () => {
       placeBetValue?.btype === "MATCH_ODDS"
     ) {
       const multiply = price * totalSize;
-      setProfit((multiply - totalSize).toFixed(2));
+      setProfit(formatNumber(multiply - totalSize));
     } else if (
       price &&
       totalSize &&
@@ -80,10 +76,7 @@ const GameDetails = () => {
       (placeBetValue?.btype === "BOOKMAKER" ||
         placeBetValue?.btype === "BOOKMAKER2")
     ) {
-      const numberPrice = Number(price);
-      const numberTotalSize = Number(totalSize);
-      const multiply = numberPrice * numberTotalSize;
-      setProfit((multiply / numberTotalSize).toFixed(2));
+      setProfit(formatNumber(1 + price / totalSize));
     }
   }, [price, totalSize, profit, placeBetValue, setProfit]);
 
@@ -229,7 +222,6 @@ const GameDetails = () => {
           refetchExposure();
           refetchBalance();
           refetchCurrentBets();
-    
         }
       });
   };
@@ -306,57 +298,132 @@ const GameDetails = () => {
     placeBetValue?.pnl && placeBetValue?.pnl[0] ? placeBetValue?.pnl[0] : 0;
   const pnl2 =
     placeBetValue?.pnl && placeBetValue?.pnl[1] ? placeBetValue?.pnl[1] : 0;
-
   const pnl3 =
     placeBetValue?.pnl && placeBetValue?.pnl[2] ? placeBetValue?.pnl[2] : 0;
-
   const selectionId = placeBetValue?.selectionId?.toString();
-
-
+  // console.log(placeBetValue);
   useEffect(() => {
     if (placeBetValue?.back) {
-      const multiply = price * totalSize;
-      const total = multiply - totalSize;
+      let total;
+
+      if (placeBetValue?.btype === "MATCH_ODDS") {
+        total = price * totalSize - totalSize;
+      }
+      if (placeBetValue?.btype === "BOOKMAKER") {
+        total = 1 + price / totalSize;
+      }
 
       if (selectionId && selectionId.includes(".1")) {
-        setOddStake((total + pnl1).toFixed());
-        setOddStakeLay1((pnl2 + -1 * totalSize).toFixed(2));
-        setOddStakeLay2((pnl3 + -1 * totalSize).toFixed(2));
+        console.log(total);
+        console.log(placeBetValue?.btype);
+        setOddStake(formatNumber(total + pnl1));
+        setOddStakeLay1(formatNumber(pnl2 + -1 * totalSize));
+        setOddStakeLay2(formatNumber(pnl3 + -1 * totalSize));
+        setBooksValue([
+          { odd: formatNumber(total + pnl1), id: placeBetValue?.runnerId[0] },
+          {
+            odd: formatNumber(pnl2 + -1 * totalSize),
+            id: placeBetValue?.runnerId[1],
+          },
+          {
+            odd: formatNumber(pnl3 + -1 * totalSize),
+            id: placeBetValue?.runnerId[2],
+          },
+        ]);
       } else if (selectionId && selectionId.includes(".2")) {
-        setOddStake((total + pnl2).toFixed(2));
-        setOddStakeLay1((pnl3 + -1 * totalSize).toFixed());
-        setOddStakeLay2((pnl2 + -1 * totalSize).toFixed());
+        setOddStake(formatNumber(total + pnl2));
+        setOddStakeLay1(formatNumber(pnl3 + -1 * totalSize));
+        setOddStakeLay2(formatNumber(pnl2 + -1 * totalSize));
+        setBooksValue([
+          { odd: formatNumber(total + pnl2), id: placeBetValue?.runnerId[0] },
+          {
+            odd: formatNumber(pnl3 + -1 * totalSize),
+            id: placeBetValue?.runnerId[1],
+          },
+          {
+            odd: formatNumber(pnl2 + -1 * totalSize),
+            id: placeBetValue?.runnerId[2],
+          },
+        ]);
       } else {
-        setOddStake((total + pnl3).toFixed());
-        setOddStakeLay1((pnl1+ -1 * totalSize).toFixed());
-        setOddStakeLay2((pnl2 + -1 * totalSize).toFixed());
+        setOddStake(formatNumber(total + pnl3));
+        setOddStakeLay1(formatNumber(pnl1 + -1 * totalSize));
+        setOddStakeLay2(formatNumber(pnl2 + -1 * totalSize));
+        setBooksValue([
+          { odd: formatNumber(total + pnl3), id: placeBetValue?.runnerId[0] },
+          {
+            odd: formatNumber(pnl1 + -1 * totalSize),
+            id: placeBetValue?.runnerId[1],
+          },
+          {
+            odd: formatNumber(pnl2 + -1 * totalSize),
+            id: placeBetValue?.runnerId[2],
+          },
+        ]);
       }
-      setBooksValue([
-        total + pnl1,
-        -1 * totalSize + pnl2,
-        -1 * totalSize + pnl3,
-      ]);
     } else if (placeBetValue?.lay) {
-      const total = -1 * (price * totalSize - totalSize);
-      if (selectionId && selectionId.includes(".1")) {
-        setOddStake((total + pnl1).toFixed(2));
-        setOddStakeLay1((1 * pnl2 + 1 * totalSize).toFixed());
-        setOddStakeLay2((1 * pnl3 + 1 * totalSize).toFixed(2));
-      } else if (selectionId && selectionId.includes(".2")) {
-        setOddStake((total + pnl2).toFixed());
-        setOddStakeLay1((1 * pnl3 + 1 * totalSize).toFixed(2));
-        setOddStakeLay2((1 * pnl1 + 1 * totalSize).toFixed(2));
-      } else {
-        setOddStake((total + pnl3).toFixed(2));
-        setOddStakeLay1((1 * pnl1 + 1 * totalSize).toFixed());
-        setOddStakeLay2((1 * pnl2 + 1 * totalSize).toFixed(2));
+      let total;
+      if (placeBetValue?.btype === "MATCH_ODDS") {
+        total = -1 * (price * totalSize - totalSize);
+      }
+      if (placeBetValue?.btype === "BOOKMAKER") {
+        total = 1 + price / totalSize;
       }
 
-      // setBooksValue([oddStakeFirstLay, oddStakeSecondLay, oddStakeThirdLay]);
+      if (selectionId && selectionId.includes(".1")) {
+        setOddStake(formatNumber(total + pnl1));
+        setOddStakeLay1(formatNumber(1 * pnl2 + 1 * totalSize));
+        setOddStakeLay2(formatNumber(1 * pnl3 + 1 * totalSize));
+        setBooksValue([
+          { odd: formatNumber(total + pnl1), id: placeBetValue?.runnerId[0] },
+          {
+            odd: formatNumber(formatNumber(1 * pnl2 + 1 * totalSize)),
+            id: placeBetValue?.runnerId[1],
+          },
+          {
+            odd: formatNumber(formatNumber(1 * pnl3 + 1 * totalSize)),
+            id: placeBetValue?.runnerId[2],
+          },
+        ]);
+      } else if (selectionId && selectionId.includes(".2")) {
+        setOddStake(formatNumber(total + pnl2));
+        setOddStakeLay1(formatNumber(1 * pnl3 + 1 * totalSize));
+        setOddStakeLay2(formatNumber(1 * pnl1 + 1 * totalSize));
+        setBooksValue([
+          { odd: formatNumber(total + pnl2), id: placeBetValue?.runnerId[0] },
+          {
+            odd: formatNumber(formatNumber(1 * pnl3 + 1 * totalSize)),
+            id: placeBetValue?.runnerId[1],
+          },
+          {
+            odd: formatNumber(formatNumber(1 * pnl1 + 1 * totalSize)),
+            id: placeBetValue?.runnerId[2],
+          },
+        ]);
+      } else {
+        setOddStake(formatNumber(total + pnl3));
+        setOddStakeLay1(formatNumber(1 * pnl1 + 1 * totalSize));
+        setOddStakeLay2(formatNumber(1 * pnl2 + 1 * totalSize));
+        setBooksValue([
+          { odd: formatNumber(total + pnl3), id: placeBetValue?.runnerId[0] },
+          {
+            odd: formatNumber(formatNumber(1 * pnl1 + 1 * totalSize)),
+            id: placeBetValue?.runnerId[1],
+          },
+          {
+            odd: formatNumber(formatNumber(1 * pnl2 + 1 * totalSize)),
+            id: placeBetValue?.runnerId[2],
+          },
+        ]);
+      }
+  
     }
   }, [price, totalSize, placeBetValue, pnl1, pnl2, pnl3, selectionId]);
 
-  const [isSticky, setSticky] = useState(false);
+  const formatNumber = (value) => {
+    const hasDecimal = value % 1 !== 0;
+    return hasDecimal ? value.toFixed(2) : value;
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -566,6 +633,7 @@ const GameDetails = () => {
               eventId={eventId}
               setTotalSize={setTotalSize}
               booksValue={booksValue}
+              totalSize={totalSize}
             />
           ) : null}
 
@@ -578,6 +646,8 @@ const GameDetails = () => {
               showBets={showBets}
               setShowBets={setShowBets}
               setTotalSize={setTotalSize}
+              booksValue={booksValue}
+              totalSize={totalSize}
             />
           ) : null}
 
