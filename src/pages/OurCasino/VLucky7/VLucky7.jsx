@@ -27,7 +27,7 @@ const VLucky7 = ({
   q,
   k,
 }) => {
-  console.log(data);
+
   return (
     <div className="casino-table">
       <div className="casino-table-full-box">

@@ -48,7 +48,7 @@ const OurCasino = () => {
       setCasino_list(data.filter((d) => d.visible === true));
     } else {
       const category = data.filter((game) => game.category === filterGames);
-      console.log(category);
+  
       setCasino_list(category.filter((d) => d.visible === true));
     }
   }, [data, filterGames]);

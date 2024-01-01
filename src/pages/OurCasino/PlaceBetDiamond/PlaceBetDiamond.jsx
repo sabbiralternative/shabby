@@ -700,7 +700,7 @@ const PlaceBetDiamond = () => {
 
       if (data.success) {
         setMyBets(data?.result);
-        console.log(data);
+  
       }
     },
   });

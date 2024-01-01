@@ -73,7 +73,7 @@ const PlaceBetModal = ({
         if (data?.success) {
           refetchExposure();
           refetchCurrentBets();
-          console.log(data);
+      
           setLoader(false);
           setShowBets(false);
           setSuccessMessage("Bet Place Successfully !");
@@ -83,7 +83,7 @@ const PlaceBetModal = ({
           setShowBets(false);
           refetchExposure();
           refetchCurrentBets();
-          console.log(data);
+         
         }
       });
   };

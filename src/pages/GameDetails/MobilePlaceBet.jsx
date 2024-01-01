@@ -21,7 +21,7 @@ const MobilePlaceBet = ({
   oddStakeLay2,
   selectionId,
 }) => {
-  // console.log(oddStake);
+ 
   const updateElementClass = (elementId) => {
     const element = document.getElementById(elementId);
     if (element) {

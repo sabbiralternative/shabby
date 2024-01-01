@@ -31,7 +31,7 @@ const CurrentBet = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+       
           if (data.result) {
             setSports(data.result);
             setFilteredData(data.result);

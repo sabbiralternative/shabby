@@ -12,7 +12,7 @@ const kkpkArr = ["H13", "C12", "D12", "H12"];
 const gulamArr = ["H11", "C11", "D11"];
 
 const Card = ({ slug, data, one }) => {
-  console.log(data);
+
   /* Virtual amar akabar anthony */
   const [amar, setAmar] = useState(false);
   const [akbar, setAkbar] = useState(false);
@@ -765,7 +765,7 @@ const Card = ({ slug, data, one }) => {
             <h5>Board</h5>
             <div className="flip-card-container">
               {data[0]?.indexCard?.map((card, i) => {
-                console.log(card);
+            
                 return (
                   <div key={i} className="flip-card">
                     <div className="flip-card-inner">
@@ -870,7 +870,7 @@ const Card = ({ slug, data, one }) => {
             <h5>Board</h5>
             <div className="flip-card-container">
               {data[0]?.indexCard?.map((card, i) => {
-                console.log(card);
+            
                 return (
                   <div key={i} className="flip-card">
                     <div className="flip-card-inner">

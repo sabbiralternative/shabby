@@ -19,7 +19,7 @@ const FantasyGames = () => {
       });
       const data = res.data;
       if (data) {
-        console.log(data);
+     
         setData(data);
    
       }

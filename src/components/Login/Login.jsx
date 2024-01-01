@@ -40,7 +40,7 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+
         if (data.success) {
           localStorage.setItem("token", data.result.token);
           localStorage.setItem("loginName", data.result.loginName);
@@ -86,7 +86,7 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+     
         localStorage.setItem("token", data.result.token);
         localStorage.setItem("loginName", data.result.loginName);
         const buttonValue = JSON.stringify(data.result.buttonValue.game);

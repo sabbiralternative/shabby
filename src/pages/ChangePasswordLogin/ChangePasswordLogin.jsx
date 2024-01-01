@@ -42,7 +42,7 @@ const ChangePasswordLogin = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+
         if (data.success) {
           setSuccessMessage(data?.result?.message);
           setTimeout(() => {
