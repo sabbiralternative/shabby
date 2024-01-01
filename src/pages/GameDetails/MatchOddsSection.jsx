@@ -11,7 +11,7 @@ const MatchOddsSection = ({
   setTotalSize,
   // booksValue,
 }) => {
-
+  // console.log(match_odds);
   const token = localStorage.getItem("token");
   const laderApi = config?.result?.endpoint?.ladder;
   const [previousData, setPreviousData] = useState(match_odds);
@@ -25,18 +25,6 @@ const MatchOddsSection = ({
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
-
-
-const updatedPnl = [];
-match_odds?.forEach((item) => {
-  item?.runners?.forEach((runner) => {
-    const pnl = pnlBySelection?.find((p) => p?.RunnerId === runner?.id);
-    if (pnl) {
-      updatedPnl.push(pnl?.pnl);
-    }
-  });
-});
-
 
   const handleLader = (marketId) => {
     const generatedToken = UseTokenGenerator();
@@ -261,6 +249,16 @@ match_odds?.forEach((item) => {
                       ?.reverse()
                       ?.map((back, i) => {
                         const handlePlaceBackBet = () => {
+                          const updatedPnl = [];
+                          item?.runners?.forEach((runner) => {
+                            const pnl = pnlBySelection?.find(
+                              (p) => p?.RunnerId === runner?.id
+                            );
+                            if (pnl) {
+                              updatedPnl.push(pnl?.pnl);
+                            }
+                          });
+
                           setTotalSize("");
                           setShowBets(true);
                           setPlaceBetValue({});
@@ -275,7 +273,7 @@ match_odds?.forEach((item) => {
                             back: true,
                             name: item.runners.map((runner) => runner.name),
                             selectedBetName: runner?.name,
-                            pnl: pnlBySelection?.find((p) => p?.RunnerId === runner?.id) ? updatedPnl:null,
+                            pnl: updatedPnl,
                             isWeak: item?.isWeak,
                             maxLiabilityPerMarket: item?.maxLiabilityPerMarket,
                             isBettable: item?.isBettable,
@@ -317,8 +315,17 @@ match_odds?.forEach((item) => {
                       })}
 
                     {runner?.lay?.map((lay, i) => {
-                
                       const handlePlaceLayBets = () => {
+                        const updatedPnl = [];
+                        item?.runners?.forEach((runner) => {
+                          const pnl = pnlBySelection?.find(
+                            (p) => p?.RunnerId === runner?.id
+                          );
+                          if (pnl) {
+                            updatedPnl.push(pnl?.pnl);
+                          }
+                        });
+
                         setTotalSize("");
                         setShowBets(true);
                         setPlaceBetValue({});
@@ -330,7 +337,7 @@ match_odds?.forEach((item) => {
                           eventTypeId: item?.eventTypeId,
                           betDelay: item?.betDelay,
                           marketId: item?.id,
-                          pnl: pnlBySelection?.find((p) => p?.RunnerId === runner?.id) ? updatedPnl:null,
+                          pnl: updatedPnl,
                           lay: true,
                           selectedBetName: runner?.name,
                           name: item.runners.map((runner) => runner.name),
