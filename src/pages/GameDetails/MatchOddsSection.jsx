@@ -12,6 +12,7 @@ const MatchOddsSection = ({
   booksValue,
   totalSize,
 }) => {
+  console.log(booksValue);
   const token = localStorage.getItem("token");
   const laderApi = config?.result?.endpoint?.ladder;
   const [previousData, setPreviousData] = useState(match_odds);
