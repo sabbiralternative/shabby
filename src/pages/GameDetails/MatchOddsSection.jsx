@@ -12,7 +12,7 @@ const MatchOddsSection = ({
   booksValue,
   totalSize,
 }) => {
-  console.log(booksValue);
+
   const token = localStorage.getItem("token");
   const laderApi = config?.result?.endpoint?.ladder;
   const [previousData, setPreviousData] = useState(match_odds);
@@ -20,7 +20,7 @@ const MatchOddsSection = ({
   const { setPlaceBetValue } = UseState();
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
-  console.log(booksValue);
+
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -79,7 +79,7 @@ const MatchOddsSection = ({
     });
     setPreviousData(match_odds);
   }, [match_odds, previousData]);
-  // console.log(match_odds);
+
   return (
     <>
       {showLadder && (
@@ -206,7 +206,7 @@ const MatchOddsSection = ({
                       <div className="market-nation-book">
                         {pnl &&
                           pnl?.map(({ pnl, MarketId }, i) => {
-                            // console.log(pnl);
+                        
                             return (
                               <span
                                 onClick={() => handleLader(MarketId)}

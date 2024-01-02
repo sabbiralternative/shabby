@@ -15,15 +15,18 @@ const CasinoList = ({ casino }) => {
     eventId: casino?.eventId,
     eventTypeId: casino?.eventTypeId,
     casinoSlug: casino?.slug,
+    type:'ourCasino'
   };
 
   const navigateToCasinoDetails = () => {
     if (isAuraCasino == "aura") {
+      localStorage.removeItem("casino");
       localStorage.removeItem("auraEventId");
       localStorage.setItem("auraEventId", JSON.stringify(auraEventId));
       navigate(`/casino/${name}`);
     } else if (isAuraCasino == "diamond") {
       localStorage.removeItem("casino");
+      localStorage.removeItem("auraEventId");
       localStorage.setItem("casino", JSON.stringify(diamondCasino));
       navigate(`/our-casino/${casino?.slug}`);
     }

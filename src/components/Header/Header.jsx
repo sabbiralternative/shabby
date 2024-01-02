@@ -18,7 +18,7 @@ const Header = () => {
   const buttonValueApi = config?.result?.endpoint?.buttonValue;
   const { register, handleSubmit } = useForm();
   const [showNotification, setShowNotification] = useState("");
-  const { buttonValue, SetButtonValue } = UseState();
+  const { buttonValue, SetButtonValue,setSports } = UseState();
 
   const [ruleModal, setRuleModal] = useState(false);
   const buttonGameValue = JSON.parse(localStorage.getItem("buttonValue"));
@@ -58,18 +58,22 @@ const Header = () => {
   const cricketEndpoint = () => {
     localStorage.removeItem("group");
     localStorage.setItem("group", 4);
+    setSports(4)
   };
   const tennisEndpoint = () => {
     localStorage.removeItem("group");
     localStorage.setItem("group", 2);
+    setSports(2)
   };
   const footballEndpoint = () => {
     localStorage.removeItem("group");
     localStorage.setItem("group", 1);
+    setSports(1)
   };
   const tableTennisEndpoint = () => {
     localStorage.removeItem("group");
     localStorage.setItem("group", 8);
+    setSports(8)
   };
 
   // /* Close modal after specific width */
@@ -884,23 +888,31 @@ const Header = () => {
                   Home
                 </Link>
               </li>
-              <li onClick={cricketEndpoint} className="nav-item">
-                <Link className="nav-link" to="/cricket">
+              <li className="nav-item">
+                <Link
+                onClick={cricketEndpoint} 
+                className="nav-link" to="/cricket">
                   Cricket
                 </Link>
               </li>
-              <li onClick={tennisEndpoint} className="nav-item">
-                <Link className="nav-link" to="/tennis">
+              <li  className="nav-item">
+                <Link
+                onClick={tennisEndpoint}
+                className="nav-link" to="/tennis">
                   Tennis
                 </Link>
               </li>
-              <li onClick={footballEndpoint} className="nav-item">
-                <Link className="nav-link" to="/football">
+              <li  className="nav-item">
+                <Link
+                onClick={footballEndpoint}
+                className="nav-link" to="/football">
                   Football
                 </Link>
               </li>
-              <li onClick={tableTennisEndpoint} className="nav-item">
-                <Link className="nav-link" to="/table-tennis">
+              <li  className="nav-item">
+                <Link 
+                onClick={tableTennisEndpoint}
+                className="nav-link" to="/table-tennis">
                   Table Tennis
                 </Link>
               </li>

@@ -301,7 +301,7 @@ const GameDetails = () => {
   const pnl3 =
     placeBetValue?.pnl && placeBetValue?.pnl[2] ? placeBetValue?.pnl[2] : 0;
   const selectionId = placeBetValue?.selectionId?.toString();
-  // console.log(placeBetValue);
+
   useEffect(() => {
     if (
       placeBetValue?.btype === "MATCH_ODDS" ||
@@ -319,8 +319,7 @@ const GameDetails = () => {
         }
 
         if (selectionId && selectionId.includes(".1")) {
-          console.log(total);
-          console.log(placeBetValue?.btype);
+     
           setOddStake(formatNumber(total + pnl1));
           setOddStakeLay1(formatNumber(pnl2 + -1 * totalSize));
           setOddStakeLay2(formatNumber(pnl3 + -1 * totalSize));
