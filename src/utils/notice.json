@@ -18,7 +18,7 @@
       "recaptcha": "6Lc4UB8dAAAAAJkIpe063dHBO_o19nUYe7hqkVHb",
       "interval": "600",
       "casino": "diamond",
-      "disabledDevtool": false
+      "disabledDevtool": true
     },
     "endpoint": {
       "login": "https://api7.live/api/account/diamond/login",

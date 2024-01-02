@@ -38,12 +38,19 @@ const Main = () => {
     setRelativeURL(relativeURL);
   }, [baseUrl, currentURL]);
 
-  
   useEffect(() => {
     if (isDisabledDevtools) {
-      DisableDevtool();
+      DisableDevtool({
+        ondevtoolopen: (type) => {
+          const info = "devtool opened!; type =" + type;
+          if (info) {
+            localStorage.clear();
+            navigate("/login");
+          }
+        },
+      });
     }
-  }, [isDisabledDevtools]);
+  }, [isDisabledDevtools,navigate]);
 
   return (
     <div>
