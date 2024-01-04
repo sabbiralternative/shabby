@@ -252,6 +252,8 @@ const GameDetails = () => {
     },
   });
 
+
+
   /* Increase price bets */
   const handleIncreasePrice = () => {
     if (price == 1000 || placeBetValue?.isWeak === true) {
@@ -372,7 +374,7 @@ const GameDetails = () => {
         }
         if (placeBetValue?.btype === "BOOKMAKER") {
           const bookmaker = 1 + price / totalSize;
-          total = bookmaker + (price * totalSize - totalSize) - 1;
+          total = -1 * (bookmaker * totalSize - totalSize);
         }
 
         if (selectionId && selectionId.includes(".1")) {
