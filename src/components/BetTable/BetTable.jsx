@@ -13,7 +13,7 @@ const BetTable = ({ data, keys }) => {
   const navigateGameList = (keys) => {
     navigate(`/game-details/${sports}/${keys}`);
   };
-console.log(sports);
+
   return (
     <>
       <div className="bet-table-row">

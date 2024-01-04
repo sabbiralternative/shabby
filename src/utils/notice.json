@@ -13,13 +13,18 @@
       "bottom": false
     },
     "settings": {
-      "whitelistedDomains": ["localhost:8080", "api7.live", "bmwexch7.com"],
       "siteTitle": "WINBUZZ365",
-      "recaptcha": "6Lc4UB8dAAAAAJkIpe063dHBO_o19nUYe7hqkVHb",
+      "siteUrl": "winbuzz365.co",
       "interval": "600",
-      "casino": "diamond",
-      "disabledDevtool": true
+      "casino": "aura",
+      "registration": true,
+      "forceLogin": true,
+      "demoLogin": true,
+      "deposit": true,
+      "withdraw": true,
+      "disabledDevtool": false
     },
+
     "endpoint": {
       "login": "https://api7.live/api/account/diamond/login",
       "inPlayAndPopularEvents": "https://api7.live/api/exchange/odds/inPlayAndPopularEvents",
@@ -64,7 +69,8 @@
       "slotCasino": " https://cache.api7.live/api/exchange/diamond/slotCasino",
       "liveCasinoIframe": " https://api7.live/api/livecasino/iframe",
       "liveCasino": " https://cache.api7.live/api/exchange/diamond/liveCasino",
-      "fantasyGames": "https://cache.api7.live/api/exchange/diamond/fantasyGames/"
+      "fantasyGames": "https://cache.api7.live/api/exchange/diamond/fantasyGames/",
+      "depositIframe": "https://b2c.bet/deposit"
     }
   },
   "success": true

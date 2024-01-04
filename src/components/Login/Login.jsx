@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import loginBanner from "../../static/front/img/logo.png";
 import { config } from "../../utils/config";
@@ -12,6 +12,8 @@ const Login = () => {
   const loginApi = config?.result?.endpoint?.login;
   const [errorLogin, setErrorLogin] = useState("");
   const pageTitle = config?.result?.settings?.siteTitle;
+  const isDemoButtonShow = config?.result?.settings?.demoLogin;
+  const isRegisterButtonShow = config?.result?.settings?.registration
 
   const {
     register,
@@ -40,7 +42,6 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-
         if (data.success) {
           localStorage.setItem("token", data.result.token);
           localStorage.setItem("loginName", data.result.loginName);
@@ -70,7 +71,7 @@ const Login = () => {
       });
   };
 
-  const loginWithDemo = () => {
+   const loginWithDemo = () => {
     const generatedToken = UseTokenGenerator();
     const loginData = UseEncryptData({
       username: "demo",
@@ -86,7 +87,6 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-     
         localStorage.setItem("token", data.result.token);
         localStorage.setItem("loginName", data.result.loginName);
         const buttonValue = JSON.stringify(data.result.buttonValue.game);
@@ -167,14 +167,28 @@ const Login = () => {
               <button type="submit" className="btn btn-primary btn-block">
                 Login<i className="fas fa-sign-in-alt float-end mt-1"></i>
               </button>
-              <button
-                onClick={loginWithDemo}
-                type="button"
-                className="btn btn-primary btn-block mt-2"
-              >
-                Login with demo ID
-                <i className="fas fa-sign-in-alt float-end mt-1"></i>
-              </button>
+              {isDemoButtonShow && (
+                <button
+                  onClick={loginWithDemo}
+                  type="button"
+                  className="btn btn-primary btn-block mt-2"
+                >
+                  Login with demo ID
+                  <i className="fas fa-sign-in-alt float-end mt-1"></i>
+                </button>
+              )}
+            {
+              isRegisterButtonShow && (
+                <div className="d-grid">
+                <Link
+                  to='/register'
+                  className="btn btn-secondary btn-block mt-2"
+                >
+                  Register<i className="fas fa-sign-in-alt float-end mt-1"></i>
+                </Link>
+              </div>
+              )
+            }
             </div>
             <small className="recaptchaTerms mt-1">
               This site is protected by reCAPTCHA and the Google

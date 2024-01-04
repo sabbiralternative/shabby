@@ -23,6 +23,8 @@ import PlaceBetDiamond from '../pages/OurCasino/PlaceBetDiamond/PlaceBetDiamond'
 import LiveCasinoVideo from "../pages/LiveCasino/LiveCasinoVideo";
 import SlotGamesVideo from "../pages/SlotGames/SlotGamesVideo.jsx";
 import SecureAuth from "../pages/SecureAuth/SecureAuth";
+import Register from "../components/Register/Register.jsx";
+import Deposit from '../pages/Deposit/Deposit'
 
 const router = createBrowserRouter([
   {
@@ -114,11 +116,19 @@ const router = createBrowserRouter([
         path: "/secure-auth",
         element: <SecureAuth />,
       },
+      {
+        path: "/deposit",
+        element: <Deposit />,
+      },
     ],
   },
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
   {
     path: "/change-Password-login",

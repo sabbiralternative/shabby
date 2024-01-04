@@ -16,18 +16,23 @@ const Main = () => {
   const navigate = useNavigate();
   const pageTitle = config?.result?.settings?.siteTitle;
   const isDisabledDevtools = config?.result?.settings?.disabledDevtool;
+  const isForceLogin = config?.result?.settings?.forceLogin;
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     const decodedToken = jwtDecode(token);
     const expirationTime = decodedToken.exp;
     const isTokenExpired = expirationTime < Date.now() / 1000;
-
     if (isTokenExpired) {
       localStorage.clear();
       navigate("/login");
+    } else if (isForceLogin) {
+      if (!token) {
+        localStorage.clear();
+        navigate("/login");
+      }
     }
-  }, [navigate]);
+  }, [navigate,isForceLogin,token]);
 
   useEffect(() => {
     document.title = pageTitle;
@@ -50,7 +55,7 @@ const Main = () => {
         },
       });
     }
-  }, [isDisabledDevtools,navigate]);
+  }, [isDisabledDevtools, navigate]);
 
   return (
     <div>
@@ -69,7 +74,8 @@ const Main = () => {
             relativeURL == "/live-casino" ||
             relativeURL == "/our-virtual" ||
             relativeURL == "/slot-games" ||
-            relativeURL == "/our-casino"
+            relativeURL == "/our-casino" ||
+            relativeURL == "/deposit"
               ? "list-page slot-page"
               : ""
           } 
@@ -87,7 +93,8 @@ const Main = () => {
             ? "casino-page"
             : ""
         } 
-        home-page `}
+       `}
+       style={{minHeight:'100vh'}}
         >
           <Outlet />
         </div>
