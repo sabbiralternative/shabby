@@ -33,8 +33,8 @@ const Main = () => {
       }
     } else if (isForceLogin) {
       if (!token) {
-        // localStorage.clear();
-        // navigate("/login");
+        localStorage.clear();
+        navigate("/login");
       }
     }
   }, [navigate, isForceLogin, token]);
