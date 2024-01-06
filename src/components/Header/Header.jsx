@@ -291,6 +291,7 @@ const Header = () => {
           data?.result?.changePassword === false
         ) {
           localStorage.removeItem("forceLogin");
+          setOpen(false)
           navigate("/");
         } else {
           setErrorLogin(data?.error);
