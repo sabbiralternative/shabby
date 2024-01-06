@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loginBanner from "../../static/front/img/logo.png";
 import { config } from "../../utils/config";
 import { useForm } from "react-hook-form";
@@ -73,9 +73,9 @@ const ChangePasswordLogin = () => {
       )}
       <div className="login-page">
         <div className="login-box">
-          <div className="logo-login">
+          <Link to='/' className="logo-login">
             <img src={loginBanner} />
-          </div>
+          </Link>
           <div className="login-form mt-4">
             <h4 className="text-center login-title">
               LOGIN <i className="fas fa-hand-point-down"></i>

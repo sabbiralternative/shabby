@@ -18,7 +18,7 @@
       "interval": "600",
       "casino": "aura",
       "registration": true,
-      "forceLogin": true,
+      "forceLogin": false,
       "demoLogin": true,
       "deposit": true,
       "withdraw": true,

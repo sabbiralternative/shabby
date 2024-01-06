@@ -130,9 +130,9 @@ const Login = () => {
         />
       )}
       <div className="login-box">
-        <div className="logo-login">
+        <Link to='/' className="logo-login">
           <img src={loginBanner} />
-        </div>
+        </Link>
         <div className="login-form mt-4">
           <h4 className="text-center login-title">
             LOGIN <i className="fas fa-hand-point-down"></i>
