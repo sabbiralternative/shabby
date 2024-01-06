@@ -113,7 +113,13 @@ const Login = () => {
           localStorage.getItem("loginName") &&
           data?.result?.changePassword === false
         ) {
-          navigate("/");
+          if (localStorage.getItem("forceLogin")) {
+            localStorage.removeItem("forceLogin");
+            localStorage.setItem("forceLoginSuccess", "true");
+            navigate("/");
+          } else {
+            navigate("/");
+          }
         } else {
           setErrorLogin(data?.error);
         }
