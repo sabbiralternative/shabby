@@ -301,6 +301,7 @@ const Header = () => {
   const handleForceLogin = () => {
     localStorage.setItem("forceLogin", "true");
   };
+
   return (
     <div
       className="wrapper"
@@ -348,7 +349,7 @@ const Header = () => {
               </div>
               <div className="ms-3 d-none d-xl-flex">
                 {showDeposit && (
-                  <Link className="btn btn-success me-2" to="/deposit">
+                  <Link className="btn btn-success me-2" to='/deposit'>
                     Deposit
                   </Link>
                 )}
@@ -1056,9 +1057,9 @@ const Header = () => {
                 {" "}
                 <div className="d-xl-none d-flex justify-content-center">
                   {showDeposit && (
-                    <a className="btn btn-success me-2" href="/deposit">
+                    <Link className="btn btn-success me-2" to="/deposit">
                       Deposit
-                    </a>
+                    </Link>
                   )}
                   {showWithdraw && (
                     <a className="btn btn-danger" href="/withdraw">
