@@ -13,7 +13,7 @@ const Login = () => {
   const [errorLogin, setErrorLogin] = useState("");
   const pageTitle = config?.result?.settings?.siteTitle;
   const isDemoButtonShow = config?.result?.settings?.demoLogin;
-  const isRegisterButtonShow = config?.result?.settings?.registration
+  const isRegisterButtonShow = config?.result?.settings?.registration;
 
   const {
     register,
@@ -63,7 +63,13 @@ const Login = () => {
             localStorage.getItem("loginName") &&
             data?.result?.changePassword === false
           ) {
-            navigate("/");
+            if (localStorage.getItem("forceLogin")) {
+              localStorage.removeItem("forceLogin");
+              localStorage.setItem("forceLoginSuccess", "true");
+              navigate("/");
+            } else {
+              navigate("/");
+            }
           }
         } else {
           setErrorLogin(data?.error);
@@ -71,7 +77,7 @@ const Login = () => {
       });
   };
 
-   const loginWithDemo = () => {
+  const loginWithDemo = () => {
     const generatedToken = UseTokenGenerator();
     const loginData = UseEncryptData({
       username: "demo",
@@ -177,18 +183,17 @@ const Login = () => {
                   <i className="fas fa-sign-in-alt float-end mt-1"></i>
                 </button>
               )}
-            {
-              isRegisterButtonShow && (
+              {isRegisterButtonShow && (
                 <div className="d-grid">
-                <Link
-                  to='/register'
-                  className="btn btn-secondary btn-block mt-2"
-                >
-                  Register<i className="fas fa-sign-in-alt float-end mt-1"></i>
-                </Link>
-              </div>
-              )
-            }
+                  <Link
+                    to="/register"
+                    className="btn btn-secondary btn-block mt-2"
+                  >
+                    Register
+                    <i className="fas fa-sign-in-alt float-end mt-1"></i>
+                  </Link>
+                </div>
+              )}
             </div>
             <small className="recaptchaTerms mt-1">
               This site is protected by reCAPTCHA and the Google

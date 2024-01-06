@@ -9,6 +9,7 @@ const Footer = () => {
   const [showModal, setShowModal] = useState(false);
   const modal = JSON.parse(localStorage.getItem('modal'))
   const siteTitle = config?.result?.settings?.siteTitle
+  const token = localStorage.getItem('token')
 
   useEffect(() => {
     const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
@@ -39,7 +40,7 @@ const Footer = () => {
 
   return (
     <>
-      {showModal && (
+      {showModal && token && (
         <>
           <div className={`fade modal-backdrop show`}></div>
           <div

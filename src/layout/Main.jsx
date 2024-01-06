@@ -19,20 +19,25 @@ const Main = () => {
   const isForceLogin = config?.result?.settings?.forceLogin;
   const token = localStorage.getItem("token");
 
+  /* TODO */
+
   useEffect(() => {
-    const decodedToken = jwtDecode(token);
-    const expirationTime = decodedToken.exp;
-    const isTokenExpired = expirationTime < Date.now() / 1000;
-    if (isTokenExpired) {
-      localStorage.clear();
-      navigate("/login");
-    } else if (isForceLogin) {
-      if (!token) {
+    let isTokenExpired;
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      const expirationTime = decodedToken.exp;
+      isTokenExpired = expirationTime < Date.now() / 1000;
+      if (isTokenExpired) {
         localStorage.clear();
         navigate("/login");
       }
+    } else if (isForceLogin) {
+      if (!token) {
+        // localStorage.clear();
+        // navigate("/login");
+      }
     }
-  }, [navigate,isForceLogin,token]);
+  }, [navigate, isForceLogin, token]);
 
   useEffect(() => {
     document.title = pageTitle;
@@ -94,7 +99,7 @@ const Main = () => {
             : ""
         } 
        `}
-       style={{minHeight:'100vh'}}
+          style={{ minHeight: "100vh" }}
         >
           <Outlet />
         </div>

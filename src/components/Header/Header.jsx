@@ -116,11 +116,7 @@ const Header = () => {
 
   /* Logout */
   const logOut = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("loginName");
-    localStorage.removeItem("hasModalBeenShown");
-    localStorage.removeItem("modal");
-    localStorage.removeItem("buttonValue");
+   localStorage.clear()
     navigate("/login");
   };
 
@@ -288,11 +284,16 @@ const Header = () => {
           localStorage.getItem("loginName") &&
           data?.result?.changePassword === false
         ) {
+          localStorage.removeItem("forceLogin")
           navigate("/");
         } else {
           setErrorLogin(data?.error);
         }
       });
+  };
+
+  const handleForceLogin = () => {
+    localStorage.setItem("forceLogin", "true");
   };
   return (
     <div
@@ -323,7 +324,7 @@ const Header = () => {
           </div>
 
           {(!isDemoLoginShow && !isShowRegisterButton && !isForceLogin) ||
-            (forceLoginSuccess && (
+            forceLoginSuccess ? (
               <div className="user-details">
                 <div className="search-box-container d-none d-xl-block">
                   <SearchBox />
@@ -1017,7 +1018,7 @@ const Header = () => {
                   )}
                 </div>
               </div>
-            ))}
+            ):null}
           {(isDemoLoginShow || isShowRegisterButton || isForceLogin) &&
           !forceLoginSuccess ? (
             <div className="user-details login-btn-box">
@@ -1028,7 +1029,11 @@ const Header = () => {
                   </Link>
                 )}
                 {isForceLogin && (
-                  <Link className="btn-home-login" to="/login">
+                  <Link
+                    onClick={handleForceLogin}
+                    className="btn-home-login"
+                    to="/login"
+                  >
                     Login
                   </Link>
                 )}
@@ -1046,7 +1051,7 @@ const Header = () => {
           ) : null}
 
           {(!isDemoLoginShow && !isShowRegisterButton && !isForceLogin) ||
-            (forceLoginSuccess && (
+            forceLoginSuccess ? (
               <div className="search-box-container d-xl-none">
                 <SearchBox />
                 <div className="depowith">
@@ -1065,7 +1070,7 @@ const Header = () => {
                   </div>{" "}
                 </div>{" "}
               </div>
-            ))}
+            ):null}
 
           <div className="news">
             {/* ToDO scrollAmount="3" */}

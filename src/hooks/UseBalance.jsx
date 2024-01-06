@@ -23,7 +23,7 @@ const UseBalance = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (res?.data?.success === false) {
+      if (res?.data?.success === false && token) {
         localStorage.clear();
         navigate("/login");
       } else if (res?.data?.success) {
