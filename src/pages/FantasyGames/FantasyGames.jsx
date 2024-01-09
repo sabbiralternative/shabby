@@ -4,13 +4,15 @@ import axios from "axios";
 import { useState } from "react";
 import { token } from "../../utils/Utils";
 import LiveSlotModal from "../../components/Modal/LiveSlotModal";
+import { useNavigate } from "react-router-dom";
 const FantasyGames = () => {
   const FantasyGamesApi = config?.result?.endpoint?.fantasyGames;
   const [params, setParams] = useState("aviator");
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [casinoId, setCasinoId] = useState({});
-
+  const isAEDCurrency = config?.result?.settings?.casinoCurrency;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getFantasyGames = async () => {
@@ -19,20 +21,22 @@ const FantasyGames = () => {
       });
       const data = res.data;
       if (data) {
-     
         setData(data);
-   
       }
     };
     getFantasyGames();
   }, [FantasyGamesApi, params]);
 
   const navigateSlotCasinoVideo = (casino) => {
-    setShowModal(true);
-    setCasinoId({
-      eventId: casino?.eventId,
-      providerId: casino?.providerId,
-    });
+    if (isAEDCurrency !== "AED") {
+      navigate(`/live-casino/${casino?.eventId}/${casino?.providerId}`);
+    } else {
+      setShowModal(true);
+      setCasinoId({
+        eventId: casino?.eventId,
+        providerId: casino?.providerId,
+      });
+    }
   };
 
   return (
@@ -84,12 +88,11 @@ const FantasyGames = () => {
               {data?.map((games, i) => {
                 return (
                   <div
-                  onClick={() => navigateSlotCasinoVideo(games)}
-                  key={i} className="casino-list-item">
-                    <img
-                      src={games?.image}
-                      className="img-fluid pointer"
-                    />
+                    onClick={() => navigateSlotCasinoVideo(games)}
+                    key={i}
+                    className="casino-list-item"
+                  >
+                    <img src={games?.image} className="img-fluid pointer" />
                     <div className="fancy-play">
                       <i className="fas fa-play"></i>
                       <i className="fas fa-info-circle fancy-info"></i>
@@ -101,7 +104,7 @@ const FantasyGames = () => {
           </div>
         </div>
       </div>
-      {showModal && (
+      {showModal && isAEDCurrency === "AED" && (
         <LiveSlotModal setShowModal={setShowModal} casinoId={casinoId} />
       )}
     </div>

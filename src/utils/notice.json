@@ -4,14 +4,6 @@
     "statusDesc": "Success"
   },
   "result": {
-    "banner": {
-      "ludo": false,
-      "casino": true,
-      "racing": true,
-      "top": false,
-      "middle": true,
-      "bottom": false
-    },
     "settings": {
       "siteTitle": "WINBUZZ365",
       "siteUrl": "winbuzz365.co",
@@ -22,7 +14,8 @@
       "demoLogin": true,
       "deposit": true,
       "withdraw": true,
-      "disabledDevtool": false
+      "disabledDevtool": false,
+      "casinoCurrency": "AED"
     },
 
     "endpoint": {
