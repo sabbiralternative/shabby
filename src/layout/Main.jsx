@@ -80,7 +80,8 @@ const Main = () => {
             relativeURL == "/our-virtual" ||
             relativeURL == "/slot-games" ||
             relativeURL == "/our-casino" ||
-            relativeURL == "/deposit"
+            relativeURL == "/deposit" ||
+            relativeURL == "/withdraw"
               ? "list-page slot-page"
               : ""
           } 

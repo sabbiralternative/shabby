@@ -1063,9 +1063,9 @@ const Header = () => {
                     </Link>
                   )}
                   {showWithdraw && (
-                    <a className="btn btn-danger" href="/withdraw">
+                    <Link className="btn btn-danger" to="/withdraw">
                       Withdraw
-                    </a>
+                    </Link>
                   )}
                 </div>{" "}
               </div>{" "}

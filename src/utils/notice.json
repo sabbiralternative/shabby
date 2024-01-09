@@ -70,7 +70,9 @@
       "liveCasinoIframe": " https://api7.live/api/livecasino/iframe",
       "liveCasino": " https://cache.api7.live/api/exchange/diamond/liveCasino",
       "fantasyGames": "https://cache.api7.live/api/exchange/diamond/fantasyGames/",
-      "depositIframe": "https://b2c.bet/deposit"
+      "depositIframe": "https://b2c.bet/deposit",
+      "withdrawIframe":"https://b2c.bet/withdraw"
+
     }
   },
   "success": true

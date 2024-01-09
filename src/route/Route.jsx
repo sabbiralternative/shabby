@@ -24,6 +24,7 @@ import SlotGamesVideo from "../pages/SlotGames/SlotGamesVideo.jsx";
 import SecureAuth from "../pages/SecureAuth/SecureAuth";
 import Register from "../components/Register/Register.jsx";
 import Deposit from "../pages/Deposit/Deposit";
+import Withdraw from '../pages/Withdraw/Withdraw'
 
 const router = createBrowserRouter(
   [
@@ -115,6 +116,10 @@ const router = createBrowserRouter(
         {
           path: "/deposit",
           element: <Deposit />,
+        },
+        {
+          path: "/withdraw",
+          element: <Withdraw />,
         },
       ],
     },
