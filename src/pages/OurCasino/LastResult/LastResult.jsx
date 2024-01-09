@@ -117,11 +117,7 @@ const LastResult = ({ data }) => {
             : ""
         }
 
-        ${
-          eventId == 10019 && winner?.split("")[0] === "R"
-            ? " result-b"
-            : ""
-        }
+        ${eventId == 10019 && winner?.split("")[0] === "R" ? " result-b" : ""}
         `}
               >
                 {winner?.split("")[0]}

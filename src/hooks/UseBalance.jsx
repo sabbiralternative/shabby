@@ -26,7 +26,7 @@ const UseBalance = () => {
       if (res?.data?.success === false && token) {
         localStorage.clear();
         navigate("/login");
-      } else if (res?.data?.success) {
+      } else if (res?.data?.success && token) {
         const data = res.data?.result;
         setRefetchBetsExposure(data?.update);
         return data;
@@ -36,11 +36,13 @@ const UseBalance = () => {
   });
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      refetchBalance();
-    }, 6000);
-    return () => clearInterval(intervalId);
-  }, [refetchBalance]);
+    if (token) {
+      const intervalId = setInterval(() => {
+        refetchBalance();
+      }, 6000);
+      return () => clearInterval(intervalId);
+    }
+  }, [refetchBalance, token]);
 
   return [balanceData, refetchBalance];
 };
