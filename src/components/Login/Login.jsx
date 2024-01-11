@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Notification from "../Notification/Notification";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
+import UseState from "../../hooks/UseState";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Login = () => {
   const pageTitle = config?.result?.settings?.siteTitle;
   const isDemoButtonShow = config?.result?.settings?.demoLogin;
   const isRegisterButtonShow = config?.result?.settings?.registration;
+  const { successRegister, setSuccessRegister } = UseState();
 
   const {
     register,
@@ -128,6 +130,13 @@ const Login = () => {
 
   return (
     <div className="login-page">
+      {successRegister && (
+        <Notification
+          message={successRegister}
+          setMessage={setSuccessRegister}
+          success={true}
+        />
+      )}
       {errorLogin && (
         <Notification
           message={errorLogin}
@@ -136,7 +145,7 @@ const Login = () => {
         />
       )}
       <div className="login-box">
-        <Link to='/' className="logo-login">
+        <Link to="/" className="logo-login">
           <img src={loginBanner} />
         </Link>
         <div className="login-form mt-4">

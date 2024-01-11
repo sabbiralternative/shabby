@@ -18,7 +18,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
-
+console.log(pnlBySelection);
   const handleLadder = (marketId) => {
     const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData(generatedToken);

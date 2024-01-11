@@ -69,7 +69,111 @@
 .modal-18plus img {
   height: 30px;
 }
+.login-page{
+  justify-content: flex-start;
+}
+.login-box{
+  margin: 2% 0;
+}
+.footer.footer-login{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+}
+.grecaptcha-badge {
+  visibility: hidden; 
+}
+.username-text .success-form{ 
+  width: 100%;
+  text-align: left;
+}
+.phnumber-text .success-form{
+  width: 100%;
+  text-align: left;
+}
+.blink-message{
+  display: flex;
+  align-items: center;
+  color: var(--text-sidebar);
+  padding: 5px;
+}
+.blink-message > div {
+-moz-animation: blinktext normal 1s infinite ease-in-out;
+-webkit-animation: blinktext normal 1s infinite ease-in-out;
+-ms-animation: blinktext normal 1s infinite ease-in-out;
+animation: blinktext normal 1s infinite ease-in-out;
+text-decoration: underline;
+line-height: 1.5;
+font-size: 18px;
+}
+@-moz-keyframes blinktext {
+  0% {
+      opacity: 1;
+      color: red;
+  }
 
+  50% {
+      opacity: 1;
+      color: yellow;
+  }
+
+  100% {
+      opacity: 1;
+      color: red;
+  }
+  }
+
+  @-webkit-keyframes blinktext {
+  0% {
+      opacity: 1;
+      color: red;
+  }
+
+  50% {
+      opacity: 1;
+      color: yellow;
+  }
+
+  100% {
+      opacity: 1;
+      color: red;
+  }
+  }
+
+  @-ms-keyframes blinktext {
+  0% {
+      opacity: 1;
+      color: red;
+  }
+
+  50% {
+      opacity: 1;
+      color: yellow;
+  }
+
+  100% {
+      opacity: 1;
+      color: red;
+  }
+  }
+
+  @keyframes blinktext {
+  0% {
+      opacity: 1;
+      color: red;
+  }
+
+  50% {
+      opacity: 1;
+      color: yellow;
+  }
+
+  100% {
+      opacity: 1;
+      color: red;
+  }
+}
 @media screen and (max-width: 767px) {
   .login-auth input {
     padding: 10px;
@@ -78,11 +182,22 @@
   }
 
   .sportsbook .slot-iframe.show {
-    top: 60px;
-    height: calc(100vh - 60px);
+    top: 50px;
+    height: calc(100vh - 50px);
     left: 0;
     width: 100%;
   }
+  .login-box img{
+    max-height: 70px;
+  }
+  .social-icon{
+    height: 30px;
+    width: 30px;
+  }
+  .social-icon img{
+    height: 20px;
+  }
+
 }
 
 @media only screen and (min-width: 768px) and (max-width:1199px) {
