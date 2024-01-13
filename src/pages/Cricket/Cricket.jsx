@@ -8,6 +8,7 @@ const Cricket = () => {
   const [data, setData] = useState([]);
   const gamesApi = config?.result?.endpoint?.group;
   const group = JSON.parse(localStorage.getItem("group"));
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const gamesData = async () => {
@@ -20,6 +21,7 @@ const Cricket = () => {
         });
         const data = res.data;
         setData(data);
+        setLoading(false);
       }
     };
     gamesData();
@@ -28,6 +30,10 @@ const Cricket = () => {
       return () => clearInterval(intervalId);
     }
   }, [group, gamesApi, token]);
+
+  if (loading) {
+    return "";
+  }
 
   return (
     <div className="center-container">
@@ -49,16 +55,19 @@ const Cricket = () => {
               </div>
             </div>
             <div className="bet-table-body">
-              {Object.values(data).length > 0 &&
+              {Object.values(data).length > 0 ? (
                 group === 4 &&
                 Object.keys(data)
                   .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                   .map((key, index) => (
                     <BetTable key={index} keys={key} data={data} />
-                  ))}
-              {Object.values(data).length < 1 && (
+                  ))
+              ) : (
                 <div className="bet-table-row">No Record Found</div>
               )}
+              {/* {Object.values(data).length < 1 && (
+                <div className="bet-table-row">No Record Found</div>
+              )} */}
             </div>
           </div>
         </div>

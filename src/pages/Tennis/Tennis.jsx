@@ -8,7 +8,7 @@ const Tennis = () => {
   const [data, setData] = useState([]);
   const gamesApi = config?.result?.endpoint?.group;
   const group = JSON.parse(localStorage.getItem("group"));
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const gamesData = async () => {
       if (group !== null) {
@@ -20,10 +20,15 @@ const Tennis = () => {
         });
         const data = res.data;
         setData(data);
+        setLoading(false)
       }
     };
     gamesData();
   }, [group, gamesApi, token]);
+
+  if (loading) {
+    return "";
+  }
 
   return (
     <div className="center-container">
