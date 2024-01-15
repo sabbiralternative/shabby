@@ -10,7 +10,7 @@ const ActivityTable = ({ data }) => {
   const [modalData, setModalData] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-
+/* Show ip details */
   const showIpDetail = (ip) => {
     const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData(generatedToken);

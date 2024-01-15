@@ -227,6 +227,7 @@ const PlaceBetDiamond = () => {
     pnlBySelection = Object?.values(obj);
   }
 
+  /* Scroll position sticky */
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -242,6 +243,7 @@ const PlaceBetDiamond = () => {
     };
   }, []);
 
+  /* Filter exposure */
   useEffect(() => {
     /* data[0]?.runners[0] exposure */
     const low = pnlBySelection?.filter(
@@ -701,11 +703,13 @@ const PlaceBetDiamond = () => {
 
       if (data.success) {
         setMyBets(data?.result);
-  
       }
     },
   });
 
+  /* Refetch  refetchCurrentBets;
+      refetchExposure
+      setRefetchBetsExposure*/
   useEffect(() => {
     if (refetchBetsExposure === 1) {
       refetchCurrentBets();

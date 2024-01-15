@@ -13,7 +13,7 @@ const OurVirtual = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState("ourVirtual");
 
-
+/* Get virtual games */
   useEffect(() => {
     const getVirtualGames = async () => {
       const res = await axios.get(virtualGamesApi, {
@@ -26,12 +26,14 @@ const OurVirtual = () => {
     getVirtualGames();
   }, [token, virtualGamesApi]);
 
+  /* Get unique category */
   useEffect(() => {
     const categories = Array.from(new Set(data.map((item) => item.category)));
 
     setCategories(categories);
   }, [data]);
 
+  /* Filter category */
   useEffect(() => {
     if (filterGames == "all") {
       setVirtualGames(data.filter((d) => d.visible === true));

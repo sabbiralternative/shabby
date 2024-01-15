@@ -13,7 +13,7 @@ const SingleCasino = () => {
   const token = localStorage.getItem("token");
   
 
-  const navigateToCasinoDetails = async () => {
+  const CasinoIFrame = async () => {
     const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData({
       eventId: eventId,
@@ -30,7 +30,7 @@ const SingleCasino = () => {
       setUrl(link);
     }
   };
-  navigateToCasinoDetails();
+  CasinoIFrame();
   return (
     <>
       <iframe

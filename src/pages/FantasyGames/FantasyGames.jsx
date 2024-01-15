@@ -13,7 +13,7 @@ const FantasyGames = () => {
   const [casinoId, setCasinoId] = useState({});
   const isAEDCurrency = config?.result?.settings?.casinoCurrency;
   const navigate = useNavigate();
-
+/* Get fantasy games */
   useEffect(() => {
     const getFantasyGames = async () => {
       const res = await axios.get(`${FantasyGamesApi}/${params}`, {
@@ -27,6 +27,7 @@ const FantasyGames = () => {
     getFantasyGames();
   }, [FantasyGamesApi, params]);
 
+  /* Navigate to slot casino video */
   const navigateSlotCasinoVideo = (casino) => {
     if (isAEDCurrency !== "AED") {
       navigate(`/live-casino/${casino?.eventId}/${casino?.providerId}`);

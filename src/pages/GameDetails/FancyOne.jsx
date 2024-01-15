@@ -18,6 +18,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
+  /* Ladder api */
   const handleLadder = (marketId) => {
     const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData(generatedToken);
@@ -36,6 +37,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
         }
       });
   };
+    /* Blink color */
   useEffect(() => {
     const newChangedPrices = {};
     if (fancy1.length > 0) {

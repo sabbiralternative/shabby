@@ -18,7 +18,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
-
+/* Ladder api */
   const handleLadder = (marketId) => {
     const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData(generatedToken);
@@ -37,7 +37,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
         }
       });
   };
-
+  /* Blink color */
   useEffect(() => {
     const newChangedPrices = {};
     if (overByOver.length > 0) {

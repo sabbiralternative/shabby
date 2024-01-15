@@ -35,7 +35,7 @@ const BookmarkerTwoSection = ({
       }
     });
   });
-
+/* Ladder api */
   const handleLader = (marketId) => {
     const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData(generatedToken);
@@ -54,6 +54,8 @@ const BookmarkerTwoSection = ({
         }
       });
   };
+
+  /* Blink color */
   useEffect(() => {
     const newChangedPrices = {};
     if (bookmarker2.length > 0) {

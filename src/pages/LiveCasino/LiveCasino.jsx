@@ -12,6 +12,8 @@ const LiveCasino = () => {
   const [casinoId, setCasinoId] = useState({});
   const isAEDCurrency = config?.result?.settings?.casinoCurrency
   const navigate = useNavigate()
+
+  /* Get live casino */
   useEffect(() => {
     const getLiveCasino = async () => {
       const res = await axios.get(`${liveCasinoApi}/${liveCasinoCategory}`, {
@@ -25,6 +27,7 @@ const LiveCasino = () => {
     getLiveCasino();
   }, [token, liveCasinoApi, liveCasinoCategory]);
 
+  /* Navigate to live casino video */
   const navigateLiveCasinoVideo = (casino) => {
     if (isAEDCurrency !== "AED") {
       navigate(`/live-casino/${casino?.eventId}/${casino?.providerId}`);

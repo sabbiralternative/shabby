@@ -9,6 +9,8 @@ const TableTennis = () => {
   const gamesApi = config?.result?.endpoint?.group;
   const group = JSON.parse(localStorage.getItem("group"));
   const [loading, setLoading] = useState(true);
+
+  /* Get table tennis data */
   useEffect(() => {
     const gamesData = async () => {
       if (group !== null) {

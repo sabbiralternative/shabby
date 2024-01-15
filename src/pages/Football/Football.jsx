@@ -9,6 +9,7 @@ const Football = () => {
   const gamesApi = config?.result?.endpoint?.group;
   const group = JSON.parse(localStorage.getItem("group"));
   const [loading, setLoading] = useState(true);
+  /* Football events */
   useEffect(() => {
     const gamesData = async () => {
       if (group !== null) {

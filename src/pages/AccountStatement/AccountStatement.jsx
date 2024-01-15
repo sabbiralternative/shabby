@@ -17,6 +17,8 @@ const AccountStatement = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
 
+
+  /* Account statement */
   const onSubmit = ({ toDate, fromDate, reportType }) => {
     if (reportType == "none") {
       return setErrorMessage("Select Report Type !");
@@ -43,6 +45,8 @@ const AccountStatement = () => {
       });
   };
 
+
+  /* Settled bets */
   const getSettledBets = (marketId) => {
     const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData(generatedToken);

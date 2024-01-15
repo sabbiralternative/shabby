@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { config } from "../utils/config";
 import { useNavigate } from "react-router-dom";
 import UseState from "./UseState";
-
+/* Balance api */
 const UseBalance = () => {
   const balanceAPi = config?.result?.endpoint?.balance;
   const token = localStorage.getItem("token");

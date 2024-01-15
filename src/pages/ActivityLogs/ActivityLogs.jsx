@@ -12,7 +12,7 @@ const ActivityLogs = () => {
   const token = localStorage.getItem("token");
   const [errorMessage, setErrorMessage] = useState("");
  
-
+/* Activity log api */
   const onSubmit = ({ toDate, fromDate, logType }) => {
     const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData({

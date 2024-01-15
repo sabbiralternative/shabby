@@ -29,7 +29,7 @@ const BookmarkerSection = ({
 
 
 
-
+/* Ladder api */
   const handleLader = (marketId) => {
     const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData(generatedToken);
@@ -48,7 +48,7 @@ const BookmarkerSection = ({
         }
       });
   };
-
+/* Blink color */
   useEffect(() => {
     const newChangedPrices = {};
     bookmarker.forEach((item, index) => {

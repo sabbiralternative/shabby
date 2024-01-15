@@ -18,6 +18,7 @@ const CasinoList = ({ casino }) => {
     type:'ourCasino'
   };
 
+  
   const navigateToCasinoDetails = () => {
     if (isAuraCasino == "aura") {
       localStorage.removeItem("casino");

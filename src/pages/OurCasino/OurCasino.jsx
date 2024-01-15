@@ -16,7 +16,7 @@ const OurCasino = () => {
   const { filterGames, setFilterGames } = UseState();
   const [active, setActive] = useState("ourCasino");
 
-
+  /* Get casino thumbnail */
   useEffect(() => {
     const getAuraCasino = async () => {
       const res = await axios.get(
@@ -37,18 +37,20 @@ const OurCasino = () => {
     getAuraCasino();
   }, [diamondCasinoUrl, auraCasinoApi, casinoType, token, filterGames]);
 
+  /* get unique category */
   useEffect(() => {
     const categories = Array.from(new Set(data.map((item) => item.category)));
 
     setCategories(categories);
   }, [data]);
 
+  /* Filter category */
   useEffect(() => {
     if (filterGames == "all") {
       setCasino_list(data.filter((d) => d.visible === true));
     } else {
       const category = data.filter((game) => game.category === filterGames);
-  
+
       setCasino_list(category.filter((d) => d.visible === true));
     }
   }, [data, filterGames]);

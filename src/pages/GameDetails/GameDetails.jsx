@@ -296,6 +296,9 @@ const GameDetails = () => {
     }
   };
 
+
+
+  /* Place bet calculate */
   const pnl1 =
     placeBetValue?.pnl && placeBetValue?.pnl[0] ? placeBetValue?.pnl[0] : 0;
   const pnl2 =

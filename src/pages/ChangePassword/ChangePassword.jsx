@@ -18,6 +18,7 @@ const ChangePassword = () => {
   } = useForm();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  /* Change password */
   const onSubmit = ({ password, newPassword, newPasswordConfirm }) => {
     const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData({

@@ -19,8 +19,8 @@ const Main = () => {
   const isForceLogin = config?.result?.settings?.forceLogin;
   const token = localStorage.getItem("token");
 
-  /* TODO */
 
+  /* Token expire logout user */
   useEffect(() => {
     let isTokenExpired;
     if (token) {
@@ -39,15 +39,18 @@ const Main = () => {
     }
   }, [navigate, isForceLogin, token]);
 
+  /* Site title */
   useEffect(() => {
     document.title = pageTitle;
   }, [pageTitle]);
 
+  /* path */
   useEffect(() => {
     const relativeURL = currentURL.replace(baseUrl, "");
     setRelativeURL(relativeURL);
   }, [baseUrl, currentURL]);
 
+  /* Disabled devtool */
   useEffect(() => {
     if (isDisabledDevtools) {
       DisableDevtool({

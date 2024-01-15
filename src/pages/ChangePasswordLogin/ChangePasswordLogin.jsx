@@ -20,11 +20,11 @@ const ChangePasswordLogin = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-
+/* Site title */
   useEffect(() => {
     document.title = pageTitle;
   }, [pageTitle]);
-
+/* Change password login api */
   const onSubmit = ({ password, newPassword, newPasswordConfirm }) => {
     const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData({

@@ -10,8 +10,7 @@ const LiveCasinoVideo = () => {
   const [videoUrl, setVideoUrl] = useState("");
   const liveCasinoIframeApi = config?.result?.endpoint?.liveCasinoIframe;
   const token = localStorage.getItem("token");
-  
-
+/* Get live casino video */
   useEffect(() => {
     const getLiveCasinoVideo = async () => {
       const generatedToken = UseTokenGenerator();

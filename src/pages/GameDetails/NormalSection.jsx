@@ -18,7 +18,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
-console.log(pnlBySelection);
+/* Ladder api */
   const handleLadder = (marketId) => {
     const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData(generatedToken);
@@ -37,6 +37,7 @@ console.log(pnlBySelection);
         }
       });
   };
+    /* Blink color */
   useEffect(() => {
     const newChangedPrices = {};
     if (normal?.length > 0) {

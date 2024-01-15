@@ -26,7 +26,7 @@ const MatchOddsSection = ({
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
-
+ /* Ladder api */
   const handleLader = (marketId) => {
     const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData(generatedToken);
@@ -45,7 +45,7 @@ const MatchOddsSection = ({
         }
       });
   };
-
+  /* Blink color */
   useEffect(() => {
     const newChangedPrices = {};
     match_odds?.forEach((item, index) => {

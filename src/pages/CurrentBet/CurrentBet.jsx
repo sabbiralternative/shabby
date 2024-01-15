@@ -14,7 +14,7 @@ const CurrentBet = () => {
   const [sportsRef, setSportsRef] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
  
-
+/* Current bet api */
   const onSubmit = ({ sportsType }) => {
     if (sportsType == "none") {
       setErrorMessage("Select Report Type !");
