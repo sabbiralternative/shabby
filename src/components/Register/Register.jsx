@@ -15,6 +15,7 @@ const Register = () => {
   const siteUrl = config?.result?.settings?.siteUrl;
   const userNameUrl = config?.result?.endpoint?.checkUsername;
   const registerUrl = config?.result?.endpoint?.register;
+  const otpUrl = config?.result?.endpoint?.otp;
   const [userExist, setUserExist] = useState(false);
   const [userErr, setUserErr] = useState(false);
   const [user, setUser] = useState({
@@ -28,6 +29,11 @@ const Register = () => {
   const [errRegister, setErrRegister] = useState("");
   const { handleSubmit } = useForm();
   const navigate = useNavigate();
+  const [otp, setOtp] = useState("");
+  const [errOtp, setErrOtp] = useState("");
+  const [password, setPassword] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     document.title = pageTitle;
@@ -52,7 +58,7 @@ const Register = () => {
   const isUserExist = async (e) => {
     if (e.target.value.length > 3) {
       setUser({ ...user, userName: e.target.value });
-      console.log(e.target.value);
+   
       const generatedToken = UseTokenGenerator();
       const encryptedVideoData = UseEncryptData({
         username: e.target.value,
@@ -71,8 +77,25 @@ const Register = () => {
   };
 
   const onSubmit = () => {
-    if (user?.password !== user?.confirmPassword) {
+  
+    setConfirmPasswordErr("");
+    setPassword("");
+    setMobile("");
+    setUserName("");
+    if (user?.userName === "") {
+      return setUserName("User name is required !");
+    }
+    if (
+      user?.password !== user?.confirmPassword &&
+      user?.confirmPassword?.length > 0
+    ) {
       return setConfirmPasswordErr("Password did not match !");
+    } else if (user?.password === "") {
+      return setPassword("Password is required !");
+    } else if (user?.confirmPassword === "") {
+      return setConfirmPasswordErr("Confirm password is required !");
+    } else if (user?.mobileNo === "") {
+      setMobile("Mobile no is required !");
     } else {
       const generatedToken = UseTokenGenerator();
       const registerData = {
@@ -103,8 +126,28 @@ const Register = () => {
     }
   };
 
+  const getOtp = async () => {
+    const generatedToken = UseTokenGenerator();
+    const otpData = {
+      mobile: user?.mobileNo,
+      token: generatedToken,
+    };
+    const encryptedData = UseEncryptData(otpData);
+    const res = await axios.post(otpUrl, encryptedData);
+    const data = res.data;
+  
+    if (data?.success) {
+      setOtp(data?.result?.message);
+    } else {
+      setErrOtp(data?.error?.errorMessage);
+    }
+  };
+
   return (
     <div className="wrapper">
+      {errOtp && (
+        <Notification message={errOtp} setMessage={setErrOtp} success={false} />
+      )}
       {errRegister && (
         <Notification
           message={errRegister}
@@ -112,6 +155,7 @@ const Register = () => {
           success={false}
         />
       )}
+      {otp && <Notification message={otp} setMessage={setOtp} success={true} />}
       <div className="login-page">
         <div className="login-box">
           <div className="logo-login">
@@ -157,9 +201,14 @@ const Register = () => {
                     Username is not available
                   </p>
                 )}
+                {userName && (
+                  <p className="success-form text-danger">
+                   {userName}
+                  </p>
+                )}
               </div>
 
-              <div className="mb-4 input-group position-relative">
+              <div className="mb-4 input-group position-relative username-text">
                 <input
                   name="password"
                   type="password"
@@ -173,6 +222,9 @@ const Register = () => {
                 <span className="input-group-text">
                   <i className="fas fa-key"></i>
                 </span>
+                {password && (
+                  <p className="success-form text-danger">{password} </p>
+                )}
               </div>
               <div className="mb-4 input-group position-relative username-text">
                 <input
@@ -195,7 +247,7 @@ const Register = () => {
                 )}
               </div>
 
-              <div className="mb-4 input-group position-relative">
+              <div className="mb-4 input-group position-relative username-text">
                 <input
                   name="mobileNo"
                   type="tel"
@@ -208,11 +260,23 @@ const Register = () => {
                 <span className="input-group-text">
                   <i className="fas fa-phone"></i>
                 </span>
+                <button
+                  onClick={getOtp}
+                  className="btn btn-primary btn-block"
+                  type="button"
+                >
+                  Get OTP
+                </button>
+                {mobile && (
+                  <p className="success-form text-danger">{mobile} </p>
+                )}
               </div>
 
               <div className="d-grid">
                 <button
-                  disabled={userExist ? false : true}
+                  disabled={
+                    userExist && user?.userName?.length > 3 ? false : true
+                  }
                   type="submit"
                   className="btn btn-primary btn-block"
                 >
@@ -227,9 +291,13 @@ const Register = () => {
               </div>
               <small className="recaptchaTerms mt-1">
                 This site is protected by reCAPTCHA and the Google
-                <Link to="https://policies.google.com/privacy">Privacy Policy</Link>
+                <Link to="https://policies.google.com/privacy">
+                  Privacy Policy
+                </Link>
                 and
-                <Link to="https://policies.google.com/terms">Terms of Service</Link>
+                <Link to="https://policies.google.com/terms">
+                  Terms of Service
+                </Link>
                 apply.
               </small>
             </form>
@@ -274,7 +342,6 @@ const Register = () => {
                     }}
                   ></textarea>
                 </div>
-            
               </div>
             </div>
           </div>

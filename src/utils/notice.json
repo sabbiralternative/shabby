@@ -67,7 +67,8 @@
       "withdrawIframe": "https://b2c.bet/withdraw",
       "register": "https://api7.live/api/account/diamond/register",
       "checkUsername": "https://api7.live/api/account/diamond/checkUsername",
-      "whatsapp": "https://api7.live/api/account/diamond/whatsapp"
+      "whatsapp": "https://api7.live/api/account/diamond/whatsapp",
+      "otp":"https://api7.live/api/exchange/diamond/otp"
     }
   },
   "success": true
