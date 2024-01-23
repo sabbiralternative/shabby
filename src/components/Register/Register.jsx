@@ -58,7 +58,7 @@ const Register = () => {
   const isUserExist = async (e) => {
     if (e.target.value.length > 3) {
       setUser({ ...user, userName: e.target.value });
-   
+
       const generatedToken = UseTokenGenerator();
       const encryptedVideoData = UseEncryptData({
         username: e.target.value,
@@ -77,7 +77,6 @@ const Register = () => {
   };
 
   const onSubmit = () => {
-  
     setConfirmPasswordErr("");
     setPassword("");
     setMobile("");
@@ -96,7 +95,11 @@ const Register = () => {
       return setConfirmPasswordErr("Confirm password is required !");
     } else if (user?.mobileNo === "") {
       setMobile("Mobile no is required !");
-    } else {
+    }else if(user?.mobileNo?.length > 10 || user?.mobileNo?.length < 10){
+    return  setMobile("Enter ten digit for mobile no !");
+    } 
+    
+    else {
       const generatedToken = UseTokenGenerator();
       const registerData = {
         username: user?.userName,
@@ -135,7 +138,7 @@ const Register = () => {
     const encryptedData = UseEncryptData(otpData);
     const res = await axios.post(otpUrl, encryptedData);
     const data = res.data;
-  
+
     if (data?.success) {
       setOtp(data?.result?.message);
     } else {
@@ -202,9 +205,7 @@ const Register = () => {
                   </p>
                 )}
                 {userName && (
-                  <p className="success-form text-danger">
-                   {userName}
-                  </p>
+                  <p className="success-form text-danger">{userName}</p>
                 )}
               </div>
 
@@ -250,7 +251,7 @@ const Register = () => {
               <div className="mb-4 input-group position-relative username-text">
                 <input
                   name="mobileNo"
-                  type="tel"
+                  type="number"
                   className="form-control PhoneInput"
                   placeholder="Mobile No."
                   onChange={(e) =>
@@ -271,7 +272,17 @@ const Register = () => {
                   <p className="success-form text-danger">{mobile} </p>
                 )}
               </div>
-
+              <div className="mb-4 input-group position-relative">
+                <input
+                  name="otp"
+                  type="number"
+                  className="form-control PhoneInput"
+                  placeholder="OTP"
+                />
+                <span className="input-group-text">
+                  <i className="fas fa-key"></i>
+                </span>
+              </div>
               <div className="d-grid">
                 <button
                   disabled={
