@@ -23,6 +23,7 @@ const Register = () => {
     password: "",
     confirmPassword: "",
     mobileNo: "",
+    otp: "",
   });
   const { setSuccessRegister } = UseState();
   const [confirmPasswordErr, setConfirmPasswordErr] = useState("");
@@ -34,6 +35,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [mobile, setMobile] = useState("");
   const [userName, setUserName] = useState("");
+  const [otpField, setOtpField] = useState("");
 
   useEffect(() => {
     document.title = pageTitle;
@@ -81,6 +83,7 @@ const Register = () => {
     setPassword("");
     setMobile("");
     setUserName("");
+    setOtpField("");
     if (user?.userName === "") {
       return setUserName("User name is required !");
     }
@@ -95,11 +98,13 @@ const Register = () => {
       return setConfirmPasswordErr("Confirm password is required !");
     } else if (user?.mobileNo === "") {
       setMobile("Mobile no is required !");
-    }else if(user?.mobileNo?.length > 10 || user?.mobileNo?.length < 10){
-    return  setMobile("Enter ten digit for mobile no !");
-    } 
-    
-    else {
+    } else if (user?.mobileNo?.length > 10 || user?.mobileNo?.length < 10) {
+      return setMobile("Enter ten digit mobile no !");
+    } else if (user?.otp === "") {
+      return setOtpField("OTP is required");
+    } else if (user?.otp?.length > 4 || user?.otp?.length < 4) {
+      return setOtpField("Enter four digit OTP no");
+    } else {
       const generatedToken = UseTokenGenerator();
       const registerData = {
         username: user?.userName,
@@ -108,7 +113,9 @@ const Register = () => {
         mobile: user?.mobileNo,
         site: siteUrl,
         token: generatedToken,
+        otp: user?.otp,
       };
+
       const encryptedData = UseEncryptData(registerData);
       fetch(registerUrl, {
         method: "POST",
@@ -118,12 +125,14 @@ const Register = () => {
         body: JSON.stringify(encryptedData),
       })
         .then((res) => res.json())
+
         .then((data) => {
+          console.log(data);
           if (data?.success) {
             setSuccessRegister("User created successfully");
             navigate("/login");
           } else if (!data?.success) {
-            setErrRegister("Unable to create user. Please try again.");
+            setErrRegister(data?.error?.description);
           }
         });
     }
@@ -138,11 +147,10 @@ const Register = () => {
     const encryptedData = UseEncryptData(otpData);
     const res = await axios.post(otpUrl, encryptedData);
     const data = res.data;
-
     if (data?.success) {
       setOtp(data?.result?.message);
     } else {
-      setErrOtp(data?.error?.errorMessage);
+      setErrOtp(data?.error?.description);
     }
   };
 
@@ -272,8 +280,9 @@ const Register = () => {
                   <p className="success-form text-danger">{mobile} </p>
                 )}
               </div>
-              <div className="mb-4 input-group position-relative">
+              <div className="mb-4 input-group position-relative username-text">
                 <input
+                  onChange={(e) => setUser({ ...user, otp: e.target.value })}
                   name="otp"
                   type="number"
                   className="form-control PhoneInput"
@@ -282,6 +291,9 @@ const Register = () => {
                 <span className="input-group-text">
                   <i className="fas fa-key"></i>
                 </span>
+                {otpField && (
+                  <p className="success-form text-danger">{otpField} </p>
+                )}
               </div>
               <div className="d-grid">
                 <button
