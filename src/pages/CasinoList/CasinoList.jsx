@@ -20,7 +20,7 @@ const CasinoList = ({ casino }) => {
 
   
   const navigateToCasinoDetails = () => {
-    if (isAuraCasino == "aura") {
+    if (isAuraCasino == "aura" || isAuraCasino === 'test') {
       localStorage.removeItem("casino");
       localStorage.removeItem("auraEventId");
       localStorage.setItem("auraEventId", JSON.stringify(auraEventId));
