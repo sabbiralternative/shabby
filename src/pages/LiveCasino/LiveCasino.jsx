@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { config } from "../../utils/config";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LiveSlotModal from "../../components/Modal/LiveSlotModal";
+import UseLiveSlotFantasyNewTab from "../../hooks/useLiveSlotFantasyNewTab";
 const LiveCasino = () => {
   const [liveCasinoCategory, setLiveCasinoCategory] = useState("evolution");
   const [live_casino, setLive_Casino] = useState([]);
@@ -11,7 +12,7 @@ const LiveCasino = () => {
   const [showModal, setShowModal] = useState(false);
   const [casinoId, setCasinoId] = useState({});
   const isAEDCurrency = config?.result?.settings?.casinoCurrency
-  const navigate = useNavigate()
+
 
   /* Get live casino */
   useEffect(() => {
@@ -31,7 +32,7 @@ const LiveCasino = () => {
   const navigateLiveCasinoVideo = (casino) => {
     if (isAEDCurrency !== "AED") {
       // navigate(`/live-casino/${casino?.eventId}/${casino?.providerId}`);
-      window.open(`/live-casino/${casinoId?.eventId}/${casinoId?.providerId}`, "_blank");
+      UseLiveSlotFantasyNewTab(casino);
     } else {
       setShowModal(true);
       setCasinoId({

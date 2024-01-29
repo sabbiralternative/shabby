@@ -1,40 +1,14 @@
-import { useNavigate } from "react-router-dom";
-import { config } from "../../utils/config";
-import UseTokenGenerator from "../../hooks/UseTokenGenerator";
-import UseEncryptData from "../../hooks/UseEncryptData";
-// import { useState } from "react";
-import axios from "axios";
+import UseLiveSlotFantasyNewTab from "../../hooks/useLiveSlotFantasyNewTab";
+
 const LiveSlotModal = ({ setShowModal, casinoId }) => {
-  const navigate = useNavigate();
-  // const [videoUrl, setVideoUrl] = useState("");
-  const liveCasinoIframeApi = config?.result?.endpoint?.liveCasinoIframe;
-  const token = localStorage.getItem("token");
   const handleNavigate = async () => {
-    // console.log(casinoId);
-    // const generatedToken = UseTokenGenerator();
-    // const encryptedData = UseEncryptData({
-    //   gameId: casinoId?.eventId,
-    //   providerName: casinoId?.providerId,
-    //   token: generatedToken,
-    // });
-
-    // // console.log(encryptedData);
-
-    // const res = await axios.post(liveCasinoIframeApi, encryptedData, {
-    //   headers: { Authorization: `Bearer ${token}` },
-    // });
-    // const data = res;
-    // console.log(data);
-    // window.open(data, "_blank");
-    // setVideoUrl(data?.gameUrl);
+    UseLiveSlotFantasyNewTab(casinoId);
     setShowModal(false);
-
-    
     // window.open(
     //   `/live-casino/${casinoId?.eventId}/${casinoId?.providerId}`,
     //   "_blank"
     // );
-    navigate(`/live-casino/${casinoId?.eventId}/${casinoId?.providerId}`)
+    // navigate(`/live-casino/${casinoId?.eventId}/${casinoId?.providerId}`)
   };
   return (
     <>

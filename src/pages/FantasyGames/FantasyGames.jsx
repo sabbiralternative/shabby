@@ -4,7 +4,8 @@ import axios from "axios";
 import { useState } from "react";
 import { token } from "../../utils/Utils";
 import LiveSlotModal from "../../components/Modal/LiveSlotModal";
-import { useNavigate } from "react-router-dom";
+
+import UseLiveSlotFantasyNewTab from "../../hooks/useLiveSlotFantasyNewTab";
 const FantasyGames = () => {
   const FantasyGamesApi = config?.result?.endpoint?.fantasyGames;
   const [params, setParams] = useState("aviator");
@@ -12,7 +13,7 @@ const FantasyGames = () => {
   const [showModal, setShowModal] = useState(false);
   const [casinoId, setCasinoId] = useState({});
   const isAEDCurrency = config?.result?.settings?.casinoCurrency;
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 /* Get fantasy games */
   useEffect(() => {
     const getFantasyGames = async () => {
@@ -30,7 +31,8 @@ const FantasyGames = () => {
   /* Navigate to slot casino video */
   const navigateSlotCasinoVideo = (casino) => {
     if (isAEDCurrency !== "AED") {
-      navigate(`/live-casino/${casino?.eventId}/${casino?.providerId}`);
+      // navigate(`/live-casino/${casino?.eventId}/${casino?.providerId}`);
+      UseLiveSlotFantasyNewTab(casino);
     } else {
       setShowModal(true);
       setCasinoId({
