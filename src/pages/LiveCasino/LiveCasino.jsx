@@ -110,6 +110,7 @@ const LiveCasino = () => {
         <div className="tab-pane active" id="all-casino">
           <div className="casino-list">
             {live_casino?.map((casino, i) => {
+              // console.log(casino);
               return (
                 <div key={i} className="casino-list-item rect">
                   <div

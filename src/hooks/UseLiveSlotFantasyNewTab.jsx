@@ -8,7 +8,7 @@ const UseLiveSlotFantasyNewTab = async (casinoId) => {
   const token = localStorage.getItem("token");
   const generatedToken = UseTokenGenerator();
   const encryptedData = UseEncryptData({
-    gameId: casinoId?.eventId,
+    gameId: casinoId?.eventId?.toString(),
     providerName: casinoId?.providerId,
     token: generatedToken,
   });
