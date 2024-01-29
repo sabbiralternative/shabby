@@ -30,11 +30,11 @@ const LiveSlotModal = ({ setShowModal, casinoId }) => {
     setShowModal(false);
 
     
-    window.open(
-      `/live-casino/${casinoId?.eventId}/${casinoId?.providerId}`,
-      "_blank"
-    );
-    // navigate(`/live-casino/${casinoId?.eventId}/${casinoId?.providerId}`)
+    // window.open(
+    //   `/live-casino/${casinoId?.eventId}/${casinoId?.providerId}`,
+    //   "_blank"
+    // );
+    navigate(`/live-casino/${casinoId?.eventId}/${casinoId?.providerId}`)
   };
   return (
     <>
