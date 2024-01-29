@@ -1,7 +1,43 @@
 import { useNavigate } from "react-router-dom";
-
+import { config } from "../../utils/config";
+import UseTokenGenerator from "../../hooks/UseTokenGenerator";
+import UseEncryptData from "../../hooks/UseEncryptData";
+// import { useState } from "react";
+import axios from "axios";
 const LiveSlotModal = ({ setShowModal, casinoId }) => {
   const navigate = useNavigate();
+  // const [videoUrl, setVideoUrl] = useState("");
+  const liveCasinoIframeApi = config?.result?.endpoint?.liveCasinoIframe;
+  const token = localStorage.getItem("token");
+  const handleNavigate = async () => {
+    // console.log(casinoId);
+    // const generatedToken = UseTokenGenerator();
+    // const encryptedData = UseEncryptData({
+    //   gameId: casinoId?.eventId,
+    //   providerName: casinoId?.providerId,
+    //   token: generatedToken,
+    // });
+
+    // // console.log(encryptedData);
+    // console.log({ gameId: casinoId?.eventId,
+    //   providerName: casinoId?.providerId,
+    //   token: generatedToken,});
+    // const res = await axios.post(liveCasinoIframeApi, encryptedData, {
+    //   headers: { Authorization: `Bearer ${token}` },
+    // });
+    // const data = res;
+    // console.log(data);
+    // window.open(data, "_blank");
+    // setVideoUrl(data?.gameUrl);
+    // setShowModal(false);
+
+    
+    window.open(
+      `/live-casino/${casinoId?.eventId}/${casinoId?.providerId}`,
+      "_blank"
+    );
+    // navigate(`/live-casino/${casinoId?.eventId}/${casinoId?.providerId}`)
+  };
   return (
     <>
       <div className="fade modal-backdrop show"></div>
@@ -31,12 +67,7 @@ const LiveSlotModal = ({ setShowModal, casinoId }) => {
                 over 1000 games available, the fun never ends....
                 <div className="disconnected-buttons mt-3">
                   <button
-                    onClick={() => {
-                      setShowModal(false);
-                      navigate(
-                        `/live-casino/${casinoId?.eventId}/${casinoId?.providerId}`
-                      );
-                    }}
+                    onClick={handleNavigate}
                     type="button"
                     className="btn btn-outline-primary"
                   >

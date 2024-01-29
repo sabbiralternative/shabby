@@ -8496,9 +8496,11 @@ img.r-rotate {
 
 .slot-iframe {
   position: fixed;
-  left: 285px;
+  /* left: 285px; */
+  left: 0;
   top: 100%;
-  width: calc(100% - 285px);
+  /* width: calc(100% - 285px); */
+  width: 100vw;
   z-index: 10;
 }
 
@@ -8508,14 +8510,16 @@ img.r-rotate {
 }
 
 .slot-iframe.show {
-  top: 159px;
+  /* top: 159px; */
+  top: 0;
   transition: all 0.3s ease-out;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;
   -o-transition: all 0.3s ease-out;
   z-index: 1000;
-  height: calc(100vh - 159px);
+  /* height: calc(100vh - 159px); */
+  height: 100vh;
 }
 
 .close-slot-frame {

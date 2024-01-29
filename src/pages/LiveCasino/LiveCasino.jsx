@@ -30,7 +30,8 @@ const LiveCasino = () => {
   /* Navigate to live casino video */
   const navigateLiveCasinoVideo = (casino) => {
     if (isAEDCurrency !== "AED") {
-      navigate(`/live-casino/${casino?.eventId}/${casino?.providerId}`);
+      // navigate(`/live-casino/${casino?.eventId}/${casino?.providerId}`);
+      window.open(`/live-casino/${casinoId?.eventId}/${casinoId?.providerId}`, "_blank");
     } else {
       setShowModal(true);
       setCasinoId({

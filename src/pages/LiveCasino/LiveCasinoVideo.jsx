@@ -23,13 +23,16 @@ const LiveCasinoVideo = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = res.data;
+      console.log(data);
       setVideoUrl(data?.gameUrl);
     };
     getLiveCasinoVideo();
   }, [token, eventId, providerId, liveCasinoIframeApi]);
 
   return (
-    <div className="slot-iframe show">
+    <div 
+    className="slot-iframe show"
+    >
       <iframe
         allow="fullscreen;"
         src={videoUrl}

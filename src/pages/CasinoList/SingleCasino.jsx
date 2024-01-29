@@ -5,7 +5,6 @@ import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 
 const SingleCasino = () => {
-  console.log('object');
   const [url, setUrl] = useState(null);
   const getSingleCasinoApi = config?.result?.endpoint?.accessToken;
   const { eventId, eventTypeId } = JSON.parse(

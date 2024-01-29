@@ -36,6 +36,7 @@ const HomePage = () => {
         }
       );
       const data = res.data;
+      // console.log(data);
       setCasino_list(data);
     };
     getAuraCasino();

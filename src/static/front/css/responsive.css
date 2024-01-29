@@ -2010,8 +2010,10 @@
         width: 110px;
     }
     .slot-iframe {
-        left: 215px;
-        width: calc(100% - 215px);
+        /* left: 215px;
+        width: calc(100% - 215px); */
+        left: 0;
+        width: 100vw;
     }
     .casino-list-item {
         width: calc(16.66% - 10px);
@@ -2209,8 +2211,10 @@
         width: 120px;
     }
     .slot-iframe {
-        left: 245px;
-        width: calc(100% - 245px);
+        /* left: 245px;
+        width: calc(100% - 245px); */
+        left: 0;
+        width: 100vw;
     }
     .casino-list-item {
         width: calc(16.66% - 10px);
