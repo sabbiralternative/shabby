@@ -68,7 +68,7 @@ const LiveCasino = () => {
               <span>Tembo</span>
             </Link>
           </li>
-          <li
+          {/* <li
             onClick={() => setLiveCasinoCategory("ezugi")}
             className="nav-item"
           >
@@ -91,7 +91,7 @@ const LiveCasino = () => {
             >
               <span>Cockfight</span>
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
       {/* <div className="casino-sub-tab-list">

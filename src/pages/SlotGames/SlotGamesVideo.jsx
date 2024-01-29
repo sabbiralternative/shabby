@@ -32,7 +32,7 @@ const SlotGamesVideo = () => {
     <div className="slot-iframe show">
       <iframe
         allow="fullscreen;"
-        src={videoUrl}
+        src={videoUrl?.length > 0 && videoUrl}
         style={{
           width: "100%",
           border: "0px",

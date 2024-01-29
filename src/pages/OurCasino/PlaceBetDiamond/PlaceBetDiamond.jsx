@@ -54,6 +54,7 @@ import UseTokenGenerator from "../../../hooks/UseTokenGenerator.jsx";
 import UseEncryptData from "../../../hooks/UseEncryptData.jsx";
 
 const PlaceBetDiamond = () => {
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

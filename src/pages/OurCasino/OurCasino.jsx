@@ -15,7 +15,7 @@ const OurCasino = () => {
   const [categories, setCategories] = useState([]);
   const { filterGames, setFilterGames } = UseState();
   const [active, setActive] = useState("ourCasino");
-
+// console.log(casino_list);
   /* Get casino thumbnail */
   useEffect(() => {
     const getAuraCasino = async () => {
@@ -29,6 +29,7 @@ const OurCasino = () => {
           },
         }
       );
+     
       const data = res.data;
       const sort = data.sort((Link, b) => Link.sort - b.sort);
       setData(sort);

@@ -5,6 +5,7 @@ import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 
 const SingleCasino = () => {
+  console.log('object');
   const [url, setUrl] = useState(null);
   const getSingleCasinoApi = config?.result?.endpoint?.accessToken;
   const { eventId, eventTypeId } = JSON.parse(
@@ -33,11 +34,13 @@ const SingleCasino = () => {
   CasinoIFrame();
   return (
     <>
+     <div className="slot-iframe show">
       <iframe
         src={url}
         title="casino video"
         style={{ border: "0px", height: "100vh", width: "100vw" }}
       ></iframe>
+      </div>
     </>
   );
 };

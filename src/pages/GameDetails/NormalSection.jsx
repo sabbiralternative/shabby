@@ -135,7 +135,8 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
         </>
       )}
 
-      <div className="game-market market-6">
+    {normal?.length > 0 && (
+        <div className="game-market market-6">
         <div className="market-title">
           <span>{normal[0]?.tabGroupName}</span>
         </div>
@@ -309,6 +310,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
           </div>
         </div>
       </div>
+    )}
     </>
   );
 };
