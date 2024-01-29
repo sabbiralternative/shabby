@@ -19,9 +19,7 @@ const LiveSlotModal = ({ setShowModal, casinoId }) => {
     // });
 
     // // console.log(encryptedData);
-    // console.log({ gameId: casinoId?.eventId,
-    //   providerName: casinoId?.providerId,
-    //   token: generatedToken,});
+
     // const res = await axios.post(liveCasinoIframeApi, encryptedData, {
     //   headers: { Authorization: `Bearer ${token}` },
     // });
@@ -29,7 +27,7 @@ const LiveSlotModal = ({ setShowModal, casinoId }) => {
     // console.log(data);
     // window.open(data, "_blank");
     // setVideoUrl(data?.gameUrl);
-    // setShowModal(false);
+    setShowModal(false);
 
     
     window.open(

@@ -84,7 +84,10 @@ const router = createBrowserRouter(
           path: "/live-casino",
           element: <LiveCasino />,
         },
-      
+        {
+          path: "/live-casino/:eventId/:providerId",
+          element: <LiveCasinoVideo />,
+        },
         {
           path: "/our-virtual",
           element: <OurVirtual />,
@@ -132,10 +135,7 @@ const router = createBrowserRouter(
       path: "/change-Password-login",
       element: <ChangePasswordLogin />,
     },
-    {
-      path: "/live-casino/:eventId/:providerId",
-      element: <LiveCasinoVideo />,
-    },
+  
   ],
   {
     basename: import.meta.env.BASE_URL ?? "/",

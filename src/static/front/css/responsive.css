@@ -2211,8 +2211,8 @@
         width: 120px;
     }
     .slot-iframe {
-        /* left: 245px;
-        width: calc(100% - 245px); */
+        /* left: 245px; */
+        /* width: calc(100% - 245px); */
         left: 0;
         width: 100vw;
     }
