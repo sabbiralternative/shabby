@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { config } from "../../utils/config";
-import logo from "../../static/front/img/logo.png";
+
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -17,6 +17,7 @@ const Header = () => {
   const [balance, setBalance] = useState(true);
   const [exp, setExp] = useState(true);
   const token = localStorage.getItem("token");
+  const logo = localStorage.getItem('siteLogo')
   const notificationApi = config?.result?.endpoint?.notification;
   const buttonValueApi = config?.result?.endpoint?.buttonValue;
   const { register, handleSubmit } = useForm();

@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import loginBanner from "../../static/front/img/logo.png";
 import { config } from "../../utils/config";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -36,6 +35,7 @@ const Register = () => {
   const [mobile, setMobile] = useState("");
   const [userName, setUserName] = useState("");
   const [otpField, setOtpField] = useState("");
+  const logo = localStorage.getItem('siteLogo')
 
   useEffect(() => {
     document.title = pageTitle;
@@ -171,7 +171,7 @@ const Register = () => {
         <div className="login-box">
           <div className="logo-login">
             <Link to="/">
-              <img src={loginBanner} />
+              <img src={logo} />
             </Link>
           </div>
           <div className="login-form mt-4">

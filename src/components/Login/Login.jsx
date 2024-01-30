@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import loginBanner from "../../static/front/img/logo.png";
 import { config } from "../../utils/config";
 import { useEffect, useState } from "react";
 import Notification from "../Notification/Notification";
@@ -17,7 +16,7 @@ const Login = () => {
   const isRegisterButtonShow = config?.result?.settings?.registration;
   const isForceLogin = config?.result?.settings?.forceLogin;
   const { successRegister, setSuccessRegister } = UseState();
-
+  const logo = localStorage.getItem('siteLogo')
   const {
     register,
     handleSubmit,
@@ -151,7 +150,7 @@ const Login = () => {
       )}
       <div className="login-box">
         <Link to="/" className="logo-login">
-          <img src={loginBanner} />
+          <img src={logo} />
         </Link>
         <div className="login-form mt-4">
           <h4 className="text-center login-title">

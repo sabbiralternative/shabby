@@ -141,7 +141,8 @@ const StateProvider = ({ children }) => {
     setFilterGames,
     refetchBetsExposure,
     setRefetchBetsExposure,
-    successRegister, setSuccessRegister,
+    successRegister,
+    setSuccessRegister,
 
     lowExposure,
     setLowExposure,

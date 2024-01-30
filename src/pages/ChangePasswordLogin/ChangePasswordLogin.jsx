@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import loginBanner from "../../static/front/img/logo.png";
+
 import { config } from "../../utils/config";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ const ChangePasswordLogin = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const pageTitle = config?.result?.settings?.siteTitle;
-
+  const logo = localStorage.getItem('siteLogo')
   const {
     register,
     handleSubmit,
@@ -74,7 +74,7 @@ const ChangePasswordLogin = () => {
       <div className="login-page">
         <div className="login-box">
           <Link to='/' className="logo-login">
-            <img src={loginBanner} />
+            <img src={logo} />
           </Link>
           <div className="login-form mt-4">
             <h4 className="text-center login-title">
