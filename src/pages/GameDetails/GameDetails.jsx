@@ -319,7 +319,7 @@ const GameDetails = () => {
           total = price * totalSize - totalSize;
         }
         if (placeBetValue?.btype === "BOOKMAKER") {
-          const bookmaker = 1 + price / totalSize;
+          const bookmaker = 1 + price / 100;
           total = bookmaker * totalSize - totalSize;
         }
 
