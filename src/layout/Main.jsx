@@ -18,21 +18,10 @@ const Main = () => {
   const isDisabledDevtools = config?.result?.settings?.disabledDevtool;
   const isForceLogin = config?.result?.settings?.forceLogin;
   const token = localStorage.getItem("token");
-  const assetsUrl = config?.result?.endpoint?.assets;
-  const siteUrl = config?.result?.settings?.siteUrl;
+
   
 
-  useEffect(() => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.type = "text/css";
-    link.href = `${assetsUrl}/${siteUrl}/theme.css`;
-    document.head.appendChild(link);
 
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, [siteUrl, assetsUrl]);
 
   /* Token expire logout user */
   useEffect(() => {
