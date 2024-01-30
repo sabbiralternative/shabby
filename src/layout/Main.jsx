@@ -20,10 +20,9 @@ const Main = () => {
   const token = localStorage.getItem("token");
   const assetsUrl = config?.result?.endpoint?.assets;
   const siteUrl = config?.result?.settings?.siteUrl;
+  
 
   useEffect(() => {
-    const logo = `${assetsUrl}/${siteUrl}/logo.png`;
-    localStorage.setItem("siteLogo", logo);
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.type = "text/css";

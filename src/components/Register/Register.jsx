@@ -24,7 +24,7 @@ const Register = () => {
     mobileNo: "",
     otp: "",
   });
-  const { setSuccessRegister } = UseState();
+  const { setSuccessRegister,logo } = UseState();
   const [confirmPasswordErr, setConfirmPasswordErr] = useState("");
   const [errRegister, setErrRegister] = useState("");
   const { handleSubmit } = useForm();
@@ -35,7 +35,7 @@ const Register = () => {
   const [mobile, setMobile] = useState("");
   const [userName, setUserName] = useState("");
   const [otpField, setOtpField] = useState("");
-  const logo = localStorage.getItem('siteLogo')
+  
 
   useEffect(() => {
     document.title = pageTitle;

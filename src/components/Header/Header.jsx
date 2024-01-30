@@ -17,12 +17,12 @@ const Header = () => {
   const [balance, setBalance] = useState(true);
   const [exp, setExp] = useState(true);
   const token = localStorage.getItem("token");
-  const logo = localStorage.getItem('siteLogo')
+ 
   const notificationApi = config?.result?.endpoint?.notification;
   const buttonValueApi = config?.result?.endpoint?.buttonValue;
   const { register, handleSubmit } = useForm();
   const [showNotification, setShowNotification] = useState("");
-  const { buttonValue, SetButtonValue, setSports } = UseState();
+  const { buttonValue, SetButtonValue, setSports,logo } = UseState();
   const isForceLogin = config?.result?.settings?.forceLogin;
   const isShowRegisterButton = config?.result?.settings?.registration;
   const isDemoLoginShow = config?.result?.settings?.demoLogin;

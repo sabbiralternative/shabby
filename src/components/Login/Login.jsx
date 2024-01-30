@@ -15,8 +15,8 @@ const Login = () => {
   const isDemoButtonShow = config?.result?.settings?.demoLogin;
   const isRegisterButtonShow = config?.result?.settings?.registration;
   const isForceLogin = config?.result?.settings?.forceLogin;
-  const { successRegister, setSuccessRegister } = UseState();
-  const logo = localStorage.getItem('siteLogo')
+  const { successRegister, setSuccessRegister,logo } = UseState();
+
   const {
     register,
     handleSubmit,

@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { config } from "../utils/config";
 
 export const StateContext = createContext(null);
 const StateProvider = ({ children }) => {
@@ -8,6 +9,13 @@ const StateProvider = ({ children }) => {
   const [filterGames, setFilterGames] = useState("all");
   const [refetchBetsExposure, setRefetchBetsExposure] = useState(null);
   const [successRegister, setSuccessRegister] = useState("");
+  const [logo, setLogo] = useState("");
+  const assetsUrl = config?.result?.endpoint?.assets;
+  const siteUrl = config?.result?.settings?.siteUrl;
+  useEffect(() => {
+    const logo = `${assetsUrl}/${siteUrl}/logo.png`;
+    setLogo(logo);
+  }, [siteUrl, assetsUrl]);
 
   /* data[0]?.runners[0] exposure */
   const [lowExposure, setLowExposure] = useState([]);
@@ -143,6 +151,8 @@ const StateProvider = ({ children }) => {
     setRefetchBetsExposure,
     successRegister,
     setSuccessRegister,
+    logo,
+    setLogo,
 
     lowExposure,
     setLowExposure,

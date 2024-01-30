@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Notification from "../../components/Notification/Notification";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
+import UseState from "../../hooks/UseState";
 
 const ChangePasswordLogin = () => {
   const changePasswordLogin = config?.result?.endpoint?.changePassword;
@@ -13,7 +14,7 @@ const ChangePasswordLogin = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const pageTitle = config?.result?.settings?.siteTitle;
-  const logo = localStorage.getItem('siteLogo')
+ const {logo} = UseState()
   const {
     register,
     handleSubmit,
