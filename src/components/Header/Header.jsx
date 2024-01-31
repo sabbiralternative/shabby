@@ -11,18 +11,19 @@ import UseBalance from "../../hooks/UseBalance";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import Notification from "../Notification/Notification";
+import MyMarketModal from "../Modal/MyMarketModal";
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [balance, setBalance] = useState(true);
   const [exp, setExp] = useState(true);
   const token = localStorage.getItem("token");
- 
+
   const notificationApi = config?.result?.endpoint?.notification;
   const buttonValueApi = config?.result?.endpoint?.buttonValue;
   const { register, handleSubmit } = useForm();
   const [showNotification, setShowNotification] = useState("");
-  const { buttonValue, SetButtonValue, setSports,logo } = UseState();
+  const { buttonValue, SetButtonValue, setSports, logo } = UseState();
   const isForceLogin = config?.result?.settings?.forceLogin;
   const isShowRegisterButton = config?.result?.settings?.registration;
   const isDemoLoginShow = config?.result?.settings?.demoLogin;
@@ -36,10 +37,12 @@ const Header = () => {
   const { setFilterGames } = UseState();
   const role = localStorage.getItem("loginName");
   const forceLoginSuccess = localStorage.getItem("forceLoginSuccess");
- 
+
   const [balanceData] = UseBalance();
+  // console.log(balanceData);
   const loginApi = config?.result?.endpoint?.login;
   const [errorLogin, setErrorLogin] = useState("");
+  const [showMyMarket, setShowMyMarket] = useState(false);
   /* Close modalRef modal click outside the modal */
   useEffect(() => {
     const handleOutsideClick = (e) => {
@@ -122,7 +125,7 @@ const Header = () => {
     if (isForceLogin) {
       navigate("/login");
     } else {
-      setDropDown(false)
+      setDropDown(false);
       navigate("/");
     }
   };
@@ -292,7 +295,7 @@ const Header = () => {
           data?.result?.changePassword === false
         ) {
           localStorage.removeItem("forceLogin");
-          setOpen(false)
+          setOpen(false);
           navigate("/");
         } else {
           setErrorLogin(data?.error);
@@ -304,6 +307,22 @@ const Header = () => {
     localStorage.setItem("forceLogin", "true");
   };
 
+  const [myMarketData, setMyMarketData] = useState([]);
+  const myMarketApi = config?.result?.endpoint?.myMarket;
+
+  const handleGetMyMarket = async () => {
+    setMyMarketData([]);
+    setShowMyMarket(true);
+    const generatedToken = UseTokenGenerator();
+    const encryptedData = UseEncryptData(generatedToken);
+    const res = await axios.post(myMarketApi, encryptedData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = res?.data?.result;
+    // console.log(data);
+    setMyMarketData(data);
+  };
+  // console.log(myMarketData);
   return (
     <div
       className="wrapper"
@@ -351,7 +370,7 @@ const Header = () => {
               </div>
               <div className="ms-3 d-none d-xl-flex">
                 {showDeposit && (
-                  <Link className="btn btn-success me-2" to='/deposit'>
+                  <Link className="btn btn-success me-2" to="/deposit">
                     Deposit
                   </Link>
                 )}
@@ -370,10 +389,12 @@ const Header = () => {
                 )}
                 <div>
                   {exp && (
-                    <>
+                    <span onClick={handleGetMyMarket}
+                    style={{cursor:'pointer'}}
+                    >
                       <span>Exp:</span>
                       <b className="pointer">{balanceData?.deductedExposure}</b>
-                    </>
+                    </span>
                   )}
 
                   {buttonValue && (
@@ -1019,9 +1040,11 @@ const Header = () => {
             </div>
           ) : null}
 
-          
-          {(isDemoLoginShow || isShowRegisterButton) &&
-          (!forceLoginSuccess) ||  ( !isDemoLoginShow && !isShowRegisterButton && !token  && !forceLoginSuccess) ? (
+          {((isDemoLoginShow || isShowRegisterButton) && !forceLoginSuccess) ||
+          (!isDemoLoginShow &&
+            !isShowRegisterButton &&
+            !token &&
+            !forceLoginSuccess) ? (
             <div className="user-details login-btn-box">
               <div className="user-name dropdown ms-3">
                 {isShowRegisterButton && (
@@ -1029,15 +1052,15 @@ const Header = () => {
                     Register
                   </Link>
                 )}
-             
-                  <Link
-                    onClick={handleForceLogin}
-                    className="btn-home-login"
-                    to="/login"
-                  >
-                    Login
-                  </Link>
-            
+
+                <Link
+                  onClick={handleForceLogin}
+                  className="btn-home-login"
+                  to="/login"
+                >
+                  Login
+                </Link>
+
                 {isDemoLoginShow && (
                   <button
                     onClick={loginWithDemo}
@@ -1052,7 +1075,7 @@ const Header = () => {
           ) : null}
 
           {(!isDemoLoginShow && !isShowRegisterButton && forceLoginSuccess) ||
-          (forceLoginSuccess && token ) ? (
+          (forceLoginSuccess && token) ? (
             <div className="search-box-container d-xl-none">
               <SearchBox />
               <div className="depowith">
@@ -1181,6 +1204,12 @@ const Header = () => {
           </nav>
         </div>
       </section>
+      {showMyMarket && myMarketData?.length > 0 && (
+        <MyMarketModal 
+        setShowMyMarket={setShowMyMarket}
+        myMarketData={myMarketData}
+        />
+      )}
     </div>
   );
 };

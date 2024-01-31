@@ -20,6 +20,7 @@ const Cricket = () => {
           },
         });
         const data = res.data;
+        console.log(data);
         setData(data);
         setLoading(false);
       }
@@ -32,7 +33,7 @@ const Cricket = () => {
   }, [group, gamesApi, token]);
 
   if (loading) {
-    return "";
+    return;
   }
 
   return (

@@ -12,6 +12,7 @@ const StateProvider = ({ children }) => {
   const [logo, setLogo] = useState("");
   const assetsUrl = config?.result?.endpoint?.assets;
   const siteUrl = config?.result?.settings?.siteUrl;
+
   useEffect(() => {
     const logo = `${assetsUrl}/${siteUrl}/logo.png`;
     setLogo(logo);
@@ -20,6 +21,12 @@ const StateProvider = ({ children }) => {
     link.type = "text/css";
     link.href = `${assetsUrl}/${siteUrl}/theme.css`;
     document.head.appendChild(link);
+
+    const FavIconLink = document.createElement("link");
+    FavIconLink.rel = "icon";
+    FavIconLink.type = "image/png";
+    FavIconLink.href = `${assetsUrl}/${siteUrl}/favicon.png`;
+    document.head.appendChild(FavIconLink);
 
     return () => {
       document.head.removeChild(link);

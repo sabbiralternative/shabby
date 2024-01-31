@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import UseEncryptData from "./UseEncryptData";
 import UseTokenGenerator from "./UseTokenGenerator";
-import { useEffect } from "react";
 import { config } from "../utils/config";
 import { useNavigate } from "react-router-dom";
 import UseState from "./UseState";
@@ -28,21 +27,18 @@ const UseBalance = () => {
         navigate("/login");
       } else if (res?.data?.success && token) {
         const data = res.data?.result;
+        // console.log(data);
         setRefetchBetsExposure(data?.update);
         return data;
       }
     },
     staleTime: 6000,
+    refetchOnMount:false,
+    refetchOnWindowFocus:false,
+    refetchInterval:6000
   });
 
-  useEffect(() => {
-    if (token) {
-      const intervalId = setInterval(() => {
-        refetchBalance();
-      }, 6000);
-      return () => clearInterval(intervalId);
-    }
-  }, [refetchBalance, token]);
+
 
   return [balanceData, refetchBalance];
 };
