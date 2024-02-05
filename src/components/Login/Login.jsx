@@ -14,7 +14,6 @@ const Login = () => {
   const pageTitle = config?.result?.settings?.siteTitle;
   const isDemoButtonShow = config?.result?.settings?.demoLogin;
   const isRegisterButtonShow = config?.result?.settings?.registration;
-  const isForceLogin = config?.result?.settings?.forceLogin;
   const { successRegister, setSuccessRegister,logo } = UseState();
 
   const {
@@ -71,7 +70,7 @@ const Login = () => {
               localStorage.setItem("forceLoginSuccess", "true");
               navigate("/");
             } else {
-              isForceLogin  &&   localStorage.setItem("forceLoginSuccess", "true");
+               localStorage.setItem("forceLoginSuccess", "true");
               navigate("/");
             }
           }
@@ -123,7 +122,7 @@ const Login = () => {
             navigate("/");
     
           } else {
-            isForceLogin && localStorage.setItem("forceLoginSuccess", "true");
+             localStorage.setItem("forceLoginSuccess", "true");
             navigate("/");
          
           }
