@@ -7,6 +7,10 @@ import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { config } from "../utils/config";
 import DisableDevtool from "disable-devtool";
+import { useQuery } from "@tanstack/react-query";
+import UseTokenGenerator from "../hooks/UseTokenGenerator";
+import UseEncryptData from "../hooks/UseEncryptData";
+import axios from "axios";
 
 const Main = () => {
   const params = useParams();
@@ -18,10 +22,8 @@ const Main = () => {
   const isDisabledDevtools = config?.result?.settings?.disabledDevtool;
   const isForceLogin = config?.result?.settings?.forceLogin;
   const token = localStorage.getItem("token");
-
-  
-
-
+  const whatsappApi = config?.result?.endpoint?.whatsapp;
+  const siteUrl = config?.result?.settings?.siteUrl;
 
   /* Token expire logout user */
   useEffect(() => {
@@ -68,6 +70,22 @@ const Main = () => {
     }
   }, [isDisabledDevtools, navigate]);
 
+  const { data: whatsAppLink } = useQuery({
+    queryKey: ["whatsApp"],
+    queryFn: async () => {
+      const generatedToken = UseTokenGenerator();
+      const encryptedVideoData = UseEncryptData({
+        site: siteUrl,
+        token: generatedToken,
+      });
+      const res = await axios.post(whatsappApi, encryptedVideoData);
+      const data = res.data;
+      if (data?.success) {
+        return data?.result?.link;
+      }
+    },
+  });
+
   return (
     <div>
       <Header />
@@ -95,7 +113,9 @@ const Main = () => {
              relativeURL == "/current-bet" ||
              relativeURL == "/activity-logs" ||
              relativeURL == "/change-password" ||
-             relativeURL == "/account-statement"
+             relativeURL == "/account-statement" ||
+             relativeURL == "/withdraw-statement" ||
+             relativeURL == "/deposit-statement"
                ? "report-page"
                : ""
            } 
@@ -112,6 +132,16 @@ const Main = () => {
         </div>
       </div>
       <Footer />
+      {whatsAppLink && (
+        <a
+          href={whatsAppLink}
+          target="_main"
+          to={whatsAppLink}
+          className="whatsapp_link"
+        >
+          <img src="/assets/wp_support.webp" alt="" />
+        </a>
+      )}
     </div>
   );
 };

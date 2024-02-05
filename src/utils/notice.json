@@ -12,8 +12,8 @@
       "registration": true,
       "forceLogin": false,
       "demoLogin": true,
-      "deposit": false,
-      "withdraw": false,
+      "deposit": true,
+      "withdraw": true,
       "disabledDevtool": false,
       "casinoCurrency": "AED"
     },

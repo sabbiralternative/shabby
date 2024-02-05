@@ -25,6 +25,8 @@ import SecureAuth from "../pages/SecureAuth/SecureAuth";
 import Register from "../components/Register/Register.jsx";
 import Deposit from "../pages/Deposit/Deposit";
 import Withdraw from '../pages/Withdraw/Withdraw'
+import DepositStatement from "../pages/DepositStatement/DepositStatement.jsx";
+import WithdrawStatement from "../pages/WithdrawStatement/WithdrawStatement.jsx";
 
 const router = createBrowserRouter(
   [
@@ -118,8 +120,16 @@ const router = createBrowserRouter(
           element: <Deposit />,
         },
         {
+          path: "/deposit-statement",
+          element: <DepositStatement />,
+        },
+        {
           path: "/withdraw",
           element: <Withdraw />,
+        },
+        {
+          path: "/withdraw-statement",
+          element: <WithdrawStatement />,
         },
       ],
     },

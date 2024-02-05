@@ -274,7 +274,7 @@ const AccountStatement = () => {
                             },
                             i
                           ) => {
-                            console.log(visibleData);
+                            // console.log(visibleData);
                             return (
                               <tr key={i} role="row">
                                 <td role="cell" className="report-date">
