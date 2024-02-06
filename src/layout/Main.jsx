@@ -139,7 +139,7 @@ const Main = () => {
           to={whatsAppLink}
           className="whatsapp_link"
         >
-          <img src="/assets/wp_support.webp" alt="" />
+          <img src="/assets/wp_support.webp" alt="WhatsAPP" />
         </a>
       )}
     </div>

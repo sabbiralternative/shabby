@@ -7,10 +7,13 @@ const TabPanel = ({ label, icon: Icon, id }) => {
   return (
     <li onClick={() => setSports(id)} className="nav-item">
       <Link className={`nav-link ${sports === id ? "active" : ""}`}>
-        <div style={{
-          paddingBottom:'3px',
-          fontSize:'15px'
-        }} className="d-xl-none">
+        <div
+          style={{
+            paddingBottom: "3px",
+            fontSize: "15px",
+          }}
+          className="d-xl-none"
+        >
           <Icon />
         </div>
         <span>{label}</span>
