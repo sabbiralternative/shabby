@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
-:root {
+/* :root {
   --bg-primary: #0088cc;
   --bg-primary65: #0088cca5;
   --bg-primary90: #0088cce6;
@@ -8,7 +8,7 @@
   --bg-secondary70: #2c3e50b3;
   --bg-secondary85: #2c3e50d9;
   --text-secondary: #fff;
-}
+} */
 
 :root {
   --bg-sidebar: #cccccc;
