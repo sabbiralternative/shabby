@@ -12,7 +12,7 @@ const HomePage = () => {
   const isCasino = config?.result?.settings.casino;
   const auraCasinoApi = config?.result?.endpoint?.auraCasino;
   const diamondCasinoApi = config?.result?.endpoint?.diamondCasino;
-  const testCasinoApi = config?.result?.endpoint?.testCasino
+  const testCasinoApi = config?.result?.endpoint?.testCasino;
   const token = localStorage.getItem("token");
   const [casino_list, setCasino_list] = useState([]);
   const { sports } = UseState();
@@ -26,9 +26,7 @@ const HomePage = () => {
       const res = await axios.get(
         `${isCasino == "aura" ? auraCasinoApi : ""} ${
           isCasino == "diamond" ? diamondCasinoApi : ""
-        }  ${
-          isCasino == "test" ? testCasinoApi : ""
-        }`,
+        }  ${isCasino == "test" ? testCasinoApi : ""}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -40,7 +38,7 @@ const HomePage = () => {
       setCasino_list(data);
     };
     getAuraCasino();
-  }, [auraCasinoApi, diamondCasinoApi, isCasino, token,testCasinoApi]);
+  }, [auraCasinoApi, diamondCasinoApi, isCasino, token, testCasinoApi]);
 
   /* Get game events */
   useEffect(() => {

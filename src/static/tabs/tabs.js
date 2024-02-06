@@ -2,37 +2,38 @@ import { MdSportsCricket, MdSportsKabaddi } from "react-icons/md";
 import { BiBasketball } from "react-icons/bi";
 import { GiBasketballBall, GiVolleyballBall } from "react-icons/gi";
 import { TbClover } from "react-icons/tb";
-import { IoGameController, IoFootballOutline } from "react-icons/io5";
+import { IoGameController, IoFootballOutline ,IoFootball,IoTennisballSharp} from "react-icons/io5";
 import { FaPlayCircle } from "react-icons/fa";
+import { FaTableTennisPaddleBall } from "react-icons/fa6";
 
 export const tabPanel = [
   {
     label: "In-Play",
-    icon: MdSportsCricket,
+    icon: FaPlayCircle,
     to: "",
     id: 0,
   },
   {
     label: "Cricket",
-    icon: FaPlayCircle,
+    icon: MdSportsCricket,
     to: "",
     id: 4,
   },
   {
     label: "Football",
-    icon: FaPlayCircle,
+    icon: IoFootball,
     to: "football",
     id: 1,
   },
   {
     label: "Tennis",
-    icon: FaPlayCircle,
+    icon: IoTennisballSharp,
     to: "tennis",
     id: 2,
   },
   {
     label: "Table Tennis",
-    icon: FaPlayCircle,
+    icon: FaTableTennisPaddleBall,
     to: "tableTennis",
     id: 8,
   },
