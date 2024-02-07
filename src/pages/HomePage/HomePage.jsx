@@ -100,6 +100,13 @@ const HomePage = () => {
                       <BetTable key={index} keys={key} data={data} />
                     ))
                 : null}
+              {Object.values(data).length > 0 && sports === 0
+                ? Object.keys(data)
+                    .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
+                    .map((key, index) => (
+                      <BetTable key={index} keys={key} data={data} />
+                    ))
+                : null}
 
               {Object.values(data).length > 0 && sports === 1
                 ? Object.keys(data)

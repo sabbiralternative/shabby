@@ -13,7 +13,8 @@ const BetTable = ({ data, keys }) => {
   const navigateGameList = (keys) => {
     navigate(`/game-details/${sports}/${keys}`);
   };
-
+console.log(data);
+console.log(sports);
   return (
     <>
       <div className="bet-table-row">
@@ -187,7 +188,7 @@ const BetTable = ({ data, keys }) => {
 
 
         {/* Data 1 */}
-        {data[keys]?.status === "OPEN" && data[keys][1] && sports ? (
+        {data[keys]?.status === "OPEN" && data[keys][1] && (sports || sports === 0) ? (
           <div className="bet-nation-odd">
             <div className="back odd-box">
               <span className="bet-odd">
