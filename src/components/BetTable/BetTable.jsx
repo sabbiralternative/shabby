@@ -4,17 +4,16 @@ import ic_fancy from "../../static/front/img/ic_fancy.png";
 import game_icon from "../../static/front/img/game-icon.svg";
 import UseState from "../../hooks/UseState";
 import { useNavigate } from "react-router-dom";
-import { PiTelevisionBold} from 'react-icons/pi'
-
+import { PiTelevisionBold } from "react-icons/pi";
 
 const BetTable = ({ data, keys }) => {
   const { sports } = UseState();
   const navigate = useNavigate();
   const navigateGameList = (keys) => {
-    navigate(`/game-details/${sports}/${keys}`);
+    navigate(`/game-details/${data[keys]?.eventTypeId}/${keys}`);
   };
-console.log(data);
-console.log(sports);
+
+
   return (
     <>
       <div className="bet-table-row">
@@ -41,7 +40,7 @@ console.log(sports);
 
             {data[keys]?.isTv === 1 ? (
               <div className="game-icon">
-                <PiTelevisionBold size={17}/>
+                <PiTelevisionBold size={17} />
                 {/* <i className="fas fa-tv icon-tv"></i> */}
               </div>
             ) : (
@@ -88,9 +87,6 @@ console.log(sports);
           <b>2</b>
         </div>
 
-
-
-
         {/* Data 0 */}
         {data[keys]?.status === "OPEN" && data[keys][0] ? (
           <div className="bet-nation-odd">
@@ -121,18 +117,8 @@ console.log(sports);
         )}
         {/* Data 0 */}
 
-
-
-
-
-
-
-
-
-
-
         {/* Data 2 */}
-        {data[keys]?.status === "OPEN" && data[keys][2]  && (
+        {data[keys]?.status === "OPEN" && data[keys][2] && (
           <div className="bet-nation-odd">
             <div className="back odd-box">
               <span className="bet-odd">
@@ -146,23 +132,21 @@ console.log(sports);
             </div>
           </div>
         )}
-        {data[keys]?.status === "SUSPENDED" &&
-          data[keys][2] && (
-            <div className="bet-nation-odd suspended-box">
-              <div className="back odd-box">
-                <span className="bet-odd">
-                  <b>{data[keys]?.[2]?.ex?.availableToBack[0]?.price ?? "-"}</b>
-                </span>
-              </div>
-              <div className="lay odd-box ">
-                <span className="bet-odd">
-                  <b>{data[keys]?.[2]?.ex?.availableToLay[0]?.price ?? "-"}</b>
-                </span>
-              </div>
+        {data[keys]?.status === "SUSPENDED" && data[keys][2] && (
+          <div className="bet-nation-odd suspended-box">
+            <div className="back odd-box">
+              <span className="bet-odd">
+                <b>{data[keys]?.[2]?.ex?.availableToBack[0]?.price ?? "-"}</b>
+              </span>
             </div>
-          )}
+            <div className="lay odd-box ">
+              <span className="bet-odd">
+                <b>{data[keys]?.[2]?.ex?.availableToLay[0]?.price ?? "-"}</b>
+              </span>
+            </div>
+          </div>
+        )}
 
-    
         {!data[keys][2] && (
           <div className="bet-nation-odd">
             <div className="back odd-box">
@@ -179,16 +163,10 @@ console.log(sports);
         )}
         {/* Data 2 */}
 
-
-
-
-
-
-
-
-
         {/* Data 1 */}
-        {data[keys]?.status === "OPEN" && data[keys][1] && (sports || sports === 0) ? (
+        {data[keys]?.status === "OPEN" &&
+        data[keys][1] &&
+        (sports || sports === 0) ? (
           <div className="bet-nation-odd">
             <div className="back odd-box">
               <span className="bet-odd">
