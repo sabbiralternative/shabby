@@ -795,6 +795,34 @@ const Header = () => {
                           }}
                         >
                           <div className="d-xl-none d-flex justify-content-center"></div>
+                          {showWithdraw && (
+                        <Link
+                        to="/withdraw-statement"
+                        onClick={() => setOpen(!open)}
+                      >
+                        <li
+                          data-rr-ui-dropdown-item=""
+                          className="dropdown-item"
+                        >
+                          Withdraw Statement
+                        </li>
+                      </Link>
+                      )}
+                      {
+                        showDeposit && (
+                          <Link
+                        to="/deposit-statement"
+                        onClick={() => setOpen(!open)}
+                      >
+                        <li
+                          data-rr-ui-dropdown-item=""
+                          className="dropdown-item"
+                        >
+                          Deposit Statement
+                        </li>
+                      </Link>
+                        )
+                      }
                           <Link
                             to="/account-statement"
                             onClick={() => setOpen(!open)}

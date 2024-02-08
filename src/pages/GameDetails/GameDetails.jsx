@@ -252,8 +252,6 @@ const GameDetails = () => {
     },
   });
 
-
-
   /* Increase price bets */
   const handleIncreasePrice = () => {
     if (price == 1000 || placeBetValue?.isWeak === true) {
@@ -296,8 +294,6 @@ const GameDetails = () => {
     }
   };
 
-
-
   /* Place bet calculate */
   const pnl1 =
     placeBetValue?.pnl && placeBetValue?.pnl[0] ? placeBetValue?.pnl[0] : 0;
@@ -324,7 +320,6 @@ const GameDetails = () => {
         }
 
         if (selectionId && selectionId.includes(".1")) {
-     
           setOddStake(formatNumber(total + pnl1));
           setOddStakeLay1(formatNumber(pnl2 + -1 * totalSize));
           setOddStakeLay2(formatNumber(pnl3 + -1 * totalSize));
