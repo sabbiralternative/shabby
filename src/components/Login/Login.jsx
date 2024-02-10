@@ -150,6 +150,7 @@ const Login = () => {
 
   return (
     <div className="login-page">
+      {/* success message ater login */}
       {successRegister && (
         <Notification
           message={successRegister}
@@ -157,6 +158,7 @@ const Login = () => {
           success={true}
         />
       )}
+      {/* error message during the login time */}
       {errorLogin && (
         <Notification
           message={errorLogin}

@@ -13,16 +13,24 @@ const PlaceBetModal = ({
   setSuccessMessage,
   setErrorMessage,
 }) => {
+  /* price state */
   const [price, setPrice] = useState("");
+  /* total size state */
   const [totalSize, setTotalSize] = useState("");
+  /* profit state */
   const [profit, setProfit] = useState("");
+  /* get button value from locale storage */
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
+  /* Get button value state from context */
   const { buttonValue, SetButtonValue } = UseState();
+  /* loading state */
   const [loader, setLoader] = useState(false);
+
   const orderApi = config?.result?.endpoint?.order;
+  /* token */
   const token = localStorage.getItem("token");
 
-  /* Set price */
+  /* Set price in price state from placeBet value*/
   useEffect(() => {
     setPrice(placeBetValue?.price);
   }, [placeBetValue]);
@@ -42,7 +50,9 @@ const PlaceBetModal = ({
 
   /* Handle bets */
   const handleOrderBets = () => {
+    /* random token  */
     const generatedToken = UseTokenGenerator();
+    /* encrypted data */
     const encryptedData = UseEncryptData([
       {
         betDelay: placeBetValue?.betDelay,
@@ -71,13 +81,16 @@ const PlaceBetModal = ({
       .then((res) => res.json())
       .then((data) => {
         if (data?.success) {
+          /* refetch exposure and current bets after successfully placed bet */
           refetchExposure();
           refetchCurrentBets();
       
           setLoader(false);
           setShowBets(false);
+          /* set notification */
           setSuccessMessage("Bet Place Successfully !");
         } else {
+          /* setError message */
           setErrorMessage(data?.error?.status[0]?.description);
           setLoader(false);
           setShowBets(false);

@@ -8,7 +8,7 @@ AOS.init();
 const Footer = () => {
   /* modal state */
   const [showModal, setShowModal] = useState(false);
-  /* get modal */
+  /* get modal from locale storage */
   const modal = JSON.parse(localStorage.getItem('modal'))
   /* site title from notice.json */
   const siteTitle = config?.result?.settings?.siteTitle
@@ -24,6 +24,7 @@ const Footer = () => {
       }, 200);
     }
   }, []);
+
 /* close modal */
   const closeModal = () => {
     setShowModal(false);

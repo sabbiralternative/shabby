@@ -2,6 +2,7 @@ import UseLiveSlotFantasyNewTab from "../../hooks/useLiveSlotFantasyNewTab";
 
 const LiveSlotModal = ({ setShowModal, casinoId }) => {
   const handleNavigate = async () => {
+    /* navigate in new tab for open live slot or fantasy game */
     UseLiveSlotFantasyNewTab(casinoId);
     setShowModal(false);
     // window.open(

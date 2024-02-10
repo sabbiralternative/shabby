@@ -3,6 +3,7 @@ import CloseModalClickOutside from "../../hooks/CloseModalClickOutside";
 import { Link } from "react-router-dom";
 
 const MyMarketModal = ({ setShowMyMarket, myMarketData }) => {
+  /* Close modal click outside */
   const modalRef = useRef();
   CloseModalClickOutside(modalRef, () => {
     setShowMyMarket(false);

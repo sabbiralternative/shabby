@@ -24,7 +24,7 @@ const Register = () => {
     mobileNo: "",
     otp: "",
   });
-  const { setSuccessRegister,logo } = UseState();
+  const { setSuccessRegister, logo } = UseState();
   const [confirmPasswordErr, setConfirmPasswordErr] = useState("");
   const [errRegister, setErrRegister] = useState("");
   const { handleSubmit } = useForm();
@@ -35,16 +35,19 @@ const Register = () => {
   const [mobile, setMobile] = useState("");
   const [userName, setUserName] = useState("");
   const [otpField, setOtpField] = useState("");
-  
 
+  /* set site title  */
   useEffect(() => {
     document.title = pageTitle;
   }, [pageTitle]);
 
+  /* get whats app link from api */
   const { data: whatsAppLink } = useQuery({
     queryKey: ["whatsApp"],
     queryFn: async () => {
+      /* random token */
       const generatedToken = UseTokenGenerator();
+      /* encrypted data */
       const encryptedVideoData = UseEncryptData({
         site: siteUrl,
         token: generatedToken,
@@ -57,11 +60,13 @@ const Register = () => {
     },
   });
 
+  /* handle user exist or not */
   const isUserExist = async (e) => {
     if (e.target.value.length > 3) {
       setUser({ ...user, userName: e.target.value });
-
+      /* random token */
       const generatedToken = UseTokenGenerator();
+      /* encrypted post data */
       const encryptedVideoData = UseEncryptData({
         username: e.target.value,
         token: generatedToken,

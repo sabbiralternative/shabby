@@ -1,4 +1,5 @@
 const Notification = ({ message, success, setMessage }) => {
+  /* remove notification after 5 second */
   setTimeout(() => {
     setMessage("");
   }, 5000);

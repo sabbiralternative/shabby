@@ -309,6 +309,7 @@ const Header = () => {
           { banner: data?.result?.banner },
           { bannerTitle: data?.result?.bannerTitle },
         ];
+        /* set modal picture and title */
         localStorage.setItem("modal", JSON.stringify(modal));
         if (
           localStorage.getItem("token") &&
@@ -332,18 +333,18 @@ const Header = () => {
       });
   };
 
-  /* If force login true in notice.json then set forceLogin   */
+  /* If force login true in notice.json then set forceLogin for hide the login,register button from home page after login   */
   const handleForceLogin = () => {
     localStorage.setItem("forceLogin", "true");
   };
 
   const [myMarketData, setMyMarketData] = useState([]);
   const myMarketApi = config?.result?.endpoint?.myMarket;
-  /* handle get market value */
+  /* handle get market value from api */
   const handleGetMyMarket = async () => {
     setMyMarketData([]);
     setShowMyMarket(true);
-    /* random toke */
+    /* random token */
     const generatedToken = UseTokenGenerator();
     /* encrypted post data */
     const encryptedData = UseEncryptData(generatedToken);
@@ -354,7 +355,7 @@ const Header = () => {
     // console.log(data);
     setMyMarketData(data);
   };
-  // console.log(myMarketData);
+
   return (
     <div
       className="wrapper"
@@ -362,7 +363,7 @@ const Header = () => {
         position: "relative",
       }}
     >
-
+{/* if error during the demo login then show error message  */}
       {errorLogin && (
         <Notification
           message={errorLogin}
@@ -384,7 +385,7 @@ const Header = () => {
               <img src={logo} />
             </Link>
           </div>
-          {/* in notice.json if demoLogin,registration = false and force login success or login success and token in locale storage then show search box  */}
+          {/* in notice.json if demoLogin,registration = false and force login success or forceLoginSuccess and token in locale storage then show search box  */}
           {(!isDemoLoginShow && !isShowRegisterButton && forceLoginSuccess) ||
           (forceLoginSuccess && token) ? (
             <div className="user-details">
@@ -809,6 +810,7 @@ const Header = () => {
                       {role}
                       <i className="fas fa-chevron-down ms-1"></i>
                     </div>
+                    {/* open dropdown for mobile version */}
                     {open && (
                       <div className="show dropdown ">
                         <Link
@@ -985,7 +987,7 @@ const Header = () => {
                   {role}
                   <i className="fas fa-chevron-down ms-1"></i>
                 </div>
-
+{/* open dropdown for desktop version */}
                 {dropDown && (
                   <div className="show dropdown">
                     <ul
@@ -1002,6 +1004,7 @@ const Header = () => {
                       }}
                     >
                       <div className="d-xl-none d-flex justify-content-center"></div>
+                      {/* notice.json if withdraw = true then show withdraw button */}
                       {showWithdraw && (
                         <Link
                           to="/withdraw-statement"
@@ -1015,6 +1018,7 @@ const Header = () => {
                           </li>
                         </Link>
                       )}
+                           {/* notice.json if deposit = true then show deposit button */}
                       {showDeposit && (
                         <Link
                           to="/deposit-statement"
@@ -1131,7 +1135,7 @@ const Header = () => {
             </div>
           ) : null}
 
-          {/* in notice.json if demoLogin or register = true and forceLogin not success or demoLogin, register, token, forceLoginSuccess = false then show this html */}
+          {/* in notice.json if demoLogin or register = true and forceLogin(localeStorage) not success or demoLogin, register, token, forceLoginSuccess = false then show this html */}
           {((isDemoLoginShow || isShowRegisterButton) && !forceLoginSuccess) ||
           (!isDemoLoginShow &&
             !isShowRegisterButton &&
@@ -1166,7 +1170,7 @@ const Header = () => {
               </div>
             </div>
           ) : null}
-          {/* in notice.json if demoLogin or register = false and forceLogin success or  token, forceLoginSuccess = true then show search box */}
+          {/* in notice.json if demoLogin or register = false and forceLogin(localeStorage) success or  token, forceLoginSuccess = true then show below html */}
           {(!isDemoLoginShow && !isShowRegisterButton && forceLoginSuccess) ||
           (forceLoginSuccess && token) ? (
             <div className="search-box-container d-xl-none">
@@ -1192,7 +1196,6 @@ const Header = () => {
           ) : null}
 
           <div className="news">
-            {/* ToDO scrollAmount="3" */}
             <marquee>{showNotification} </marquee>
           </div>
         </div>
@@ -1299,6 +1302,7 @@ const Header = () => {
           </nav>
         </div>
       </section>
+      {/* market modal */}
       {showMyMarket && myMarketData?.length > 0 && (
         <MyMarketModal
           setShowMyMarket={setShowMyMarket}
