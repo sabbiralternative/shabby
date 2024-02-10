@@ -9,6 +9,7 @@ const Sidebar = () => {
   const menuApi = config?.result?.endpoint?.menu;
   const token = localStorage.getItem("token");
 
+  /* get menu links */
   useEffect(() => {
     const getAllMenuApi = async () => {
       const res = await axios.get(menuApi, {

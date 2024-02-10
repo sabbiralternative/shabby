@@ -6,11 +6,16 @@ import { config } from "../../utils/config";
 AOS.init();
 
 const Footer = () => {
+  /* modal state */
   const [showModal, setShowModal] = useState(false);
+  /* get modal */
   const modal = JSON.parse(localStorage.getItem('modal'))
+  /* site title from notice.json */
   const siteTitle = config?.result?.settings?.siteTitle
+  /* token from locale storage */
   const token = localStorage.getItem('token')
 
+  /* show modal after login */
   useEffect(() => {
     const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
     if (!hasModalBeenShown) {
@@ -19,7 +24,7 @@ const Footer = () => {
       }, 200);
     }
   }, []);
-
+/* close modal */
   const closeModal = () => {
     setShowModal(false);
     localStorage.setItem("hasModalBeenShown", "true");

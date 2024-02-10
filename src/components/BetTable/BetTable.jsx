@@ -7,13 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { PiTelevisionBold } from "react-icons/pi";
 
 const BetTable = ({ data, keys }) => {
+  /* get sports number */
   const { sports } = UseState();
   const navigate = useNavigate();
+  /* navigate to game-details page */
   const navigateGameList = (keys) => {
     navigate(`/game-details/${data[keys]?.eventTypeId}/${keys}`);
   };
 
-  // console.log(data);
 
   return (
     <>

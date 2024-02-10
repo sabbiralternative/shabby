@@ -9,13 +9,15 @@ const SearchBox = () => {
   const [searchText, setSearchText] = useState("");
   const searchEventApi = config?.result?.endpoint?.searchEvent;
   const token = localStorage.getItem("token");
-
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    /* if search input greater the 2. then run this function */
     if (searchText.length > 2) {
+      /* random token  */
       const generatedToken = UseTokenGenerator();
+      /* encrypted post data */
       const encryptedData = UseEncryptData(generatedToken);
       const getSearchData = async () => {
         const res = await fetch(searchEventApi, {
@@ -39,12 +41,14 @@ const SearchBox = () => {
     }
   }, [searchEventApi, searchText, token]);
 
+  /* filter the search value */
   useEffect(() => {
     const categories = Array.from(new Set(data.map((item) => item.eventType)));
 
     setCategories(categories);
   }, [data]);
 
+  /* hide the search modal */
   const handleHideDropdown = () => {
     setShowInput(false)
     localStorage.removeItem("showSearchValue");

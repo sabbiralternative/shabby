@@ -17,10 +17,10 @@ const HomePage = () => {
   const [casino_list, setCasino_list] = useState([]);
   const { sports } = UseState();
   const [data, setData] = useState([]);
-  const cricketApi = config?.result?.endpoint?.group;
+  const oddsApi = config?.result?.endpoint?.group;
   const interval = config?.result?.settings?.interval;
 
-  /* Get casino thumbnail */
+  /* Get casino thumbnail for home page */
   useEffect(() => {
     const getAuraCasino = async () => {
       const res = await axios.get(
@@ -34,7 +34,6 @@ const HomePage = () => {
         }
       );
       const data = res.data;
-      // console.log(data);
       setCasino_list(data);
     };
     getAuraCasino();
@@ -44,7 +43,7 @@ const HomePage = () => {
   useEffect(() => {
     const gameData = async () => {
       if (sports !== null) {
-        const apiUrl = `${cricketApi}/${sports}`;
+        const apiUrl = `${oddsApi}/${sports}`;
         const res = await axios.get(apiUrl, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -55,11 +54,12 @@ const HomePage = () => {
       }
     };
     gameData();
+    /* Refetch odds api for cricket, football, and tennis */
     if (sports === 4 || sports === 1 || sports === 2) {
       const intervalId = setInterval(gameData, interval);
       return () => clearInterval(intervalId);
     }
-  }, [sports, cricketApi, token, interval]);
+  }, [sports, oddsApi, token, interval]);
 
   return (
     <div className="center-container">
@@ -93,6 +93,7 @@ const HomePage = () => {
               </div>
             </div>
             <div className="bet-table-body position-relative">
+              {/* Odds component for each sportsType */}
               {data && Object.values(data).length > 0 && sports === 4
                 ? Object.keys(data)
                     .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
@@ -196,6 +197,7 @@ const HomePage = () => {
       </div>
 
       <div className="casino-list mt-2">
+        {/* Casino thumbnail component */}
         {casino_list?.map((casino, i) => (
           <CasinoList key={i} casino={casino} />
         ))}

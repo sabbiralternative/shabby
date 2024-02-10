@@ -13,37 +13,54 @@ import UseEncryptData from "../../hooks/UseEncryptData";
 import Notification from "../Notification/Notification";
 import MyMarketModal from "../Modal/MyMarketModal";
 const Header = () => {
+  /* Open dropdown state for mobile version */
   const [open, setOpen] = useState(false);
+  /* Open dropdown state for desktop version */
   const [dropDown, setDropDown] = useState(false);
+  /* show balance state */
   const [balance, setBalance] = useState(true);
+  /* show exposure state */
   const [exp, setExp] = useState(true);
+  /* token */
   const token = localStorage.getItem("token");
-
+/* notification endpoint */
   const notificationApi = config?.result?.endpoint?.notification;
+  /* buttonValue endpoint */
   const buttonValueApi = config?.result?.endpoint?.buttonValue;
   const { register, handleSubmit } = useForm();
+  /* notification state */
   const [showNotification, setShowNotification] = useState("");
+  /* this are coming from context */
   const { buttonValue, SetButtonValue, setSports, logo } = UseState();
+/* Some settings from notice.json for which button will show in ui */
   const isForceLogin = config?.result?.settings?.forceLogin;
   const isShowRegisterButton = config?.result?.settings?.registration;
   const isDemoLoginShow = config?.result?.settings?.demoLogin;
   const showWithdraw = config?.result?.settings?.withdraw;
   const showDeposit = config?.result?.settings?.deposit;
+  /* rule modal state */
   const [ruleModal, setRuleModal] = useState(false);
+  /* get button values */
   const buttonGameValue = JSON.parse(localStorage.getItem("buttonValue"));
   const navigate = useNavigate();
   const modalRef = useRef(null);
   const openModalRef = useRef();
+  /* filter games state */
   const { setFilterGames } = UseState();
+  /* role name */
   const role = localStorage.getItem("loginName");
+  /* get forceLoginSuccess */
   const forceLoginSuccess = localStorage.getItem("forceLoginSuccess");
-
+  /* Balance api */
   const [balanceData] = UseBalance();
-  // console.log(balanceData);
+  /* login api */
   const loginApi = config?.result?.endpoint?.login;
+  /* error state */
   const [errorLogin, setErrorLogin] = useState("");
+  /* show market state */
   const [showMyMarket, setShowMyMarket] = useState(false);
-  /* Close modalRef modal click outside the modal */
+
+  /* handle close modal click outside the modal desktop version */
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (!modalRef.current.contains(e.target)) {
@@ -55,7 +72,7 @@ const Header = () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
-
+  /* handle close modal click outside the modal mobile version */
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (!openModalRef.current.contains(e.target)) {
@@ -68,7 +85,7 @@ const Header = () => {
     };
   }, []);
 
-  /* Game endpoint  */
+  /* Set games eventId for fetch odds data in homepage  */
   const cricketEndpoint = () => {
     localStorage.removeItem("group");
     localStorage.setItem("group", 4);
@@ -90,7 +107,7 @@ const Header = () => {
     setSports(8);
   };
 
-  // /* Close modal after specific width */
+  // /* Close modal automatic after specific width */
   useEffect(() => {
     const handleWindowResize = () => {
       if (window.innerWidth > 1199) {
@@ -119,10 +136,11 @@ const Header = () => {
       });
   }, [notificationApi, token]);
 
-  /* Logout */
+  /*handle Logout */
   const logOut = () => {
     localStorage.clear();
     if (isForceLogin) {
+      /* If force login is true in notice.json the navigate login page after logout otherwise stay in homepage */
       navigate("/login");
     } else {
       setDropDown(false);
@@ -130,7 +148,7 @@ const Header = () => {
     }
   };
 
-  /* SetButton value */
+  /* Edit button value that saved in locale storage after login */
   const onSubmit = ({
     buttons0label,
     buttons0value,
@@ -249,6 +267,7 @@ const Header = () => {
               value: buttons9value,
             },
           ];
+          /* set edited button values */
           localStorage.setItem(
             "buttonValue",
             JSON.stringify(gameButtonsValues)
@@ -257,8 +276,12 @@ const Header = () => {
         }
       });
   };
+
+  /* Login with demoId  */
   const loginWithDemo = () => {
+    /* random token  */
     const generatedToken = UseTokenGenerator();
+    /* encrypted post data */
     const loginData = UseEncryptData({
       username: "demo",
       password: "",
@@ -273,10 +296,14 @@ const Header = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        /* Set token to localeStorage */
         localStorage.setItem("token", data.result.token);
+        /* Set login name to locale storage */
         localStorage.setItem("loginName", data.result.loginName);
+        /* set button value to locale storage */
         localStorage.setItem("forceLoginSuccess", "true");
         const buttonValue = JSON.stringify(data.result.buttonValue.game);
+        /* set modal picture to locale storage for the open modal in home page */
         localStorage.setItem("buttonValue", buttonValue);
         const modal = [
           { banner: data?.result?.banner },
@@ -288,6 +315,7 @@ const Header = () => {
           localStorage.getItem("loginName") &&
           data?.result?.changePassword === true
         ) {
+          /* if token, login name, and result.password === true then navigation change-password-login page */
           navigate("/change-password-login");
         } else if (
           localStorage.getItem("token") &&
@@ -297,23 +325,27 @@ const Header = () => {
           localStorage.removeItem("forceLogin");
           setOpen(false);
           navigate("/");
+          /* if token, login name, and result.password === false then stay in home page */
         } else {
           setErrorLogin(data?.error);
         }
       });
   };
 
+  /* If force login true in notice.json then set forceLogin   */
   const handleForceLogin = () => {
     localStorage.setItem("forceLogin", "true");
   };
 
   const [myMarketData, setMyMarketData] = useState([]);
   const myMarketApi = config?.result?.endpoint?.myMarket;
-
+  /* handle get market value */
   const handleGetMyMarket = async () => {
     setMyMarketData([]);
     setShowMyMarket(true);
+    /* random toke */
     const generatedToken = UseTokenGenerator();
+    /* encrypted post data */
     const encryptedData = UseEncryptData(generatedToken);
     const res = await axios.post(myMarketApi, encryptedData, {
       headers: { Authorization: `Bearer ${token}` },
@@ -330,6 +362,7 @@ const Header = () => {
         position: "relative",
       }}
     >
+
       {errorLogin && (
         <Notification
           message={errorLogin}
@@ -339,6 +372,7 @@ const Header = () => {
       )}
       <section className="header">
         <div className="header-top">
+          {/* show rules modal */}
           {ruleModal && (
             <RulesModal ruleModal={ruleModal} setRuleModal={setRuleModal} />
           )}
@@ -350,7 +384,7 @@ const Header = () => {
               <img src={logo} />
             </Link>
           </div>
-
+          {/* in notice.json if demoLogin,registration = false and force login success or login success and token in locale storage then show search box  */}
           {(!isDemoLoginShow && !isShowRegisterButton && forceLoginSuccess) ||
           (forceLoginSuccess && token) ? (
             <div className="user-details">
@@ -369,11 +403,13 @@ const Header = () => {
                 </div>
               </div>
               <div className="ms-3 d-none d-xl-flex">
+                {/* In notice.json if deposit = true then showing deposit button */}
                 {showDeposit && (
                   <Link className="btn btn-success me-2" to="/deposit">
                     Deposit
                   </Link>
                 )}
+                {/* In notice.json if withdraw = true then showing withdraw button */}
                 {showWithdraw && (
                   <Link className="btn btn-danger" to="/withdraw">
                     Withdraw
@@ -389,8 +425,9 @@ const Header = () => {
                 )}
                 <div>
                   {exp && (
-                    <span onClick={handleGetMyMarket}
-                    style={{cursor:'pointer'}}
+                    <span
+                      onClick={handleGetMyMarket}
+                      style={{ cursor: "pointer" }}
                     >
                       <span>Exp:</span>
                       <b className="pointer">{balanceData?.deductedExposure}</b>
@@ -795,34 +832,34 @@ const Header = () => {
                           }}
                         >
                           <div className="d-xl-none d-flex justify-content-center"></div>
+                          {/* in notice.json if withdraw = true then show this link */}
                           {showWithdraw && (
-                        <Link
-                        to="/withdraw-statement"
-                        onClick={() => setOpen(!open)}
-                      >
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Withdraw Statement
-                        </li>
-                      </Link>
-                      )}
-                      {
-                        showDeposit && (
-                          <Link
-                        to="/deposit-statement"
-                        onClick={() => setOpen(!open)}
-                      >
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
-                        >
-                          Deposit Statement
-                        </li>
-                      </Link>
-                        )
-                      }
+                            <Link
+                              to="/withdraw-statement"
+                              onClick={() => setOpen(!open)}
+                            >
+                              <li
+                                data-rr-ui-dropdown-item=""
+                                className="dropdown-item"
+                              >
+                                Withdraw Statement
+                              </li>
+                            </Link>
+                          )}
+                          {/* in notice.json if deposit = true then show this link */}
+                          {showDeposit && (
+                            <Link
+                              to="/deposit-statement"
+                              onClick={() => setOpen(!open)}
+                            >
+                              <li
+                                data-rr-ui-dropdown-item=""
+                                className="dropdown-item"
+                              >
+                                Deposit Statement
+                              </li>
+                            </Link>
+                          )}
                           <Link
                             to="/account-statement"
                             onClick={() => setOpen(!open)}
@@ -967,32 +1004,30 @@ const Header = () => {
                       <div className="d-xl-none d-flex justify-content-center"></div>
                       {showWithdraw && (
                         <Link
-                        to="/withdraw-statement"
-                        onClick={() => setDropDown(!dropDown)}
-                      >
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
+                          to="/withdraw-statement"
+                          onClick={() => setDropDown(!dropDown)}
                         >
-                          Withdraw Statement
-                        </li>
-                      </Link>
+                          <li
+                            data-rr-ui-dropdown-item=""
+                            className="dropdown-item"
+                          >
+                            Withdraw Statement
+                          </li>
+                        </Link>
                       )}
-                      {
-                        showDeposit && (
-                          <Link
-                        to="/deposit-statement"
-                        onClick={() => setDropDown(!dropDown)}
-                      >
-                        <li
-                          data-rr-ui-dropdown-item=""
-                          className="dropdown-item"
+                      {showDeposit && (
+                        <Link
+                          to="/deposit-statement"
+                          onClick={() => setDropDown(!dropDown)}
                         >
-                          Deposit Statement
-                        </li>
-                      </Link>
-                        )
-                      }
+                          <li
+                            data-rr-ui-dropdown-item=""
+                            className="dropdown-item"
+                          >
+                            Deposit Statement
+                          </li>
+                        </Link>
+                      )}
                       <Link
                         to="/account-statement"
                         onClick={() => setDropDown(!dropDown)}
@@ -1096,6 +1131,7 @@ const Header = () => {
             </div>
           ) : null}
 
+          {/* in notice.json if demoLogin or register = true and forceLogin not success or demoLogin, register, token, forceLoginSuccess = false then show this html */}
           {((isDemoLoginShow || isShowRegisterButton) && !forceLoginSuccess) ||
           (!isDemoLoginShow &&
             !isShowRegisterButton &&
@@ -1103,6 +1139,7 @@ const Header = () => {
             !forceLoginSuccess) ? (
             <div className="user-details login-btn-box">
               <div className="user-name dropdown ms-3">
+                {/* if register = true in notice.json then show register button */}
                 {isShowRegisterButton && (
                   <Link className="btn-home-login" to="/register">
                     Register
@@ -1116,7 +1153,7 @@ const Header = () => {
                 >
                   Login
                 </Link>
-
+                {/* notice.json --> demoLogin = true then show the button */}
                 {isDemoLoginShow && (
                   <button
                     onClick={loginWithDemo}
@@ -1129,7 +1166,7 @@ const Header = () => {
               </div>
             </div>
           ) : null}
-
+          {/* in notice.json if demoLogin or register = false and forceLogin success or  token, forceLoginSuccess = true then show search box */}
           {(!isDemoLoginShow && !isShowRegisterButton && forceLoginSuccess) ||
           (forceLoginSuccess && token) ? (
             <div className="search-box-container d-xl-none">
@@ -1137,11 +1174,13 @@ const Header = () => {
               <div className="depowith">
                 {" "}
                 <div className="d-xl-none d-flex justify-content-center">
+                  {/* In notice.json if deposit = true then showDeposit */}
                   {showDeposit && (
                     <Link className="btn btn-success me-2" to="/deposit">
                       Deposit
                     </Link>
                   )}
+                  {/* In notice.json if withdraw = true then showDeposit */}
                   {showWithdraw && (
                     <Link className="btn btn-danger" to="/withdraw">
                       Withdraw
@@ -1261,9 +1300,9 @@ const Header = () => {
         </div>
       </section>
       {showMyMarket && myMarketData?.length > 0 && (
-        <MyMarketModal 
-        setShowMyMarket={setShowMyMarket}
-        myMarketData={myMarketData}
+        <MyMarketModal
+          setShowMyMarket={setShowMyMarket}
+          myMarketData={myMarketData}
         />
       )}
     </div>

@@ -14,7 +14,7 @@ const Login = () => {
   const pageTitle = config?.result?.settings?.siteTitle;
   const isDemoButtonShow = config?.result?.settings?.demoLogin;
   const isRegisterButtonShow = config?.result?.settings?.registration;
-  const { successRegister, setSuccessRegister,logo } = UseState();
+  const { successRegister, setSuccessRegister, logo } = UseState();
 
   const {
     register,
@@ -22,17 +22,21 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  /* Dynamically append the site title from notice.json */
   useEffect(() => {
     document.title = pageTitle;
   }, [pageTitle]);
 
+  /* handle login user */
   const onSubmit = ({ username, password }) => {
+    /* Random token generator */
     const generatedToken = UseTokenGenerator();
     const loginData = {
       username: username,
       password: password,
       token: generatedToken,
     };
+    /* Encrypted the post data */
     const encryptedData = UseEncryptData(loginData);
     fetch(loginApi, {
       method: "POST",
@@ -43,22 +47,26 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
         if (data.success) {
+          /* Set token to localeStorage */
           localStorage.setItem("token", data.result.token);
+          /* Set login name to locale storage */
           localStorage.setItem("loginName", data.result.loginName);
           const buttonValue = JSON.stringify(data.result.buttonValue.game);
+          /* set button value to locale storage */
           localStorage.setItem("buttonValue", buttonValue);
           const modal = [
             { banner: data?.result?.banner },
             { bannerTitle: data?.result?.bannerTitle },
           ];
+          /* set modal picture to locale storage for the open modal in home page */
           localStorage.setItem("modal", JSON.stringify(modal));
           if (
             localStorage.getItem("token") &&
             localStorage.getItem("loginName") &&
             data?.result?.changePassword === true
           ) {
+            /* if token, login name, and result.password === true then navigation change-password-login page */
             navigate("/change-password-login");
           } else if (
             localStorage.getItem("token") &&
@@ -68,9 +76,10 @@ const Login = () => {
             if (localStorage.getItem("forceLogin")) {
               localStorage.removeItem("forceLogin");
               localStorage.setItem("forceLoginSuccess", "true");
+              /* if token, login name, and result.password === false then navigation home page */
               navigate("/");
             } else {
-               localStorage.setItem("forceLoginSuccess", "true");
+              localStorage.setItem("forceLoginSuccess", "true");
               navigate("/");
             }
           }
@@ -79,9 +88,12 @@ const Login = () => {
         }
       });
   };
-// console.log(3);
+
+  /* handle login demo user */
   const loginWithDemo = () => {
+    /* Random token generator */
     const generatedToken = UseTokenGenerator();
+    /* Encrypted the post data */
     const loginData = UseEncryptData({
       username: "demo",
       password: "",
@@ -96,9 +108,13 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        /* Set token to localeStorage */
         localStorage.setItem("token", data.result.token);
+        /* Set login name to locale storage */
         localStorage.setItem("loginName", data.result.loginName);
+        /* set button value to locale storage */
         const buttonValue = JSON.stringify(data.result.buttonValue.game);
+        /* set modal picture to locale storage for the open modal in home page */
         localStorage.setItem("buttonValue", buttonValue);
         const modal = [
           { banner: data?.result?.banner },
@@ -110,6 +126,7 @@ const Login = () => {
           localStorage.getItem("loginName") &&
           data?.result?.changePassword === true
         ) {
+          /* if token, login name, and result.password === true then navigation change-password-login page */
           navigate("/change-password-login");
         } else if (
           localStorage.getItem("token") &&
@@ -120,11 +137,10 @@ const Login = () => {
             localStorage.removeItem("forceLogin");
             localStorage.setItem("forceLoginSuccess", "true");
             navigate("/");
-    
+            /* if token, login name, and result.password === false then navigation change-password-login page */
           } else {
-             localStorage.setItem("forceLoginSuccess", "true");
+            localStorage.setItem("forceLoginSuccess", "true");
             navigate("/");
-         
           }
         } else {
           setErrorLogin(data?.error);
@@ -192,6 +208,7 @@ const Login = () => {
               <button type="submit" className="btn btn-primary btn-block">
                 Login<i className="fas fa-sign-in-alt float-end mt-1"></i>
               </button>
+              {/* if in notice.json demoLogin true then show button value  */}
               {isDemoButtonShow && (
                 <button
                   onClick={loginWithDemo}
@@ -202,6 +219,7 @@ const Login = () => {
                   <i className="fas fa-sign-in-alt float-end mt-1"></i>
                 </button>
               )}
+              {/* if in notice.json demo registration true then showing registration button   */}
               {isRegisterButtonShow && (
                 <div className="d-grid">
                   <Link

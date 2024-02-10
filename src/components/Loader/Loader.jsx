@@ -1,4 +1,5 @@
 const Loader = () => {
+  /* loading html */
   return (
     <div id="loader-section">
       <div id="load-inner">
