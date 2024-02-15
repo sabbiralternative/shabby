@@ -25,6 +25,7 @@ const Football = () => {
       }
     };
     gamesData();
+    /* Refetch football api after one second */
     if (group === 1) {
       const intervalId = setInterval(gamesData, 1000);
       return () => clearInterval(intervalId);

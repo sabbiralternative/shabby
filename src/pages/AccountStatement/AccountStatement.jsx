@@ -18,12 +18,14 @@ const AccountStatement = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
 
-  /* Account statement */
+  /*Get Account statement  */
   const onSubmit = ({ toDate, fromDate, reportType }) => {
     if (reportType == "none") {
       return setErrorMessage("Select Report Type !");
     }
+    /* Generated random token */
     const generatedToken = UseTokenGenerator();
+    /* Encryption post data */
     const encryptedData = UseEncryptData({
       from: fromDate,
       to: toDate,
@@ -48,7 +50,9 @@ const AccountStatement = () => {
 
   /* Settled bets */
   const getSettledBets = (marketId) => {
+    /* Generated random token */
     const generatedToken = UseTokenGenerator();
+    /* Encryption post data */
     const encryptedData = UseEncryptData(generatedToken);
     fetch(`${settledBetsApi}/${marketId}`, {
       method: "POST",

@@ -1,5 +1,5 @@
 import CryptoJS from "crypto-js";
-/* Data encryption */
+/* Data encryption function */
 const UseEncryptData = (data) => {
   const jsonData = JSON.stringify(data);
   const { ciphertext, iv, salt } = CryptoJS.AES.encrypt(

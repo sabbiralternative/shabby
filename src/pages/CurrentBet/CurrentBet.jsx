@@ -13,13 +13,15 @@ const CurrentBet = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [sportsRef, setSportsRef] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
- 
-/* Current bet api */
+
+  /* Current bet api */
   const onSubmit = ({ sportsType }) => {
     if (sportsType == "none") {
       setErrorMessage("Select Report Type !");
     }
+    /* Generate random token */
     const generatedToken = UseTokenGenerator();
+    /* Encrypt post data */
     const encryptedData = UseEncryptData(generatedToken);
     if (sportsType) {
       fetch(`${currentBetsApi}/${sportsType}`, {
@@ -31,7 +33,6 @@ const CurrentBet = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-       
           if (data.result) {
             setSports(data.result);
             setFilteredData(data.result);

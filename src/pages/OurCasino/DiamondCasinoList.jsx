@@ -9,6 +9,7 @@ const DiamondCasinoList = ({ casino }) => {
   };
 
   const navigate = useNavigate();
+  /* Storing casino details for place bet component api and other settings */
   const handleNavigate = () => {
       localStorage.removeItem("casino");
       localStorage.setItem("casino", JSON.stringify(diamondCasino));

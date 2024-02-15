@@ -27,6 +27,7 @@ const BookmarkerTwoSection = ({
 
   const updatedPnl = [];
 
+  /* exposer */
   bookmarker2?.forEach((item) => {
     item?.runners?.forEach((runner) => {
       const pnl = pnlBySelection?.find((p) => p?.RunnerId === runner?.id);
@@ -37,7 +38,9 @@ const BookmarkerTwoSection = ({
   });
 /* Ladder api */
   const handleLader = (marketId) => {
+    /* Random token */
     const generatedToken = UseTokenGenerator();
+    /* Encrypt post data */
     const encryptedData = UseEncryptData(generatedToken);
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {

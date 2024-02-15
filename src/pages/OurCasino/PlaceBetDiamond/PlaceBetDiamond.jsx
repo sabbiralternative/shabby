@@ -55,6 +55,7 @@ import UseEncryptData from "../../../hooks/UseEncryptData.jsx";
 
 const PlaceBetDiamond = () => {
   
+  /* Reset scroll */
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -627,7 +628,9 @@ const PlaceBetDiamond = () => {
 
   /* Get video */
   useEffect(() => {
+    /* Random token */
     const generatedToken = UseTokenGenerator();
+    /* Encrypted post data */
     const encryptedVideoData = UseEncryptData({
       eventId: eventId,
       eventTypeId: eventTypeId,
@@ -671,7 +674,9 @@ const PlaceBetDiamond = () => {
   const { refetch: refetchExposure } = useQuery({
     queryKey: ["exposure"],
     queryFn: async () => {
+      /* Random token */
       const generatedToken = UseTokenGenerator();
+      /* Encrypted data */
       const encryptedData = UseEncryptData(generatedToken);
       const res = await axios.post(`${exposerApi}/${eventId}`, encryptedData, {
         headers: {
@@ -690,7 +695,9 @@ const PlaceBetDiamond = () => {
   const { refetch: refetchCurrentBets } = useQuery({
     queryKey: ["currentBets"],
     queryFn: async () => {
+      /* Random token */
       const generatedToken = UseTokenGenerator();
+      /* Encrypted post  data */
       const encryptedData = UseEncryptData(generatedToken);
       const res = await axios.post(
         `${currentBetsApi}/${eventId}`,
@@ -709,7 +716,7 @@ const PlaceBetDiamond = () => {
     },
   });
 
-  /* Refetch  refetchCurrentBets;
+  /* in balance api if data?.update = true then Refetch  refetchCurrentBets;
       refetchExposure
       setRefetchBetsExposure*/
   useEffect(() => {

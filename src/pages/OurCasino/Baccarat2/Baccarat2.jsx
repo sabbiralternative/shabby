@@ -9,7 +9,6 @@ const Baccarat2 = ({
   evenExposure,
   redExposure,
   a23Exposure,
-
   four56Exposure,
   eight910Exposure,
   jqkExposure,

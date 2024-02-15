@@ -9,8 +9,8 @@ const CasinoList = ({ casino }) => {
   const isAuraCasino = config?.result?.settings?.casino;
   const getSingleCasinoApi = config?.result?.endpoint?.accessToken;
   const token = localStorage.getItem("token");
-  let name = casino.name;
-  name = name.replace(/ /g, "");
+  // let name = casino.name;
+  // name = name.replace(/ /g, "");
   const auraEventId = {
     eventId: casino?.eventId,
     eventTypeId: casino?.eventTypeId,

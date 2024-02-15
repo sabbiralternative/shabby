@@ -12,7 +12,9 @@ const ActivityTable = ({ data }) => {
 
 /* Show ip details */
   const showIpDetail = (ip) => {
+    /* Random token */
     const generatedToken = UseTokenGenerator();
+    /* Encryption post data */
     const encryptedData = UseEncryptData(generatedToken);
     fetch(`${ipDetailApi}/${ip}`, {
       method: "POST",

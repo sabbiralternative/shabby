@@ -11,9 +11,13 @@ const SlotGamesVideo = () => {
   const liveCasinoIframeApi = config?.result?.endpoint?.liveCasinoIframe;
   const token = localStorage.getItem("token");
 
+
+  /* Get slot casino video url */
   useEffect(() => {
     const getLiveCasinoVideo = async () => {
+      /* random token */
       const generatedToken = UseTokenGenerator();
+      /* Encrypt post data */
       const encryptedData = UseEncryptData({
         gameId: eventId,
         providerName: providerId,

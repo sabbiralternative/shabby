@@ -13,6 +13,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
   const laderApi = config?.result?.endpoint?.ladder;
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
+  /* Exposer */
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -20,7 +21,9 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
   }
 /* Ladder api */
   const handleLadder = (marketId) => {
+    /* Random token */
     const generatedToken = UseTokenGenerator();
+    /* Encrypt post data */
     const encryptedData = UseEncryptData(generatedToken);
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {

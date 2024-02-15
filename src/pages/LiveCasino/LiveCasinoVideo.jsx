@@ -13,7 +13,9 @@ const LiveCasinoVideo = () => {
 /* Get live casino video */
   useEffect(() => {
     const getLiveCasinoVideo = async () => {
+      /* Random token */
       const generatedToken = UseTokenGenerator();
+      /* Encrypt post data */
       const encryptedData = UseEncryptData({
         gameId: eventId,
         providerName: providerId,

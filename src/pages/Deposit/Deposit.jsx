@@ -4,7 +4,7 @@ const Deposit = () => {
   const depositIframe = config?.result?.endpoint?.depositIframe;
   const siteUrl = config?.result?.settings?.siteUrl;
   const token = localStorage.getItem("token");
-
+/* Deposit iframe */
   return (
     <div className="center-container">
       <iframe

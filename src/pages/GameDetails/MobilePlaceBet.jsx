@@ -22,6 +22,7 @@ const MobilePlaceBet = ({
   selectionId,
 }) => {
  
+  /* Adding red or green color on odd */
   const updateElementClass = (elementId) => {
     const element = document.getElementById(elementId);
     if (element) {

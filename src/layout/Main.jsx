@@ -25,7 +25,7 @@ const Main = () => {
   const whatsappApi = config?.result?.endpoint?.whatsapp;
   const siteUrl = config?.result?.settings?.siteUrl;
 
-  /* Token expire logout user */
+  /*if Token expire logout user */
   useEffect(() => {
     let isTokenExpired;
     if (token) {
@@ -36,6 +36,7 @@ const Main = () => {
         localStorage.clear();
         navigate("/login");
       }
+      /* if forceLogin true in notice.json and token not available then logout */
     } else if (isForceLogin) {
       if (!token) {
         localStorage.clear();
@@ -70,10 +71,13 @@ const Main = () => {
     }
   }, [isDisabledDevtools, navigate]);
 
+  /* Get whats app link */
   const { data: whatsAppLink } = useQuery({
     queryKey: ["whatsApp"],
     queryFn: async () => {
+      /* random token function */
       const generatedToken = UseTokenGenerator();
+      /* Encryption post data */
       const encryptedVideoData = UseEncryptData({
         site: siteUrl,
         token: generatedToken,

@@ -20,7 +20,9 @@ const DepositStatement = () => {
     if (status == "none") {
       return setErrorMessage("Select Report Type !");
     }
+    /* random token */
     const generatedToken = UseTokenGenerator();
+    /* Encrypt post data */
     const encryptedData = UseEncryptData({
       from: fromDate,
       to: toDate,

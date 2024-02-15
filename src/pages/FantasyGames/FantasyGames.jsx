@@ -32,6 +32,7 @@ const FantasyGames = () => {
   const navigateSlotCasinoVideo = (casino) => {
     if (isAEDCurrency !== "AED") {
       // navigate(`/live-casino/${casino?.eventId}/${casino?.providerId}`);
+      /* Navigate to fantasy,slot game function */
       UseLiveSlotFantasyNewTab(casino);
     } else {
       setShowModal(true);

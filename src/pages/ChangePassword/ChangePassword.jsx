@@ -18,9 +18,11 @@ const ChangePassword = () => {
   } = useForm();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  /* Change password */
+  /* handle Change password */
   const onSubmit = ({ password, newPassword, newPasswordConfirm }) => {
+    /* random token */
     const generatedToken = UseTokenGenerator();
+    /* Encrypted data */
     const encryptedData = UseEncryptData({
       oldPassword: password,
       password: newPassword,
@@ -38,6 +40,7 @@ const ChangePassword = () => {
       .then((data) => {
         if (data.success) {
           setSuccessMessage(data?.result?.message);
+          /* After change password , logout user, navigation user to login page */
           setTimeout(() => {
             localStorage.clear();
             navigate("/login");

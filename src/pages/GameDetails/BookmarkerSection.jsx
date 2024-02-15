@@ -20,6 +20,8 @@ const BookmarkerSection = ({
   const [changedPrices, setChangedPrices] = useState({});
   const { setPlaceBetValue } = UseState();
 
+
+  /* exposer */
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -31,7 +33,9 @@ const BookmarkerSection = ({
 
 /* Ladder api */
   const handleLader = (marketId) => {
+    /* Random token */
     const generatedToken = UseTokenGenerator();
+    /* Encrypt post data */
     const encryptedData = UseEncryptData(generatedToken);
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {

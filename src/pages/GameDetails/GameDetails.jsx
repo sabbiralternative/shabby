@@ -94,6 +94,7 @@ const GameDetails = () => {
       }
     };
     getGameDetails();
+    /* Refetch after some millisecond */
     const intervalId = setInterval(getGameDetails, interval);
     return () => clearInterval(intervalId);
   }, [token, oddsApi, id, eventId, interval]);
@@ -136,7 +137,9 @@ const GameDetails = () => {
   /* Get video */
   useEffect(() => {
     const getVideo = () => {
+      /* random token */
       const generatedToken = UseTokenGenerator();
+      /* Encrypt post data */
       const encryptedVideoData = UseEncryptData({
         eventTypeId: id,
         eventId: eventId,
@@ -164,7 +167,9 @@ const GameDetails = () => {
   const { data: exposer = [], refetch: refetchExposure } = useQuery({
     queryKey: ["exposure"],
     queryFn: async () => {
+      /* Random token */
       const generatedToken = UseTokenGenerator();
+      /* Encrypt post data */
       const encryptedData = UseEncryptData(generatedToken);
       const res = await axios.post(`${exposerApi}/${eventId}`, encryptedData, {
         headers: {
@@ -178,10 +183,12 @@ const GameDetails = () => {
       }
     },
   });
-
-  /* Handle bets */
+// console.log(exposer);
+  /* Handle order bets */
   const handleOrderBets = () => {
+    /* Random token */
     const generatedToken = UseTokenGenerator();
+    /* Encrypt post data */
     const encryptedData = UseEncryptData([
       {
         betDelay: placeBetValue?.betDelay,
@@ -231,7 +238,9 @@ const GameDetails = () => {
     queryKey: ["currentBets"],
     queryFn: async () => {
       try {
+        /* Random token */
         const generatedToken = UseTokenGenerator();
+        /* Encrypt post data */
         const encryptedData = UseEncryptData(generatedToken);
         const response = await fetch(`${currentBetsApi}/${eventId}`, {
           method: "POST",
@@ -425,11 +434,13 @@ const GameDetails = () => {
     }
   }, [price, totalSize, placeBetValue, pnl1, pnl2, pnl3, selectionId]);
 
+  /* Format number */
   const formatNumber = (value) => {
     const hasDecimal = value % 1 !== 0;
     return hasDecimal ? value.toFixed(2) : value;
   };
 
+  /* Position sticky for bet section */
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;

@@ -83,6 +83,7 @@ const Register = () => {
     }
   };
 
+  /* Handle register */
   const onSubmit = () => {
     setConfirmPasswordErr("");
     setPassword("");
@@ -110,6 +111,7 @@ const Register = () => {
     } else if (user?.otp?.length > 4 || user?.otp?.length < 4) {
       return setOtpField("Enter four digit OTP no");
     } else {
+      /* Get random token */
       const generatedToken = UseTokenGenerator();
       const registerData = {
         username: user?.userName,
@@ -120,7 +122,7 @@ const Register = () => {
         token: generatedToken,
         otp: user?.otp,
       };
-
+      /* Encrypted post data */
       const encryptedData = UseEncryptData(registerData);
       fetch(registerUrl, {
         method: "POST",
@@ -143,12 +145,15 @@ const Register = () => {
     }
   };
 
+  /* Get whats app api */
   const getOtp = async () => {
+    /* random token */
     const generatedToken = UseTokenGenerator();
     const otpData = {
       mobile: user?.mobileNo,
       token: generatedToken,
     };
+    /* Encrypt post data */
     const encryptedData = UseEncryptData(otpData);
     const res = await axios.post(otpUrl, encryptedData);
     const data = res.data;

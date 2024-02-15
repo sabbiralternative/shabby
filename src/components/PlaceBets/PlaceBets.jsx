@@ -13,15 +13,15 @@ const PlaceBets = ({
   setSuccessMessage,
   setErrorMessage,
 }) => {
-    /* price state */
+  /* price state */
   const [price, setPrice] = useState("");
-    /* total size state */
+  /* total size state */
   const [totalSize, setTotalSize] = useState("");
-   /* profit state */
+  /* profit state */
   const [profit, setProfit] = useState("");
-    /* get button value from locale storage */
+  /* get button value from locale storage */
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
-    /* Get button value state from context */
+  /* Get button value state from context */
   const { buttonValue, SetButtonValue } = UseState();
 
   /* loading state */
@@ -29,13 +29,12 @@ const PlaceBets = ({
   const orderApi = config?.result?.endpoint?.order;
   const token = localStorage.getItem("token");
 
- /* Set price in price state from placeBet value*/
+  /* Set price in price state from placeBet value*/
   useEffect(() => {
     setPrice(placeBetValue?.price);
   }, [placeBetValue]);
 
-
-   /* Profit */
+  /* Profit */
   useEffect(() => {
     if (
       price &&
@@ -50,9 +49,9 @@ const PlaceBets = ({
 
   /* Handle bets */
   const handleOrderBets = () => {
-       /* random token  */
+    /* random token  */
     const generatedToken = UseTokenGenerator();
-        /* encrypted data */
+    /* encrypted data */
     const encryptedData = UseEncryptData([
       {
         betDelay: placeBetValue?.betDelay,
@@ -66,7 +65,7 @@ const PlaceBets = ({
         token: generatedToken,
         maxLiabilityPerMarket: placeBetValue?.maxLiabilityPerMarket,
         isBettable: placeBetValue?.isBettable,
-        maxLiabilityPerBet:placeBetValue?.maxLiabilityPerBet
+        maxLiabilityPerBet: placeBetValue?.maxLiabilityPerBet,
       },
     ]);
     setLoader(true);
@@ -80,22 +79,21 @@ const PlaceBets = ({
       .then((res) => res.json())
       .then((data) => {
         if (data?.success) {
-           /* refetch exposure and current bets after successfully placed bet */
+          /* refetch exposure and current bets after successfully placed bet */
           refetchExposure();
           refetchCurrentBets();
-       
+
           setLoader(false);
           setShowBets(false);
-                  /* set notification */
+          /* set notification */
           setSuccessMessage("Bet Place Successfully !");
         } else {
-               /* setError message */
+          /* setError message */
           setErrorMessage(data?.error?.status[0]?.description);
           setLoader(false);
           setShowBets(false);
           refetchExposure();
           refetchCurrentBets();
-      
         }
       });
   };

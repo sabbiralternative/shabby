@@ -16,7 +16,9 @@ const WithdrawStatement = () => {
 
   /* Account statement */
   const onSubmit = ({ toDate, fromDate }) => {
+    /* Random token */
     const generatedToken = UseTokenGenerator();
+    /* Encrypt data */
     const encryptedData = UseEncryptData({
       from: fromDate,
       to: toDate,

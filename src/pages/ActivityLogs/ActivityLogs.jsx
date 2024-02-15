@@ -14,7 +14,9 @@ const ActivityLogs = () => {
  
 /* Activity log api */
   const onSubmit = ({ toDate, fromDate, logType }) => {
+    /* Generated token */
     const generatedToken = UseTokenGenerator();
+    /* Encryption post data */
     const encryptedData = UseEncryptData({
       from: fromDate,
       to: toDate,

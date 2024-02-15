@@ -9,13 +9,17 @@ import UseState from "./UseState";
 const UseBalance = () => {
   const balanceAPi = config?.result?.endpoint?.balance;
   const token = localStorage.getItem("token");
+  /* Refetch bet exposure function*/
   const { setRefetchBetsExposure } = UseState();
   const navigate = useNavigate();
 
+  /* Get balance from api */
   const { data: balanceData, refetch: refetchBalance } = useQuery({
     queryKey: ["balance"],
     queryFn: async () => {
+      /* Random token */
       const generatedToken = UseTokenGenerator();
+      /* Encrypted data */
       const encryptedData = UseEncryptData(generatedToken);
       const res = await axios.post(balanceAPi, encryptedData, {
         headers: {

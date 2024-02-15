@@ -13,6 +13,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
   const token = localStorage.getItem("token");
   const { setPlaceBetValue } = UseState();
 
+  /* Exposer */
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;

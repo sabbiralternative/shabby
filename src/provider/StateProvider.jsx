@@ -13,7 +13,9 @@ const StateProvider = ({ children }) => {
   const assetsUrl = config?.result?.endpoint?.assets;
   const siteUrl = config?.result?.settings?.siteUrl;
 
+  
   useEffect(() => {
+    /* Dynamically append  theme css  */
     const logo = `${assetsUrl}/${siteUrl}/logo.png`;
     setLogo(logo);
     const link = document.createElement("link");
@@ -21,7 +23,7 @@ const StateProvider = ({ children }) => {
     link.type = "text/css";
     link.href = `${assetsUrl}/${siteUrl}/theme.css`;
     document.head.appendChild(link);
-
+    /* Dynamically append site logo  */
     const FavIconLink = document.createElement("link");
     FavIconLink.rel = "icon";
     FavIconLink.type = "image/png";
@@ -33,6 +35,8 @@ const StateProvider = ({ children }) => {
     };
   }, [siteUrl, assetsUrl]);
 
+
+  /* These are all exposure for state */
   /* data[0]?.runners[0] exposure */
   const [lowExposure, setLowExposure] = useState([]);
   /* data[0]?.runners[1] exposure */

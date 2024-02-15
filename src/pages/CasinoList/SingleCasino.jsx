@@ -11,10 +11,12 @@ const SingleCasino = () => {
     localStorage.getItem("auraEventId")
   );
   const token = localStorage.getItem("token");
-  
 
+  /* Get casino iframe */
   const CasinoIFrame = async () => {
+    /* Random token */
     const generatedToken = UseTokenGenerator();
+    /* Encryp */
     const encryptedData = UseEncryptData({
       eventId: eventId,
       eventTypeId: eventTypeId,
@@ -33,12 +35,12 @@ const SingleCasino = () => {
   CasinoIFrame();
   return (
     <>
-     <div className="slot-iframe show">
-      <iframe
-        src={url}
-        title="casino video"
-        style={{ border: "0px", height: "100vh", width: "100vw" }}
-      ></iframe>
+      <div className="slot-iframe show">
+        <iframe
+          src={url}
+          title="casino video"
+          style={{ border: "0px", height: "100vh", width: "100vw" }}
+        ></iframe>
       </div>
     </>
   );

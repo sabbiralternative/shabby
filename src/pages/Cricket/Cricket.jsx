@@ -26,6 +26,7 @@ const Cricket = () => {
       }
     };
     gamesData();
+    /* Refetch cricket api after 1 second */
     if (group === 4) {
       const intervalId = setInterval(gamesData, 1000);
       return () => clearInterval(intervalId);

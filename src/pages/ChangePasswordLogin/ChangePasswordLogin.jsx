@@ -27,7 +27,9 @@ const ChangePasswordLogin = () => {
   }, [pageTitle]);
 /* Change password login api */
   const onSubmit = ({ password, newPassword, newPasswordConfirm }) => {
+    /* Random token */
     const generatedToken = UseTokenGenerator();
+    /* Encrypted post  data  */
     const encryptedData = UseEncryptData({
       oldPassword: password,
       password: newPassword,
@@ -46,6 +48,7 @@ const ChangePasswordLogin = () => {
 
         if (data.success) {
           setSuccessMessage(data?.result?.message);
+           /* After change password , logout user, navigation user to login page */
           setTimeout(() => {
             localStorage.clear();
             navigate("/login");

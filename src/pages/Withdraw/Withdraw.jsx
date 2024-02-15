@@ -4,7 +4,7 @@ const Withdraw = () => {
   const withdrawIframe = config?.result?.endpoint?.withdrawIframe;
   const siteUrl = config?.result?.settings?.siteUrl;
   const token = localStorage.getItem("token");
-
+/* withdraw iframe */
   return (
     <div className="center-container">
       <iframe

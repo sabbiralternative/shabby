@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+/* Close modal click outside function */
 const CloseModalClickOutside = (ref, callback) => {
   useEffect(() => {
     const handleOutsideClick = (e) => {

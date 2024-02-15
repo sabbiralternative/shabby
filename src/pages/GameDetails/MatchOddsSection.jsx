@@ -21,6 +21,7 @@ const MatchOddsSection = ({
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
 
+  /* exposer */
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
     const obj = exposer?.pnlBySelection;
@@ -28,7 +29,9 @@ const MatchOddsSection = ({
   }
  /* Ladder api */
   const handleLader = (marketId) => {
+    /* Random token */
     const generatedToken = UseTokenGenerator();
+    /* Encrypt post data */
     const encryptedData = UseEncryptData(generatedToken);
     setShowLadder(!showLadder);
     fetch(`${laderApi}/${marketId}`, {
