@@ -20,7 +20,7 @@ const Register = () => {
   const [user, setUser] = useState({
     userName: "",
     password: "",
-    confirmPassword: "",
+    confirmPassword:"",
     mobileNo: "",
     otp: "",
   });

@@ -5,128 +5,138 @@ import { Link } from "react-router-dom";
 import LiveSlotModal from "../../components/Modal/LiveSlotModal";
 import UseLiveSlotFantasyNewTab from "../../hooks/useLiveSlotFantasyNewTab";
 const LiveCasino = () => {
-  const [liveCasinoCategory, setLiveCasinoCategory] = useState("evolution");
-  const [live_casino, setLive_Casino] = useState([]);
-  const liveCasinoApi = config?.result?.endpoint?.liveCasino;
+  const [product, setProduct] = useState("All");
+  const [live_casino, setLive_Casino] = useState({});
+  const liveCasinoWolf = config?.result?.endpoint?.liveCasinoWolf;
   const token = localStorage.getItem("token");
   const [showModal, setShowModal] = useState(false);
   const [casinoId, setCasinoId] = useState({});
-  const isAEDCurrency = config?.result?.settings?.casinoCurrency
-
+  const isAEDCurrency = config?.result?.settings?.casinoCurrency;
 
   /* Get live casino */
   useEffect(() => {
     const getLiveCasino = async () => {
-      const res = await axios.get(`${liveCasinoApi}/${liveCasinoCategory}`, {
-        headers: {
-          Authorization: `bearer ${token}`,
+      const res = await axios.post(
+        `${liveCasinoWolf}`,
+        {
+          gameList: "All",
+          product: product,
+          isHome: false,
         },
-      });
-      const data = res.data;
-      setLive_Casino(data);
+        {
+          headers: {
+            Authorization: `bearer ${token}`,
+          },
+        }
+      );
+
+      if (res?.status === 200) {
+        const data = res.data;
+        setLive_Casino(data);
+      }
     };
     getLiveCasino();
-  }, [token, liveCasinoApi, liveCasinoCategory]);
+  }, [token, liveCasinoWolf, product]);
 
   /* Navigate to live casino video */
   const navigateLiveCasinoVideo = (casino) => {
+    console.log(casino);
+    console.log(casino);
     if (isAEDCurrency !== "AED") {
-      // navigate(`/live-casino/${casino?.eventId}/${casino?.providerId}`);
       UseLiveSlotFantasyNewTab(casino);
     } else {
       setShowModal(true);
       setCasinoId({
-        eventId: casino?.eventId,
+        eventId: casino?.game_id,
         providerId: casino?.providerId,
       });
     }
   };
 
+  if (
+    live_casino == undefined ||
+    !live_casino?.gameList ||
+    !Object.keys(live_casino?.gameList)
+  ) {
+    return;
+  }
+
   return (
     <div className="center-container">
       <div className="casino-tab-list">
         <ul className="nav nav-pills casino-tab" id="casino-tab">
-          <li
-            onClick={() => setLiveCasinoCategory("evolution")}
-            className="nav-item"
-          >
-            <Link
-              className={`nav-link ${
-                liveCasinoCategory === "evolution" ? "active" : ""
-              }`}
-            >
-              <span>Evolution</span>
+          <li onClick={() => setProduct("All")} className="nav-item">
+            <Link className={`nav-link ${product === "All" ? "active" : ""}`}>
+              <span>ALL</span>
             </Link>
           </li>
-          <li
-            onClick={() => setLiveCasinoCategory("tembo")}
-            className="nav-item"
-          >
-            <Link
-              className={`nav-link ${
-                liveCasinoCategory === "tembo" ? "active" : ""
-              }`}
-            >
-              <span>Tembo</span>
-            </Link>
-          </li>
-          {/* <li
-            onClick={() => setLiveCasinoCategory("ezugi")}
-            className="nav-item"
-          >
-            <Link
-              className={`nav-link ${
-                liveCasinoCategory === "ezugi" ? "active" : ""
-              }`}
-            >
-              <span>Ezugi</span>
-            </Link>
-          </li>
-          <li
-            onClick={() => setLiveCasinoCategory("cockfight")}
-            className="nav-item"
-          >
-            <Link
-              className={`nav-link ${
-                liveCasinoCategory === "cockfight" ? "active" : ""
-              }`}
-            >
-              <span>Cockfight</span>
-            </Link>
-          </li> */}
+          {live_casino?.companyListData?.map((item, i) => {
+            return (
+              <li
+                key={i}
+                onClick={() => setProduct(item?.product)}
+                className="nav-item"
+              >
+                <Link
+                  className={`nav-link ${
+                    product === item?.product ? "active" : ""
+                  }`}
+                >
+                  <span>{item?.product}</span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
-      {/* <div className="casino-sub-tab-list">
-            <ul className="nav nav-pills casino-sub-tab" id="casino-sub-tab">
-                <li className="nav-item"><a className="nav-link active"
-                        href="/live-casino-list/CS/26/124"><span>All Casino</span></a></li>
-                <li className="nav-item"><a className="nav-link "
-                        href="/live-casino-list/CS/26/125"><span>Sensual Casino</span></a></li>
-                <li className="nav-item"><a className="nav-link "
-                        href="/live-casino-list/CS/26/126"><span>Classic Casino</span></a></li>
-            </ul>
-        </div> */}
       <div className="tab-content mt-xl-2 mt-1">
         <div className="tab-pane active" id="all-casino">
           <div className="casino-list">
-            {live_casino?.map((casino, i) => {
-              // console.log(casino);
-              return (
-                <div key={i} className="casino-list-item rect">
-                  <div
-                    onClick={() => navigateLiveCasinoVideo(casino)}
-                    className="casino-list-item-banner"
-                    style={{
-                      backgroundImage: `url(${casino?.image})`,
-                    }}
-                  ></div>
-                </div>
-              );
-            })}
+            {live_casino?.gameList &&
+              Object?.keys(live_casino?.gameList)?.map((title) =>
+                Array.isArray(live_casino?.gameList[title])
+                  ? live_casino?.gameList[title]?.map((item) => {
+                      return (
+                        <div
+                          key={item?.game_id}
+                          className="casino-list-item rect"
+                        >
+                          <div
+                            title={item?.url_thumb}
+                            onClick={() => navigateLiveCasinoVideo(item)}
+                            className="casino-list-item-banner"
+                            style={{
+                              backgroundImage: `url(${item?.url_thumb})`,
+                             
+                            }}
+                          ></div>
+                        </div>
+                      );
+                    })
+                  : Object?.values(live_casino?.gameList[title])?.map(
+                      (item) => {
+                        return (
+                          <div
+                            key={item?.game_id}
+                            className="casino-list-item rect"
+                          >
+                            <div
+                              title={item?.url_thumb}
+                              onClick={() => navigateLiveCasinoVideo(item)}
+                              className="casino-list-item-banner"
+                              style={{
+                                backgroundImage: `url(${item?.url_thumb})`,
+                              }}
+                            ></div>
+                          </div>
+                        );
+                      }
+                    )
+              )}
           </div>
         </div>
       </div>
-      {showModal && isAEDCurrency === 'AED' && (
+      {showModal && isAEDCurrency === "AED" && (
         <LiveSlotModal setShowModal={setShowModal} casinoId={casinoId} />
       )}
     </div>
