@@ -5,26 +5,36 @@ import { useState } from "react";
 import LiveSlotModal from "../../components/Modal/LiveSlotModal";
 
 import UseLiveSlotFantasyNewTab from "../../hooks/useLiveSlotFantasyNewTab";
+import { Link } from "react-router-dom";
 
 const SlotGames = () => {
-  const slotGamesApi = config?.result?.endpoint?.slotCasino;
+  const slotWolf = config?.result?.endpoint?.slotsWolf;
   const token = localStorage.getItem("token");
-  const [slotGames, setSlotGames] = useState([]);
+  const [slotGames, setSlotGames] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [casinoId, setCasinoId] = useState({});
   const isAEDCurrency = config?.result?.settings?.casinoCurrency;
+  const [product, setProduct] = useState("All");
 
-/* Get slot games */
+  /* Get slot games */
   useEffect(() => {
     const getSlotCasino = async () => {
-      const res = await axios.get(slotGamesApi, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.post(
+        slotWolf,
+        {
+          gameList: "All",
+          product,
+          isHome: false,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const data = res.data;
       setSlotGames(data);
     };
     getSlotCasino();
-  }, [token, slotGamesApi]);
+  }, [token, product, slotWolf]);
 
   /* Navigate to slot video */
   const navigateSlotCasinoVideo = (casino) => {
@@ -34,14 +44,48 @@ const SlotGames = () => {
     } else {
       setShowModal(true);
       setCasinoId({
-        eventId: casino?.eventId,
+        eventId: casino?.game_id,
         providerId: casino?.providerId,
       });
     }
   };
+  if (
+    slotGames == undefined ||
+    !slotGames?.gameList ||
+    !Object.keys(slotGames?.gameList)
+  ) {
+    return;
+  }
+  console.log(slotGames);
 
   return (
     <div className="center-container">
+      <div className="casino-tab-list">
+        <ul className="nav nav-pills casino-tab" id="casino-tab">
+          <li onClick={() => setProduct("All")} className="nav-item">
+            <Link className={`nav-link ${product === "All" ? "active" : ""}`}>
+              <span>ALL</span>
+            </Link>
+          </li>
+          {slotGames?.companyListData?.map((item, i) => {
+            return (
+              <li
+                key={i}
+                onClick={() => setProduct(item?.product)}
+                className="nav-item"
+              >
+                <Link
+                  className={`nav-link ${
+                    product === item?.product ? "active" : ""
+                  }`}
+                >
+                  <span>{item?.product}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
       {/* <div className="casino-tab-list">
         <a className="tabs-arow tabs-arow-left">
           <i className="fas fa-angle-left"></i>
@@ -250,22 +294,46 @@ const SlotGames = () => {
         <div className="tab-content mt-xl-2 mt-1">
           <div className="tab-pane active" id="all-casino">
             <div className="casino-list">
-              {slotGames?.map((slotGame, i) => {
-                return (
-                  <div
-                    onClick={() => navigateSlotCasinoVideo(slotGame)}
-                    key={i}
-                    className="casino-list-item rect"
-                  >
-                    <div
-                      className="casino-list-item-banner"
-                      style={{
-                        backgroundImage: `url(${slotGame?.image})`,
-                      }}
-                    ></div>
-                  </div>
-                );
-              })}
+              {slotGames?.gameList &&
+                Object?.keys(slotGames?.gameList)?.map((title) =>
+                  Array.isArray(slotGames?.gameList[title])
+                    ? slotGames?.gameList[title]?.map((item) => {
+                        return (
+                          <div
+                            key={item?.game_id}
+                            className="casino-list-item rect"
+                          >
+                            <div
+                              title={item?.url_thumb}
+                              onClick={() => navigateSlotCasinoVideo(item)}
+                              className="casino-list-item-banner"
+                              style={{
+                                backgroundImage: `url(${item?.url_thumb})`,
+                              }}
+                            ></div>
+                          </div>
+                        );
+                      })
+                    : Object?.values(slotGames?.gameList[title])?.map(
+                        (item) => {
+                          return (
+                            <div
+                              key={item?.game_id}
+                              className="casino-list-item rect"
+                            >
+                              <div
+                                title={item?.url_thumb}
+                                onClick={() => navigateSlotCasinoVideo(item)}
+                                className="casino-list-item-banner"
+                                style={{
+                                  backgroundImage: `url(${item?.url_thumb})`,
+                                }}
+                              ></div>
+                            </div>
+                          );
+                        }
+                      )
+                )}
             </div>
           </div>
         </div>
