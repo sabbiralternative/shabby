@@ -20,7 +20,7 @@ const Register = () => {
   const [user, setUser] = useState({
     userName: "",
     password: "",
-    confirmPassword:"",
+    confirmPassword: "",
     mobileNo: "",
     otp: "",
   });
@@ -136,8 +136,44 @@ const Register = () => {
         .then((data) => {
           console.log(data);
           if (data?.success) {
-            setSuccessRegister("User created successfully");
-            navigate("/login");
+            /* Set token to localeStorage */
+            localStorage.setItem("token", data.result.token);
+            /* Set login name to locale storage */
+            localStorage.setItem("loginName", data.result.loginName);
+            const buttonValue = JSON.stringify(data.result.buttonValue.game);
+            /* set button value to locale storage */
+            localStorage.setItem("buttonValue", buttonValue);
+            const modal = [
+              { banner: data?.result?.banner },
+              { bannerTitle: data?.result?.bannerTitle },
+            ];
+            /* set modal picture to locale storage for the open modal in home page */
+            localStorage.setItem("modal", JSON.stringify(modal));
+            if (
+              localStorage.getItem("token") &&
+              localStorage.getItem("loginName") &&
+              data?.result?.changePassword === true
+            ) {
+              /* if token, login name, and result.password === true then navigation change-password-login page */
+              navigate("/change-password-login");
+            } else if (
+              localStorage.getItem("token") &&
+              localStorage.getItem("loginName") &&
+              data?.result?.changePassword === false
+            ) {
+              if (localStorage.getItem("forceLogin")) {
+                localStorage.removeItem("forceLogin");
+                localStorage.setItem("forceLoginSuccess", "true");
+                /* if token, login name, and result.password === false then navigation home page */
+                setSuccessRegister("User created successfully");
+
+                navigate("/");
+              } else {
+                localStorage.setItem("forceLoginSuccess", "true");
+                setSuccessRegister("User created successfully");
+                navigate("/");
+              }
+            }
           } else if (!data?.success) {
             setErrRegister(data?.error?.description);
           }
