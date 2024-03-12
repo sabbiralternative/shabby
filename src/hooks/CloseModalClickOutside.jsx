@@ -4,7 +4,7 @@ import { useEffect } from "react";
 const CloseModalClickOutside = (ref, callback) => {
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if (!ref.current.contains(e.target)) {
+      if (!ref?.current?.contains(e?.target)) {
         callback();
       }
     };

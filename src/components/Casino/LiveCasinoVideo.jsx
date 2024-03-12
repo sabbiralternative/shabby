@@ -17,6 +17,7 @@ const LiveCasinoVideo = () => {
   const token = localStorage.getItem("token");
   /* Get live casino video */
   useEffect(() => {
+    console.log('api call');
     const getLiveCasinoVideo = async () => {
       let additionalData = {};
       if (location.pathname?.includes("/fantasy-games")) {
@@ -47,8 +48,8 @@ const LiveCasinoVideo = () => {
       setVideoUrl(data?.gameUrl);
     };
     getLiveCasinoVideo();
-  }, [token, eventId, liveCasinoIframeApi, name, location.pathname]);
-
+  }, []);
+  // token, eventId, liveCasinoIframeApi, name, location.pathname
   return (
     <div>
       <NavbarWithIFrame />

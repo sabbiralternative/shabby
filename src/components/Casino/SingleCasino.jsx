@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { config } from "../../utils/config";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
@@ -15,27 +15,29 @@ const SingleCasino = () => {
   const token = localStorage.getItem("token");
 
   /* Get casino iframe */
-  const CasinoIFrame = async () => {
-    /* Random token */
-    const generatedToken = UseTokenGenerator();
-    /* Encryp */
-    const encryptedData = UseEncryptData({
-      eventId: eventId,
-      eventTypeId: eventTypeId,
-      token: generatedToken,
-      mobileOnly: true,
-    });
-    const res = await axios.post(getSingleCasinoApi, encryptedData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const link = res?.data?.result?.url;
-    if (link) {
-      setUrl(link);
-    }
-  };
-  CasinoIFrame();
+  useEffect(() => {
+    const CasinoIFrame = async () => {
+      /* Random token */
+      const generatedToken = UseTokenGenerator();
+      /* Encryp */
+      const encryptedData = UseEncryptData({
+        eventId: eventId,
+        eventTypeId: eventTypeId,
+        token: generatedToken,
+        mobileOnly: true,
+      });
+      const res = await axios.post(getSingleCasinoApi, encryptedData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const link = res?.data?.result?.url;
+      if (link) {
+        setUrl(link);
+      }
+    };
+    CasinoIFrame();
+  }, []);
 
   return (
     <>

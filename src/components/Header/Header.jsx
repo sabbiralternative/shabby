@@ -63,7 +63,7 @@ const Header = () => {
   /* handle close modal click outside the modal desktop version */
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if (!modalRef.current.contains(e.target)) {
+      if (!modalRef?.current?.contains(e?.target)) {
         setDropDown(false);
       }
     };
@@ -75,7 +75,7 @@ const Header = () => {
   /* handle close modal click outside the modal mobile version */
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if (!openModalRef.current.contains(e.target)) {
+      if (!openModalRef?.current?.contains(e?.target)) {
         setOpen(false);
       }
     };
