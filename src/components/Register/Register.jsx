@@ -134,7 +134,7 @@ const Register = () => {
         .then((res) => res.json())
 
         .then((data) => {
-          console.log(data);
+      
           if (data?.success) {
             /* Set token to localeStorage */
             localStorage.setItem("token", data.result.token);

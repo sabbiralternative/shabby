@@ -4,8 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import { token } from "../../utils/Utils";
 import LiveSlotModal from "../../components/Modal/LiveSlotModal";
-
-import UseLiveSlotFantasyNewTab from "../../hooks/useLiveSlotFantasyNewTab";
+import { useNavigate } from "react-router-dom";
 const FantasyGames = () => {
   const FantasyGamesApi = config?.result?.endpoint?.fantasyGames;
   const [params, setParams] = useState("aviator");
@@ -13,8 +12,9 @@ const FantasyGames = () => {
   const [showModal, setShowModal] = useState(false);
   const [casinoId, setCasinoId] = useState({});
   const isAEDCurrency = config?.result?.settings?.casinoCurrency;
-  // const navigate = useNavigate();
-/* Get fantasy games */
+  const navigate = useNavigate();
+
+  /* Get fantasy games */
   useEffect(() => {
     const getFantasyGames = async () => {
       const res = await axios.get(`${FantasyGamesApi}/${params}`, {
@@ -31,14 +31,13 @@ const FantasyGames = () => {
   /* Navigate to slot casino video */
   const navigateSlotCasinoVideo = (casino) => {
     if (isAEDCurrency !== "AED") {
-      // navigate(`/live-casino/${casino?.eventId}/${casino?.providerId}`);
-      /* Navigate to fantasy,slot game function */
-      UseLiveSlotFantasyNewTab(casino);
+      navigate(`/fantasy-games/${casino?.eventId}/${casino?.providerId}`);
     } else {
       setShowModal(true);
       setCasinoId({
         eventId: casino?.eventId,
         providerId: casino?.providerId,
+        base: "fantasy-games",
       });
     }
   };

@@ -1,16 +1,21 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { config } from "../../utils/config";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 
 const LiveCasinoVideo = () => {
-  const { eventId, providerId } = useParams();
+  const { eventId, name } = useParams();
+  const location = useLocation();
   const [videoUrl, setVideoUrl] = useState("");
   const liveCasinoIframeApi = config?.result?.endpoint?.liveCasinoIframe;
+  let additionalData = {};
+  if (location.pathname?.includes ("/fantasy-games")) {
+    additionalData = { providerId: name };
+  }
   const token = localStorage.getItem("token");
-/* Get live casino video */
+  /* Get live casino video */
   useEffect(() => {
     const getLiveCasinoVideo = async () => {
       /* Random token */
@@ -18,32 +23,31 @@ const LiveCasinoVideo = () => {
       /* Encrypt post data */
       const encryptedData = UseEncryptData({
         gameId: eventId,
-        providerName: providerId,
         token: generatedToken,
+        isHome: false,
+        mobileOnly: true,
+        ...additionalData,
       });
+  
       const res = await axios.post(liveCasinoIframeApi, encryptedData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = res.data;
-      console.log(data);
+    
       setVideoUrl(data?.gameUrl);
     };
     getLiveCasinoVideo();
-  }, [token, eventId, providerId, liveCasinoIframeApi]);
+  }, [token, eventId, liveCasinoIframeApi, name]);
 
   return (
-    <div 
-    className="slot-iframe show"
-    >
-      <iframe
-        allow="fullscreen;"
-        src={videoUrl}
-        style={{
-          width: "100%",
-          border: "0px",
-        }}
-      ></iframe>
-    </div>
+    <iframe
+      allow="fullscreen;"
+      src={videoUrl}
+      style={{
+        width: "100%",
+        border: "0px",
+      }}
+    ></iframe>
   );
 };
 

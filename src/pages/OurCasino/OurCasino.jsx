@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { config } from "../../utils/config";
 import axios from "axios";
 import DiamondCasinoList from "./DiamondCasinoList";
-import CasinoList from "../CasinoList/CasinoList";
+import CasinoList from "../../components/Casino/CasinoList";
 import { Link } from "react-router-dom";
 import UseState from "../../hooks/UseState";
 const OurCasino = () => {
   const diamondCasinoUrl = config?.result?.endpoint?.diamondCasino;
   const auraCasinoApi = config?.result?.endpoint?.auraCasino;
-  const testCasinoApi = config?.result?.endpoint?.testCasino
+  const testCasinoApi = config?.result?.endpoint?.testCasino;
   const casinoType = config?.result?.settings?.casino;
   const token = localStorage.getItem("token");
   const [data, setData] = useState([]);
@@ -16,7 +16,7 @@ const OurCasino = () => {
   const [categories, setCategories] = useState([]);
   const { filterGames, setFilterGames } = UseState();
   const [active, setActive] = useState("ourCasino");
-// console.log(casino_list);
+
   /* Get casino thumbnail */
   useEffect(() => {
     const getAuraCasino = async () => {
@@ -24,9 +24,7 @@ const OurCasino = () => {
         `${casinoType == "aura" ? auraCasinoApi : ""} ${
           casinoType == "diamond" ? diamondCasinoUrl : ""
         } 
-        ${
-          casinoType == "test" ? testCasinoApi : ""
-        }
+        ${casinoType == "test" ? testCasinoApi : ""}
         `,
         {
           headers: {
@@ -34,15 +32,22 @@ const OurCasino = () => {
           },
         }
       );
-     
+
       const data = res.data;
-      console.log(data);
+   
       const sort = data.sort((Link, b) => Link.sort - b.sort);
       setData(sort);
       setCasino_list(sort);
     };
     getAuraCasino();
-  }, [diamondCasinoUrl, auraCasinoApi, casinoType, token, filterGames,testCasinoApi]);
+  }, [
+    diamondCasinoUrl,
+    auraCasinoApi,
+    casinoType,
+    token,
+    filterGames,
+    testCasinoApi,
+  ]);
 
   /* get unique category */
   useEffect(() => {
@@ -131,14 +136,13 @@ const OurCasino = () => {
           </div>
         )}
 
-        {casinoType == "aura" || casinoType === 'test' ? (
+        {casinoType == "aura" || casinoType === "test" ? (
           <div className="casino-list mt-2">
             {casino_list.map((casino, i) => (
               <CasinoList key={i} casino={casino} />
             ))}
           </div>
-        ):null}
-      
+        ) : null}
       </div>
     </>
   );

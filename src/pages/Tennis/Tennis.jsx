@@ -21,7 +21,7 @@ const Tennis = () => {
           },
         });
         const data = res.data;
-        console.log(data);
+   
         setData(data);
         setLoading(false)
       }

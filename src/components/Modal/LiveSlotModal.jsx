@@ -1,15 +1,15 @@
-import UseLiveSlotFantasyNewTab from "../../hooks/useLiveSlotFantasyNewTab";
+import { useNavigate } from "react-router-dom";
 
 const LiveSlotModal = ({ setShowModal, casinoId }) => {
+
+  const navigate = useNavigate();
   const handleNavigate = async () => {
-    /* navigate in new tab for open live slot or fantasy game */
-    UseLiveSlotFantasyNewTab(casinoId);
     setShowModal(false);
-    // window.open(
-    //   `/live-casino/${casinoId?.eventId}/${casinoId?.providerId}`,
-    //   "_blank"
-    // );
-    // navigate(`/live-casino/${casinoId?.eventId}/${casinoId?.providerId}`)
+    navigate(
+      `/${casinoId?.base}/${casinoId?.name || casinoId?.providerId}/${
+        casinoId?.eventId
+      }`
+    );
   };
   return (
     <>

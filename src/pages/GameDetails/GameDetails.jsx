@@ -183,7 +183,7 @@ const GameDetails = () => {
       }
     },
   });
-// console.log(exposer);
+
   /* Handle order bets */
   const handleOrderBets = () => {
     /* Random token */
@@ -432,7 +432,16 @@ const GameDetails = () => {
         }
       }
     }
-  }, [price, totalSize, placeBetValue, pnl1, pnl2, pnl3, selectionId,oddStake]);
+  }, [
+    price,
+    totalSize,
+    placeBetValue,
+    pnl1,
+    pnl2,
+    pnl3,
+    selectionId,
+    oddStake,
+  ]);
 
   /* Format number */
   const formatNumber = (value) => {

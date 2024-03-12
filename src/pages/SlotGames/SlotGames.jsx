@@ -5,7 +5,7 @@ import { useState } from "react";
 import LiveSlotModal from "../../components/Modal/LiveSlotModal";
 
 import UseLiveSlotFantasyNewTab from "../../hooks/useLiveSlotFantasyNewTab";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SlotGames = () => {
   const slotWolf = config?.result?.endpoint?.slotsWolf;
@@ -15,7 +15,7 @@ const SlotGames = () => {
   const [casinoId, setCasinoId] = useState({});
   const isAEDCurrency = config?.result?.settings?.casinoCurrency;
   const [product, setProduct] = useState("All");
-
+  const navigate = useNavigate();
   /* Get slot games */
   useEffect(() => {
     const getSlotCasino = async () => {
@@ -38,14 +38,18 @@ const SlotGames = () => {
 
   /* Navigate to slot video */
   const navigateSlotCasinoVideo = (casino) => {
+
     if (isAEDCurrency !== "AED") {
-      // navigate(`/live-casino/${casino?.eventId}/${casino?.providerId}`);
+      navigate(
+        `/slot-games/${casino?.game_name.replace(/ /g, "")}/${casino?.game_id}`
+      );
       UseLiveSlotFantasyNewTab(casino);
     } else {
       setShowModal(true);
       setCasinoId({
         eventId: casino?.game_id,
-        providerId: casino?.providerId,
+        name: casino?.game_name.replace(/ /g, ""),
+        base:'slot-games'
       });
     }
   };
@@ -56,7 +60,7 @@ const SlotGames = () => {
   ) {
     return;
   }
-  console.log(slotGames);
+
 
   return (
     <div className="center-container">

@@ -20,7 +20,7 @@ const Cricket = () => {
           },
         });
         const data = res.data;
-        console.log(data);
+     
         setData(data);
         setLoading(false);
       }

@@ -109,7 +109,7 @@ const Main = () => {
             relativeURL == "/slot-games" ||
             relativeURL == "/our-casino" ||
             relativeURL == "/deposit" ||
-            relativeURL == "/withdraw"
+            relativeURL == "/withdraw" 
               ? "list-page slot-page"
               : ""
           } 
@@ -125,8 +125,14 @@ const Main = () => {
            } 
         ${
           relativeURL.includes("/our-casino/") ||
-          relativeURL.includes("/our-virtual/")
+          relativeURL.includes("/our-virtual/") 
             ? "casino-page"
+            : ""
+        } 
+
+        ${
+          relativeURL.includes("/casino") || relativeURL.includes("/live-casino") 
+            ? "list-page slot-page"
             : ""
         } 
        `}

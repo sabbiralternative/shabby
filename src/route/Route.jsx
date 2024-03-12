@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
 import HomePage from "../pages/HomePage/HomePage";
 import Login from "../components/Login/Login";
-import SingleCasino from "../pages/CasinoList/SingleCasino";
+import SingleCasino from "../components/Casino/SingleCasino.jsx";
 import Cricket from "../pages/Cricket/Cricket";
 import Football from "../pages/Football/Football";
 import Tennis from "../pages/Tennis/Tennis.jsx";
@@ -19,8 +19,8 @@ import OurVirtual from "../pages/OurVirtual/OurVirtual";
 import SlotGames from "../pages/SlotGames/SlotGames";
 import OurCasino from "../pages/OurCasino/OurCasino";
 import PlaceBetDiamond from "../pages/OurCasino/PlaceBetDiamond/PlaceBetDiamond";
-import LiveCasinoVideo from "../pages/LiveCasino/LiveCasinoVideo";
-import SlotGamesVideo from "../pages/SlotGames/SlotGamesVideo.jsx";
+import LiveCasinoVideo from "../components/Casino/LiveCasinoVideo.jsx";
+
 import SecureAuth from "../pages/SecureAuth/SecureAuth";
 import Register from "../components/Register/Register.jsx";
 import Deposit from "../pages/Deposit/Deposit";
@@ -39,7 +39,7 @@ const router = createBrowserRouter(
           element: <HomePage />,
         },
         {
-          path: "/casino/:name",
+          path: "/casino/:eventId/:eventTypeId",
           element: <SingleCasino />,
         },
         {
@@ -87,7 +87,11 @@ const router = createBrowserRouter(
           element: <LiveCasino />,
         },
         {
-          path: "/live-casino/:eventId/:providerId",
+          path: "/slot-games",
+          element: <SlotGames />,
+        },
+        {
+          path: "/:category/:name/:eventId",
           element: <LiveCasinoVideo />,
         },
         {
@@ -95,14 +99,6 @@ const router = createBrowserRouter(
           element: <OurVirtual />,
         },
 
-        {
-          path: "/slot-games",
-          element: <SlotGames />,
-        },
-        {
-          path: "/slot-games/:eventId/:providerId",
-          element: <SlotGamesVideo />,
-        },
         {
           path: "/our-casino",
           element: <OurCasino />,

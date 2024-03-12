@@ -31,7 +31,7 @@ const UseBalance = () => {
         navigate("/login");
       } else if (res?.data?.success && token) {
         const data = res.data?.result;
-        // console.log(data);
+  
         setRefetchBetsExposure(data?.update);
         return data;
       }

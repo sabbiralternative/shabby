@@ -81,7 +81,7 @@ const DepositStatement = () => {
 
   /* Pagination  end*/
 
-  console.log(stateMentData);
+
   return (
     <div className="center-container">
       {errorMessage && (

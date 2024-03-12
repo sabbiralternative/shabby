@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { config } from "../../utils/config";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LiveSlotModal from "../../components/Modal/LiveSlotModal";
-import UseLiveSlotFantasyNewTab from "../../hooks/useLiveSlotFantasyNewTab";
+
 const LiveCasino = () => {
   const [product, setProduct] = useState("All");
   const [live_casino, setLive_Casino] = useState({});
@@ -12,7 +12,7 @@ const LiveCasino = () => {
   const [showModal, setShowModal] = useState(false);
   const [casinoId, setCasinoId] = useState({});
   const isAEDCurrency = config?.result?.settings?.casinoCurrency;
-
+  const navigate = useNavigate();
   /* Get live casino */
   useEffect(() => {
     const getLiveCasino = async () => {
@@ -40,15 +40,18 @@ const LiveCasino = () => {
 
   /* Navigate to live casino video */
   const navigateLiveCasinoVideo = (casino) => {
-    console.log(casino);
-    console.log(casino);
+  
+
     if (isAEDCurrency !== "AED") {
-      UseLiveSlotFantasyNewTab(casino);
+      navigate(
+        `/live-casino/${casino?.game_name.replace(/ /g, "")}/${casino?.game_id}`
+      );
     } else {
       setShowModal(true);
       setCasinoId({
         eventId: casino?.game_id,
-        providerId: casino?.providerId,
+        name: casino?.game_name.replace(/ /g, ""),
+        base:'live-casino'
       });
     }
   };
@@ -107,7 +110,6 @@ const LiveCasino = () => {
                             className="casino-list-item-banner"
                             style={{
                               backgroundImage: `url(${item?.url_thumb})`,
-                             
                             }}
                           ></div>
                         </div>

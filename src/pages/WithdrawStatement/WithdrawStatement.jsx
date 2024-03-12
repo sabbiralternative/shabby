@@ -77,7 +77,7 @@ const WithdrawStatement = () => {
 
   /* Pagination  end*/
 
-  console.log(stateMentData);
+
   return (
     <div className="center-container">
       <div className="card">

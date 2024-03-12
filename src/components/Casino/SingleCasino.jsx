@@ -3,13 +3,13 @@ import { useState } from "react";
 import { config } from "../../utils/config";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
+import { useParams } from "react-router-dom";
 
 const SingleCasino = () => {
   const [url, setUrl] = useState(null);
   const getSingleCasinoApi = config?.result?.endpoint?.accessToken;
-  const { eventId, eventTypeId } = JSON.parse(
-    localStorage.getItem("auraEventId")
-  );
+  const {eventId, eventTypeId} = useParams()
+
   const token = localStorage.getItem("token");
 
   /* Get casino iframe */
@@ -21,6 +21,7 @@ const SingleCasino = () => {
       eventId: eventId,
       eventTypeId: eventTypeId,
       token: generatedToken,
+      mobileOnly: true,
     });
     const res = await axios.post(getSingleCasinoApi, encryptedData, {
       headers: {
@@ -33,13 +34,24 @@ const SingleCasino = () => {
     }
   };
   CasinoIFrame();
+
+
   return (
     <>
-      <div className="slot-iframe show">
+      <div className="center-main-container list-page slot-page">
         <iframe
+        allow="fullscreen"
           src={url}
           title="casino video"
-          style={{ border: "0px", height: "100vh", width: "100vw" }}
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            border: " none",
+            margin: "0",
+            padding: "0",
+            overflow: "hidden",
+          }}
         ></iframe>
       </div>
     </>

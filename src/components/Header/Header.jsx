@@ -352,7 +352,7 @@ const Header = () => {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = res?.data?.result;
-    // console.log(data);
+
     setMyMarketData(data);
   };
 

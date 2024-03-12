@@ -2,7 +2,7 @@ import { config } from "../../utils/config";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import CasinoList from "../CasinoList/CasinoList";
+import CasinoList from "../../components/Casino/CasinoList";
 import UseState from "../../hooks/UseState";
 import TabPanel from "./TabPanel";
 import { tabPanel } from "../../static/tabs/tabs";
@@ -188,9 +188,7 @@ const HomePage = () => {
                     ))
                 : null}
 
-              {!data  && (
-                <div className="bet-table-row">No Record Found</div>
-              )}
+              {!data && <div className="bet-table-row">No Record Found</div>}
             </div>
           </div>
         </div>
