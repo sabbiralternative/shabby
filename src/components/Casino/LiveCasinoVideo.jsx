@@ -6,7 +6,6 @@ import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import NavbarWithIFrame from "./NavbarWithIFrame";
 import Sidebar from "../Sidebar/Sidebar";
-import Category from "../Category/Category";
 
 const LiveCasinoVideo = () => {
   const { eventId, name } = useParams();
@@ -48,7 +47,7 @@ const LiveCasinoVideo = () => {
       setVideoUrl(data?.gameUrl);
     };
     getLiveCasinoVideo();
-  }, [token, eventId, liveCasinoIframeApi, name,location.pathname]);
+  }, [token, eventId, liveCasinoIframeApi, name, location.pathname]);
 
   return (
     <div>
@@ -57,7 +56,6 @@ const LiveCasinoVideo = () => {
         <div className="sidebar left-sidebar">
           <Sidebar />
         </div>
-        <Category />
 
         <div className="center-main-container list-page slot-page">
           <iframe

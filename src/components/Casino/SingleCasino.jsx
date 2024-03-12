@@ -5,7 +5,6 @@ import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { useParams } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
-import Category from "../Category/Category";
 import NavbarWithIFrame from "./NavbarWithIFrame";
 
 const SingleCasino = () => {
@@ -46,7 +45,6 @@ const SingleCasino = () => {
           <div className="sidebar left-sidebar">
             <Sidebar />
           </div>
-          <Category />
 
           <div className="center-main-container list-page slot-page">
             <iframe
