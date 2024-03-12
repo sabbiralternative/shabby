@@ -38,10 +38,7 @@ const router = createBrowserRouter(
           path: "/",
           element: <HomePage />,
         },
-        {
-          path: "/casino/:eventId/:eventTypeId",
-          element: <SingleCasino />,
-        },
+
         {
           path: "/cricket",
           element: <Cricket />,
@@ -90,10 +87,7 @@ const router = createBrowserRouter(
           path: "/slot-games",
           element: <SlotGames />,
         },
-        {
-          path: "/:category/:name/:eventId",
-          element: <LiveCasinoVideo />,
-        },
+
         {
           path: "/our-virtual",
           element: <OurVirtual />,
@@ -128,6 +122,14 @@ const router = createBrowserRouter(
           element: <WithdrawStatement />,
         },
       ],
+    },
+    {
+      path: "/:category/:name/:eventId",
+      element: <LiveCasinoVideo />,
+    },
+    {
+      path: "/casino/:eventId/:eventTypeId",
+      element: <SingleCasino />,
     },
     {
       path: "/login",

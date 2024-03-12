@@ -4,11 +4,14 @@ import { config } from "../../utils/config";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { useParams } from "react-router-dom";
+import Sidebar from "../Sidebar/Sidebar";
+import Category from "../Category/Category";
+import NavbarWithIFrame from "./NavbarWithIFrame";
 
 const SingleCasino = () => {
   const [url, setUrl] = useState(null);
   const getSingleCasinoApi = config?.result?.endpoint?.accessToken;
-  const {eventId, eventTypeId} = useParams()
+  const { eventId, eventTypeId } = useParams();
 
   const token = localStorage.getItem("token");
 
@@ -35,24 +38,33 @@ const SingleCasino = () => {
   };
   CasinoIFrame();
 
-
   return (
     <>
-      <div className="center-main-container list-page slot-page">
-        <iframe
-        allow="fullscreen"
-          src={url}
-          title="casino video"
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            border: " none",
-            margin: "0",
-            padding: "0",
-            overflow: "hidden",
-          }}
-        ></iframe>
+      <div>
+        <NavbarWithIFrame />
+        <div className="main-container">
+          <div className="sidebar left-sidebar">
+            <Sidebar />
+          </div>
+          <Category />
+
+          <div className="center-main-container list-page slot-page">
+            <iframe
+              allow="fullscreen"
+              src={url}
+              title="casino video"
+              style={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                border: " none",
+                margin: "0",
+                padding: "0",
+                overflow: "hidden",
+              }}
+            ></iframe>
+          </div>
+        </div>
       </div>
     </>
   );
