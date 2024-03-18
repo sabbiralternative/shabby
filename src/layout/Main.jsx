@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import UseTokenGenerator from "../hooks/UseTokenGenerator";
 import UseEncryptData from "../hooks/UseEncryptData";
 import axios from "axios";
+import useLatestEvent from "../hooks/useLatestEvent";
 
 const Main = () => {
   const params = useParams();
@@ -24,7 +25,8 @@ const Main = () => {
   const token = localStorage.getItem("token");
   const whatsappApi = config?.result?.endpoint?.whatsapp;
   const siteUrl = config?.result?.settings?.siteUrl;
-
+  const { latestEvents } = useLatestEvent();
+  console.log(latestEvents);
   /*if Token expire logout user */
   useEffect(() => {
     let isTokenExpired;
@@ -97,6 +99,29 @@ const Main = () => {
         <div className="sidebar left-sidebar">
           <Sidebar />
         </div>
+        <div className="latest-event d-xl-none">
+          {latestEvents?.map((event, i) => {
+            return (
+              <div
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  navigate(
+                    `/game-details/${event?.eventTypeId}/${event?.eventId}`
+                  );
+                }}
+                key={i}
+                className="latest-event-item"
+              >
+                <a className="blink_me">
+                  <i className="d-icon"></i>
+                  <span style={{ color: "white",  }}>
+                    {event?.eventName}
+                  </span>
+                </a>
+              </div>
+            );
+          })}
+        </div>
         <Category />
         <div
           className={`center-main-container ${
@@ -109,7 +134,7 @@ const Main = () => {
             relativeURL == "/slot-games" ||
             relativeURL == "/our-casino" ||
             relativeURL == "/deposit" ||
-            relativeURL == "/withdraw" 
+            relativeURL == "/withdraw"
               ? "list-page slot-page"
               : ""
           } 
@@ -125,13 +150,14 @@ const Main = () => {
            } 
         ${
           relativeURL.includes("/our-casino/") ||
-          relativeURL.includes("/our-virtual/") 
+          relativeURL.includes("/our-virtual/")
             ? "casino-page"
             : ""
         } 
 
         ${
-          relativeURL.includes("/casino") || relativeURL.includes("/live-casino") 
+          relativeURL.includes("/casino") ||
+          relativeURL.includes("/live-casino")
             ? "list-page slot-page"
             : ""
         } 

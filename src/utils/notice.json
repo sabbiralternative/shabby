@@ -73,7 +73,8 @@
       "assets": "https://api7.live/sitethemes",
       "myMarket": "https://api7.live/api/exchange/diamond/myMarket",
       "liveCasinoWolf": "https://api7.live/api/exchange/diamond/liveCasinoWolf",
-      "slotsWolf": "https://api7.live/api/exchange/diamond/slotsWolf"
+      "slotsWolf": "https://api7.live/api/exchange/diamond/slotsWolf",
+      "latestEvents": "https://api7.live/api/exchange/diamond/latestEvents"
     }
   },
   "success": true

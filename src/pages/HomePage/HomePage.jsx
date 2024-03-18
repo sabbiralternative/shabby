@@ -7,6 +7,8 @@ import UseState from "../../hooks/UseState";
 import TabPanel from "./TabPanel";
 import { tabPanel } from "../../static/tabs/tabs";
 import BetTable from "../../components/BetTable/BetTable";
+import useLatestEvent from "../../hooks/useLatestEvent";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const isCasino = config?.result?.settings.casino;
@@ -19,7 +21,8 @@ const HomePage = () => {
   const [data, setData] = useState([]);
   const oddsApi = config?.result?.endpoint?.group;
   const interval = config?.result?.settings?.interval;
-
+  const { latestEvents } = useLatestEvent();
+  const navigate = useNavigate();
   /* Get casino thumbnail for home page */
   useEffect(() => {
     const getAuraCasino = async () => {
@@ -63,6 +66,27 @@ const HomePage = () => {
 
   return (
     <div className="center-container">
+      <div className="latest-event d-none d-xl-flex">
+        {latestEvents?.map((event, i) => {
+          return (
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                navigate(
+                  `/game-details/${event?.eventTypeId}/${event?.eventId}`
+                );
+              }}
+              key={i}
+              className="latest-event-item"
+            >
+              <a className="blink_me">
+                <i className="d-icon me-1"></i>
+                <span style={{ color: "white",  }}>{event?.eventName}</span>
+              </a>
+            </div>
+          );
+        })}
+      </div>
       <ul className="nav nav-pills sports-tab">
         {tabPanel.map((tab) => (
           <TabPanel
