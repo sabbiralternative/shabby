@@ -90,7 +90,10 @@ const GameDetails = () => {
       });
       const data = res.data;
       if (data.success) {
-        setData(data.result);
+        if(data?.result){
+          setData(data.result);
+        }
+      
       }
     };
     getGameDetails();
@@ -465,6 +468,7 @@ const GameDetails = () => {
     };
   }, []);
 
+
   return (
     <>
       <div className="center-container">
@@ -582,7 +586,7 @@ const GameDetails = () => {
             id == "4") ||
           tabs === "tv" ? (
             <div className="scorecard">
-              {match_odds[0]?.score?.map((scoreInfo, i) => {
+              {match_odds?.[0]?.score?.map((scoreInfo, i) => {
                 return (
                   <div key={i} className="row">
                     <div className="col-12 col-md-6">
@@ -620,7 +624,7 @@ const GameDetails = () => {
                           <div className="row">
                             <div className="col-12">
                               <p className="text-xl-end ball-by-ball mt-2">
-                                {scoreInfo?.recent.map((score, i) => {
+                                {Array.isArray(scoreInfo?.recent) && scoreInfo?.recent?.map((score, i) => {
                                   return (
                                     <span
                                       key={i}

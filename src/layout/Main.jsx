@@ -26,7 +26,7 @@ const Main = () => {
   const whatsappApi = config?.result?.endpoint?.whatsapp;
   const siteUrl = config?.result?.settings?.siteUrl;
   const { latestEvents } = useLatestEvent();
-  console.log(latestEvents);
+
   /*if Token expire logout user */
   useEffect(() => {
     let isTokenExpired;
@@ -114,9 +114,7 @@ const Main = () => {
               >
                 <a className="blink_me">
                   <i className="d-icon"></i>
-                  <span style={{ color: "white",  }}>
-                    {event?.eventName}
-                  </span>
+                  <span style={{ color: "white" }}>{event?.eventName}</span>
                 </a>
               </div>
             );
