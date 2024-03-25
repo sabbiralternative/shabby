@@ -10,7 +10,6 @@ const OurCasino = () => {
   const auraCasinoApi = config?.result?.endpoint?.auraCasino;
   const testCasinoApi = config?.result?.endpoint?.testCasino;
   const casinoType = config?.result?.settings?.casino;
-  const token = localStorage.getItem("token");
   const [data, setData] = useState([]);
   const [casino_list, setCasino_list] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -25,12 +24,7 @@ const OurCasino = () => {
           casinoType == "diamond" ? diamondCasinoUrl : ""
         } 
         ${casinoType == "test" ? testCasinoApi : ""}
-        `,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `
       );
 
       const data = res.data;
@@ -44,7 +38,7 @@ const OurCasino = () => {
     diamondCasinoUrl,
     auraCasinoApi,
     casinoType,
-    token,
+
     filterGames,
     testCasinoApi,
   ]);

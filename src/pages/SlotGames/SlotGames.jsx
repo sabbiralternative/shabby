@@ -9,7 +9,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 const SlotGames = () => {
   const slotWolf = config?.result?.endpoint?.slotsWolf;
-  const token = localStorage.getItem("token");
   const [slotGames, setSlotGames] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [casinoId, setCasinoId] = useState({});
@@ -25,16 +24,13 @@ const SlotGames = () => {
           gameList: "All",
           product,
           isHome: false,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
         }
       );
       const data = res.data;
       setSlotGames(data);
     };
     getSlotCasino();
-  }, [token, product, slotWolf]);
+  }, [product, slotWolf]);
 
   /* Navigate to slot video */
   const navigateSlotCasinoVideo = (casino) => {

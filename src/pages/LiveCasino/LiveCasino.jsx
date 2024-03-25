@@ -8,7 +8,6 @@ const LiveCasino = () => {
   const [product, setProduct] = useState("All");
   const [live_casino, setLive_Casino] = useState({});
   const liveCasinoWolf = config?.result?.endpoint?.liveCasinoWolf;
-  const token = localStorage.getItem("token");
   const [showModal, setShowModal] = useState(false);
   const [casinoId, setCasinoId] = useState({});
   const isAEDCurrency = config?.result?.settings?.casinoCurrency;
@@ -22,11 +21,6 @@ const LiveCasino = () => {
           gameList: "All",
           product: product,
           isHome: false,
-        },
-        {
-          headers: {
-            Authorization: `bearer ${token}`,
-          },
         }
       );
 
@@ -36,7 +30,7 @@ const LiveCasino = () => {
       }
     };
     getLiveCasino();
-  }, [token, liveCasinoWolf, product]);
+  }, [liveCasinoWolf, product]);
 
   /* Navigate to live casino video */
   const navigateLiveCasinoVideo = (casino) => {

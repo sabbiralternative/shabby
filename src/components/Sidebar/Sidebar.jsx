@@ -7,21 +7,17 @@ const Sidebar = () => {
   const [sportsLink, setSportsLink] = useState(true);
   const [menu, setMenu] = useState([]);
   const menuApi = config?.result?.endpoint?.menu;
-  const token = localStorage.getItem("token");
+
 
   /* get menu links */
   useEffect(() => {
     const getAllMenuApi = async () => {
-      const res = await axios.get(menuApi, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(menuApi);
       const data = res.data;
       setMenu(data);
     };
     getAllMenuApi();
-  }, [menuApi, token]);
+  }, [menuApi]);
 
   return (
     <>

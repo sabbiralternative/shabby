@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { config } from "../../utils/config";
 import axios from "axios";
 import { useState } from "react";
-import { token } from "../../utils/Utils";
 import LiveSlotModal from "../../components/Modal/LiveSlotModal";
 import { useNavigate } from "react-router-dom";
 const FantasyGames = () => {
@@ -17,9 +16,7 @@ const FantasyGames = () => {
   /* Get fantasy games */
   useEffect(() => {
     const getFantasyGames = async () => {
-      const res = await axios.get(`${FantasyGamesApi}/${params}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(`${FantasyGamesApi}/${params}`);
       const data = res.data;
       if (data) {
         setData(data);

@@ -4,7 +4,6 @@ import axios from "axios";
 import BetTable from "../../components/BetTable/BetTable";
 
 const Cricket = () => {
-  const token = localStorage.getItem("token");
   const [data, setData] = useState([]);
   const gamesApi = config?.result?.endpoint?.group;
   const group = JSON.parse(localStorage.getItem("group"));
@@ -14,11 +13,7 @@ const Cricket = () => {
     const gamesData = async () => {
       if (group !== null) {
         const apiUrl = `${gamesApi}/${group}`;
-        const res = await axios.get(apiUrl, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await axios.get(apiUrl);
         const data = res.data;
      
         setData(data);
@@ -31,7 +26,7 @@ const Cricket = () => {
       const intervalId = setInterval(gamesData, 1000);
       return () => clearInterval(intervalId);
     }
-  }, [group, gamesApi, token]);
+  }, [group, gamesApi]);
 
   if (loading) {
     return;

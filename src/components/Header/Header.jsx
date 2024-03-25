@@ -126,11 +126,7 @@ const Header = () => {
   /* Get marquee notification */
   useEffect(() => {
     axios
-      .get(notificationApi, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(notificationApi)
       .then((res) => {
         setShowNotification(res?.data?.result[0].text);
       });

@@ -83,11 +83,7 @@ const GameDetails = () => {
   /* Get game details */
   useEffect(() => {
     const getGameDetails = async () => {
-      const res = await axios.get(`${oddsApi}/${id}/${eventId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(`${oddsApi}/${id}/${eventId}`);
       const data = res.data;
       if (data.success) {
         if(data?.result){

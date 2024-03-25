@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 const OurVirtual = () => {
   const virtualGamesApi = config?.result?.endpoint?.virtualCasino;
-  const token = localStorage.getItem("token");
+
   const [virtualGames, setVirtualGames] = useState([]);
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -16,15 +16,13 @@ const OurVirtual = () => {
 /* Get virtual games */
   useEffect(() => {
     const getVirtualGames = async () => {
-      const res = await axios.get(virtualGamesApi, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(virtualGamesApi);
       const data = res.data;
       setData(data);
       setVirtualGames(data);
     };
     getVirtualGames();
-  }, [token, virtualGamesApi]);
+  }, [virtualGamesApi]);
 
   /* Get unique category */
   useEffect(() => {
