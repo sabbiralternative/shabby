@@ -6,18 +6,20 @@ import UseEncryptData from "../../hooks/UseEncryptData";
 import { useParams } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import NavbarWithIFrame from "./NavbarWithIFrame";
+import IFrameLoader from "../Loader/IFrameLoader";
 
 const SingleCasino = () => {
   const [url, setUrl] = useState(null);
   const getSingleCasinoApi = config?.result?.endpoint?.accessToken;
   const { eventId, eventTypeId } = useParams();
-
+const [loading,setLoading] = useState(false)
   const token = localStorage.getItem("token");
 
   /* Get casino iframe */
   useEffect(() => {
     const CasinoIFrame = async () => {
       /* Random token */
+      setLoading(true)
       const generatedToken = UseTokenGenerator();
       /* Encryp */
       const encryptedData = UseEncryptData({
@@ -32,12 +34,19 @@ const SingleCasino = () => {
         },
       });
       const link = res?.data?.result?.url;
+      setLoading(false)
+      console.log(link);
       if (link) {
+
         setUrl(link);
       }
     };
     CasinoIFrame();
   }, []);
+
+  // if(loading){
+  //   return <IFrameLoader/>
+  // }
 
   return (
     <>
@@ -49,6 +58,7 @@ const SingleCasino = () => {
           </div>
 
           <div className="center-main-container list-page slot-page">
+            {loading && <IFrameLoader/>}
             <iframe
               allow="fullscreen"
               src={url}
