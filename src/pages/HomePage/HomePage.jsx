@@ -9,6 +9,7 @@ import { tabPanel } from "../../static/tabs/tabs";
 import BetTable from "../../components/BetTable/BetTable";
 import useLatestEvent from "../../hooks/useLatestEvent";
 import { useNavigate } from "react-router-dom";
+import UseBalance from "../../hooks/UseBalance";
 
 const HomePage = () => {
   const isCasino = config?.result?.settings.casino;
@@ -23,7 +24,15 @@ const HomePage = () => {
   const interval = config?.result?.settings?.interval;
   const { latestEvents } = useLatestEvent();
   const navigate = useNavigate();
+  const [, refetchBalance] = UseBalance();
   /* Get casino thumbnail for home page */
+  const balanceLoopApi = config?.result?.settings?.balanceApiLoop;
+
+  useEffect(() => {
+    if (!balanceLoopApi) {
+      refetchBalance();
+    }
+  }, []);
   useEffect(() => {
     const getAuraCasino = async () => {
       const res = await axios.get(
@@ -72,7 +81,7 @@ const HomePage = () => {
             >
               <a className="blink_me">
                 <i className="d-icon me-1"></i>
-                <span style={{ color: "white",  }}>{event?.eventName}</span>
+                <span style={{ color: "white" }}>{event?.eventName}</span>
               </a>
             </div>
           );

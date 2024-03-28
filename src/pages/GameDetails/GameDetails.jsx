@@ -53,6 +53,15 @@ const GameDetails = () => {
   const [, refetchBalance] = UseBalance();
   const [booksValue, setBooksValue] = useState([]);
   const [isSticky, setSticky] = useState(false);
+  const balanceLoopApi = config?.result?.settings?.balanceApiLoop;
+
+  /* Get casino thumbnail for home page */
+
+  useEffect(() => {
+    if (!balanceLoopApi) {
+      refetchBalance();
+    }
+  }, []);
 
   /* Set price */
   useEffect(() => {
@@ -86,10 +95,9 @@ const GameDetails = () => {
       const res = await axios.get(`${oddsApi}/${id}/${eventId}`);
       const data = res.data;
       if (data.success) {
-        if(data?.result){
+        if (data?.result) {
           setData(data.result);
         }
-      
       }
     };
     getGameDetails();
@@ -464,7 +472,6 @@ const GameDetails = () => {
     };
   }, []);
 
-
   return (
     <>
       <div className="center-container">
@@ -620,20 +627,21 @@ const GameDetails = () => {
                           <div className="row">
                             <div className="col-12">
                               <p className="text-xl-end ball-by-ball mt-2">
-                                {Array.isArray(scoreInfo?.recent) && scoreInfo?.recent?.map((score, i) => {
-                                  return (
-                                    <span
-                                      key={i}
-                                      className={`ball-runs ${
-                                        score === "4" ? "four" : ""
-                                      } ${score === "6" ? "six" : ""} ${
-                                        score === "ww" ? "wicket" : ""
-                                      }`}
-                                    >
-                                      {score}
-                                    </span>
-                                  );
-                                })}
+                                {Array.isArray(scoreInfo?.recent) &&
+                                  scoreInfo?.recent?.map((score, i) => {
+                                    return (
+                                      <span
+                                        key={i}
+                                        className={`ball-runs ${
+                                          score === "4" ? "four" : ""
+                                        } ${score === "6" ? "six" : ""} ${
+                                          score === "ww" ? "wicket" : ""
+                                        }`}
+                                      >
+                                        {score}
+                                      </span>
+                                    );
+                                  })}
                               </p>
                             </div>
                           </div>
