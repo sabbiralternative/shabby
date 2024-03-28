@@ -15,7 +15,8 @@
       "deposit": true,
       "withdraw": true,
       "disabledDevtool": false,
-      "casinoCurrency": "AED"
+      "casinoCurrency": "AED",
+      "balanceApiLoop": false
     },
 
     "endpoint": {

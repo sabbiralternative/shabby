@@ -8,6 +8,7 @@ import UseState from "./UseState";
 /* Balance api */
 const UseBalance = () => {
   const balanceAPi = config?.result?.endpoint?.balance;
+  const balanceAPiLoop = config?.result?.settings?.balanceApiLoop;
   const token = localStorage.getItem("token");
   /* Refetch bet exposure function*/
   const { setRefetchBetsExposure } = UseState();
@@ -31,18 +32,15 @@ const UseBalance = () => {
         navigate("/login");
       } else if (res?.data?.success && token) {
         const data = res.data?.result;
-  
+
         setRefetchBetsExposure(data?.update);
         return data;
       }
     },
-    staleTime: 6000,
-    refetchOnMount:false,
-    refetchOnWindowFocus:false,
-    refetchInterval:6000
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: balanceAPiLoop ? 6000 : null,
   });
-
-
 
   return [balanceData, refetchBalance];
 };
