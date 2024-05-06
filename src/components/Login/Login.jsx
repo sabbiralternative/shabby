@@ -103,6 +103,7 @@ const Login = () => {
       username: "demo",
       password: "",
       token: generatedToken,
+      site:siteUrl,
     });
     fetch(loginApi, {
       method: "POST",
