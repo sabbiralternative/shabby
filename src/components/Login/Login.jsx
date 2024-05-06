@@ -14,6 +14,7 @@ const Login = () => {
   const pageTitle = config?.result?.settings?.siteTitle;
   const isDemoButtonShow = config?.result?.settings?.demoLogin;
   const isRegisterButtonShow = config?.result?.settings?.registration;
+  const siteUrl = config?.result?.settings?.siteUrl
   const { successRegister, setSuccessRegister, logo } = UseState();
 
   const {
@@ -33,6 +34,7 @@ const Login = () => {
     const generatedToken = UseTokenGenerator();
     const loginData = {
       username: username,
+      site:siteUrl,
       password: password,
       token: generatedToken,
     };
