@@ -1,19 +1,19 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { config } from "../../utils/config";
+
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import NavbarWithIFrame from "./NavbarWithIFrame";
 import Sidebar from "../Sidebar/Sidebar";
 import IFrameLoader from "../Loader/IFrameLoader";
+import { API } from "../../utils";
 
 const LiveCasinoVideo = () => {
   const { eventId, name } = useParams();
   const location = useLocation();
 
   const [videoUrl, setVideoUrl] = useState("");
-  const liveCasinoIframeApi = config?.result?.endpoint?.liveCasinoIframe;
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
   /* Get live casino video */
@@ -42,7 +42,7 @@ const LiveCasinoVideo = () => {
       //   mobileOnly: true,
       //   ...additionalData,
       // });
-      const res = await axios.post(liveCasinoIframeApi, encryptedData, {
+      const res = await axios.post(API.liveCasinoIframe, encryptedData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = res.data;

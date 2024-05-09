@@ -1,23 +1,23 @@
 import axios from "axios";
-import { config } from "../../utils/config";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { API } from "../../utils";
 
 const Sidebar = () => {
   const [sportsLink, setSportsLink] = useState(true);
   const [menu, setMenu] = useState([]);
-  const menuApi = config?.result?.endpoint?.menu;
-
 
   /* get menu links */
   useEffect(() => {
+    console.log("fgfdgfdg");
     const getAllMenuApi = async () => {
-      const res = await axios.get(menuApi);
+      const res = await axios.get(API.menu);
+
       const data = res.data;
       setMenu(data);
     };
     getAllMenuApi();
-  }, [menuApi]);
+  }, []);
 
   return (
     <>

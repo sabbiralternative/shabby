@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import { config } from "../../utils/config";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -8,13 +7,13 @@ import UseEncryptData from "../../hooks/UseEncryptData";
 import { useForm } from "react-hook-form";
 import Notification from "../Notification/Notification";
 import UseState from "../../hooks/UseState";
+import { API, settings } from "../../utils";
 const Register = () => {
-  const pageTitle = config?.result?.settings?.siteTitle;
-  const whatsappApi = config?.result?.endpoint?.whatsapp;
-  const siteUrl = config?.result?.settings?.siteUrl;
-  const userNameUrl = config?.result?.endpoint?.checkUsername;
-  const registerUrl = config?.result?.endpoint?.register;
-  const otpUrl = config?.result?.endpoint?.otp;
+
+
+
+  
+
   const [userExist, setUserExist] = useState(false);
   const [userErr, setUserErr] = useState(false);
   const [user, setUser] = useState({
@@ -38,8 +37,8 @@ const Register = () => {
 
   /* set site title  */
   useEffect(() => {
-    document.title = pageTitle;
-  }, [pageTitle]);
+    document.title = settings.siteTitle;
+  }, []);
 
   /* get whats app link from api */
   const { data: whatsAppLink } = useQuery({
@@ -49,10 +48,10 @@ const Register = () => {
       const generatedToken = UseTokenGenerator();
       /* encrypted data */
       const encryptedVideoData = UseEncryptData({
-        site: siteUrl,
+        site: settings.siteUrl,
         token: generatedToken,
       });
-      const res = await axios.post(whatsappApi, encryptedVideoData);
+      const res = await axios.post(API.whatsapp, encryptedVideoData);
       const data = res.data;
       if (data?.success) {
         return data?.result?.link;
@@ -71,7 +70,7 @@ const Register = () => {
         username: e.target.value,
         token: generatedToken,
       });
-      const res = await axios.post(userNameUrl, encryptedVideoData);
+      const res = await axios.post(API.checkUsername, encryptedVideoData);
       const data = res.data;
       if (data?.success) {
         setUserErr(false);
@@ -118,13 +117,13 @@ const Register = () => {
         password: user?.password,
         confirmPassword: user?.confirmPassword,
         mobile: user?.mobileNo,
-        site: siteUrl,
+        site: settings.siteUrl,
         token: generatedToken,
         otp: user?.otp,
       };
       /* Encrypted post data */
       const encryptedData = UseEncryptData(registerData);
-      fetch(registerUrl, {
+      fetch(API.register, {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -191,7 +190,7 @@ const Register = () => {
     };
     /* Encrypt post data */
     const encryptedData = UseEncryptData(otpData);
-    const res = await axios.post(otpUrl, encryptedData);
+    const res = await axios.post(API.otp, encryptedData);
     const data = res.data;
     if (data?.success) {
       setOtp(data?.result?.message);

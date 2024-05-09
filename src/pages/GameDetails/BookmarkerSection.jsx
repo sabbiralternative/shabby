@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
-import { config } from "../../utils/config";
+
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
+import { API } from "../../utils";
 
 const BookmarkerSection = ({
   bookmarker,
@@ -13,7 +14,6 @@ const BookmarkerSection = ({
   totalSize,
 }) => {
   const token = localStorage.getItem("token");
-  const laderApi = config?.result?.endpoint?.ladder;
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
   const [previousData, setPreviousData] = useState(bookmarker);
@@ -38,7 +38,7 @@ const BookmarkerSection = ({
     /* Encrypt post data */
     const encryptedData = UseEncryptData(generatedToken);
     setShowLadder(!showLadder);
-    fetch(`${laderApi}/${marketId}`, {
+    fetch(`${API.ladder}/${marketId}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

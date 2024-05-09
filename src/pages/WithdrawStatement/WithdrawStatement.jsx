@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { config } from "../../utils/config";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
+import { API } from "../../utils";
 
 const WithdrawStatement = () => {
   const { register, handleSubmit } = useForm();
-  const accountStatementApi = config?.result?.endpoint?.accountStatement;
+
   //   const settledBetsApi = config?.result?.endpoint?.settledBets;
   const token = localStorage.getItem("token");
   //   const [modalData, setModalData] = useState([]);
@@ -26,7 +26,7 @@ const WithdrawStatement = () => {
 
       token: generatedToken,
     });
-    fetch(accountStatementApi, {
+    fetch(API.accountStatement, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -76,7 +76,6 @@ const WithdrawStatement = () => {
   const hasNextPage = currentPage < getLastPage();
 
   /* Pagination  end*/
-
 
   return (
     <div className="center-container">

@@ -1,31 +1,28 @@
 import { Link, useNavigate } from "react-router-dom";
-
-import { config } from "../../utils/config";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Notification from "../../components/Notification/Notification";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import UseState from "../../hooks/UseState";
+import { API, settings } from "../../utils";
 
 const ChangePasswordLogin = () => {
-  const changePasswordLogin = config?.result?.endpoint?.changePassword;
   const token = localStorage.getItem("token");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const pageTitle = config?.result?.settings?.siteTitle;
- const {logo} = UseState()
+  const { logo } = UseState();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-/* Site title */
+  /* Site title */
   useEffect(() => {
-    document.title = pageTitle;
-  }, [pageTitle]);
-/* Change password login api */
+    document.title = settings.siteTitle;
+  }, []);
+  /* Change password login api */
   const onSubmit = ({ password, newPassword, newPasswordConfirm }) => {
     /* Random token */
     const generatedToken = UseTokenGenerator();
@@ -36,7 +33,7 @@ const ChangePasswordLogin = () => {
       passVerify: newPasswordConfirm,
       token: generatedToken,
     });
-    fetch(changePasswordLogin, {
+    fetch(API.changePassword, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -45,10 +42,9 @@ const ChangePasswordLogin = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-
         if (data.success) {
           setSuccessMessage(data?.result?.message);
-           /* After change password , logout user, navigation user to login page */
+          /* After change password , logout user, navigation user to login page */
           setTimeout(() => {
             localStorage.clear();
             navigate("/login");
@@ -77,7 +73,7 @@ const ChangePasswordLogin = () => {
       )}
       <div className="login-page">
         <div className="login-box">
-          <Link to='/' className="logo-login">
+          <Link to="/" className="logo-login">
             <img src={logo} />
           </Link>
           <div className="login-form mt-4">

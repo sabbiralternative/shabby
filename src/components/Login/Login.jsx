@@ -1,20 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { config } from "../../utils/config";
 import { useEffect, useState } from "react";
 import Notification from "../Notification/Notification";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import UseState from "../../hooks/UseState";
+import { API, settings } from "../../utils";
 
 const Login = () => {
   const navigate = useNavigate();
-  const loginApi = config?.result?.endpoint?.login;
   const [errorLogin, setErrorLogin] = useState("");
-  const pageTitle = config?.result?.settings?.siteTitle;
-  const isDemoButtonShow = config?.result?.settings?.demoLogin;
-  const isRegisterButtonShow = config?.result?.settings?.registration;
-  const siteUrl = config?.result?.settings?.siteUrl
   const { successRegister, setSuccessRegister, logo } = UseState();
 
   const {
@@ -25,8 +20,8 @@ const Login = () => {
 
   /* Dynamically append the site title from notice.json */
   useEffect(() => {
-    document.title = pageTitle;
-  }, [pageTitle]);
+    document.title = settings.siteTitle;
+  }, []);
 
   /* handle login user */
   const onSubmit = ({ username, password }) => {
@@ -34,13 +29,13 @@ const Login = () => {
     const generatedToken = UseTokenGenerator();
     const loginData = {
       username: username,
-      site:siteUrl,
+      site: settings.siteUrl,
       password: password,
       token: generatedToken,
     };
     /* Encrypted the post data */
     const encryptedData = UseEncryptData(loginData);
-    fetch(loginApi, {
+    fetch(API.login, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -85,10 +80,7 @@ const Login = () => {
               navigate("/");
             }
           }
-        }
-        
-        
-        else {
+        } else {
           setErrorLogin(data?.error);
         }
       });
@@ -103,9 +95,9 @@ const Login = () => {
       username: "demo",
       password: "",
       token: generatedToken,
-      site:siteUrl,
+      site: settings.siteUrl,
     });
-    fetch(loginApi, {
+    fetch(API.login, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -217,7 +209,7 @@ const Login = () => {
                 Login<i className="fas fa-sign-in-alt float-end mt-1"></i>
               </button>
               {/* if in notice.json demoLogin true then show button value  */}
-              {isDemoButtonShow && (
+              {settings.demoLogin && (
                 <button
                   onClick={loginWithDemo}
                   type="button"
@@ -228,7 +220,7 @@ const Login = () => {
                 </button>
               )}
               {/* if in notice.json demo registration true then showing registration button   */}
-              {isRegisterButtonShow && (
+              {settings.registration && (
                 <div className="d-grid">
                   <Link
                     to="/register"

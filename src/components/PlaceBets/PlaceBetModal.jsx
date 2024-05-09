@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { config } from "../../utils/config";
 import UseState from "../../hooks/UseState";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
+import { API } from "../../utils";
 
 const PlaceBetModal = ({
   showBets,
@@ -26,7 +26,7 @@ const PlaceBetModal = ({
   /* loading state */
   const [loader, setLoader] = useState(false);
 
-  const orderApi = config?.result?.endpoint?.order;
+
   /* token */
   const token = localStorage.getItem("token");
 
@@ -71,7 +71,7 @@ const PlaceBetModal = ({
     ]);
 
     setLoader(true);
-    fetch(orderApi, {
+    fetch(API.order, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

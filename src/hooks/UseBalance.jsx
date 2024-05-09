@@ -2,13 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import UseEncryptData from "./UseEncryptData";
 import UseTokenGenerator from "./UseTokenGenerator";
-import { config } from "../utils/config";
+
 import { useNavigate } from "react-router-dom";
 import UseState from "./UseState";
+import { API, settings } from "../utils";
 /* Balance api */
 const UseBalance = () => {
-  const balanceAPi = config?.result?.endpoint?.balance;
-  const balanceAPiLoop = config?.result?.settings?.balanceApiLoop;
   const token = localStorage.getItem("token");
   /* Refetch bet exposure function*/
   const { setRefetchBetsExposure } = UseState();
@@ -22,7 +21,7 @@ const UseBalance = () => {
       const generatedToken = UseTokenGenerator();
       /* Encrypted data */
       const encryptedData = UseEncryptData(generatedToken);
-      const res = await axios.post(balanceAPi, encryptedData, {
+      const res = await axios.post(API.balance, encryptedData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,7 +38,7 @@ const UseBalance = () => {
     },
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    refetchInterval: balanceAPiLoop ? 6000 : null,
+    refetchInterval: settings?.balanceApiLoop ? 6000 : null,
   });
 
   return [balanceData, refetchBalance];

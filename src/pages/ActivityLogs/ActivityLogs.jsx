@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { config } from "../../utils/config";
 import ActivityTable from "./ActivityTable";
 import Notification from "../../components/Notification/Notification";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
+import { API } from "../../utils";
 const ActivityLogs = () => {
   const [activityLogs, setActivityLogs] = useState([]);
   const { register, handleSubmit } = useForm();
-  const activityLogApi = config?.result?.endpoint?.activityLogs;
   const token = localStorage.getItem("token");
   const [errorMessage, setErrorMessage] = useState("");
  
@@ -26,7 +25,7 @@ const ActivityLogs = () => {
     if (logType == "none") {
       return setErrorMessage("Select Log Type !");
     }
-    fetch(activityLogApi, {
+    fetch(API.activityLogs, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

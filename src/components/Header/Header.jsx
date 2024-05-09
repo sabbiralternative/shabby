@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { config } from "../../utils/config";
-
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -12,6 +10,7 @@ import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import Notification from "../Notification/Notification";
 import MyMarketModal from "../Modal/MyMarketModal";
+import { API, settings } from "../../utils";
 const Header = () => {
   /* Open dropdown state for mobile version */
   const [open, setOpen] = useState(false);
@@ -23,21 +22,12 @@ const Header = () => {
   const [exp, setExp] = useState(true);
   /* token */
   const token = localStorage.getItem("token");
-/* notification endpoint */
-  const notificationApi = config?.result?.endpoint?.notification;
-  /* buttonValue endpoint */
-  const buttonValueApi = config?.result?.endpoint?.buttonValue;
   const { register, handleSubmit } = useForm();
   /* notification state */
   const [showNotification, setShowNotification] = useState("");
   /* this are coming from context */
   const { buttonValue, SetButtonValue, setSports, logo } = UseState();
-/* Some settings from notice.json for which button will show in ui */
-  const isForceLogin = config?.result?.settings?.forceLogin;
-  const isShowRegisterButton = config?.result?.settings?.registration;
-  const isDemoLoginShow = config?.result?.settings?.demoLogin;
-  const showWithdraw = config?.result?.settings?.withdraw;
-  const showDeposit = config?.result?.settings?.deposit;
+
   /* rule modal state */
   const [ruleModal, setRuleModal] = useState(false);
   /* get button values */
@@ -53,8 +43,7 @@ const Header = () => {
   const forceLoginSuccess = localStorage.getItem("forceLoginSuccess");
   /* Balance api */
   const [balanceData] = UseBalance();
-  /* login api */
-  const loginApi = config?.result?.endpoint?.login;
+
   /* error state */
   const [errorLogin, setErrorLogin] = useState("");
   /* show market state */
@@ -125,17 +114,15 @@ const Header = () => {
 
   /* Get marquee notification */
   useEffect(() => {
-    axios
-      .get(notificationApi)
-      .then((res) => {
-        setShowNotification(res?.data?.result[0].text);
-      });
-  }, [notificationApi, token]);
+    axios.get(API.notification).then((res) => {
+      setShowNotification(res?.data?.result[0].text);
+    });
+  }, [token]);
 
   /*handle Logout */
   const logOut = () => {
     localStorage.clear();
-    if (isForceLogin) {
+    if (settings.forceLogin) {
       /* If force login is true in notice.json the navigate login page after logout otherwise stay in homepage */
       navigate("/login");
     } else {
@@ -167,7 +154,7 @@ const Header = () => {
     buttons9label,
     buttons9value,
   }) => {
-    fetch(buttonValueApi, {
+    fetch(API.buttonValue, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -283,7 +270,7 @@ const Header = () => {
       password: "",
       token: generatedToken,
     });
-    fetch(loginApi, {
+    fetch(API.login, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -335,7 +322,7 @@ const Header = () => {
   };
 
   const [myMarketData, setMyMarketData] = useState([]);
-  const myMarketApi = config?.result?.endpoint?.myMarket;
+
   /* handle get market value from api */
   const handleGetMyMarket = async () => {
     setMyMarketData([]);
@@ -344,7 +331,7 @@ const Header = () => {
     const generatedToken = UseTokenGenerator();
     /* encrypted post data */
     const encryptedData = UseEncryptData(generatedToken);
-    const res = await axios.post(myMarketApi, encryptedData, {
+    const res = await axios.post(API.myMarket, encryptedData, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = res?.data?.result;
@@ -359,7 +346,7 @@ const Header = () => {
         position: "relative",
       }}
     >
-{/* if error during the demo login then show error message  */}
+      {/* if error during the demo login then show error message  */}
       {errorLogin && (
         <Notification
           message={errorLogin}
@@ -382,7 +369,9 @@ const Header = () => {
             </Link>
           </div>
           {/* in notice.json if demoLogin,registration = false and force login success or forceLoginSuccess and token in locale storage then show search box  */}
-          {(!isDemoLoginShow && !isShowRegisterButton && forceLoginSuccess) ||
+          {(!settings.demoLogin &&
+            !settings.registration &&
+            forceLoginSuccess) ||
           (forceLoginSuccess && token) ? (
             <div className="user-details">
               <div className="search-box-container d-none d-xl-block">
@@ -401,13 +390,13 @@ const Header = () => {
               </div>
               <div className="ms-3 d-none d-xl-flex">
                 {/* In notice.json if deposit = true then showing deposit button */}
-                {showDeposit && (
+                {settings.deposit && (
                   <Link className="btn btn-success me-2" to="/deposit">
                     Deposit
                   </Link>
                 )}
                 {/* In notice.json if withdraw = true then showing withdraw button */}
-                {showWithdraw && (
+                {settings.withdraw && (
                   <Link className="btn btn-danger" to="/withdraw">
                     Withdraw
                   </Link>
@@ -831,7 +820,7 @@ const Header = () => {
                         >
                           <div className="d-xl-none d-flex justify-content-center"></div>
                           {/* in notice.json if withdraw = true then show this link */}
-                          {showWithdraw && (
+                          {settings.withdraw && (
                             <Link
                               to="/withdraw-statement"
                               onClick={() => setOpen(!open)}
@@ -845,7 +834,7 @@ const Header = () => {
                             </Link>
                           )}
                           {/* in notice.json if deposit = true then show this link */}
-                          {showDeposit && (
+                          {settings.deposit && (
                             <Link
                               to="/deposit-statement"
                               onClick={() => setOpen(!open)}
@@ -983,7 +972,7 @@ const Header = () => {
                   {role}
                   <i className="fas fa-chevron-down ms-1"></i>
                 </div>
-{/* open dropdown for desktop version */}
+                {/* open dropdown for desktop version */}
                 {dropDown && (
                   <div className="show dropdown">
                     <ul
@@ -1001,7 +990,7 @@ const Header = () => {
                     >
                       <div className="d-xl-none d-flex justify-content-center"></div>
                       {/* notice.json if withdraw = true then show withdraw button */}
-                      {showWithdraw && (
+                      {settings.withdraw && (
                         <Link
                           to="/withdraw-statement"
                           onClick={() => setDropDown(!dropDown)}
@@ -1014,8 +1003,8 @@ const Header = () => {
                           </li>
                         </Link>
                       )}
-                           {/* notice.json if deposit = true then show deposit button */}
-                      {showDeposit && (
+                      {/* notice.json if deposit = true then show deposit button */}
+                      {settings.deposit && (
                         <Link
                           to="/deposit-statement"
                           onClick={() => setDropDown(!dropDown)}
@@ -1132,15 +1121,16 @@ const Header = () => {
           ) : null}
 
           {/* in notice.json if demoLogin or register = true and forceLogin(localeStorage) not success or demoLogin, register, token, forceLoginSuccess = false then show this html */}
-          {((isDemoLoginShow || isShowRegisterButton) && !forceLoginSuccess) ||
-          (!isDemoLoginShow &&
-            !isShowRegisterButton &&
+          {((settings.demoLogin || settings.registration) &&
+            !forceLoginSuccess) ||
+          (!settings.demoLogin &&
+            !settings.registration &&
             !token &&
             !forceLoginSuccess) ? (
             <div className="user-details login-btn-box">
               <div className="user-name dropdown ms-3">
                 {/* if register = true in notice.json then show register button */}
-                {isShowRegisterButton && (
+                {settings.registration && (
                   <Link className="btn-home-login" to="/register">
                     Register
                   </Link>
@@ -1154,7 +1144,7 @@ const Header = () => {
                   Login
                 </Link>
                 {/* notice.json --> demoLogin = true then show the button */}
-                {isDemoLoginShow && (
+                {settings.demoLogin && (
                   <button
                     onClick={loginWithDemo}
                     type="button"
@@ -1167,7 +1157,9 @@ const Header = () => {
             </div>
           ) : null}
           {/* in notice.json if demoLogin or register = false and forceLogin(localeStorage) success or  token, forceLoginSuccess = true then show below html */}
-          {(!isDemoLoginShow && !isShowRegisterButton && forceLoginSuccess) ||
+          {(!settings.demoLogin &&
+            !settings.registration &&
+            forceLoginSuccess) ||
           (forceLoginSuccess && token) ? (
             <div className="search-box-container d-xl-none">
               <SearchBox />
@@ -1175,13 +1167,13 @@ const Header = () => {
                 {" "}
                 <div className="d-xl-none d-flex justify-content-center">
                   {/* In notice.json if deposit = true then showDeposit */}
-                  {showDeposit && (
+                  {settings.deposit && (
                     <Link className="btn btn-success me-2" to="/deposit">
                       Deposit
                     </Link>
                   )}
                   {/* In notice.json if withdraw = true then showDeposit */}
-                  {showWithdraw && (
+                  {settings.withdraw && (
                     <Link className="btn btn-danger" to="/withdraw">
                       Withdraw
                     </Link>

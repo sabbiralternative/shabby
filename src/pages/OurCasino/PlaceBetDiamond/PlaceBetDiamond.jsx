@@ -24,14 +24,6 @@ import TeenPattiOneDay from "../TeenPattiOneday/TeenPattiOneday.jsx";
 import TeenPatti20 from "../TeenPatti20/TeenPatti20.jsx";
 import InstantTeenPatti from "../InstantTeenPatti/InstantTeenPatti.jsx";
 import Notification from "../../../components/Notification/Notification.jsx";
-import {
-  currentBetsApi,
-  exposerApi,
-  getSingleCasinoApi,
-  interval,
-  oddsApi,
-  token,
-} from "../../../utils/Utils.jsx";
 import VLucky7 from "../VLucky7/VLucky7.jsx";
 import VAmarAkbarAnthony from "../VAmarAkbarAnthony/VAmarAkbarAnthony.jsx";
 import VBollywoodCasino from "../VBollywoodCasino/VBollywoodCasino.jsx";
@@ -52,9 +44,10 @@ import Baccrat29 from "../Baccrat29/Baccrat29.jsx";
 import TeenPattiTwoPointZero from "../TeenPattiTwoPointZero/TeenPattiTwoPointZero.jsx";
 import UseTokenGenerator from "../../../hooks/UseTokenGenerator.jsx";
 import UseEncryptData from "../../../hooks/UseEncryptData.jsx";
+import { API, settings } from "../../../utils/index.js";
 
 const PlaceBetDiamond = () => {
-  
+  const token = localStorage.getItem("token");
   /* Reset scroll */
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -637,13 +630,12 @@ const PlaceBetDiamond = () => {
       token: generatedToken,
     });
     const getCasinoVideo = async () => {
-      const res = await axios.post(getSingleCasinoApi, encryptedVideoData, {
+      const res = await axios.post(API.accessToken, encryptedVideoData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       const data = res.data;
-
 
       if (data.success) {
         setUrl(data?.result?.url);
@@ -655,7 +647,7 @@ const PlaceBetDiamond = () => {
   /* Get odds */
   useEffect(() => {
     const getGameDetails = async () => {
-      const res = await axios.get(`${oddsApi}/${eventTypeId}/${eventId}`, {
+      const res = await axios.get(`${API.odds}/${eventTypeId}/${eventId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -666,7 +658,7 @@ const PlaceBetDiamond = () => {
       }
     };
     getGameDetails();
-    const intervalId = setInterval(getGameDetails, interval);
+    const intervalId = setInterval(getGameDetails, settings.interval);
     return () => clearInterval(intervalId);
   }, [eventTypeId, eventId]);
 
@@ -678,11 +670,15 @@ const PlaceBetDiamond = () => {
       const generatedToken = UseTokenGenerator();
       /* Encrypted data */
       const encryptedData = UseEncryptData(generatedToken);
-      const res = await axios.post(`${exposerApi}/${eventId}`, encryptedData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.post(
+        `${API.exposure}/${eventId}`,
+        encryptedData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const data = res.data;
 
       if (data.success) {
@@ -700,7 +696,7 @@ const PlaceBetDiamond = () => {
       /* Encrypted post  data */
       const encryptedData = UseEncryptData(generatedToken);
       const res = await axios.post(
-        `${currentBetsApi}/${eventId}`,
+        `${API.currentBets}/${eventId}`,
         encryptedData,
         {
           headers: {

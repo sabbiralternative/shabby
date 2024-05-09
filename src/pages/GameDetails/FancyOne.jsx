@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
-import { config } from "../../utils/config";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
+import { API } from "../../utils";
 
 const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
   
@@ -10,8 +10,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
   const [changedPrices, setChangedPrices] = useState({});
   const token = localStorage.getItem("token");
   const { setPlaceBetValue } = UseState();
- 
-  const laderApi = config?.result?.endpoint?.ladder;
+
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
   /* Exposer */
@@ -27,7 +26,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
     /* Encrypt post data */
     const encryptedData = UseEncryptData(generatedToken);
     setShowLadder(!showLadder);
-    fetch(`${laderApi}/${marketId}`, {
+    fetch(`${API.ladder}/${marketId}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

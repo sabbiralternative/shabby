@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { config } from "../../utils/config";
 import axios from "axios";
 import BetTable from "../../components/BetTable/BetTable";
+import { API } from "../../utils";
 
 const Tennis = () => {
   const [data, setData] = useState([]);
-  const gamesApi = config?.result?.endpoint?.group;
   const group = JSON.parse(localStorage.getItem("group"));
   const [loading, setLoading] = useState(true);
 
@@ -13,16 +12,16 @@ const Tennis = () => {
   useEffect(() => {
     const gamesData = async () => {
       if (group !== null) {
-        const apiUrl = `${gamesApi}/${group}`;
+        const apiUrl = `${API.group}/${group}`;
         const res = await axios.get(apiUrl);
         const data = res.data;
-   
+
         setData(data);
-        setLoading(false)
+        setLoading(false);
       }
     };
     gamesData();
-  }, [group, gamesApi]);
+  }, [group]);
 
   if (loading) {
     return "";

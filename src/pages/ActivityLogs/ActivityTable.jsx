@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { config } from "../../utils/config";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
+import { API } from "../../utils";
 
 const ActivityTable = ({ data }) => {
-  const ipDetailApi = config?.result?.endpoint?.ipDetails;
   const { username, ipAddress, date } = data;
   const token = localStorage.getItem("token");
   const [modalData, setModalData] = useState([]);
@@ -16,7 +15,7 @@ const ActivityTable = ({ data }) => {
     const generatedToken = UseTokenGenerator();
     /* Encryption post data */
     const encryptedData = UseEncryptData(generatedToken);
-    fetch(`${ipDetailApi}/${ip}`, {
+    fetch(`${API.ipDetails}/${ip}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

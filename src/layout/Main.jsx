@@ -5,13 +5,13 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import Category from "../components/Category/Category";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { config } from "../utils/config";
 import DisableDevtool from "disable-devtool";
 import { useQuery } from "@tanstack/react-query";
 import UseTokenGenerator from "../hooks/UseTokenGenerator";
 import UseEncryptData from "../hooks/UseEncryptData";
 import axios from "axios";
 import useLatestEvent from "../hooks/useLatestEvent";
+import { API, settings } from "../utils";
 
 const Main = () => {
   const params = useParams();
@@ -19,12 +19,7 @@ const Main = () => {
   const currentURL = window.location.href;
   const baseUrl = window.location.origin;
   const navigate = useNavigate();
-  const pageTitle = config?.result?.settings?.siteTitle;
-  const isDisabledDevtools = config?.result?.settings?.disabledDevtool;
-  const isForceLogin = config?.result?.settings?.forceLogin;
   const token = localStorage.getItem("token");
-  const whatsappApi = config?.result?.endpoint?.whatsapp;
-  const siteUrl = config?.result?.settings?.siteUrl;
   const { latestEvents } = useLatestEvent();
 
   /*if Token expire logout user */
@@ -39,18 +34,18 @@ const Main = () => {
         navigate("/login");
       }
       /* if forceLogin true in notice.json and token not available then logout */
-    } else if (isForceLogin) {
+    } else if (settings.forceLogin) {
       if (!token) {
         localStorage.clear();
         navigate("/login");
       }
     }
-  }, [navigate, isForceLogin, token]);
+  }, [navigate, token]);
 
   /* Site title */
   useEffect(() => {
-    document.title = pageTitle;
-  }, [pageTitle]);
+    document.title = settings.siteTitle;
+  }, []);
 
   /* path */
   useEffect(() => {
@@ -60,7 +55,7 @@ const Main = () => {
 
   /* Disabled devtool */
   useEffect(() => {
-    if (isDisabledDevtools) {
+    if (settings.disabledDevtool) {
       DisableDevtool({
         ondevtoolopen: (type) => {
           const info = "devtool opened!; type =" + type;
@@ -71,7 +66,7 @@ const Main = () => {
         },
       });
     }
-  }, [isDisabledDevtools, navigate]);
+  }, [navigate]);
 
   /* Get whats app link */
   const { data: whatsAppLink } = useQuery({
@@ -81,10 +76,10 @@ const Main = () => {
       const generatedToken = UseTokenGenerator();
       /* Encryption post data */
       const encryptedVideoData = UseEncryptData({
-        site: siteUrl,
+        site: settings.siteUrl,
         token: generatedToken,
       });
-      const res = await axios.post(whatsappApi, encryptedVideoData);
+      const res = await axios.post(API.whatsapp, encryptedVideoData);
       const data = res.data;
       if (data?.success) {
         return data?.result?.link;

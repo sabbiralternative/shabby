@@ -1,10 +1,9 @@
 import axios from "axios";
 import UseEncryptData from "./UseEncryptData";
 import UseTokenGenerator from "./UseTokenGenerator";
-import { config } from "../utils/config";
+import { API } from "../utils";
 
 const UseLiveSlotFantasyNewTab = async (casinoId) => {
-  const liveCasinoIframeApi = config?.result?.endpoint?.liveCasinoIframe;
   const token = localStorage.getItem("token");
   /* get random token */
   const generatedToken = UseTokenGenerator();
@@ -15,7 +14,7 @@ const UseLiveSlotFantasyNewTab = async (casinoId) => {
     token: generatedToken,
   });
 
-  const res = await axios.post(liveCasinoIframeApi, encryptedData, {
+  const res = await axios.post(API.liveCasinoIframe, encryptedData, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = res?.data;

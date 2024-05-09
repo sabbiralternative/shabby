@@ -1,4 +1,3 @@
-import { config } from "../../utils/config";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -10,47 +9,40 @@ import BetTable from "../../components/BetTable/BetTable";
 import useLatestEvent from "../../hooks/useLatestEvent";
 import { useNavigate } from "react-router-dom";
 import UseBalance from "../../hooks/UseBalance";
+import { API, settings } from "../../utils";
 
 const HomePage = () => {
-  const isCasino = config?.result?.settings.casino;
-  const auraCasinoApi = config?.result?.endpoint?.auraCasino;
-  const diamondCasinoApi = config?.result?.endpoint?.diamondCasino;
-  const testCasinoApi = config?.result?.endpoint?.testCasino;
-
   const [casino_list, setCasino_list] = useState([]);
   const { sports } = UseState();
   const [data, setData] = useState([]);
-  const oddsApi = config?.result?.endpoint?.group;
-  const interval = config?.result?.settings?.interval;
+
   const { latestEvents } = useLatestEvent();
   const navigate = useNavigate();
   const [, refetchBalance] = UseBalance();
-  /* Get casino thumbnail for home page */
-  const balanceLoopApi = config?.result?.settings?.balanceApiLoop;
 
   useEffect(() => {
-    if (!balanceLoopApi) {
+    if (!settings.balanceApiLoop) {
       refetchBalance();
     }
-  }, []);
+  }, [refetchBalance]);
   useEffect(() => {
     const getAuraCasino = async () => {
       const res = await axios.get(
-        `${isCasino == "aura" ? auraCasinoApi : ""} ${
-          isCasino == "diamond" ? diamondCasinoApi : ""
-        }  ${isCasino == "test" ? testCasinoApi : ""}`
+        `${settings.casino == "aura" ? API.auraCasino : ""} ${
+          settings.casino == "diamond" ? API.diamondCasino : ""
+        }  ${settings.casino == "test" ? API.testCasino : ""}`
       );
       const data = res.data;
       setCasino_list(data);
     };
     getAuraCasino();
-  }, [auraCasinoApi, diamondCasinoApi, isCasino, testCasinoApi]);
+  }, []);
 
   /* Get game events */
   useEffect(() => {
     const gameData = async () => {
       if (sports !== null) {
-        const apiUrl = `${oddsApi}/${sports}`;
+        const apiUrl = `${API.group}/${sports}`;
         const res = await axios.get(apiUrl);
         const data = res.data;
         setData(data);
@@ -59,10 +51,10 @@ const HomePage = () => {
     gameData();
     /* Refetch odds api for cricket, football, and tennis */
     if (sports === 4 || sports === 1 || sports === 2) {
-      const intervalId = setInterval(gameData, interval);
+      const intervalId = setInterval(gameData, settings.interval);
       return () => clearInterval(intervalId);
     }
-  }, [sports, oddsApi, interval]);
+  }, [sports]);
 
   return (
     <div className="center-container">

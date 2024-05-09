@@ -2,18 +2,19 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { config } from "../../utils/config";
+import { settings } from "../../utils";
+
 AOS.init();
 
 const Footer = () => {
   /* modal state */
   const [showModal, setShowModal] = useState(false);
   /* get modal from locale storage */
-  const modal = JSON.parse(localStorage.getItem('modal'))
+  const modal = JSON.parse(localStorage.getItem("modal"));
   /* site title from notice.json */
-  const siteTitle = config?.result?.settings?.siteTitle
+
   /* token from locale storage */
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem("token");
 
   /* show modal after login */
   useEffect(() => {
@@ -25,7 +26,7 @@ const Footer = () => {
     }
   }, []);
 
-/* close modal */
+  /* close modal */
   const closeModal = () => {
     setShowModal(false);
     localStorage.setItem("hasModalBeenShown", "true");
@@ -65,7 +66,7 @@ const Footer = () => {
               <div className="modal-content">
                 <div className="modal-header">
                   <div className="modal-title h4">
-               {modal && modal[1].bannerTitle}
+                    {modal && modal[1].bannerTitle}
                   </div>
                   <button
                     onClick={closeModal}
@@ -79,8 +80,8 @@ const Footer = () => {
                     src={modal && modal[0].banner}
                     className="img-fluid"
                     style={{
-                      width:'100%',
-                      objectFit:'contain'
+                      width: "100%",
+                      objectFit: "contain",
                     }}
                   />
                 </div>
@@ -124,7 +125,8 @@ const Footer = () => {
       <div className="footer-text">
         <p></p>
         <p className="text-center">
-          © Copyright {new Date().getFullYear()}. All Rights Reserved. Powered by {siteTitle}.
+          © Copyright {new Date().getFullYear()}. All Rights Reserved. Powered
+          by {settings.siteTitle}.
         </p>
       </div>
     </>

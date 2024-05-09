@@ -1,17 +1,14 @@
-import { config } from "../../utils/config";
+import { API, settings } from "../../utils";
 
 const Deposit = () => {
-  const depositIframe = config?.result?.endpoint?.depositIframe;
-  const siteUrl = config?.result?.settings?.siteUrl;
   const token = localStorage.getItem("token");
-/* Deposit iframe */
+  /* Deposit iframe */
   return (
     <div className="center-container">
       <iframe
         allow="fullscreen;"
-        src={`${depositIframe}/${siteUrl}/${token}`}
+        src={`${API.depositIframe}/${settings.siteUrl}/${token}`}
         style={{ width: "100%", height: "100%", border: "0px" }}
-        
       ></iframe>
     </div>
   );

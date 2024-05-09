@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-import { config } from "../utils/config";
+import { getSetApis } from "../utils/config";
+import { API, settings } from "../utils";
 
 export const StateContext = createContext(null);
 const StateProvider = ({ children }) => {
@@ -10,31 +11,34 @@ const StateProvider = ({ children }) => {
   const [refetchBetsExposure, setRefetchBetsExposure] = useState(null);
   const [successRegister, setSuccessRegister] = useState("");
   const [logo, setLogo] = useState("");
-  const assetsUrl = config?.result?.endpoint?.assets;
-  const siteUrl = config?.result?.settings?.siteUrl;
+  const [noticeLoaded, setNoticeLoaded] = useState(false);
 
-  
   useEffect(() => {
-    /* Dynamically append  theme css  */
-    const logo = `${assetsUrl}/${siteUrl}/logo.png`;
-    setLogo(logo);
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.type = "text/css";
-    link.href = `${assetsUrl}/${siteUrl}/theme.css`;
-    document.head.appendChild(link);
-    /* Dynamically append site logo  */
-    const FavIconLink = document.createElement("link");
-    FavIconLink.rel = "icon";
-    FavIconLink.type = "image/png";
-    FavIconLink.href = `${assetsUrl}/${siteUrl}/favicon.png`;
-    document.head.appendChild(FavIconLink);
+    getSetApis(setNoticeLoaded);
+  }, [noticeLoaded]);
 
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, [siteUrl, assetsUrl]);
+  useEffect(() => {
+    if (noticeLoaded) {
+      /* Dynamically append  theme css  */
+      const logo = `${API.assets}/${settings.siteUrl}/logo.png`;
+      setLogo(logo);
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = `${API.assets}/${settings.siteUrl}/theme.css`;
+      document.head.appendChild(link);
+      /* Dynamically append site logo  */
+      const FavIconLink = document.createElement("link");
+      FavIconLink.rel = "icon";
+      FavIconLink.type = "image/png";
+      FavIconLink.href = `${API.assets}/${settings.siteUrl}/favicon.png`;
+      document.head.appendChild(FavIconLink);
 
+      return () => {
+        document.head.removeChild(link);
+      };
+    }
+  }, [noticeLoaded]);
 
   /* These are all exposure for state */
   /* data[0]?.runners[0] exposure */
@@ -157,6 +161,10 @@ const StateProvider = ({ children }) => {
   const [fifteenIndexZeroRunnersEx, setFifteenIndexZeroEx] = useState([]);
   const [sixteenIndexZeroRunnersEx, setSixteenIndexZeroEx] = useState([]);
   const [seventeenIndexZeroRunnersEx, setSeventeenIndexZeroEx] = useState([]);
+
+  if (!noticeLoaded) {
+    return;
+  }
 
   const stateInfo = {
     sports,

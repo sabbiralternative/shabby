@@ -1,33 +1,32 @@
 import { useEffect } from "react";
-import { config } from "../../utils/config";
 import axios from "axios";
 import { useState } from "react";
 import LiveSlotModal from "../../components/Modal/LiveSlotModal";
 import { useNavigate } from "react-router-dom";
+import { API, settings } from "../../utils";
 const FantasyGames = () => {
-  const FantasyGamesApi = config?.result?.endpoint?.fantasyGames;
   const [params, setParams] = useState("aviator");
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [casinoId, setCasinoId] = useState({});
-  const isAEDCurrency = config?.result?.settings?.casinoCurrency;
+
   const navigate = useNavigate();
 
   /* Get fantasy games */
   useEffect(() => {
     const getFantasyGames = async () => {
-      const res = await axios.get(`${FantasyGamesApi}/${params}`);
+      const res = await axios.get(`${API.fantasyGames}/${params}`);
       const data = res.data;
       if (data) {
         setData(data);
       }
     };
     getFantasyGames();
-  }, [FantasyGamesApi, params]);
+  }, [params]);
 
   /* Navigate to slot casino video */
   const navigateSlotCasinoVideo = (casino) => {
-    if (isAEDCurrency !== "AED") {
+    if (settings.casinoCurrency !== "AED") {
       navigate(`/fantasy-games/${casino?.eventId}/${casino?.providerId}`);
     } else {
       setShowModal(true);
@@ -104,7 +103,7 @@ const FantasyGames = () => {
           </div>
         </div>
       </div>
-      {showModal && isAEDCurrency === "AED" && (
+      {showModal && settings.casinoCurrency === "AED" && (
         <LiveSlotModal setShowModal={setShowModal} casinoId={casinoId} />
       )}
     </div>

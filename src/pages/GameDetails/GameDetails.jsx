@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { config } from "../../utils/config";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import MatchOddsSection from "./MatchOddsSection";
@@ -16,15 +15,11 @@ import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseBalance from "../../hooks/UseBalance";
 import MobilePlaceBet from "./MobilePlaceBet";
 import DesktopPlaceBet from "./DesktopPlaceBet";
+import { API, settings } from "../../utils";
 
 const GameDetails = () => {
   const { id, eventId } = useParams();
-  const oddsApi = config?.result?.endpoint?.odds;
-  const interval = config?.result?.settings?.interval;
-  const accessTokenApi = config?.result?.endpoint?.accessToken;
-  const exposerApi = config?.result?.endpoint?.exposure;
-  const orderApi = config?.result?.endpoint?.order;
-  const currentBetsApi = config?.result?.endpoint?.currentBets;
+
   const token = localStorage.getItem("token");
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
   const [data, setData] = useState([]);
@@ -53,15 +48,14 @@ const GameDetails = () => {
   const [, refetchBalance] = UseBalance();
   const [booksValue, setBooksValue] = useState([]);
   const [isSticky, setSticky] = useState(false);
-  const balanceLoopApi = config?.result?.settings?.balanceApiLoop;
 
   /* Get casino thumbnail for home page */
 
   useEffect(() => {
-    if (!balanceLoopApi) {
+    if (!settings.balanceApiLoop) {
       refetchBalance();
     }
-  }, []);
+  }, [refetchBalance]);
 
   /* Set price */
   useEffect(() => {
@@ -92,7 +86,7 @@ const GameDetails = () => {
   /* Get game details */
   useEffect(() => {
     const getGameDetails = async () => {
-      const res = await axios.get(`${oddsApi}/${id}/${eventId}`);
+      const res = await axios.get(`${API.odds}/${id}/${eventId}`);
       const data = res.data;
       if (data.success) {
         if (data?.result) {
@@ -102,9 +96,9 @@ const GameDetails = () => {
     };
     getGameDetails();
     /* Refetch after some millisecond */
-    const intervalId = setInterval(getGameDetails, interval);
+    const intervalId = setInterval(getGameDetails, settings.interval);
     return () => clearInterval(intervalId);
-  }, [token, oddsApi, id, eventId, interval]);
+  }, [token, id, eventId]);
 
   /* Filtered all the game  */
   useEffect(() => {
@@ -154,7 +148,7 @@ const GameDetails = () => {
         token: generatedToken,
       });
       if (showTv || showMobileTv) {
-        fetch(accessTokenApi, {
+        fetch(API.accessToken, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -168,7 +162,7 @@ const GameDetails = () => {
       }
     };
     getVideo();
-  }, [eventId, id, showTv, token, accessTokenApi, showMobileTv]);
+  }, [eventId, id, showTv, token, showMobileTv]);
 
   /* Get exposure data */
   const { data: exposer = [], refetch: refetchExposure } = useQuery({
@@ -178,11 +172,15 @@ const GameDetails = () => {
       const generatedToken = UseTokenGenerator();
       /* Encrypt post data */
       const encryptedData = UseEncryptData(generatedToken);
-      const res = await axios.post(`${exposerApi}/${eventId}`, encryptedData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.post(
+        `${API.exposure}/${eventId}`,
+        encryptedData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const data = res.data;
 
       if (data.success) {
@@ -213,7 +211,7 @@ const GameDetails = () => {
       },
     ]);
     setLoader(true);
-    fetch(orderApi, {
+    fetch(API.order, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -249,7 +247,7 @@ const GameDetails = () => {
         const generatedToken = UseTokenGenerator();
         /* Encrypt post data */
         const encryptedData = UseEncryptData(generatedToken);
-        const response = await fetch(`${currentBetsApi}/${eventId}`, {
+        const response = await fetch(`${API.currentBets}/${eventId}`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,

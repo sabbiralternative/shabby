@@ -1,41 +1,35 @@
 import { useEffect } from "react";
-import { config } from "../../utils/config";
 import axios from "axios";
 import { useState } from "react";
 import LiveSlotModal from "../../components/Modal/LiveSlotModal";
-
 import UseLiveSlotFantasyNewTab from "../../hooks/useLiveSlotFantasyNewTab";
 import { Link, useNavigate } from "react-router-dom";
+import { API, settings } from "../../utils";
 
 const SlotGames = () => {
-  const slotWolf = config?.result?.endpoint?.slotsWolf;
   const [slotGames, setSlotGames] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [casinoId, setCasinoId] = useState({});
-  const isAEDCurrency = config?.result?.settings?.casinoCurrency;
+
   const [product, setProduct] = useState("All");
   const navigate = useNavigate();
   /* Get slot games */
   useEffect(() => {
     const getSlotCasino = async () => {
-      const res = await axios.post(
-        slotWolf,
-        {
-          gameList: "All",
-          product,
-          isHome: false,
-        }
-      );
+      const res = await axios.post(API.slotsWolf, {
+        gameList: "All",
+        product,
+        isHome: false,
+      });
       const data = res.data;
       setSlotGames(data);
     };
     getSlotCasino();
-  }, [product, slotWolf]);
+  }, [product]);
 
   /* Navigate to slot video */
   const navigateSlotCasinoVideo = (casino) => {
-
-    if (isAEDCurrency !== "AED") {
+    if (settings.casinoCurrency !== "AED") {
       navigate(
         `/slot-games/${casino?.game_name.replace(/ /g, "")}/${casino?.game_id}`
       );
@@ -45,7 +39,7 @@ const SlotGames = () => {
       setCasinoId({
         eventId: casino?.game_id,
         name: casino?.game_name.replace(/ /g, ""),
-        base:'slot-games'
+        base: "slot-games",
       });
     }
   };
@@ -56,7 +50,6 @@ const SlotGames = () => {
   ) {
     return;
   }
-
 
   return (
     <div className="center-container">
@@ -338,7 +331,7 @@ const SlotGames = () => {
           </div>
         </div>
       </div>
-      {showModal && isAEDCurrency === "AED" && (
+      {showModal && settings.casinoCurrency === "AED" && (
         <LiveSlotModal setShowModal={setShowModal} casinoId={casinoId} />
       )}
     </div>

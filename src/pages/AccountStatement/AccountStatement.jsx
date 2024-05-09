@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { config } from "../../utils/config";
 import SettleBetsModal from "./SettleBetsModal";
 import Notification from "../../components/Notification/Notification";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
+import { API } from "../../utils";
 
 const AccountStatement = () => {
   const { register, handleSubmit } = useForm();
-  const accountStatementApi = config?.result?.endpoint?.accountStatement;
-  const settledBetsApi = config?.result?.endpoint?.settledBets;
+
   const token = localStorage.getItem("token");
   const [modalData, setModalData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [stateMentData, setStateMentData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-
 
   /*Get Account statement  */
   const onSubmit = ({ toDate, fromDate, reportType }) => {
@@ -32,7 +30,7 @@ const AccountStatement = () => {
       type: reportType,
       token: generatedToken,
     });
-    fetch(accountStatementApi, {
+    fetch(API.accountStatement, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -47,14 +45,13 @@ const AccountStatement = () => {
       });
   };
 
-
   /* Settled bets */
   const getSettledBets = (marketId) => {
     /* Generated random token */
     const generatedToken = UseTokenGenerator();
     /* Encryption post data */
     const encryptedData = UseEncryptData(generatedToken);
-    fetch(`${settledBetsApi}/${marketId}`, {
+    fetch(`${API.settledBets}/${marketId}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -278,7 +275,6 @@ const AccountStatement = () => {
                             },
                             i
                           ) => {
-                   
                             return (
                               <tr key={i} role="row">
                                 <td role="cell" className="report-date">

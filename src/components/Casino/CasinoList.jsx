@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { config } from "../../utils/config";
+import { settings } from "../../utils";
 
 const CasinoList = ({ casino }) => {
   const navigate = useNavigate();
-  const isAuraCasino = config?.result?.settings?.casino;
+
   // let name = casino.name;
   // name = name.replace(/ /g, "");
   const diamondCasino = {
@@ -14,9 +14,9 @@ const CasinoList = ({ casino }) => {
   };
 
   const navigateToCasinoDetails = async () => {
-    if (isAuraCasino == "aura" || isAuraCasino === "test") {
+    if (settings.casino == "aura" || settings.casino === "test") {
       navigate(`/casino/${casino?.eventId}/${casino?.eventTypeId}`);
-    } else if (isAuraCasino == "diamond") {
+    } else if (settings.casino == "diamond") {
       localStorage.removeItem("casino");
       localStorage.removeItem("auraEventId");
       localStorage.setItem("casino", JSON.stringify(diamondCasino));

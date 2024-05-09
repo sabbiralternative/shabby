@@ -1,12 +1,11 @@
-import { config } from "../../utils/config";
 import { useForm } from "react-hook-form";
 import BetTable from "./BetTable";
 import { useEffect, useState } from "react";
 import Notification from "../../components/Notification/Notification";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
+import { API } from "../../utils";
 const CurrentBet = () => {
-  const currentBetsApi = config?.result?.endpoint?.currentBets;
   const { register, handleSubmit } = useForm();
   const token = localStorage.getItem("token");
   const [sports, setSports] = useState([]);
@@ -24,7 +23,7 @@ const CurrentBet = () => {
     /* Encrypt post data */
     const encryptedData = UseEncryptData(generatedToken);
     if (sportsType) {
-      fetch(`${currentBetsApi}/${sportsType}`, {
+      fetch(`${API.currentBets}/${sportsType}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

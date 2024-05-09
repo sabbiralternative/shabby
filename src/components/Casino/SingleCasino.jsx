@@ -1,25 +1,24 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { config } from "../../utils/config";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { useParams } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import NavbarWithIFrame from "./NavbarWithIFrame";
 import IFrameLoader from "../Loader/IFrameLoader";
+import { API } from "../../utils";
 
 const SingleCasino = () => {
   const [url, setUrl] = useState(null);
-  const getSingleCasinoApi = config?.result?.endpoint?.accessToken;
   const { eventId, eventTypeId } = useParams();
-const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
 
   /* Get casino iframe */
   useEffect(() => {
     const CasinoIFrame = async () => {
       /* Random token */
-      setLoading(true)
+      setLoading(true);
       const generatedToken = UseTokenGenerator();
       /* Encryp */
       const encryptedData = UseEncryptData({
@@ -28,16 +27,15 @@ const [loading,setLoading] = useState(false)
         token: generatedToken,
         mobileOnly: true,
       });
-      const res = await axios.post(getSingleCasinoApi, encryptedData, {
+      const res = await axios.post(API.accessToken, encryptedData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       const link = res?.data?.result?.url;
-      setLoading(false)
+      setLoading(false);
       console.log(link);
       if (link) {
-
         setUrl(link);
       }
     };
@@ -58,7 +56,7 @@ const [loading,setLoading] = useState(false)
           </div>
 
           <div className="center-main-container list-page slot-page">
-            {loading && <IFrameLoader/>}
+            {loading && <IFrameLoader />}
             <iframe
               allow="fullscreen"
               src={url}

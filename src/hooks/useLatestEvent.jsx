@@ -2,11 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import UseTokenGenerator from "./UseTokenGenerator";
 import UseEncryptData from "./UseEncryptData";
-import { config } from "../utils/config";
+import { API } from "../utils";
+
 
 const useLatestEvent = () => {
   const token = localStorage.getItem("token");
-  const latestEventAPi = config?.result?.endpoint?.latestEvents;
   const { data: latestEvents } = useQuery({
     queryKey: ["latestEvent"],
     queryFn: async () => {
@@ -17,7 +17,7 @@ const useLatestEvent = () => {
       };
       const encryptedData = UseEncryptData(payload);
 
-      const res = await axios.post(latestEventAPi, encryptedData, {
+      const res = await axios.post(API.latestEvents, encryptedData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = res.data;

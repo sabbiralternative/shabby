@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
-import { config } from "../../utils/config";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
+import { API } from "../../utils";
 
 const MatchOddsSection = ({
   match_odds,
@@ -14,7 +14,6 @@ const MatchOddsSection = ({
 }) => {
 
   const token = localStorage.getItem("token");
-  const laderApi = config?.result?.endpoint?.ladder;
   const [previousData, setPreviousData] = useState(match_odds);
   const [changedPrices, setChangedPrices] = useState({});
   const { setPlaceBetValue } = UseState();
@@ -34,7 +33,7 @@ const MatchOddsSection = ({
     /* Encrypt post data */
     const encryptedData = UseEncryptData(generatedToken);
     setShowLadder(!showLadder);
-    fetch(`${laderApi}/${marketId}`, {
+    fetch(`${API.ladder}/${marketId}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

@@ -1,11 +1,9 @@
 import { useEffect } from "react";
-import { config } from "../../utils/config";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { API } from "../../utils";
 const OurVirtual = () => {
-  const virtualGamesApi = config?.result?.endpoint?.virtualCasino;
-
   const [virtualGames, setVirtualGames] = useState([]);
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -13,16 +11,16 @@ const OurVirtual = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState("ourVirtual");
 
-/* Get virtual games */
+  /* Get virtual games */
   useEffect(() => {
     const getVirtualGames = async () => {
-      const res = await axios.get(virtualGamesApi);
+      const res = await axios.get(API.virtualCasino);
       const data = res.data;
       setData(data);
       setVirtualGames(data);
     };
     getVirtualGames();
-  }, [virtualGamesApi]);
+  }, []);
 
   /* Get unique category */
   useEffect(() => {

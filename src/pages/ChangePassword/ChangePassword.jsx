@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { config } from "../../utils/config";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Notification from "../../components/Notification/Notification";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
+import { API } from "../../utils";
 const ChangePassword = () => {
-  const ChangePasswordApi = config?.result?.endpoint?.changePassword;
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -29,7 +28,7 @@ const ChangePassword = () => {
       passVerify: newPasswordConfirm,
       token: generatedToken,
     });
-    fetch(ChangePasswordApi, {
+    fetch(API.changePassword, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

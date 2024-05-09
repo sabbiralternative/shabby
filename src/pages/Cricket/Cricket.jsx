@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
-import { config } from "../../utils/config";
 import axios from "axios";
 import BetTable from "../../components/BetTable/BetTable";
+import { API } from "../../utils";
 
 const Cricket = () => {
   const [data, setData] = useState([]);
-  const gamesApi = config?.result?.endpoint?.group;
   const group = JSON.parse(localStorage.getItem("group"));
   const [loading, setLoading] = useState(true);
 /* Cricket event */
   useEffect(() => {
     const gamesData = async () => {
       if (group !== null) {
-        const apiUrl = `${gamesApi}/${group}`;
+        const apiUrl = `${API.group}/${group}`;
         const res = await axios.get(apiUrl);
         const data = res.data;
      
@@ -26,7 +25,7 @@ const Cricket = () => {
       const intervalId = setInterval(gamesData, 1000);
       return () => clearInterval(intervalId);
     }
-  }, [group, gamesApi]);
+  }, [group]);
 
   if (loading) {
     return;
