@@ -492,7 +492,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[0].label
+                                            buttonGameValue?.[0]?.label
                                           }
                                           name="buttons0label"
                                           type="text"
@@ -505,7 +505,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[0].value
+                                            buttonGameValue?.[0]?.value
                                           }
                                           name="buttons0value"
                                           type="text"
@@ -520,7 +520,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[1].label
+                                            buttonGameValue?.[1]?.label
                                           }
                                           name="buttons1label"
                                           type="text"
@@ -533,7 +533,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[1].value
+                                            buttonGameValue?.[1]?.value
                                           }
                                           name="buttons1value"
                                           type="text"
@@ -548,7 +548,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[2].label
+                                            buttonGameValue?.[2]?.label
                                           }
                                           name="buttons2label"
                                           type="text"
@@ -561,7 +561,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[2].value
+                                            buttonGameValue?.[2]?.value
                                           }
                                           name="buttons2value"
                                           type="text"
@@ -576,7 +576,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[3].label
+                                            buttonGameValue?.[3]?.label
                                           }
                                           name="buttons3label"
                                           type="text"
@@ -589,7 +589,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[3].value
+                                            buttonGameValue?.[3]?.value
                                           }
                                           name="buttons3value"
                                           type="text"
@@ -604,7 +604,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[4].label
+                                            buttonGameValue?.[4]?.label
                                           }
                                           name="buttons4label"
                                           type="text"
@@ -617,7 +617,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[4].value
+                                            buttonGameValue?.[4]?.value
                                           }
                                           name="buttons4value"
                                           type="text"
@@ -632,7 +632,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[5].label
+                                            buttonGameValue?.[5]?.label
                                           }
                                           name="buttons5label"
                                           type="text"
@@ -645,7 +645,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[5].value
+                                            buttonGameValue?.[5]?.value
                                           }
                                           name="buttons5value"
                                           type="text"
@@ -660,7 +660,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[6].label
+                                            buttonGameValue?.[6]?.label
                                           }
                                           name="buttons6label"
                                           type="text"
@@ -673,7 +673,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[6].value
+                                            buttonGameValue?.[6]?.value
                                           }
                                           name="buttons6value"
                                           type="text"
@@ -688,7 +688,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[7].label
+                                            buttonGameValue?.[7]?.label
                                           }
                                           name="buttons7label"
                                           type="text"
@@ -701,7 +701,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[7].value
+                                            buttonGameValue?.[7]?.value
                                           }
                                           name="buttons7value"
                                           type="text"
@@ -716,7 +716,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[8].label
+                                            buttonGameValue?.[8]?.label
                                           }
                                           name="buttons8label"
                                           type="text"
@@ -729,7 +729,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[8].value
+                                            buttonGameValue?.[8]?.value
                                           }
                                           name="buttons8value"
                                           type="text"
@@ -744,7 +744,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[9].label
+                                            buttonGameValue?.[9]?.label
                                           }
                                           name="buttons9label"
                                           type="text"
@@ -757,7 +757,7 @@ const Header = () => {
                                             required: true,
                                           })}
                                           defaultValue={
-                                            buttonGameValue[9].value
+                                            buttonGameValue?.[9]?.value
                                           }
                                           name="buttons9value"
                                           type="text"
