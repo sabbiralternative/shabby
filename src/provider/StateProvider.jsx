@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { getSetApis } from "../utils/config";
 import { API, settings } from "../utils";
-
+import notice from "../../notice.json";
 export const StateContext = createContext(null);
 const StateProvider = ({ children }) => {
   const [sports, setSports] = useState(4);
@@ -12,10 +12,10 @@ const StateProvider = ({ children }) => {
   const [successRegister, setSuccessRegister] = useState("");
   const [logo, setLogo] = useState("");
   const [noticeLoaded, setNoticeLoaded] = useState(false);
-
+  const baseUrl = notice?.result?.settings?.baseUrl;
   useEffect(() => {
-    getSetApis(setNoticeLoaded);
-  }, [noticeLoaded]);
+    getSetApis(setNoticeLoaded,baseUrl);
+  }, [noticeLoaded,baseUrl]);
 
   useEffect(() => {
     if (noticeLoaded) {

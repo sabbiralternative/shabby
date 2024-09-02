@@ -18,8 +18,8 @@ import DesktopPlaceBet from "./DesktopPlaceBet";
 import { API, settings } from "../../utils";
 
 const GameDetails = () => {
+  window.scrollTo(0,0)
   const { id, eventId } = useParams();
-
   const token = localStorage.getItem("token");
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
   const [data, setData] = useState([]);

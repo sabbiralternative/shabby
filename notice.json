@@ -16,7 +16,8 @@
       "withdraw": true,
       "disabledDevtool": false,
       "casinoCurrency": "AED",
-      "balanceApiLoop": false
+      "balanceApiLoop": false,
+      "baseUrl": "/shabby"
     },
 
     "endpoint": {
