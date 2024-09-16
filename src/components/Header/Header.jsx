@@ -133,25 +133,15 @@ const Header = () => {
 
   /* Edit button value that saved in locale storage after login */
   const onSubmit = ({
-    buttons0label,
     buttons0value,
-    buttons1label,
     buttons1value,
-    buttons2label,
     buttons2value,
-    buttons3label,
     buttons3value,
-    buttons4label,
     buttons4value,
-    buttons5label,
     buttons5value,
-    buttons6label,
     buttons6value,
-    buttons7label,
     buttons7value,
-    buttons8label,
     buttons8value,
-    buttons9label,
     buttons9value,
   }) => {
     fetch(API.buttonValue, {
@@ -162,43 +152,43 @@ const Header = () => {
       body: JSON.stringify({
         game: [
           {
-            label: buttons0label,
+            label: 100,
             value: buttons0value,
           },
           {
-            label: buttons1label,
+            label: 100,
             value: buttons1value,
           },
           {
-            label: buttons2label,
+            label: 100,
             value: buttons2value,
           },
           {
-            label: buttons3label,
+            label: 100,
             value: buttons3value,
           },
           {
-            label: buttons4label,
+            label: 100,
             value: buttons4value,
           },
           {
-            label: buttons5label,
+            label: 100,
             value: buttons5value,
           },
           {
-            label: buttons6label,
+            label: 100,
             value: buttons6value,
           },
           {
-            label: buttons7label,
+            label: 100,
             value: buttons7value,
           },
           {
-            label: buttons8label,
+            label: 100,
             value: buttons8value,
           },
           {
-            label: buttons9label,
+            label: 100,
             value: buttons9value,
           },
         ],
@@ -210,43 +200,43 @@ const Header = () => {
           localStorage.removeItem("buttonValue");
           const gameButtonsValues = [
             {
-              label: buttons0label,
+              label: 100,
               value: buttons0value,
             },
             {
-              label: buttons1label,
+              label: 100,
               value: buttons1value,
             },
             {
-              label: buttons2label,
+              label: 100,
               value: buttons2value,
             },
             {
-              label: buttons3label,
+              label: 100,
               value: buttons3value,
             },
             {
-              label: buttons4label,
+              label: 100,
               value: buttons4value,
             },
             {
-              label: buttons5label,
+              label: 100,
               value: buttons5value,
             },
             {
-              label: buttons6label,
+              label: 100,
               value: buttons6value,
             },
             {
-              label: buttons7label,
+              label: 100,
               value: buttons7value,
             },
             {
-              label: buttons8label,
+              label: 100,
               value: buttons8value,
             },
             {
-              label: buttons9label,
+              label: 100,
               value: buttons9value,
             },
           ];
@@ -473,10 +463,10 @@ const Header = () => {
                                   className="fade tab-pane active show"
                                 >
                                   <form onSubmit={handleSubmit(onSubmit)}>
-                                    <div className="row row10">
+                                    {/* <div className="row row10">
                                       <div className="mb-1 col-6">
                                         <label className="form-label">
-                                          <b>Price Label:</b>
+                                          <b>Price Value:</b>
                                         </label>
                                       </div>
                                       <div className="mb-1 col-6">
@@ -484,21 +474,9 @@ const Header = () => {
                                           <b>Price Value:</b>
                                         </label>
                                       </div>
-                                    </div>
+                                    </div> */}
                                     <div className="row row10">
-                                      <div className="mb-3 col-6 position-relative">
-                                        <input
-                                          {...register("buttons0label", {
-                                            required: true,
-                                          })}
-                                          defaultValue={
-                                            buttonGameValue?.[0]?.label
-                                          }
-                                          name="buttons0label"
-                                          type="text"
-                                          className="form-control"
-                                        />
-                                      </div>
+                               
                                       <div className="mb-3 col-6 position-relative">
                                         <input
                                           {...register("buttons0value", {
@@ -508,21 +486,6 @@ const Header = () => {
                                             buttonGameValue?.[0]?.value
                                           }
                                           name="buttons0value"
-                                          type="text"
-                                          className="form-control"
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="row row10">
-                                      <div className="mb-3 col-6 position-relative">
-                                        <input
-                                          {...register("buttons1label", {
-                                            required: true,
-                                          })}
-                                          defaultValue={
-                                            buttonGameValue?.[1]?.label
-                                          }
-                                          name="buttons1label"
                                           type="text"
                                           className="form-control"
                                         />
@@ -542,20 +505,7 @@ const Header = () => {
                                       </div>
                                     </div>
                                     <div className="row row10">
-                                      <div className="mb-3 col-6 position-relative">
-                                        <input
-                                          {...register("buttons2label", {
-                                            required: true,
-                                          })}
-                                          defaultValue={
-                                            buttonGameValue?.[2]?.label
-                                          }
-                                          name="buttons2label"
-                                          type="text"
-                                          className="form-control"
-                                        />
-                                      </div>
-                                      <div className="mb-3 col-6 position-relative">
+                                    <div className="mb-3 col-6 position-relative">
                                         <input
                                           {...register("buttons2value", {
                                             required: true,
@@ -564,21 +514,6 @@ const Header = () => {
                                             buttonGameValue?.[2]?.value
                                           }
                                           name="buttons2value"
-                                          type="text"
-                                          className="form-control"
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="row row10">
-                                      <div className="mb-3 col-6 position-relative">
-                                        <input
-                                          {...register("buttons3label", {
-                                            required: true,
-                                          })}
-                                          defaultValue={
-                                            buttonGameValue?.[3]?.label
-                                          }
-                                          name="buttons3label"
                                           type="text"
                                           className="form-control"
                                         />
@@ -597,20 +532,9 @@ const Header = () => {
                                         />
                                       </div>
                                     </div>
+                             
                                     <div className="row row10">
-                                      <div className="mb-3 col-6 position-relative">
-                                        <input
-                                          {...register("buttons4label", {
-                                            required: true,
-                                          })}
-                                          defaultValue={
-                                            buttonGameValue?.[4]?.label
-                                          }
-                                          name="buttons4label"
-                                          type="text"
-                                          className="form-control"
-                                        />
-                                      </div>
+                                 
                                       <div className="mb-3 col-6 position-relative">
                                         <input
                                           {...register("buttons4value", {
@@ -620,21 +544,6 @@ const Header = () => {
                                             buttonGameValue?.[4]?.value
                                           }
                                           name="buttons4value"
-                                          type="text"
-                                          className="form-control"
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="row row10">
-                                      <div className="mb-3 col-6 position-relative">
-                                        <input
-                                          {...register("buttons5label", {
-                                            required: true,
-                                          })}
-                                          defaultValue={
-                                            buttonGameValue?.[5]?.label
-                                          }
-                                          name="buttons5label"
                                           type="text"
                                           className="form-control"
                                         />
@@ -653,20 +562,9 @@ const Header = () => {
                                         />
                                       </div>
                                     </div>
+                                
                                     <div className="row row10">
-                                      <div className="mb-3 col-6 position-relative">
-                                        <input
-                                          {...register("buttons6label", {
-                                            required: true,
-                                          })}
-                                          defaultValue={
-                                            buttonGameValue?.[6]?.label
-                                          }
-                                          name="buttons6label"
-                                          type="text"
-                                          className="form-control"
-                                        />
-                                      </div>
+                            
                                       <div className="mb-3 col-6 position-relative">
                                         <input
                                           {...register("buttons6value", {
@@ -676,21 +574,6 @@ const Header = () => {
                                             buttonGameValue?.[6]?.value
                                           }
                                           name="buttons6value"
-                                          type="text"
-                                          className="form-control"
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="row row10">
-                                      <div className="mb-3 col-6 position-relative">
-                                        <input
-                                          {...register("buttons7label", {
-                                            required: true,
-                                          })}
-                                          defaultValue={
-                                            buttonGameValue?.[7]?.label
-                                          }
-                                          name="buttons7label"
                                           type="text"
                                           className="form-control"
                                         />
@@ -709,20 +592,9 @@ const Header = () => {
                                         />
                                       </div>
                                     </div>
+                              
                                     <div className="row row10">
-                                      <div className="mb-3 col-6 position-relative">
-                                        <input
-                                          {...register("buttons8label", {
-                                            required: true,
-                                          })}
-                                          defaultValue={
-                                            buttonGameValue?.[8]?.label
-                                          }
-                                          name="buttons8label"
-                                          type="text"
-                                          className="form-control"
-                                        />
-                                      </div>
+                             
                                       <div className="mb-3 col-6 position-relative">
                                         <input
                                           {...register("buttons8value", {
@@ -732,21 +604,6 @@ const Header = () => {
                                             buttonGameValue?.[8]?.value
                                           }
                                           name="buttons8value"
-                                          type="text"
-                                          className="form-control"
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="row row10">
-                                      <div className="mb-3 col-6 position-relative">
-                                        <input
-                                          {...register("buttons9label", {
-                                            required: true,
-                                          })}
-                                          defaultValue={
-                                            buttonGameValue?.[9]?.label
-                                          }
-                                          name="buttons9label"
                                           type="text"
                                           className="form-control"
                                         />
@@ -765,6 +622,7 @@ const Header = () => {
                                         />
                                       </div>
                                     </div>
+                               
                                     <div className="row row10">
                                       <div className="mb-3 col-md-6 ">
                                         <button
