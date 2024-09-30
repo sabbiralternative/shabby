@@ -6,7 +6,7 @@
   "result": {
     "settings": {
       "siteTitle": "WINBUZZ365",
-      "siteUrl": "winbuzz365.co",
+      "siteUrl": "a23money.com",
       "interval": "600",
       "casino": "aura",
       "registration": true,
@@ -17,7 +17,8 @@
       "disabledDevtool": false,
       "casinoCurrency": "AED",
       "balanceApiLoop": false,
-      "baseUrl": "/shabby"
+      "baseUrl": "/shabby",
+      "betFairCashOut":true
     },
 
     "endpoint": {

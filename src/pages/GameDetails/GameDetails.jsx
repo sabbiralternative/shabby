@@ -18,7 +18,6 @@ import DesktopPlaceBet from "./DesktopPlaceBet";
 import { API, settings } from "../../utils";
 
 const GameDetails = () => {
-  window.scrollTo(0,0)
   const { id, eventId } = useParams();
   const token = localStorage.getItem("token");
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
@@ -60,6 +59,9 @@ const GameDetails = () => {
   /* Set price */
   useEffect(() => {
     setPrice(placeBetValue?.price);
+    setTotalSize(
+      placeBetValue?.totalSize > 0 ? placeBetValue?.totalSize.toFixed(2) : null
+    );
   }, [placeBetValue]);
 
   /* Profit */
@@ -451,7 +453,8 @@ const GameDetails = () => {
   /* Format number */
   const formatNumber = (value) => {
     const hasDecimal = value % 1 !== 0;
-    return hasDecimal ? value.toFixed(2) : value;
+    // value?.toFixed(2)
+    return hasDecimal ? parseFloat(value?.toFixed(2)) : value;
   };
 
   /* Position sticky for bet section */

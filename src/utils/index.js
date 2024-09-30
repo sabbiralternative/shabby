@@ -49,4 +49,5 @@ export const settings = {
   disabledDevtool: "",
   casinoCurrency: "",
   interval: "",
+  betFairCashOut:""
 };

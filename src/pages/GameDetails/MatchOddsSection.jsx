@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
-import { API } from "../../utils";
+import { API, settings } from "../../utils";
+import { useNavigate, useParams } from "react-router-dom";
+import handleCashoutPlaceBet from "../../utils/handleCashoutPlaceBet";
 
 const MatchOddsSection = ({
   match_odds,
@@ -12,7 +14,9 @@ const MatchOddsSection = ({
   booksValue,
   totalSize,
 }) => {
-
+  const navigate = useNavigate();
+  const { eventId } = useParams();
+  const [teamProfit, setTeamProfit] = useState([]);
   const token = localStorage.getItem("token");
   const [previousData, setPreviousData] = useState(match_odds);
   const [changedPrices, setChangedPrices] = useState({});
@@ -26,7 +30,7 @@ const MatchOddsSection = ({
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
- /* Ladder api */
+  /* Ladder api */
   const handleLader = (marketId) => {
     /* Random token */
     const generatedToken = UseTokenGenerator();
@@ -81,6 +85,102 @@ const MatchOddsSection = ({
     });
     setPreviousData(match_odds);
   }, [match_odds, previousData]);
+
+  const computeExposureAndStake = (
+    exposureA,
+    exposureB,
+    runner1,
+    runner2,
+    gameId
+  ) => {
+    let runner, largerExposure, layValue, oppositeLayValue, lowerExposure;
+
+    const pnlArr = [exposureA, exposureB];
+    const isOnePositiveExposure = onlyOnePositive(pnlArr);
+
+    if (exposureA > exposureB) {
+      // Team A has a larger exposure.
+      runner = runner1;
+      largerExposure = exposureA;
+      layValue = runner1?.lay?.[0]?.price;
+      oppositeLayValue = runner2?.lay?.[0]?.price;
+      lowerExposure = exposureB;
+    } else {
+      // Team B has a larger exposure.
+      runner = runner2;
+      largerExposure = exposureB;
+      layValue = runner2?.lay?.[0]?.price;
+      oppositeLayValue = runner1?.lay?.[0]?.price;
+      lowerExposure = exposureA;
+    }
+
+    // Compute the absolute value of the lower exposure.
+    let absLowerExposure = Math.abs(lowerExposure);
+
+    // Compute the liability for the team with the initially larger exposure.
+    let liability = absLowerExposure * (layValue - 1);
+
+    // Compute the new exposure of the team with the initially larger exposure.
+    let newExposure = largerExposure - liability;
+
+    // Compute the profit using the new exposure and the lay odds of the opposite team.
+    let profit = newExposure / layValue;
+
+    // Calculate the new stake value for the opposite team by adding profit to the absolute value of its exposure.
+    let newStakeValue = absLowerExposure + profit;
+
+    // Return the results.
+    return {
+      runner,
+      newExposure,
+      profit,
+      newStakeValue,
+      oppositeLayValue,
+      gameId,
+      isOnePositiveExposure,
+    };
+  };
+  function onlyOnePositive(arr) {
+    let positiveCount = arr?.filter((num) => num > 0).length;
+    return positiveCount === 1;
+  }
+  useEffect(() => {
+    let results = [];
+    if (
+      match_odds?.length > 0 &&
+      exposer?.pnlBySelection &&
+      Object.keys(exposer?.pnlBySelection)?.length > 0
+    ) {
+      match_odds.forEach((game) => {
+        const runners = game?.runners || [];
+        if (runners?.length === 2) {
+          const runner1 = runners[0];
+          const runner2 = runners[1];
+          const pnl1 = pnlBySelection?.find(
+            (pnl) => pnl?.RunnerId === runner1?.id
+          )?.pnl;
+          const pnl2 = pnlBySelection?.find(
+            (pnl) => pnl?.RunnerId === runner2?.id
+          )?.pnl;
+
+          if (pnl1 && pnl2 && runner1 && runner2) {
+            const result = computeExposureAndStake(
+              pnl1,
+              pnl2,
+              runner1,
+              runner2,
+              game?.id
+            );
+            results.push(result);
+          }
+        }
+      });
+      setTeamProfit(results);
+    } else {
+      setTeamProfit([]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [match_odds, eventId]);
 
   return (
     <>
@@ -144,10 +244,82 @@ const MatchOddsSection = ({
       )}
 
       {match_odds?.map((item) => {
+        const teamProfitForGame = teamProfit?.find(
+          (profit) =>
+            profit?.gameId === item?.id && profit?.isOnePositiveExposure
+        );
+
         return (
           <div key={item.id} className={`game-market market-4`}>
             <div className="market-title">
-              <span>{item?.name.toUpperCase()}</span>
+              <span style={{ display: "flex", alignItems: "center" }}>
+                {item?.name.toUpperCase()}
+              </span>
+              {settings.betFairCashOut && item?.runners?.length !== 3 && (
+                <button
+                  onClick={() =>
+                    handleCashoutPlaceBet(
+                      item,
+                      "lay",
+                      setTotalSize,
+                      setShowBets,
+                      setPlaceBetValue,
+                      pnlBySelection,
+                      token,
+                      navigate,
+                      teamProfitForGame
+                    )
+                  }
+                  style={{
+                    cursor: `${!teamProfitForGame ? "not-allowed" : "pointer"}`,
+                    opacity: `${!teamProfitForGame ? "0.6" : "1"}`,
+                    height: "30px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    border: "none",
+                    minWidth: "130px",
+                  }}
+                  disabled={!teamProfitForGame}
+                  type="button"
+                  className={` ${
+                    teamProfitForGame?.profit > 0
+                      ? "btn-success"
+                      : " btn-danger"
+                  }`}
+                >
+                  <div>Cashout</div>
+                  {teamProfitForGame?.profit && (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "start",
+                        justifyContent: "flex-start",
+                        marginLeft: "2px",
+                      }}
+                    >
+                      <span
+                        style={{
+                          marginLeft: "2px",
+                        }}
+                      >
+                        :
+                      </span>
+                      <span
+                        style={{
+                          marginLeft: "2px",
+                        }}
+                      >
+                        ₹{" "}
+                      </span>
+                      <span style={{ overflow: "visible" }}>
+                        {" "}
+                        {teamProfitForGame?.profit?.toFixed(2)}
+                      </span>
+                    </div>
+                  )}
+                </button>
+              )}
             </div>
 
             <div className="market-header">
@@ -208,7 +380,6 @@ const MatchOddsSection = ({
                       <div className="market-nation-book">
                         {pnl &&
                           pnl?.map(({ pnl, MarketId }, i) => {
-                        
                             return (
                               <span
                                 onClick={() => handleLader(MarketId)}

@@ -57,6 +57,7 @@ export const getSetApis = (setNoticeLoaded,baseUrl) => {
         settings.disabledDevtool = setting?.disabledDevtool;
         settings.casinoCurrency = setting?.casinoCurrency;
         settings.interval = setting?.interval;
+        settings.betFairCashOut = setting?.betFairCashOut;
         setNoticeLoaded(true);
       }
     })

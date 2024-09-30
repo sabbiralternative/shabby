@@ -30,7 +30,8 @@ const PlaceBets = ({
 
   /* Set price in price state from placeBet value*/
   useEffect(() => {
-    setPrice(placeBetValue?.price);
+    setPrice(placeBetValue?.price)
+    setTotalSize(placeBetValue?.totalSize)
   }, [placeBetValue]);
 
   /* Profit */
@@ -43,6 +44,7 @@ const PlaceBets = ({
     ) {
       const multiply = price * totalSize;
       setProfit(multiply - totalSize);
+
     }
   }, [price, totalSize, placeBetValue?.back, placeBetValue?.btype]);
 
