@@ -10,7 +10,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
   const token = localStorage.getItem("token");
-  const { setPlaceBetValue } = UseState();
+  const { setPlaceBetValue, placeBetValue } = UseState();
 
   /* Exposer */
   let pnlBySelection;
@@ -18,7 +18,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
-/* Ladder api */
+  /* Ladder api */
   const handleLadder = (marketId) => {
     const generatedToken = UseTokenGenerator();
     const encryptedData = UseEncryptData(generatedToken);
@@ -43,6 +43,14 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
     if (overByOver.length > 0) {
       overByOver.forEach((item, index) => {
         item.runners.forEach((runner, runnerIndex) => {
+          if (placeBetValue?.marketId) {
+            if (placeBetValue?.marketId === item?.id) {
+              if (item?.status !== "OPEN") {
+                setShowBets(false);
+                setPlaceBetValue({});
+              }
+            }
+          }
           const previousRunner = previousData[index]?.runners[runnerIndex];
           runner.back.forEach((backItem, backIndex) => {
             const previousBackItem = previousRunner?.back[backIndex];
@@ -133,177 +141,189 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
         </>
       )}
 
-     {overByOver?.length > 0 && (
-       <div className="game-market market-6">
-       <div className="market-title">
-         <span>{overByOver[0]?.tabGroupName}</span>
-       </div>
-       <div className="row row10">
-         <div className="col-md-6">
-           <div className="market-header">
-             <div className="market-nation-detail"></div>
-             <div className="market-odd-box lay">
-               <b>No</b>
-             </div>
-             <div className="market-odd-box back">
-               <b>Yes</b>
-             </div>
-             <div className="fancy-min-max-box"></div>
-           </div>
-         </div>
-         <div className="col-md-6 d-none d-xl-block">
-           <div className="market-header">
-             <div className="market-nation-detail"></div>
-             <div className="market-odd-box lay">
-               <b>No</b>
-             </div>
-             <div className="market-odd-box back">
-               <b>Yes</b>
-             </div>
-             <div className="fancy-min-max-box"></div>
-           </div>
-         </div>
-       </div>
-       <div className="market-body" data-title="OPEN">
-         <div className="row row10">
-           {overByOver?.map((over) => {
-             const pnl = pnlBySelection?.filter(
-               (pnl) => pnl?.MarketId === over?.id
-             );
-             return (
-               <div key={over.id} className="col-md-6">
-                 <div
-                   className={`${
-                     over?.status === "OPEN"
-                       ? "fancy-market "
-                       : "fancy-market suspended-row"
-                   }`}
-                   data-title={`${
-                     over?.status === "OPEN" ? "ACTIVATE" : "SUSPENDED"
-                   }`}
-                 >
-                   <div className="market-row">
-                     <div className="market-nation-detail">
-                       <span className="market-nation-name">{over?.name}</span>
-                       {pnl?.map(({ pnl, MarketId }, i) => {
-                         return (
-                           <span
-                             onClick={() => handleLadder(MarketId)}
-                             key={i}
-                             className={`market-book float-end  ${
-                               pnl > 0 ? "text-success" : "text-danger"
-                             }`}
-                             style={{
-                               cursor: "pointer",
-                             }}
-                           >
-                             {pnl}
-                           </span>
-                         );
-                       })}
-                     </div>
+      {overByOver?.length > 0 && (
+        <div className="game-market market-6">
+          <div className="market-title">
+            <span>{overByOver[0]?.tabGroupName}</span>
+          </div>
+          <div className="row row10">
+            <div className="col-md-6">
+              <div className="market-header">
+                <div className="market-nation-detail"></div>
+                <div className="market-odd-box lay">
+                  <b>No</b>
+                </div>
+                <div className="market-odd-box back">
+                  <b>Yes</b>
+                </div>
+                <div className="fancy-min-max-box"></div>
+              </div>
+            </div>
+            <div className="col-md-6 d-none d-xl-block">
+              <div className="market-header">
+                <div className="market-nation-detail"></div>
+                <div className="market-odd-box lay">
+                  <b>No</b>
+                </div>
+                <div className="market-odd-box back">
+                  <b>Yes</b>
+                </div>
+                <div className="fancy-min-max-box"></div>
+              </div>
+            </div>
+          </div>
+          <div className="market-body" data-title="OPEN">
+            <div className="row row10">
+              {overByOver?.map((over) => {
+                const pnl = pnlBySelection?.filter(
+                  (pnl) => pnl?.MarketId === over?.id
+                );
+                return (
+                  <div key={over.id} className="col-md-6">
+                    <div
+                      className={`${
+                        over?.status === "OPEN"
+                          ? "fancy-market "
+                          : "fancy-market suspended-row"
+                      }`}
+                      data-title={`${
+                        over?.status === "OPEN" ? "ACTIVATE" : "SUSPENDED"
+                      }`}
+                    >
+                      <div className="market-row">
+                        <div className="market-nation-detail">
+                          <span className="market-nation-name">
+                            {over?.name}
+                          </span>
+                          {pnl?.map(({ pnl, MarketId }, i) => {
+                            return (
+                              <span
+                                onClick={() => handleLadder(MarketId)}
+                                key={i}
+                                className={`market-book float-end  ${
+                                  pnl > 0 ? "text-success" : "text-danger"
+                                }`}
+                                style={{
+                                  cursor: "pointer",
+                                }}
+                              >
+                                {pnl}
+                              </span>
+                            );
+                          })}
+                        </div>
 
-                     {over?.runners.map((runner) =>
-                       runner.lay.map((lay, i) => {
-                         const handlePlaceLayBet = () => {
-                           setTotalSize("");
-                           setShowBets(true);
-                           setPlaceBetValue({});
-                           setPlaceBetValue({
-                             price: lay?.line,
-                             side: 1,
-                             selectionId: runner?.id,
-                             btype: over?.btype,
-                             eventTypeId: over?.eventTypeId,
-                             betDelay: over?.betDelay,
-                             maxLiabilityPerBet: over?.maxLiabilityPerBet,
-                             minLiabilityPerBet: over?.minLiabilityPerBet,
-                             marketId: over?.id,
-                             lay: true,
-                             selectedBetName:runner?.name,
-                             isWeak: over?.isWeak,
-                             maxLiabilityPerMarket:over?.maxLiabilityPerMarket,
-                             isBettable:over?.isBettable
-                           });
-                         };
-                         return (
-                           <div
-                             onClick={handlePlaceLayBet}
-                             key={i}
-                             className={`market-odd-box lay ${
-                               changedPrices[`lay-${runner.id}-${i}`]
-                                 ? "blink"
-                                 : ""
-                             }`}
-                           >
-                             <span className="market-odd">{lay.line}</span>
-                             <span className="market-volume">{lay.price}</span>
-                           </div>
-                         );
-                       })
-                     )}
+                        {over?.runners.map((runner) =>
+                          runner.lay.map((lay, i) => {
+                            const handlePlaceLayBet = () => {
+                              if (over?.status !== "OPEN") {
+                                return;
+                              }
+                              setTotalSize("");
+                              setShowBets(true);
+                              setPlaceBetValue({});
+                              setPlaceBetValue({
+                                price: lay?.line,
+                                side: 1,
+                                selectionId: runner?.id,
+                                btype: over?.btype,
+                                eventTypeId: over?.eventTypeId,
+                                betDelay: over?.betDelay,
+                                maxLiabilityPerBet: over?.maxLiabilityPerBet,
+                                minLiabilityPerBet: over?.minLiabilityPerBet,
+                                marketId: over?.id,
+                                lay: true,
+                                selectedBetName: runner?.name,
+                                isWeak: over?.isWeak,
+                                maxLiabilityPerMarket:
+                                  over?.maxLiabilityPerMarket,
+                                isBettable: over?.isBettable,
+                              });
+                            };
+                            return (
+                              <div
+                                onClick={handlePlaceLayBet}
+                                key={i}
+                                className={`market-odd-box lay ${
+                                  changedPrices[`lay-${runner.id}-${i}`]
+                                    ? "blink"
+                                    : ""
+                                }`}
+                              >
+                                <span className="market-odd">{lay.line}</span>
+                                <span className="market-volume">
+                                  {lay.price}
+                                </span>
+                              </div>
+                            );
+                          })
+                        )}
 
-                     {over?.runners?.map((runner) =>
-                       runner.back.map((back, i) => {
-                         const handlePlaceBackBets = () => {
-                           setTotalSize("");
-                           setShowBets(true);
-                           setPlaceBetValue({});
-                           setPlaceBetValue({
-                             price: back?.line,
-                             side: 0,
-                             selectionId: runner?.id,
-                             btype: over?.btype,
-                             eventTypeId: over?.eventTypeId,
-                             betDelay: over?.betDelay,
-                             marketId: over?.id,
-                             maxLiabilityPerBet: over?.maxLiabilityPerBet,
-                             minLiabilityPerBet: over?.minLiabilityPerBet,
-                             back: true,
-                             selectedBetName:runner?.name,
-                             isWeak: over?.isWeak,
-                             isBettable:over?.isBettable,
-                             maxLiabilityPerMarket:over?.maxLiabilityPerMarket,
-                           });
-                         };
-                         return (
-                           <div
-                             onClick={handlePlaceBackBets}
-                             key={i}
-                             className={`market-odd-box back ${
-                               changedPrices[`back-${runner.id}-${i}`]
-                                 ? "blink"
-                                 : ""
-                             }`}
-                           >
-                             <span className="market-odd">{back.line}</span>
-                             <span className="market-volume">
-                               {back.price}
-                             </span>
-                           </div>
-                         );
-                       })
-                     )}
+                        {over?.runners?.map((runner) =>
+                          runner.back.map((back, i) => {
+                            const handlePlaceBackBets = () => {
+                              if (over?.status !== "OPEN") {
+                                return;
+                              }
+                              setTotalSize("");
+                              setShowBets(true);
+                              setPlaceBetValue({});
+                              setPlaceBetValue({
+                                price: back?.line,
+                                side: 0,
+                                selectionId: runner?.id,
+                                btype: over?.btype,
+                                eventTypeId: over?.eventTypeId,
+                                betDelay: over?.betDelay,
+                                marketId: over?.id,
+                                maxLiabilityPerBet: over?.maxLiabilityPerBet,
+                                minLiabilityPerBet: over?.minLiabilityPerBet,
+                                back: true,
+                                selectedBetName: runner?.name,
+                                isWeak: over?.isWeak,
+                                isBettable: over?.isBettable,
+                                maxLiabilityPerMarket:
+                                  over?.maxLiabilityPerMarket,
+                              });
+                            };
+                            return (
+                              <div
+                                onClick={handlePlaceBackBets}
+                                key={i}
+                                className={`market-odd-box back ${
+                                  changedPrices[`back-${runner.id}-${i}`]
+                                    ? "blink"
+                                    : ""
+                                }`}
+                              >
+                                <span className="market-odd">{back.line}</span>
+                                <span className="market-volume">
+                                  {back.price}
+                                </span>
+                              </div>
+                            );
+                          })
+                        )}
 
-                     <div className="fancy-min-max-box">
-                       <div className="fancy-min-max">
-                         <span className="w-100 d-block">
-                           Min: {over?.minLiabilityPerBet}
-                         </span>
-                         <span className="w-100 d-block">
-                           Max: {over?.maxLiabilityPerBet}
-                         </span>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-               </div>
-             );
-           })}
-         </div>
-       </div>
-     </div>
-     )}
+                        <div className="fancy-min-max-box">
+                          <div className="fancy-min-max">
+                            <span className="w-100 d-block">
+                              Min: {over?.minLiabilityPerBet}
+                            </span>
+                            <span className="w-100 d-block">
+                              Max: {over?.maxLiabilityPerBet}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

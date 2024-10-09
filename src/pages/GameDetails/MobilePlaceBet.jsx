@@ -21,7 +21,6 @@ const MobilePlaceBet = ({
   oddStakeLay2,
   selectionId,
 }) => {
- 
   /* Adding red or green color on odd */
   const updateElementClass = (elementId) => {
     const element = document.getElementById(elementId);
@@ -44,7 +43,7 @@ const MobilePlaceBet = ({
 
   return (
     <>
-      {showBets && window.innerWidth < 1200 && (
+      {showBets && window.innerWidth < 1200 && placeBetValue && (
         <>
           <div className="fade modal-backdrop show"></div>
           <div
@@ -199,31 +198,37 @@ const MobilePlaceBet = ({
 
                           <div className="col-4 text-end">
                             <span id="oddOne">
-                              { placeBetValue?.back && oddStake !== 0 &&
+                              {placeBetValue?.back &&
+                                oddStake !== 0 &&
                                 totalSize?.length > 0 &&
                                 selectionId.includes(".1") &&
                                 oddStake}
 
-                              { placeBetValue?.back && oddStake !== 0 &&
+                              {placeBetValue?.back &&
+                                oddStake !== 0 &&
                                 totalSize?.length > 0 &&
                                 selectionId.includes(".2") &&
                                 oddStakeLay2}
 
-                              {  placeBetValue?.back && oddStake !== 0 &&
+                              {placeBetValue?.back &&
+                                oddStake !== 0 &&
                                 totalSize?.length > 0 &&
                                 selectionId.includes(".3") &&
                                 oddStakeLay1}
-                              { placeBetValue?.lay && oddStake !== 0 &&
+                              {placeBetValue?.lay &&
+                                oddStake !== 0 &&
                                 totalSize?.length > 0 &&
                                 selectionId.includes(".1") &&
                                 oddStake}
 
-                              { placeBetValue?.lay && oddStake !== 0 &&
+                              {placeBetValue?.lay &&
+                                oddStake !== 0 &&
                                 totalSize?.length > 0 &&
                                 selectionId.includes(".2") &&
                                 oddStakeLay2}
 
-                              {  placeBetValue?.lay && oddStake !== 0 &&
+                              {placeBetValue?.lay &&
+                                oddStake !== 0 &&
                                 totalSize?.length > 0 &&
                                 selectionId.includes(".3") &&
                                 oddStakeLay1}
@@ -285,7 +290,7 @@ const MobilePlaceBet = ({
                                 totalSize?.length > 0 &&
                                 selectionId.includes(".2") &&
                                 oddStake}
-                                
+
                               {placeBetValue?.lay &&
                                 oddStake !== 0 &&
                                 totalSize?.length > 0 &&

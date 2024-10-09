@@ -13,12 +13,11 @@ const BookmarkerTwoSection = ({
 }) => {
   const [previousData, setPreviousData] = useState(bookmarker2);
   const [changedPrices, setChangedPrices] = useState({});
-  const { setPlaceBetValue } = UseState();
+  const { setPlaceBetValue, placeBetValue } = UseState();
 
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
   const token = localStorage.getItem("token");
-
 
   let pnlBySelection;
   if (exposer?.pnlBySelection) {
@@ -37,7 +36,7 @@ const BookmarkerTwoSection = ({
       }
     });
   });
-/* Ladder api */
+  /* Ladder api */
   const handleLader = (marketId) => {
     /* Random token */
     const generatedToken = UseTokenGenerator();
@@ -65,6 +64,14 @@ const BookmarkerTwoSection = ({
     if (bookmarker2.length > 0) {
       bookmarker2.forEach((item, index) => {
         item.runners.forEach((runner, runnerIndex) => {
+          if (placeBetValue?.selectionId) {
+            if (placeBetValue?.selectionId === runner?.id) {
+              if (runner?.status !== "OPEN") {
+                setShowBets(false);
+                setPlaceBetValue({});
+              }
+            }
+          }
           const previousRunner = previousData[index]?.runners[runnerIndex];
           runner.back.forEach((backItem, backIndex) => {
             const previousBackItem = previousRunner?.back[backIndex];
@@ -235,6 +242,12 @@ const BookmarkerTwoSection = ({
                       .reverse()
                       .map((back, i) => {
                         const handlePlaceBackBet = () => {
+                          if (
+                            bookmaker?.status !== "OPEN" ||
+                            runner?.status !== "OPEN"
+                          ) {
+                            return;
+                          }
                           setTotalSize("");
                           setShowBets(true);
                           setPlaceBetValue({});
@@ -247,15 +260,16 @@ const BookmarkerTwoSection = ({
                             betDelay: bookmaker?.betDelay,
                             marketId: bookmaker?.id,
                             pnl: updatedPnl,
-                            selectedBetName:runner?.name,
+                            selectedBetName: runner?.name,
                             back: true,
                             name: bookmaker.runners.map(
                               (runner) => runner.name
                             ),
                             isWeak: bookmaker?.isWeak,
-                            maxLiabilityPerMarket:bookmaker?.maxLiabilityPerMarket,
-                            isBettable:bookmaker?.isBettable,
-                            maxLiabilityPerBet:bookmaker?.maxLiabilityPerBet
+                            maxLiabilityPerMarket:
+                              bookmaker?.maxLiabilityPerMarket,
+                            isBettable: bookmaker?.isBettable,
+                            maxLiabilityPerBet: bookmaker?.maxLiabilityPerBet,
                           });
                         };
                         return (
@@ -299,6 +313,12 @@ const BookmarkerTwoSection = ({
 
                     {runner?.lay?.map((lay, i) => {
                       const handlePlaceLayBets = () => {
+                        if (
+                          bookmaker?.status !== "OPEN" ||
+                          runner?.status !== "OPEN"
+                        ) {
+                          return;
+                        }
                         setTotalSize("");
                         setShowBets(true);
                         setPlaceBetValue({});
@@ -311,15 +331,14 @@ const BookmarkerTwoSection = ({
                           betDelay: bookmaker?.betDelay,
                           marketId: bookmaker?.id,
                           pnl: updatedPnl,
-                          selectedBetName:runner?.name,
+                          selectedBetName: runner?.name,
                           lay: true,
-                          name: bookmaker.runners.map(
-                            (runner) => runner.name
-                          ),
+                          name: bookmaker.runners.map((runner) => runner.name),
                           isWeak: bookmaker?.isWeak,
-                          maxLiabilityPerMarket:bookmaker?.maxLiabilityPerMarket,
-                          isBettable:bookmaker?.isBettable,
-                          maxLiabilityPerBet:bookmaker?.maxLiabilityPerBet
+                          maxLiabilityPerMarket:
+                            bookmaker?.maxLiabilityPerMarket,
+                          isBettable: bookmaker?.isBettable,
+                          maxLiabilityPerBet: bookmaker?.maxLiabilityPerBet,
                         });
                       };
                       return (

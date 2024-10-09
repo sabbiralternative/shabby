@@ -18,7 +18,7 @@
       "casinoCurrency": "AED",
       "balanceApiLoop": false,
       "baseUrl": "/shabby",
-      "betFairCashOut":true
+      "betFairCashOut": true
     },
 
     "endpoint": {

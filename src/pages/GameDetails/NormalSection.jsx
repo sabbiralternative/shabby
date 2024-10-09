@@ -8,7 +8,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
   const token = localStorage.getItem("token");
   const [previousData, setPreviousData] = useState(normal);
   const [changedPrices, setChangedPrices] = useState({});
-  const { setPlaceBetValue } = UseState();
+  const { setPlaceBetValue, placeBetValue } = UseState();
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
   /* Exposer */
@@ -17,7 +17,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
     const obj = exposer?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
-/* Ladder api */
+  /* Ladder api */
   const handleLadder = (marketId) => {
     /* Random token */
     const generatedToken = UseTokenGenerator();
@@ -38,12 +38,20 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
         }
       });
   };
-    /* Blink color */
+  /* Blink color */
   useEffect(() => {
     const newChangedPrices = {};
     if (normal?.length > 0) {
       normal?.forEach((item, index) => {
         item?.runners?.forEach((runner, runnerIndex) => {
+          if (placeBetValue?.marketId) {
+            if (placeBetValue?.marketId === item?.id) {
+              if (item?.status !== "OPEN") {
+                setShowBets(false);
+                setPlaceBetValue({});
+              }
+            }
+          }
           const previousRunner = previousData[index]?.runners[runnerIndex];
           runner?.back?.forEach((backItem, backIndex) => {
             const previousBackItem = previousRunner?.back[backIndex];
@@ -136,182 +144,196 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
         </>
       )}
 
-    {normal?.length > 0 && (
+      {normal?.length > 0 && (
         <div className="game-market market-6">
-        <div className="market-title">
-          <span>{normal[0]?.tabGroupName}</span>
-        </div>
-        <div className="row row10">
-          <div className="col-md-6">
-            <div className="market-header">
-              <div className="market-nation-detail"></div>
-              <div className="market-odd-box lay">
-                <b>No</b>
-              </div>
-              <div className="market-odd-box back">
-                <b>Yes</b>
-              </div>
-              <div className="fancy-min-max-box"></div>
-            </div>
+          <div className="market-title">
+            <span>{normal[0]?.tabGroupName}</span>
           </div>
-          <div className="col-md-6 d-none d-xl-block">
-            <div className="market-header">
-              <div className="market-nation-detail"></div>
-              <div className="market-odd-box lay">
-                <b>No</b>
-              </div>
-              <div className="market-odd-box back">
-                <b>Yes</b>
-              </div>
-              <div className="fancy-min-max-box"></div>
-            </div>
-          </div>
-        </div>
-        <div className="market-body" data-title="OPEN">
           <div className="row row10">
-            {normal?.map((fancyGame) => {
-              const pnl = pnlBySelection?.filter(
-                (pnl) => pnl?.MarketId === fancyGame?.id
-              );
-
-              return (
-                <div key={fancyGame.id} className="col-md-6">
-                  <div
-                    className={`${
-                      fancyGame?.status === "OPEN"
-                        ? "fancy-market "
-                        : "fancy-market suspended-row"
-                    }`}
-                    data-title={`${
-                      fancyGame?.status === "OPEN" ? "ACTIVATE" : "SUSPENDED"
-                    }`}
-                  >
-                    <div className="market-row">
-                      <div className="market-nation-detail">
-                        <span className="market-nation-name">
-                          {fancyGame?.name}
-                        </span>
-                        {pnl?.map(({ pnl, MarketId }, i) => {
-                          return (
-                            <span
-                              onClick={() => handleLadder(MarketId)}
-                              key={i}
-                              className={`market-book float-end  ${
-                                pnl > 0 ? "text-success" : "text-danger"
-                              }`}
-                              style={{
-                                cursor: "pointer",
-                              }}
-                            >
-                              {pnl}
-                            </span>
-                          );
-                        })}
-                      </div>
-
-                      {fancyGame?.runners.map((runner) =>
-                        runner.lay.map((lay, i) => {
-                          const handlePlaceLayBet = () => {
-                            setTotalSize("");
-                            setShowBets(true);
-                            setPlaceBetValue({});
-                            setPlaceBetValue({
-                              price: lay?.line,
-                              side: 1,
-                              selectionId: runner?.id,
-                              btype: fancyGame?.btype,
-                              eventTypeId: fancyGame?.eventTypeId,
-                              maxLiabilityPerBet: fancyGame?.maxLiabilityPerBet,
-                              minLiabilityPerBet: fancyGame?.minLiabilityPerBet,
-                              betDelay: fancyGame?.betDelay,
-                              marketId: fancyGame?.id,
-                              lay: true,
-                              selectedBetName:runner?.name,
-                              isWeak: fancyGame?.isWeak,
-                              maxLiabilityPerMarket:fancyGame?.maxLiabilityPerMarket,
-                              isBettable:fancyGame?.isBettable
-                            });
-                          };
-
-                          return (
-                            <div
-                              onClick={handlePlaceLayBet}
-                              key={i}
-                              className={`market-odd-box lay ${
-                                changedPrices[`lay-${runner.id}-${i}`]
-                                  ? "blink"
-                                  : ""
-                              }`}
-                            >
-                              <span className="market-odd">{lay.line}</span>
-                              <span className="market-volume">{lay.price}</span>
-                            </div>
-                          );
-                        })
-                      )}
-
-                      {fancyGame?.runners?.map((runner) =>
-                        runner.back.map((back, i) => {
-                          const handlePlaceBackBets = () => {
-                            setTotalSize("");
-                            setShowBets(true);
-                            setPlaceBetValue({});
-                            setPlaceBetValue({
-                              price: back?.line,
-                              side: 0,
-                              selectionId: runner?.id,
-                              btype: fancyGame?.btype,
-                              eventTypeId: fancyGame?.eventTypeId,
-                              maxLiabilityPerBet: fancyGame?.maxLiabilityPerBet,
-                              minLiabilityPerBet: fancyGame?.minLiabilityPerBet,
-                              betDelay: fancyGame?.betDelay,
-                              marketId: fancyGame?.id,
-                              back: true,
-                              selectedBetName:runner?.name,
-                              isWeak: fancyGame?.isWeak,
-                              maxLiabilityPerMarket:fancyGame?.maxLiabilityPerMarket,
-                              isBettable:fancyGame?.isBettable,
-                             
-                            });
-                          };
-                          return (
-                            <div
-                              onClick={handlePlaceBackBets}
-                              key={i}
-                              className={`market-odd-box back ${
-                                changedPrices[`back-${runner.id}-${i}`]
-                                  ? "blink"
-                                  : ""
-                              }`}
-                            >
-                              <span className="market-odd">{back.line}</span>
-                              <span className="market-volume">
-                                {back.price}
+            <div className="col-md-6">
+              <div className="market-header">
+                <div className="market-nation-detail"></div>
+                <div className="market-odd-box lay">
+                  <b>No</b>
+                </div>
+                <div className="market-odd-box back">
+                  <b>Yes</b>
+                </div>
+                <div className="fancy-min-max-box"></div>
+              </div>
+            </div>
+            <div className="col-md-6 d-none d-xl-block">
+              <div className="market-header">
+                <div className="market-nation-detail"></div>
+                <div className="market-odd-box lay">
+                  <b>No</b>
+                </div>
+                <div className="market-odd-box back">
+                  <b>Yes</b>
+                </div>
+                <div className="fancy-min-max-box"></div>
+              </div>
+            </div>
+          </div>
+          <div className="market-body" data-title="OPEN">
+            <div className="row row10">
+              {normal?.map((fancyGame) => {
+                const pnl = pnlBySelection?.filter(
+                  (pnl) => pnl?.MarketId === fancyGame?.id
+                );
+                // console.log(fancyGame);
+                return (
+                  <div key={fancyGame.id} className="col-md-6">
+                    <div
+                      className={`${
+                        fancyGame?.status === "OPEN"
+                          ? "fancy-market "
+                          : "fancy-market suspended-row"
+                      }`}
+                      data-title={`${
+                        fancyGame?.status === "OPEN" ? "ACTIVATE" : "SUSPENDED"
+                      }`}
+                    >
+                      <div className="market-row">
+                        <div className="market-nation-detail">
+                          <span className="market-nation-name">
+                            {fancyGame?.name}
+                          </span>
+                          {pnl?.map(({ pnl, MarketId }, i) => {
+                            return (
+                              <span
+                                onClick={() => handleLadder(MarketId)}
+                                key={i}
+                                className={`market-book float-end  ${
+                                  pnl > 0 ? "text-success" : "text-danger"
+                                }`}
+                                style={{
+                                  cursor: "pointer",
+                                }}
+                              >
+                                {pnl}
                               </span>
-                            </div>
-                          );
-                        })
-                      )}
+                            );
+                          })}
+                        </div>
 
-                      <div className="fancy-min-max-box">
-                        <div className="fancy-min-max">
-                          <span className="w-100 d-block">
-                            Min: {fancyGame?.minLiabilityPerBet}
-                          </span>
-                          <span className="w-100 d-block">
-                            Max: {fancyGame?.maxLiabilityPerBet}
-                          </span>
+                        {fancyGame?.runners.map((runner) =>
+                          runner.lay.map((lay, i) => {
+                            const handlePlaceLayBet = () => {
+                              if (fancyGame?.status !== "OPEN") {
+                                return;
+                              }
+                              setTotalSize("");
+                              setShowBets(true);
+                              setPlaceBetValue({});
+                              setPlaceBetValue({
+                                price: lay?.line,
+                                side: 1,
+                                selectionId: runner?.id,
+                                btype: fancyGame?.btype,
+                                eventTypeId: fancyGame?.eventTypeId,
+                                maxLiabilityPerBet:
+                                  fancyGame?.maxLiabilityPerBet,
+                                minLiabilityPerBet:
+                                  fancyGame?.minLiabilityPerBet,
+                                betDelay: fancyGame?.betDelay,
+                                marketId: fancyGame?.id,
+                                lay: true,
+                                selectedBetName: fancyGame?.name,
+                                isWeak: fancyGame?.isWeak,
+                                maxLiabilityPerMarket:
+                                  fancyGame?.maxLiabilityPerMarket,
+                                isBettable: fancyGame?.isBettable,
+                              });
+                            };
+
+                            return (
+                              <div
+                                onClick={handlePlaceLayBet}
+                                key={i}
+                                className={`market-odd-box lay ${
+                                  changedPrices[`lay-${runner.id}-${i}`]
+                                    ? "blink"
+                                    : ""
+                                }`}
+                              >
+                                <span className="market-odd">{lay.line}</span>
+                                <span className="market-volume">
+                                  {lay.price}
+                                </span>
+                              </div>
+                            );
+                          })
+                        )}
+
+                        {fancyGame?.runners?.map((runner) =>
+                          runner.back.map((back, i) => {
+                            const handlePlaceBackBets = () => {
+                              if (fancyGame?.status !== "OPEN") {
+                                return;
+                              }
+
+                              setTotalSize("");
+                              setShowBets(true);
+                              setPlaceBetValue({});
+                              setPlaceBetValue({
+                                price: back?.line,
+                                side: 0,
+                                selectionId: runner?.id,
+                                btype: fancyGame?.btype,
+                                eventTypeId: fancyGame?.eventTypeId,
+                                maxLiabilityPerBet:
+                                  fancyGame?.maxLiabilityPerBet,
+                                minLiabilityPerBet:
+                                  fancyGame?.minLiabilityPerBet,
+                                betDelay: fancyGame?.betDelay,
+                                marketId: fancyGame?.id,
+                                back: true,
+                                selectedBetName: fancyGame?.name,
+                                isWeak: fancyGame?.isWeak,
+                                maxLiabilityPerMarket:
+                                  fancyGame?.maxLiabilityPerMarket,
+                                isBettable: fancyGame?.isBettable,
+                              });
+                            };
+                            return (
+                              <div
+                                onClick={handlePlaceBackBets}
+                                key={i}
+                                className={`market-odd-box back ${
+                                  changedPrices[`back-${runner.id}-${i}`]
+                                    ? "blink"
+                                    : ""
+                                }`}
+                              >
+                                <span className="market-odd">{back.line}</span>
+                                <span className="market-volume">
+                                  {back.price}
+                                </span>
+                              </div>
+                            );
+                          })
+                        )}
+
+                        <div className="fancy-min-max-box">
+                          <div className="fancy-min-max">
+                            <span className="w-100 d-block">
+                              Min: {fancyGame?.minLiabilityPerBet}
+                            </span>
+                            <span className="w-100 d-block">
+                              Max: {fancyGame?.maxLiabilityPerBet}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
-    )}
+      )}
     </>
   );
 };

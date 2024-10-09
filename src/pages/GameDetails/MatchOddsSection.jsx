@@ -20,7 +20,7 @@ const MatchOddsSection = ({
   const token = localStorage.getItem("token");
   const [previousData, setPreviousData] = useState(match_odds);
   const [changedPrices, setChangedPrices] = useState({});
-  const { setPlaceBetValue } = UseState();
+  const { setPlaceBetValue, placeBetValue } = UseState();
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
 
@@ -56,6 +56,14 @@ const MatchOddsSection = ({
     const newChangedPrices = {};
     match_odds?.forEach((item, index) => {
       item?.runners?.forEach((runner, runnerIndex) => {
+        if (placeBetValue?.selectionId) {
+          if (placeBetValue?.selectionId === runner?.id) {
+            if (runner?.status !== "OPEN") {
+              setShowBets(false);
+              setPlaceBetValue({});
+            }
+          }
+        }
         const previousRunner = previousData[index]?.runners[runnerIndex];
         runner?.back?.forEach((backItem, backIndex) => {
           const previousBackItem = previousRunner?.back[backIndex];
@@ -427,6 +435,12 @@ const MatchOddsSection = ({
                       ?.reverse()
                       ?.map((back, i) => {
                         const handlePlaceBackBet = () => {
+                          if (
+                            item?.status !== "OPEN" ||
+                            runner?.status !== "OPEN"
+                          ) {
+                            return;
+                          }
                           const updatedPnl = [];
                           item?.runners?.forEach((runner) => {
                             const pnl = pnlBySelection?.find(
@@ -495,6 +509,12 @@ const MatchOddsSection = ({
 
                     {runner?.lay?.map((lay, i) => {
                       const handlePlaceLayBets = () => {
+                        if (
+                          item?.status !== "OPEN" ||
+                          runner?.status !== "OPEN"
+                        ) {
+                          return;
+                        }
                         const updatedPnl = [];
                         item?.runners?.forEach((runner) => {
                           const pnl = pnlBySelection?.find(

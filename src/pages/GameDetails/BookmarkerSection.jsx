@@ -23,7 +23,7 @@ const BookmarkerSection = ({
   const [ladderData, setLadderData] = useState([]);
   const [previousData, setPreviousData] = useState(bookmarker);
   const [changedPrices, setChangedPrices] = useState({});
-  const { setPlaceBetValue } = UseState();
+  const { setPlaceBetValue, placeBetValue } = UseState();
 
   /* exposer */
   let pnlBySelection;
@@ -58,6 +58,14 @@ const BookmarkerSection = ({
     const newChangedPrices = {};
     bookmarker.forEach((item, index) => {
       item.runners.forEach((runner, runnerIndex) => {
+        if (placeBetValue?.selectionId) {
+          if (placeBetValue?.selectionId === runner?.id) {
+            if (runner?.status !== "OPEN") {
+              setShowBets(false);
+              setPlaceBetValue({});
+            }
+          }
+        }
         const previousRunner = previousData[index].runners[runnerIndex];
         runner.back.forEach((backItem, backIndex) => {
           const previousBackItem = previousRunner.back[backIndex];
@@ -410,6 +418,12 @@ const BookmarkerSection = ({
                       ?.reverse()
                       ?.map((back, i) => {
                         const handlePlaceBackBet = () => {
+                          if (
+                            bookmark?.status !== "OPEN" ||
+                            runner?.status !== "OPEN"
+                          ) {
+                            return;
+                          }
                           const updatedPnl = [];
                           bookmark?.runners?.forEach((runner) => {
                             const pnl = pnlBySelection?.find(
@@ -481,6 +495,12 @@ const BookmarkerSection = ({
 
                     {runner.lay.map((lay, i) => {
                       const handlePlaceLayBets = () => {
+                        if (
+                          bookmark?.status !== "OPEN" ||
+                          runner?.status !== "OPEN"
+                        ) {
+                          return;
+                        }
                         const updatedPnl = [];
                         bookmark?.runners?.forEach((runner) => {
                           const pnl = pnlBySelection?.find(
