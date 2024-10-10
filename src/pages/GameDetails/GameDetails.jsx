@@ -16,12 +16,14 @@ import UseBalance from "../../hooks/UseBalance";
 import MobilePlaceBet from "./MobilePlaceBet";
 import DesktopPlaceBet from "./DesktopPlaceBet";
 import { API, settings } from "../../utils";
+import handleDecryptData from "../../utils/handleDecryptData";
 
 const GameDetails = () => {
   const { id, eventId } = useParams();
   const token = localStorage.getItem("token");
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
   const [data, setData] = useState([]);
+  const [score, setScore] = useState();
   const [match_odds, setMatch_odds] = useState([]);
   const [bookmarker, setBookmarker] = useState([]);
   const [bookmarker2, setBookmarker2] = useState([]);
@@ -88,12 +90,13 @@ const GameDetails = () => {
   /* Get game details */
   useEffect(() => {
     const getGameDetails = async () => {
-      const res = await axios.get(`${API.odds}/${id}/${eventId}`);
+      const res = await axios.get(`${API.eventDetails}/${id}/${eventId}`);
       const data = res.data;
-      if (data.success) {
-        if (data?.result) {
-          setData(data.result);
-        }
+      const decryptionData = await handleDecryptData(JSON.stringify(data));
+
+      if (decryptionData.success) {
+        setData(decryptionData.result);
+        setScore(decryptionData.score);
       }
     };
     getGameDetails();
@@ -524,7 +527,7 @@ const GameDetails = () => {
               </a>
             </li>
 
-            {match_odds?.length > 0 && match_odds[0]?.hasVideo && (
+            {score?.hasVideo && (
               <li
                 onClick={() => {
                   setShowTv(!showTv);
@@ -760,7 +763,7 @@ const GameDetails = () => {
       </div>
 
       <div className={`sidebar right-sidebar ${isSticky ? "sticky" : ""}`}>
-        {match_odds?.length > 0 && match_odds[0]?.hasVideo && (
+        {score?.hasVideo && (
           <div
             style={{
               cursor: "pointer",

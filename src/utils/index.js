@@ -34,6 +34,7 @@ export const API = {
   slotsWolf: "",
   withdrawIframe: "",
   assets: "",
+  eventDetails: "",
 };
 
 export const settings = {
@@ -49,5 +50,5 @@ export const settings = {
   disabledDevtool: "",
   casinoCurrency: "",
   interval: "",
-  betFairCashOut:""
+  betFairCashOut: "",
 };
