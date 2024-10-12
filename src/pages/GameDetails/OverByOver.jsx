@@ -40,9 +40,9 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
   /* Blink color */
   useEffect(() => {
     const newChangedPrices = {};
-    if (overByOver.length > 0) {
-      overByOver.forEach((item, index) => {
-        item.runners.forEach((runner, runnerIndex) => {
+    if (overByOver?.length > 0) {
+      overByOver?.forEach((item, index) => {
+        item?.runners?.forEach((runner, runnerIndex) => {
           if (placeBetValue?.marketId) {
             if (placeBetValue?.marketId === item?.id) {
               if (item?.status !== "OPEN") {
@@ -51,11 +51,11 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
               }
             }
           }
-          const previousRunner = previousData[index]?.runners[runnerIndex];
-          runner.back.forEach((backItem, backIndex) => {
+          const previousRunner = previousData?.[index]?.runners[runnerIndex];
+          runner?.back?.forEach((backItem, backIndex) => {
             const previousBackItem = previousRunner?.back[backIndex];
-            if (backItem.price !== previousBackItem?.price) {
-              newChangedPrices[`back-${runner.id}-${backIndex}`] = true;
+            if (backItem?.price !== previousBackItem?.price) {
+              newChangedPrices[`back-${runner?.id}-${backIndex}`] = true;
               setChangedPrices({ ...newChangedPrices });
               setTimeout(() => {
                 newChangedPrices[`back-${runner.id}-${backIndex}`] = false;
@@ -64,7 +64,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
               }, 300);
             }
           });
-          runner.lay.forEach((layItem, layIndex) => {
+          runner?.lay?.forEach((layItem, layIndex) => {
             const previousLayItem = previousRunner?.lay[layIndex];
             if (layItem.price !== previousLayItem?.price) {
               newChangedPrices[`lay-${runner.id}-${layIndex}`] = true;

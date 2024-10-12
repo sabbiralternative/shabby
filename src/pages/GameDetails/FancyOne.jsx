@@ -42,8 +42,8 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
   /* Blink color */
   useEffect(() => {
     const newChangedPrices = {};
-    if (fancy1.length > 0) {
-      fancy1.forEach((item, index) => {
+    if (fancy1?.length > 0) {
+      fancy1?.forEach((item, index) => {
         item?.runners?.forEach((runner, runnerIndex) => {
           if (placeBetValue?.marketId) {
             if (placeBetValue?.marketId === item?.id) {
@@ -53,26 +53,26 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
               }
             }
           }
-          const previousRunner = previousData[index]?.runners[runnerIndex];
+          const previousRunner = previousData?.[index]?.runners[runnerIndex];
           runner?.back?.forEach((backItem, backIndex) => {
-            const previousBackItem = previousRunner?.back[backIndex];
-            if (backItem.price !== previousBackItem?.price) {
+            const previousBackItem = previousRunner?.back?.[backIndex];
+            if (backItem?.price !== previousBackItem?.price) {
               newChangedPrices[`back-${runner.id}-${backIndex}`] = true;
               setChangedPrices({ ...newChangedPrices });
               setTimeout(() => {
-                newChangedPrices[`back-${runner.id}-${backIndex}`] = false;
+                newChangedPrices[`back-${runner?.id}-${backIndex}`] = false;
 
                 setChangedPrices({ ...newChangedPrices });
               }, 300);
             }
           });
           runner?.lay?.forEach((layItem, layIndex) => {
-            const previousLayItem = previousRunner?.lay[layIndex];
-            if (layItem.price !== previousLayItem?.price) {
-              newChangedPrices[`lay-${runner.id}-${layIndex}`] = true;
+            const previousLayItem = previousRunner?.lay?.[layIndex];
+            if (layItem?.price !== previousLayItem?.price) {
+              newChangedPrices[`lay-${runner?.id}-${layIndex}`] = true;
               setChangedPrices({ ...newChangedPrices });
               setTimeout(() => {
-                newChangedPrices[`lay-${runner.id}-${layIndex}`] = false;
+                newChangedPrices[`lay-${runner?.id}-${layIndex}`] = false;
                 setChangedPrices({ ...newChangedPrices });
               }, 300);
             }

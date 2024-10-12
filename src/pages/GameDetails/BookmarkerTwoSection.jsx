@@ -61,9 +61,9 @@ const BookmarkerTwoSection = ({
   /* Blink color */
   useEffect(() => {
     const newChangedPrices = {};
-    if (bookmarker2.length > 0) {
-      bookmarker2.forEach((item, index) => {
-        item.runners.forEach((runner, runnerIndex) => {
+    if (bookmarker2?.length > 0) {
+      bookmarker2?.forEach((item, index) => {
+        item?.runners?.forEach((runner, runnerIndex) => {
           if (placeBetValue?.selectionId) {
             if (placeBetValue?.selectionId === runner?.id) {
               if (runner?.status !== "OPEN") {
@@ -72,26 +72,26 @@ const BookmarkerTwoSection = ({
               }
             }
           }
-          const previousRunner = previousData[index]?.runners[runnerIndex];
-          runner.back.forEach((backItem, backIndex) => {
+          const previousRunner = previousData?.[index]?.runners?.[runnerIndex];
+          runner?.back?.forEach((backItem, backIndex) => {
             const previousBackItem = previousRunner?.back[backIndex];
-            if (backItem.price !== previousBackItem?.price) {
-              newChangedPrices[`back-${runner.id}-${backIndex}`] = true;
+            if (backItem?.price !== previousBackItem?.price) {
+              newChangedPrices[`back-${runner?.id}-${backIndex}`] = true;
               setChangedPrices({ ...newChangedPrices });
               setTimeout(() => {
-                newChangedPrices[`back-${runner.id}-${backIndex}`] = false;
+                newChangedPrices[`back-${runner?.id}-${backIndex}`] = false;
 
                 setChangedPrices({ ...newChangedPrices });
               }, 300);
             }
           });
-          runner.lay.forEach((layItem, layIndex) => {
-            const previousLayItem = previousRunner.lay[layIndex];
-            if (layItem.price !== previousLayItem.price) {
-              newChangedPrices[`lay-${runner.id}-${layIndex}`] = true;
+          runner?.lay?.forEach((layItem, layIndex) => {
+            const previousLayItem = previousRunner?.lay?.[layIndex];
+            if (layItem?.price !== previousLayItem?.price) {
+              newChangedPrices[`lay-${runner?.id}-${layIndex}`] = true;
               setChangedPrices({ ...newChangedPrices });
               setTimeout(() => {
-                newChangedPrices[`lay-${runner.id}-${layIndex}`] = false;
+                newChangedPrices[`lay-${runner?.id}-${layIndex}`] = false;
                 setChangedPrices({ ...newChangedPrices });
               }, 300);
             }
@@ -161,7 +161,7 @@ const BookmarkerTwoSection = ({
           </div>
         </>
       )}
-      {bookmarker2.map((bookmaker) => {
+      {bookmarker2?.map((bookmaker) => {
         return (
           <div key={bookmaker} className="game-market market-4">
             <div className="market-title">
@@ -226,7 +226,7 @@ const BookmarkerTwoSection = ({
                         })}
                       </div>
                     </div>
-                    {runner.back.length === 1 && (
+                    {runner?.back?.length === 1 && (
                       <>
                         <div className={`market-odd-box back2`}>
                           <span className="market-odd">-</span>
@@ -290,7 +290,7 @@ const BookmarkerTwoSection = ({
                             ${i === 1 ? "back1" : ""} ${i === 2 ? "back" : ""}
                            
                             ${
-                              changedPrices[`back-${runner.id}-${i}`]
+                              changedPrices[`back-${runner?.id}-${i}`]
                                 ? "blink"
                                 : ""
                             }`}

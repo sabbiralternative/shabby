@@ -217,8 +217,8 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                           })}
                         </div>
 
-                        {fancyGame?.runners.map((runner) =>
-                          runner.lay.map((lay, i) => {
+                        {fancyGame?.runners?.map((runner) =>
+                          runner?.lay?.map((lay, i) => {
                             const handlePlaceLayBet = () => {
                               if (fancyGame?.status !== "OPEN") {
                                 return;
@@ -267,7 +267,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                         )}
 
                         {fancyGame?.runners?.map((runner) =>
-                          runner.back.map((back, i) => {
+                          runner?.back?.map((back, i) => {
                             const handlePlaceBackBets = () => {
                               if (fancyGame?.status !== "OPEN") {
                                 return;

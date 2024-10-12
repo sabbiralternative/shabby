@@ -56,8 +56,8 @@ const BookmarkerSection = ({
   /* Blink color */
   useEffect(() => {
     const newChangedPrices = {};
-    bookmarker.forEach((item, index) => {
-      item.runners.forEach((runner, runnerIndex) => {
+    bookmarker?.forEach((item, index) => {
+      item?.runners?.forEach((runner, runnerIndex) => {
         if (placeBetValue?.selectionId) {
           if (placeBetValue?.selectionId === runner?.id) {
             if (runner?.status !== "OPEN") {
@@ -66,27 +66,27 @@ const BookmarkerSection = ({
             }
           }
         }
-        const previousRunner = previousData[index].runners[runnerIndex];
-        runner.back.forEach((backItem, backIndex) => {
-          const previousBackItem = previousRunner.back[backIndex];
+        const previousRunner = previousData?.[index]?.runners[runnerIndex];
+        runner?.back?.forEach((backItem, backIndex) => {
+          const previousBackItem = previousRunner?.back?.[backIndex];
 
-          if (backItem.price !== previousBackItem.price) {
-            newChangedPrices[`back-${runner.id}-${backIndex}`] = true;
+          if (backItem?.price !== previousBackItem?.price) {
+            newChangedPrices[`back-${runner?.id}-${backIndex}`] = true;
             setChangedPrices({ ...newChangedPrices });
             setTimeout(() => {
-              newChangedPrices[`back-${runner.id}-${backIndex}`] = false;
+              newChangedPrices[`back-${runner?.id}-${backIndex}`] = false;
 
               setChangedPrices({ ...newChangedPrices });
             }, 300);
           }
         });
-        runner.lay.forEach((layItem, layIndex) => {
-          const previousLayItem = previousRunner.lay[layIndex];
-          if (layItem.price !== previousLayItem.price) {
-            newChangedPrices[`lay-${runner.id}-${layIndex}`] = true;
+        runner?.lay?.forEach((layItem, layIndex) => {
+          const previousLayItem = previousRunner?.lay?.[layIndex];
+          if (layItem?.price !== previousLayItem?.price) {
+            newChangedPrices[`lay-${runner?.id}-${layIndex}`] = true;
             setChangedPrices({ ...newChangedPrices });
             setTimeout(() => {
-              newChangedPrices[`lay-${runner.id}-${layIndex}`] = false;
+              newChangedPrices[`lay-${runner?.id}-${layIndex}`] = false;
               setChangedPrices({ ...newChangedPrices });
             }, 300);
           }
@@ -251,13 +251,13 @@ const BookmarkerSection = ({
           </div>
         </>
       )}
-      {bookmarker.map((bookmark) => {
+      {bookmarker?.map((bookmark) => {
         // const teamProfitForGame = teamProfit?.find(
         //   (profit) =>
         //     profit?.gameId === bookmark?.id && profit?.isOnePositiveExposure
         // );
         return (
-          <div key={bookmark.id} className="game-market market-4">
+          <div key={bookmark?.id} className="game-market market-4">
             <div className="market-title">
               <span style={{ display: "flex", alignItems: "center" }}>
                 {bookmark?.name.toUpperCase()}
@@ -352,7 +352,7 @@ const BookmarkerSection = ({
               }`}
               data-title={`${bookmark?.status !== "OPEN" ? "SUSPENDED" : ""}`}
             >
-              {bookmark.runners.map((runner) => {
+              {bookmark?.runners?.map((runner) => {
                 const pnl = pnlBySelection?.filter(
                   (pnl) => pnl?.RunnerId === runner?.id
                 );
@@ -361,18 +361,20 @@ const BookmarkerSection = ({
                 );
                 return (
                   <div
-                    key={runner.id}
+                    key={runner?.id}
                     className={`${
-                      runner.status === "OPEN"
+                      runner?.status === "OPEN"
                         ? "market-row"
                         : " market-row suspended-row"
                     }`}
                     data-title={`${
-                      runner.status === "OPEN" ? "ACTIVATE" : "SUSPENDED"
+                      runner?.status === "OPEN" ? "ACTIVATE" : "SUSPENDED"
                     }`}
                   >
                     <div className="market-nation-detail">
-                      <span className="market-nation-name">{runner.name} </span>
+                      <span className="market-nation-name">
+                        {runner?.name}{" "}
+                      </span>
                       <div className="market-nation-book">
                         {pnl?.map(({ pnl, MarketId }, i) => {
                           return (
@@ -402,7 +404,7 @@ const BookmarkerSection = ({
                         })}
                       </div>
                     </div>
-                    {runner.back.length === 1 && (
+                    {runner?.back?.length === 1 && (
                       <>
                         <div className={`market-odd-box back2`}>
                           <span className="market-odd">-</span>
@@ -493,7 +495,7 @@ const BookmarkerSection = ({
                         );
                       })}
 
-                    {runner.lay.map((lay, i) => {
+                    {runner?.lay?.map((lay, i) => {
                       const handlePlaceLayBets = () => {
                         if (
                           bookmark?.status !== "OPEN" ||
@@ -540,7 +542,7 @@ const BookmarkerSection = ({
                           className={`market-odd-box ${i === 0 ? "lay" : ""} ${
                             i === 1 ? "lay1" : ""
                           } ${i === 2 ? "lay2" : ""}
-                      ${changedPrices[`lay-${runner.id}-${i}`] ? "blink" : ""}
+                      ${changedPrices[`lay-${runner?.id}-${i}`] ? "blink" : ""}
                       `}
                         >
                           {lay?.price || lay?.size ? (
@@ -555,7 +557,7 @@ const BookmarkerSection = ({
                       );
                     })}
 
-                    {runner.lay.length === 1 && (
+                    {runner?.lay?.length === 1 && (
                       <>
                         <div className={`market-odd-box lay1`}>
                           <span className="market-odd">-</span>

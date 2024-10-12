@@ -418,7 +418,7 @@ const MatchOddsSection = ({
                       </div>
                     </div>
 
-                    {runner.back.length === 1 && (
+                    {runner?.back?.length === 1 && (
                       <>
                         <div className={`market-odd-box back2`}>
                           <span className="market-odd">-</span>
