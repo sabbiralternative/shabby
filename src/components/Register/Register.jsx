@@ -8,12 +8,9 @@ import { useForm } from "react-hook-form";
 import Notification from "../Notification/Notification";
 import UseState from "../../hooks/UseState";
 import { API, settings } from "../../utils";
+import useGetSocialLink from "../../hooks/useGetSocialLink";
 const Register = () => {
-
-
-
-  
-
+  const { refetchSocialLinks } = useGetSocialLink();
   const [userExist, setUserExist] = useState(false);
   const [userErr, setUserErr] = useState(false);
   const [user, setUser] = useState({
@@ -133,8 +130,8 @@ const Register = () => {
         .then((res) => res.json())
 
         .then((data) => {
-      
           if (data?.success) {
+            refetchSocialLinks();
             /* Set token to localeStorage */
             localStorage.setItem("token", data.result.token);
             /* Set login name to locale storage */

@@ -6,14 +6,12 @@ import Category from "../components/Category/Category";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import DisableDevtool from "disable-devtool";
-import { useQuery } from "@tanstack/react-query";
-import UseTokenGenerator from "../hooks/UseTokenGenerator";
-import UseEncryptData from "../hooks/UseEncryptData";
-import axios from "axios";
 import useLatestEvent from "../hooks/useLatestEvent";
-import { API, settings } from "../utils";
+import { settings } from "../utils";
+import useGetSocialLink from "../hooks/useGetSocialLink";
 
 const Main = () => {
+  const { socialLink } = useGetSocialLink();
   const params = useParams();
   const [relativeURL, setRelativeURL] = useState("");
   const currentURL = window.location.href;
@@ -68,24 +66,13 @@ const Main = () => {
     }
   }, [navigate]);
 
-  /* Get whats app link */
-  const { data: whatsAppLink } = useQuery({
-    queryKey: ["whatsApp"],
-    queryFn: async () => {
-      /* random token function */
-      const generatedToken = UseTokenGenerator();
-      /* Encryption post data */
-      const encryptedVideoData = UseEncryptData({
-        site: settings.siteUrl,
-        token: generatedToken,
-      });
-      const res = await axios.post(API.whatsapp, encryptedVideoData);
-      const data = res.data;
-      if (data?.success) {
-        return data?.result?.link;
-      }
-    },
-  });
+  const navigateWhatsApp = () => {
+    if (token && socialLink?.branchWhatsapplink) {
+      window.open(socialLink?.branchWhatsapplink, "_blank");
+    } else {
+      window.open(socialLink?.whatsapplink, "_blank");
+    }
+  };
 
   return (
     <div>
@@ -161,16 +148,15 @@ const Main = () => {
         </div>
       </div>
       <Footer />
-      {whatsAppLink && (
+      {socialLink?.whatsapplink || socialLink?.branchWhatsapplink ? (
         <a
-          href={whatsAppLink}
-          target="_main"
-          to={whatsAppLink}
+          onClick={navigateWhatsApp}
+          style={{ cursor: "pointer" }}
           className="whatsapp_link"
         >
           <img src="/assets/wp_support.webp" alt="WhatsAPP" />
         </a>
-      )}
+      ) : null}
     </div>
   );
 };
