@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import RulesModal from "./RulesModal";
 import UseState from "../../hooks/UseState";
@@ -11,9 +11,13 @@ import UseEncryptData from "../../hooks/UseEncryptData";
 import Notification from "../Notification/Notification";
 import MyMarketModal from "../Modal/MyMarketModal";
 import { API, settings } from "../../utils";
+import AppPopup from "./AppPopUp";
 const Header = () => {
   /* Open dropdown state for mobile version */
+  const location = useLocation();
   const [open, setOpen] = useState(false);
+  const [showAppPopUp, setShowAppPopUp] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   /* Open dropdown state for desktop version */
   const [dropDown, setDropDown] = useState(false);
   /* show balance state */
@@ -329,6 +333,35 @@ const Header = () => {
     setMyMarketData(data);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const closePopupForForever = localStorage.getItem("closePopupForForever");
+    if (location?.state?.pathname === "/apk" || location.pathname === "/apk") {
+      localStorage.setItem("closePopupForForever", true);
+      localStorage.removeItem("installPromptExpiryTime");
+    } else {
+      if (!closePopupForForever) {
+        const expiryTime = localStorage.getItem("installPromptExpiryTime");
+        const currentTime = new Date().getTime();
+
+        if (!expiryTime || currentTime > expiryTime) {
+          localStorage.removeItem("installPromptExpiryTime");
+
+          setShowAppPopUp(true);
+        }
+      }
+    }
+  }, [windowWidth, showAppPopUp, location?.state?.pathname, location.pathname]);
   return (
     <div
       className="wrapper"
@@ -336,6 +369,9 @@ const Header = () => {
         position: "relative",
       }}
     >
+      {settings?.apkLink && showAppPopUp && windowWidth < 600 && (
+        <AppPopup setShowAppPopUp={setShowAppPopUp} />
+      )}
       {/* if error during the demo login then show error message  */}
       {errorLogin && (
         <Notification
@@ -476,7 +512,6 @@ const Header = () => {
                                       </div>
                                     </div> */}
                                     <div className="row row10">
-                               
                                       <div className="mb-3 col-6 position-relative">
                                         <input
                                           {...register("buttons0value", {
@@ -505,7 +540,7 @@ const Header = () => {
                                       </div>
                                     </div>
                                     <div className="row row10">
-                                    <div className="mb-3 col-6 position-relative">
+                                      <div className="mb-3 col-6 position-relative">
                                         <input
                                           {...register("buttons2value", {
                                             required: true,
@@ -532,9 +567,8 @@ const Header = () => {
                                         />
                                       </div>
                                     </div>
-                             
+
                                     <div className="row row10">
-                                 
                                       <div className="mb-3 col-6 position-relative">
                                         <input
                                           {...register("buttons4value", {
@@ -562,9 +596,8 @@ const Header = () => {
                                         />
                                       </div>
                                     </div>
-                                
+
                                     <div className="row row10">
-                            
                                       <div className="mb-3 col-6 position-relative">
                                         <input
                                           {...register("buttons6value", {
@@ -592,9 +625,8 @@ const Header = () => {
                                         />
                                       </div>
                                     </div>
-                              
+
                                     <div className="row row10">
-                             
                                       <div className="mb-3 col-6 position-relative">
                                         <input
                                           {...register("buttons8value", {
@@ -622,7 +654,7 @@ const Header = () => {
                                         />
                                       </div>
                                     </div>
-                               
+
                                     <div className="row row10">
                                       <div className="mb-3 col-md-6 ">
                                         <button

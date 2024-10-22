@@ -27,6 +27,7 @@ import Deposit from "../pages/Deposit/Deposit";
 import Withdraw from "../pages/Withdraw/Withdraw";
 import DepositStatement from "../pages/DepositStatement/DepositStatement.jsx";
 import WithdrawStatement from "../pages/WithdrawStatement/WithdrawStatement.jsx";
+import APK from "../pages/APK/APK.jsx";
 
 const router = createBrowserRouter(
   [
@@ -142,6 +143,10 @@ const router = createBrowserRouter(
     {
       path: "/change-Password-login",
       element: <ChangePasswordLogin />,
+    },
+    {
+      path: "/apk",
+      element: <APK />,
     },
   ],
   {

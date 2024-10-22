@@ -59,6 +59,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         settings.casinoCurrency = setting?.casinoCurrency;
         settings.interval = setting?.interval;
         settings.betFairCashOut = setting?.betFairCashOut;
+        settings.apkLink = setting?.apkLink;
         setNoticeLoaded(true);
       }
     })

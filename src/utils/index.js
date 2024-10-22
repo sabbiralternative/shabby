@@ -51,4 +51,5 @@ export const settings = {
   casinoCurrency: "",
   interval: "",
   betFairCashOut: "",
+  apkLink: "",
 };
