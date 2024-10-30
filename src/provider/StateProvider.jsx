@@ -14,8 +14,8 @@ const StateProvider = ({ children }) => {
   const [noticeLoaded, setNoticeLoaded] = useState(false);
   const baseUrl = notice?.result?.settings?.baseUrl;
   useEffect(() => {
-    getSetApis(setNoticeLoaded,baseUrl);
-  }, [noticeLoaded,baseUrl]);
+    getSetApis(setNoticeLoaded, baseUrl);
+  }, [noticeLoaded, baseUrl]);
 
   useEffect(() => {
     if (noticeLoaded) {
@@ -25,8 +25,14 @@ const StateProvider = ({ children }) => {
       const link = document.createElement("link");
       link.rel = "stylesheet";
       link.type = "text/css";
-      link.href = `${API.assets}/${settings.siteUrl}/theme.css`;
-      document.head.appendChild(link);
+
+      if (settings.build === "production") {
+        link.href = `${API.assets}/${settings.siteUrl}/theme.css`;
+        document.head.appendChild(link);
+      } else {
+        link.href = `/src/static/front/css/theme.css`;
+        document.head.appendChild(link);
+      }
       /* Dynamically append site logo  */
       const FavIconLink = document.createElement("link");
       FavIconLink.rel = "icon";

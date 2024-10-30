@@ -52,4 +52,5 @@ export const settings = {
   interval: "",
   betFairCashOut: "",
   apkLink: "",
+  build: "",
 };

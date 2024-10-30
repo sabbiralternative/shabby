@@ -47,6 +47,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         API.withdrawIframe = endPoints?.withdrawIframe;
         API.assets = endPoints?.assets;
         settings.casino = setting?.casino;
+        settings.build = setting?.build;
         settings.siteTitle = setting?.siteTitle;
         settings.forceLogin = setting?.forceLogin;
         settings.registration = setting?.registration;

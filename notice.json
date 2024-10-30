@@ -19,7 +19,8 @@
       "casinoCurrency": "AED",
       "balanceApiLoop": false,
       "baseUrl": "",
-      "betFairCashOut": true
+      "betFairCashOut": true,
+      "build": "production"
     },
 
     "endpoint": {
