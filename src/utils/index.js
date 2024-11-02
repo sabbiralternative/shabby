@@ -35,6 +35,7 @@ export const API = {
   withdrawIframe: "",
   assets: "",
   eventDetails: "",
+  mac88: "",
 };
 
 export const settings = {
@@ -53,4 +54,5 @@ export const settings = {
   betFairCashOut: "",
   apkLink: "",
   build: "",
+  mac88: "",
 };

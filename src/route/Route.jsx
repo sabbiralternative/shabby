@@ -28,6 +28,7 @@ import Withdraw from "../pages/Withdraw/Withdraw";
 import DepositStatement from "../pages/DepositStatement/DepositStatement.jsx";
 import WithdrawStatement from "../pages/WithdrawStatement/WithdrawStatement.jsx";
 import APK from "../pages/APK/APK.jsx";
+import Mac88 from "../pages/Mac88/Mac88.jsx";
 
 const router = createBrowserRouter(
   [
@@ -79,6 +80,10 @@ const router = createBrowserRouter(
         {
           path: "/fantasy-games",
           element: <FantasyGames />,
+        },
+        {
+          path: "/mac88",
+          element: <Mac88 />,
         },
         {
           path: "/live-casino",

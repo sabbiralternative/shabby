@@ -46,6 +46,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         API.slotsWolf = endPoints?.slotsWolf;
         API.withdrawIframe = endPoints?.withdrawIframe;
         API.assets = endPoints?.assets;
+        API.mac88 = endPoints?.mac88;
         settings.casino = setting?.casino;
         settings.build = setting?.build;
         settings.siteTitle = setting?.siteTitle;
@@ -61,6 +62,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         settings.interval = setting?.interval;
         settings.betFairCashOut = setting?.betFairCashOut;
         settings.apkLink = setting?.apkLink;
+        settings.mac88 = setting?.mac88;
         setNoticeLoaded(true);
       }
     })

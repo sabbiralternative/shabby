@@ -16,10 +16,11 @@
       "deposit": true,
       "withdraw": true,
       "disabledDevtool": false,
-      "casinoCurrency": "AED",
+      "casinoCurrency": "INR",
       "balanceApiLoop": false,
       "baseUrl": "",
       "betFairCashOut": true,
+      "mac88": true,
       "build": "production"
     },
 
@@ -80,7 +81,8 @@
       "myMarket": "https://api7.live/api/exchange/diamond/myMarket",
       "liveCasinoWolf": "https://api7.live/api/exchange/diamond/liveCasinoWolf",
       "slotsWolf": "https://api7.live/api/exchange/diamond/slotsWolf",
-      "latestEvents": "https://api7.live/api/exchange/diamond/latestEvents"
+      "latestEvents": "https://api7.live/api/exchange/diamond/latestEvents",
+      "mac88": "https://api7.live/api/exchange/diamond/mac88"
     }
   },
   "success": true

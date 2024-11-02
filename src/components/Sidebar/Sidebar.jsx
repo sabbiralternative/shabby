@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { API } from "../../utils";
+import { API, settings } from "../../utils";
 
 const Sidebar = () => {
   const [sportsLink, setSportsLink] = useState(true);
@@ -46,6 +46,7 @@ const Sidebar = () => {
                     <span className="blink_me">Our Virtual</span>
                   </Link>
                 </li>
+
                 <li className="nav-item">
                   <Link className="nav-link" to="/live-casino">
                     <span>Live Casino</span>
@@ -61,6 +62,13 @@ const Sidebar = () => {
                     <span>Fantasy Game</span>
                   </Link>
                 </li>
+                {settings.casinoCurrency === "INR" && settings.mac88 && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/mac88">
+                      <span>Mac88</span>
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
           </div>

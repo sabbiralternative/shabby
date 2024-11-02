@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { settings } from "../../utils";
 
 const Category = () => {
   return (
@@ -29,6 +30,13 @@ const Category = () => {
             Fantasy
           </NavLink>
         </li>
+        {settings.mac88 && settings.casinoCurrency === "INR" && (
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/mac88">
+              Mac88
+            </NavLink>
+          </li>
+        )}
       </ul>
     </>
   );
