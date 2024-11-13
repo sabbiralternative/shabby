@@ -749,6 +749,17 @@ const Header = () => {
                             </li>
                           </Link>
                           <Link
+                            to="/bonus-statement"
+                            onClick={() => setOpen(!open)}
+                          >
+                            <li
+                              data-rr-ui-dropdown-item=""
+                              className="dropdown-item"
+                            >
+                              Bonus Statement
+                            </li>
+                          </Link>
+                          <Link
                             onClick={() => setOpen(!open)}
                             to="/current-bet"
                           >
@@ -916,6 +927,17 @@ const Header = () => {
                           className="dropdown-item"
                         >
                           Account Statement
+                        </li>
+                      </Link>
+                      <Link
+                        to="/bonus-statement"
+                        onClick={() => setDropDown(!dropDown)}
+                      >
+                        <li
+                          data-rr-ui-dropdown-item=""
+                          className="dropdown-item"
+                        >
+                          Bonus Statement
                         </li>
                       </Link>
                       <Link

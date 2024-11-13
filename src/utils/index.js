@@ -36,6 +36,7 @@ export const API = {
   assets: "",
   eventDetails: "",
   mac88: "",
+  bonus: "",
 };
 
 export const settings = {

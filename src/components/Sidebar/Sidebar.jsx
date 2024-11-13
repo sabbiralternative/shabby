@@ -9,7 +9,6 @@ const Sidebar = () => {
 
   /* get menu links */
   useEffect(() => {
-    console.log("fgfdgfdg");
     const getAllMenuApi = async () => {
       const res = await axios.get(API.menu);
 
