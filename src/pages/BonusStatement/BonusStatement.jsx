@@ -4,6 +4,7 @@ import useBonusStatement from "../../hooks/useBonusStatement";
 import { API } from "../../utils";
 import { useState } from "react";
 import Notification from "../../components/Notification/Notification";
+import moment from "moment";
 
 const BonusStatement = () => {
   const [success, setSuccess] = useState("");
@@ -16,6 +17,8 @@ const BonusStatement = () => {
       return <span style={{ color: "green" }}>Bonus Claimed</span>;
     } else if (item?.is_claimed == 2) {
       return <span style={{ color: "orange" }}>Claim Pending</span>;
+    } else if (item?.is_claimed == 3) {
+      return <span style={{ color: "red" }}>Rejected</span>;
     } else if (item?.is_claimed == 0) {
       if (item?.is_wagering_complete == 1) {
         return (
@@ -61,7 +64,12 @@ const BonusStatement = () => {
       setErr(result?.data?.result || "Something went wrong");
     }
   };
-
+  const formateDate = (date) => {
+    if (date) {
+      const formateDate = moment(date).format("DD-MM-YYYY, h:mm a");
+      return formateDate;
+    }
+  };
   return (
     <>
       {success && (
@@ -202,7 +210,10 @@ const BonusStatement = () => {
                       }}
                     >
                       <span>Date Added:</span>
-                      <span style={{ fontWeight: 600 }}>{item.date_added}</span>
+                      <span style={{ fontWeight: 600 }}>
+                        {" "}
+                        {formateDate(item?.date_added)}
+                      </span>
                     </span>
                   </div>
 
@@ -230,7 +241,7 @@ const BonusStatement = () => {
                     >
                       <span>Expiry Date:</span>
                       <span style={{ fontWeight: 600 }}>
-                        {item.expirity_date}
+                        {formateDate(item?.expiry_date)}
                       </span>
                     </span>
                     <span
