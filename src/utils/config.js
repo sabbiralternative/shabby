@@ -10,6 +10,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
       if (data?.result?.endpoint) {
         const endPoints = data?.result?.endpoint;
         const setting = data?.result?.settings;
+        API.index = endPoints?.index;
         API.bonus = endPoints?.bonus;
         API.eventDetails = endPoints?.eventDetails;
         API.liveCasinoIframe = endPoints?.liveCasinoIframe;
@@ -64,6 +65,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         settings.betFairCashOut = setting?.betFairCashOut;
         settings.apkLink = setting?.apkLink;
         settings.mac88 = setting?.mac88;
+        settings.referral = setting?.referral;
         setNoticeLoaded(true);
       }
     })

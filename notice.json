@@ -21,6 +21,7 @@
       "baseUrl": "",
       "betFairCashOut": true,
       "mac88": true,
+      "referral": true,
       "build": "production"
     },
 
@@ -83,7 +84,8 @@
       "slotsWolf": "https://api7.live/api/exchange/diamond/slotsWolf",
       "latestEvents": "https://api7.live/api/exchange/diamond/latestEvents",
       "mac88": "https://api7.live/api/exchange/diamond/mac88",
-      "bonus": "https://api7.live/api/exchange/diamond/bonus"
+      "bonus": "https://api7.live/api/exchange/diamond/bonus",
+      "index": "https://api7.live/api/exchange/diamond/index"
     }
   },
   "success": true

@@ -37,6 +37,7 @@ export const API = {
   eventDetails: "",
   mac88: "",
   bonus: "",
+  index: "",
 };
 
 export const settings = {
@@ -56,4 +57,5 @@ export const settings = {
   apkLink: "",
   build: "",
   mac88: "",
+  referral: "",
 };
