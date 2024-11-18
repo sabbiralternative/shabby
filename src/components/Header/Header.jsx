@@ -780,6 +780,21 @@ const Header = () => {
                                 </li>
                               </a>
                             )}
+
+                            <Link
+                              to="/referral-statement"
+                              onClick={() => {
+                                setDropDown(false);
+                              }}
+                            >
+                              <li
+                                data-rr-ui-dropdown-item=""
+                                className="dropdown-item"
+                              >
+                                Referral Statement
+                              </li>
+                            </Link>
+
                             <Link
                               onClick={() => setOpen(!open)}
                               to="/current-bet"
@@ -978,6 +993,20 @@ const Header = () => {
                             </li>
                           </a>
                         )}
+
+                        <Link
+                          to="/referral-statement"
+                          onClick={() => {
+                            setDropDown(false);
+                          }}
+                        >
+                          <li
+                            data-rr-ui-dropdown-item=""
+                            className="dropdown-item"
+                          >
+                            Referral Statement
+                          </li>
+                        </Link>
                         <Link
                           onClick={() => setDropDown(!dropDown)}
                           to="/current-bet"

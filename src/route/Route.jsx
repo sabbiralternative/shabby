@@ -31,6 +31,7 @@ import APK from "../pages/APK/APK.jsx";
 import Mac88 from "../pages/Mac88/Mac88.jsx";
 import BonusStatement from "../pages/BonusStatement/BonusStatement.jsx";
 import NotFound from "../pages/NotFound/NotFound.jsx";
+import ReferralStatement from "../pages/ReferralStatement/ReferralStatement.jsx";
 
 const router = createBrowserRouter(
   [
@@ -133,6 +134,10 @@ const router = createBrowserRouter(
         {
           path: "/withdraw-statement",
           element: <WithdrawStatement />,
+        },
+        {
+          path: "/referral-statement",
+          element: <ReferralStatement />,
         },
       ],
     },
