@@ -30,12 +30,14 @@ import WithdrawStatement from "../pages/WithdrawStatement/WithdrawStatement.jsx"
 import APK from "../pages/APK/APK.jsx";
 import Mac88 from "../pages/Mac88/Mac88.jsx";
 import BonusStatement from "../pages/BonusStatement/BonusStatement.jsx";
+import NotFound from "../pages/NotFound/NotFound.jsx";
 
 const router = createBrowserRouter(
   [
     {
       path: "/",
       element: <Main />,
+      errorElement: <NotFound />,
       children: [
         {
           path: "/",

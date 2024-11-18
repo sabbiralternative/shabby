@@ -10,6 +10,7 @@ import UseState from "../../hooks/UseState";
 import { API, settings } from "../../utils";
 import useGetSocialLink from "../../hooks/useGetSocialLink";
 const Register = () => {
+  const referralCode = localStorage.getItem("referralCode");
   const { refetchSocialLinks } = useGetSocialLink();
   const [userExist, setUserExist] = useState(false);
   const [userErr, setUserErr] = useState(false);
@@ -19,6 +20,7 @@ const Register = () => {
     confirmPassword: "",
     mobileNo: "",
     otp: "",
+    referralCode: "",
   });
   const { setSuccessRegister, logo } = UseState();
   const [confirmPasswordErr, setConfirmPasswordErr] = useState("");
@@ -117,6 +119,7 @@ const Register = () => {
         site: settings.siteUrl,
         token: generatedToken,
         otp: user?.otp,
+        referralCode: referralCode || user.referralCode,
       };
       /* Encrypted post data */
       const encryptedData = UseEncryptData(registerData);
@@ -336,6 +339,22 @@ const Register = () => {
                 {otpField && (
                   <p className="success-form text-danger">{otpField} </p>
                 )}
+              </div>
+              <div className="mb-4 input-group position-relative username-text">
+                <input
+                  onChange={(e) =>
+                    setUser({ ...user, referralCode: e.target.value })
+                  }
+                  readOnly={referralCode}
+                  name="referralCode"
+                  type="text"
+                  className="form-control PhoneInput"
+                  placeholder="Referral Code"
+                  defaultValue={referralCode}
+                />
+                <span className="input-group-text">
+                  <i className="fas fa-key"></i>
+                </span>
               </div>
               <div className="d-grid">
                 <button
