@@ -219,7 +219,7 @@ const Login = () => {
                   type="button"
                   className="btn btn-primary btn-block mt-2"
                 >
-                  Login with demo ID
+                  Demo
                   <i className="fas fa-sign-in-alt float-end mt-1"></i>
                 </button>
               )}

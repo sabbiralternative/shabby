@@ -1113,7 +1113,10 @@ const Header = () => {
               !token &&
               !forceLoginSuccess) ? (
               <div className="user-details login-btn-box">
-                <div className="user-name dropdown ms-3">
+                <div
+                  className="user-name dropdown ms-3"
+                  style={{ display: "flex" }}
+                >
                   {/* if register = true in notice.json then show register button */}
                   {settings.registration && (
                     <Link className="btn-home-login" to="/register">
@@ -1130,13 +1133,9 @@ const Header = () => {
                   </Link>
                   {/* notice.json --> demoLogin = true then show the button */}
                   {settings.demoLogin && (
-                    <button
-                      onClick={loginWithDemo}
-                      type="button"
-                      className="btn-home-login"
-                    >
-                      Login with demo ID
-                    </button>
+                    <a onClick={loginWithDemo} className="btn-home-login">
+                      Demoo
+                    </a>
                   )}
                 </div>
               </div>
