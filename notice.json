@@ -9,7 +9,7 @@
       "siteUrl": "jainbook.club",
       "interval": "600",
       "casino": "aura",
-      "registration": false,
+      "registration": true,
       "forceLogin": false,
       "demoLogin": true,
       "apkLink": "https://11xgame.vip/11xgame.apk",

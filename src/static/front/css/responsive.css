@@ -1084,11 +1084,11 @@
     right: 5px;
   }
   .btn-home-login:nth-child(3) {
-    position: absolute;
+    /* position: absolute;
     width: auto;
     right: 0;
     bottom: -45px;
-    z-index: 1;
+    z-index: 1; */
   }
   .support-detail {
     width: 100%;

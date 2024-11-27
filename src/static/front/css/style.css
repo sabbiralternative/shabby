@@ -9755,12 +9755,15 @@ img.r-rotate {
 .btn-home-login {
   background: var(--bg-secondary);
   color: var(--text-secondary);
-  padding: 8px 16px;
+  padding: 8px 10px;
   border-radius: 4px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.5s;
   border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-home-login:hover {

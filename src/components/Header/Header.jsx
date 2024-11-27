@@ -1134,7 +1134,7 @@ const Header = () => {
                   {/* notice.json --> demoLogin = true then show the button */}
                   {settings.demoLogin && (
                     <a onClick={loginWithDemo} className="btn-home-login">
-                      Demoo
+                      Demo
                     </a>
                   )}
                 </div>
