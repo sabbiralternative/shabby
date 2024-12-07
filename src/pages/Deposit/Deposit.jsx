@@ -1,15 +1,45 @@
-import { API, settings } from "../../utils";
+import "../../static/front/css/depositWithdraw.css";
+
+import { useState } from "react";
+import DepositModal from "../../components/Modal/DepositModal";
+import AmountBox from "./AmountBox";
+import PaymentMethods from "./PaymentMethods";
+import UploadTransaction from "./UploadTransaction";
 
 const Deposit = () => {
-  const token = localStorage.getItem("token");
-  /* Deposit iframe */
+  const [amount, setAmount] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [paymentMethods, setPaymentMethods] = useState(false);
+  const [uploadTransaction, setUploadTransaction] = useState(false);
+  const [paymentId, setPaymentId] = useState("");
+
   return (
     <div className="center-container">
-      <iframe
-        allow="fullscreen;"
-        src={`${API.depositIframe}/${settings.siteUrl}/${token}`}
-        style={{ width: "100%", height: "100%", border: "0px" }}
-      ></iframe>
+      {!paymentMethods && !uploadTransaction && (
+        <AmountBox
+          amount={amount}
+          setAmount={setAmount}
+          setShowModal={setShowModal}
+        />
+      )}
+      {uploadTransaction && (
+        <UploadTransaction paymentId={paymentId} amount={amount} />
+      )}
+      {paymentMethods && (
+        <PaymentMethods
+          setUploadTransaction={setUploadTransaction}
+          setPaymentMethods={setPaymentMethods}
+          setPaymentId={setPaymentId}
+          amount={amount}
+        />
+      )}
+      {showModal && (
+        <DepositModal
+          amount={amount}
+          setShowModal={setShowModal}
+          setPaymentMethods={setPaymentMethods}
+        />
+      )}
     </div>
   );
 };

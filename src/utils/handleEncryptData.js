@@ -15,3 +15,8 @@ const handleEncryptData = (data) => {
 };
 
 export default handleEncryptData;
+
+
+
+
+

@@ -10,7 +10,13 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
       if (data?.result?.endpoint) {
         const endPoints = data?.result?.endpoint;
         const setting = data?.result?.settings;
+        API.withdrawBreakdown = endPoints?.withdrawBreakdown;
+        API.uploadScreenshot = endPoints?.uploadScreenshot;
+        API.depositBreakdown = endPoints?.depositBreakdown;
+        API.pgStatus = endPoints?.pgStatus;
+        API.pg = endPoints?.pg;
         API.index = endPoints?.index;
+        API.bankAccount = endPoints?.bankAccount;
         API.bonus = endPoints?.bonus;
         API.eventDetails = endPoints?.eventDetails;
         API.liveCasinoIframe = endPoints?.liveCasinoIframe;
@@ -66,6 +72,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         settings.apkLink = setting?.apkLink;
         settings.mac88 = setting?.mac88;
         settings.referral = setting?.referral;
+        settings.paymentIntent = setting?.paymentIntent;
         setNoticeLoaded(true);
       }
     })

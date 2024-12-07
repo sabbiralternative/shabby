@@ -6,15 +6,15 @@
   "result": {
     "settings": {
       "siteTitle": "Jainbook",
-      "siteUrl": "jainbook.club",
+      "siteUrl": "a23money.com",
       "interval": "600",
       "casino": "aura",
       "registration": true,
       "forceLogin": false,
       "demoLogin": true,
       "apkLink": "https://11xgame.vip/11xgame.apk",
-      "deposit": false,
-      "withdraw": false,
+      "deposit": true,
+      "withdraw": true,
       "disabledDevtool": false,
       "casinoCurrency": "AED",
       "balanceApiLoop": false,
@@ -22,6 +22,7 @@
       "betFairCashOut": true,
       "mac88": true,
       "referral": true,
+      "paymentIntent": false,
       "build": "production"
     },
 
@@ -85,7 +86,13 @@
       "latestEvents": "https://api7.live/api/exchange/diamond/latestEvents",
       "mac88": "https://api7.live/api/exchange/diamond/mac88",
       "bonus": "https://api7.live/api/exchange/diamond/bonus",
-      "index": "https://api7.live/api/exchange/diamond/index"
+      "index": "https://api7.live/api/exchange/diamond/index",
+      "bankAccount": "https://api7.live/api/exchange/diamond/bankAccount",
+      "pg": "https://api7.live/api/exchange/diamond/pg",
+      "pgStatus": "https://api7.live/api/exchange/diamond/pgStatus",
+      "depositBreakdown": "https://api7.live/api/exchange/diamond/depositBreakdown",
+      "uploadScreenshot": "https://b2c.bet/deposit/up.php",
+      "withdrawBreakdown": "https://api7.live/api/exchange/diamond/withdrawBreakdown"
     }
   },
   "success": true

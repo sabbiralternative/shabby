@@ -12,10 +12,9 @@ import useGetSocialLink from "../../hooks/useGetSocialLink";
 const Register = () => {
   const referralCode = localStorage.getItem("referralCode");
   const { refetchSocialLinks } = useGetSocialLink();
-  const [userExist, setUserExist] = useState(false);
-  const [userErr, setUserErr] = useState(false);
+  // const [userExist, setUserExist] = useState(false);
+
   const [user, setUser] = useState({
-    userName: "",
     password: "",
     confirmPassword: "",
     mobileNo: "",
@@ -31,7 +30,7 @@ const Register = () => {
   const [errOtp, setErrOtp] = useState("");
   const [password, setPassword] = useState("");
   const [mobile, setMobile] = useState("");
-  const [userName, setUserName] = useState("");
+  // const [userName, setUserName] = useState("");
   const [otpField, setOtpField] = useState("");
 
   /* set site title  */
@@ -59,38 +58,38 @@ const Register = () => {
   });
 
   /* handle user exist or not */
-  const isUserExist = async (e) => {
-    if (e.target.value.length > 3) {
-      setUser({ ...user, userName: e.target.value });
-      /* random token */
-      const generatedToken = UseTokenGenerator();
-      /* encrypted post data */
-      const encryptedVideoData = UseEncryptData({
-        username: e.target.value,
-        token: generatedToken,
-      });
-      const res = await axios.post(API.checkUsername, encryptedVideoData);
-      const data = res.data;
-      if (data?.success) {
-        setUserErr(false);
-        setUserExist(true);
-      } else if (!data?.success) {
-        setUserErr(true);
-        setUserExist(false);
-      }
-    }
-  };
+  // const isUserExist = async (e) => {
+  //   if (e.target.value.length > 3) {
+  //     setUser({ ...user, userName: e.target.value });
+  //     /* random token */
+  //     const generatedToken = UseTokenGenerator();
+  //     /* encrypted post data */
+  //     const encryptedVideoData = UseEncryptData({
+  //       username: e.target.value,
+  //       token: generatedToken,
+  //     });
+  //     const res = await axios.post(API.checkUsername, encryptedVideoData);
+  //     const data = res.data;
+  //     if (data?.success) {
+  //       setUserErr(false);
+  //       setUserExist(true);
+  //     } else if (!data?.success) {
+  //       setUserErr(true);
+  //       setUserExist(false);
+  //     }
+  //   }
+  // };
 
   /* Handle register */
   const onSubmit = () => {
     setConfirmPasswordErr("");
     setPassword("");
     setMobile("");
-    setUserName("");
+    // setUserName("");
     setOtpField("");
-    if (user?.userName === "") {
-      return setUserName("User name is required !");
-    }
+    // if (user?.userName === "") {
+    //   return setUserName("User name is required !");
+    // }
     if (
       user?.password !== user?.confirmPassword &&
       user?.confirmPassword?.length > 0
@@ -112,7 +111,6 @@ const Register = () => {
       /* Get random token */
       const generatedToken = UseTokenGenerator();
       const registerData = {
-        username: user?.userName,
         password: user?.password,
         confirmPassword: user?.confirmPassword,
         mobile: user?.mobileNo,
@@ -225,13 +223,18 @@ const Register = () => {
             </h4>
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* <!-- whatsapp start--> */}
-              {whatsAppLink && (
+              {whatsAppLink?.whatsapplink && (
                 <div className="whatsapp-box">
                   <div>
                     <span>Register as New User</span>
                     <h4>Get your instant ID from whatsapp</h4>
                   </div>
-                  <Link to={whatsAppLink} className="create-whatsapp-link">
+                  <Link
+                    onClick={() =>
+                      window.open(whatsAppLink?.whatsapplink, "_blank")
+                    }
+                    className="create-whatsapp-link"
+                  >
                     <div className="whatsapp-icon">
                       <i className="fab fa-whatsapp"></i>
                     </div>
@@ -243,22 +246,26 @@ const Register = () => {
 
               <div className="mb-4 input-group position-relative username-text">
                 <input
-                  name="username"
-                  type="text"
-                  className="form-control"
-                  placeholder="Username"
-                  onChange={(e) => isUserExist(e)}
+                  name="mobileNo"
+                  type="number"
+                  className="form-control PhoneInput"
+                  placeholder="Mobile No."
+                  onChange={(e) =>
+                    setUser({ ...user, mobileNo: e.target.value })
+                  }
                 />
                 <span className="input-group-text">
-                  <i className="fas fa-user"></i>
+                  <i className="fas fa-phone"></i>
                 </span>
-                {userErr && (
-                  <p className="success-form text-danger">
-                    Username is not available
-                  </p>
-                )}
-                {userName && (
-                  <p className="success-form text-danger">{userName}</p>
+                <button
+                  onClick={getOtp}
+                  className="btn btn-primary btn-block"
+                  type="button"
+                >
+                  Get OTP
+                </button>
+                {mobile && (
+                  <p className="success-form text-danger">{mobile} </p>
                 )}
               </div>
 
@@ -303,30 +310,6 @@ const Register = () => {
 
               <div className="mb-4 input-group position-relative username-text">
                 <input
-                  name="mobileNo"
-                  type="number"
-                  className="form-control PhoneInput"
-                  placeholder="Mobile No."
-                  onChange={(e) =>
-                    setUser({ ...user, mobileNo: e.target.value })
-                  }
-                />
-                <span className="input-group-text">
-                  <i className="fas fa-phone"></i>
-                </span>
-                <button
-                  onClick={getOtp}
-                  className="btn btn-primary btn-block"
-                  type="button"
-                >
-                  Get OTP
-                </button>
-                {mobile && (
-                  <p className="success-form text-danger">{mobile} </p>
-                )}
-              </div>
-              <div className="mb-4 input-group position-relative username-text">
-                <input
                   onChange={(e) => setUser({ ...user, otp: e.target.value })}
                   name="otp"
                   type="number"
@@ -357,13 +340,7 @@ const Register = () => {
                 </span>
               </div>
               <div className="d-grid">
-                <button
-                  disabled={
-                    userExist && user?.userName?.length > 3 ? false : true
-                  }
-                  type="submit"
-                  className="btn btn-primary btn-block"
-                >
+                <button type="submit" className="btn btn-primary btn-block">
                   Register<i className="fas fa-sign-in-alt float-end mt-1"></i>
                 </button>
               </div>

@@ -5,6 +5,7 @@ import notice from "../../notice.json";
 export const StateContext = createContext(null);
 const StateProvider = ({ children }) => {
   const [sports, setSports] = useState(4);
+  const [addBank, setAddBank] = useState(false);
   const [buttonValue, SetButtonValue] = useState(false);
   const [placeBetValue, setPlaceBetValue] = useState({});
   const [filterGames, setFilterGames] = useState("all");
@@ -187,6 +188,8 @@ const StateProvider = ({ children }) => {
     setSuccessRegister,
     logo,
     setLogo,
+    addBank,
+    setAddBank,
 
     lowExposure,
     setLowExposure,

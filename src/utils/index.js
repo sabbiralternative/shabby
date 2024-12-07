@@ -38,6 +38,12 @@ export const API = {
   mac88: "",
   bonus: "",
   index: "",
+  bankAccount: "",
+  pg: "",
+  pgStatus: "",
+  depositBreakdown: "",
+  uploadScreenshot: "",
+  withdrawBreakdown: "",
 };
 
 export const settings = {
@@ -58,4 +64,5 @@ export const settings = {
   build: "",
   mac88: "",
   referral: "",
+  paymentIntent: "",
 };
