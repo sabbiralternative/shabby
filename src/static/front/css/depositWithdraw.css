@@ -1,5 +1,4 @@
 .amountBox {
-  font-family: "Inter";
   margin-top: 1.38rem;
   display: flex;
   padding: 1rem;
@@ -110,7 +109,7 @@
   background-color: var(--color1);
   /* box-shadow: 0 0 5px #2db261; */
   color: #fff;
-  font-family: "Inter";
+
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
@@ -166,7 +165,7 @@
 
 .depositbreak > p {
   color: #040404;
-  font-family: "Inter";
+
   font-size: 1rem;
   font-style: normal;
   font-weight: 700;
@@ -212,7 +211,7 @@
 
 .balancetxt {
   color: #040404;
-  font-family: "Inter";
+
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
@@ -227,7 +226,7 @@
 .amt > p {
   color: #040404;
   text-align: center;
-  font-family: "Inter";
+
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
@@ -250,7 +249,7 @@
 }
 .money {
   color: #040404;
-  font-family: "Inter";
+
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
@@ -259,7 +258,7 @@
 .doll1 {
   color: var(--success-01, #22c55e);
   text-align: center;
-  font-family: "Inter";
+
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
@@ -310,7 +309,7 @@
 
 .money {
   color: #040404;
-  font-family: "Inter";
+
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
@@ -320,7 +319,7 @@
 .doll {
   color: #040404;
   text-align: center;
-  font-family: "Inter";
+
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
@@ -383,7 +382,7 @@
 
 .make[_ngcontent-kdb-c159] {
   color: #fff;
-  font-family: "Inter";
+
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
@@ -416,7 +415,6 @@
 }
 
 .utrbox {
-  font-family: "Inter";
   margin: 10px;
   display: flex;
   padding: 1rem;
@@ -509,7 +507,6 @@
 }
 
 .utrbox {
-  font-family: "Inter";
   margin: 10px;
   display: flex;
   padding: 1rem;
@@ -640,7 +637,7 @@
   top: 0;
   left: 0;
   color: #040404;
-  font-family: "Inter";
+
   font-size: 1.125rem;
   font-style: normal;
   font-weight: 600;
@@ -670,7 +667,7 @@
 
 .amount-text {
   color: #040404;
-  font-family: "Inter";
+
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 600;
@@ -767,7 +764,7 @@
   background-color: #ad1919;
   /* box-shadow: 0 0 5px var(--color2); */
   color: #fff;
-  font-family: "Inter";
+
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -907,7 +904,7 @@
 .logo > p {
   color: #040404;
   text-align: center;
-  font-family: "Inter";
+
   font-size: 0.75rem;
   font-style: normal;
   font-weight: 500;
@@ -938,7 +935,7 @@
   border-radius: 0rem 0.75rem 0.75rem 0rem;
   background: rgba(255, 255, 255, 0);
   color: #040404;
-  font-family: "Inter";
+
   font-size: 0.75rem;
   font-style: normal;
   font-weight: 400;
@@ -988,7 +985,7 @@
 }
 .plus-btn > span {
   color: #d5d9de;
-  font-family: "Inter";
+
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 600;
@@ -1065,7 +1062,7 @@
 .card-header > h2 {
   margin-bottom: 0;
   color: var(--white, #fff);
-  font-family: "Inter";
+
   font-size: 1rem;
   font-style: normal;
   font-weight: 700;
@@ -1116,7 +1113,7 @@
 .input-box > input {
   color: #000;
   background-color: #ebedf4;
-  font-family: "Inter";
+
   font-size: 0.75rem;
   font-style: normal;
   font-weight: 500;
@@ -1149,7 +1146,7 @@
 }
 .add-btn > span {
   color: var(--white, #fff);
-  font-family: "Inter";
+
   font-size: 1rem;
   font-style: normal;
   font-weight: 600;
@@ -1169,7 +1166,7 @@
 }
 .cancel-btn > span {
   color: #d5d9de;
-  font-family: "Inter";
+
   font-size: 1rem;
   font-style: normal;
   font-weight: 600;
@@ -1224,7 +1221,7 @@
 }
 .withdraw-amount > span {
   color: #040404;
-  font-family: "Inter";
+
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 600;
@@ -1260,7 +1257,7 @@
     rgba(10, 116, 58, 0.1) 100%
   );
   color: #040404;
-  font-family: "Inter";
+
   font-size: 1rem;
   font-style: normal;
   font-weight: 600;
@@ -1276,7 +1273,7 @@
 }
 .bank-account > span {
   color: #040404;
-  font-family: "Inter";
+
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 600;
@@ -1357,7 +1354,7 @@
 
 .depositbreak > p {
   color: #040404;
-  font-family: "Inter";
+
   font-size: 1rem;
   font-style: normal;
   font-weight: 700;
@@ -1458,7 +1455,7 @@
 .card-header > h2 {
   margin-bottom: 0;
   color: var(--white, #fff);
-  font-family: "Inter";
+
   font-size: 1rem;
   font-style: normal;
   font-weight: 700;
@@ -1489,7 +1486,7 @@
 .remove-text {
   margin-top: 1rem;
   color: #bbbbbb;
-  font-family: "Inter";
+
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
@@ -1522,7 +1519,7 @@
 
 .cancel-btnn > span {
   color: #d5d9de;
-  font-family: "Inter";
+
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
@@ -1545,7 +1542,7 @@
 
 .confirm-btnn > span {
   color: var(--white, #fff);
-  font-family: "Inter";
+
   font-size: 1rem;
   font-style: normal;
   font-weight: 600;

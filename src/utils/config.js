@@ -73,6 +73,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         settings.mac88 = setting?.mac88;
         settings.referral = setting?.referral;
         settings.paymentIntent = setting?.paymentIntent;
+        settings.registrationWhatsapp = setting?.registrationWhatsapp;
         setNoticeLoaded(true);
       }
     })

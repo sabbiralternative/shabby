@@ -65,4 +65,5 @@ export const settings = {
   mac88: "",
   referral: "",
   paymentIntent: "",
+  registrationWhatsapp: "",
 };

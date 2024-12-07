@@ -51,8 +51,9 @@ const Register = () => {
       });
       const res = await axios.post(API.whatsapp, encryptedVideoData);
       const data = res.data;
+
       if (data?.success) {
-        return data?.result?.link;
+        return data?.result;
       }
     },
   });
@@ -223,7 +224,7 @@ const Register = () => {
             </h4>
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* <!-- whatsapp start--> */}
-              {whatsAppLink?.whatsapplink && (
+              {whatsAppLink?.whatsapplink && settings?.registrationWhatsapp && (
                 <div className="whatsapp-box">
                   <div>
                     <span>Register as New User</span>

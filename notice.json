@@ -23,6 +23,7 @@
       "mac88": true,
       "referral": true,
       "paymentIntent": false,
+      "registrationWhatsapp": true,
       "build": "production"
     },
 

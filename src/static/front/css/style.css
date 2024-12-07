@@ -2328,7 +2328,7 @@ tr {
 }
 
 .search-box input.search-input-show {
-  width: 270px;
+  width: 150px;
   transition: width 0.4s linear;
   -webkit-transition: width 0.4s linear;
   -moz-transition: width 0.4s linear;
