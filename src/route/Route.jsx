@@ -32,6 +32,9 @@ import Mac88 from "../pages/Mac88/Mac88.jsx";
 import BonusStatement from "../pages/BonusStatement/BonusStatement.jsx";
 import NotFound from "../pages/NotFound/NotFound.jsx";
 import ReferralStatement from "../pages/ReferralStatement/ReferralStatement.jsx";
+import Kabaddi from "../pages/Kabaddi/Kabaddi.jsx";
+import Greyhound from "../pages/Greyhound/Greyhound.jsx";
+import Horse from "../pages/Horse/Horse.jsx";
 
 const router = createBrowserRouter(
   [
@@ -52,6 +55,22 @@ const router = createBrowserRouter(
         {
           path: "/football",
           element: <Football />,
+        },
+        {
+          path: "/kabaddi",
+          element: <Kabaddi />,
+        },
+        {
+          path: "/tennis",
+          element: <Tennis />,
+        },
+        {
+          path: "/greyhound",
+          element: <Greyhound />,
+        },
+        {
+          path: "/horse",
+          element: <Horse />,
         },
         {
           path: "/tennis",

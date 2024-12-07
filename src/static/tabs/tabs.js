@@ -2,7 +2,12 @@ import { MdSportsCricket, MdSportsKabaddi } from "react-icons/md";
 import { BiBasketball } from "react-icons/bi";
 import { GiBasketballBall, GiVolleyballBall } from "react-icons/gi";
 import { TbClover } from "react-icons/tb";
-import { IoGameController, IoFootballOutline ,IoFootball,IoTennisballSharp} from "react-icons/io5";
+import {
+  IoGameController,
+  IoFootballOutline,
+  IoFootball,
+  IoTennisballSharp,
+} from "react-icons/io5";
 import { FaPlayCircle } from "react-icons/fa";
 import { FaTableTennisPaddleBall } from "react-icons/fa6";
 
@@ -30,6 +35,24 @@ export const tabPanel = [
     icon: IoTennisballSharp,
     to: "tennis",
     id: 2,
+  },
+  {
+    label: "Kabaddi",
+    icon: MdSportsKabaddi,
+    to: "kabaddi",
+    id: 5,
+  },
+  {
+    label: "Horse",
+    icon: MdSportsKabaddi,
+    to: "kabaddi",
+    id: 7,
+  },
+  {
+    label: "Greyhound",
+    icon: MdSportsKabaddi,
+    to: "kabaddi",
+    id: 4339,
   },
   {
     label: "Table Tennis",
@@ -72,11 +95,5 @@ export const tabPanel = [
     icon: BiBasketball,
     to: "handball",
     id: 85,
-  },
-  {
-    label: "Kabaddi",
-    icon: MdSportsKabaddi,
-    to: "kabaddi",
-    id: 99,
   },
 ];

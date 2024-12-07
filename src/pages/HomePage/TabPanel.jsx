@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import UseState from "../../hooks/UseState";
 
 const TabPanel = ({ label, icon: Icon, id }) => {
@@ -6,7 +5,7 @@ const TabPanel = ({ label, icon: Icon, id }) => {
 
   return (
     <li onClick={() => setSports(id)} className="nav-item">
-      <Link className={`nav-link ${sports === id ? "active" : ""}`}>
+      <p className={`nav-link ${sports === id ? "active" : ""}`}>
         <div
           style={{
             paddingBottom: "3px",
@@ -14,10 +13,16 @@ const TabPanel = ({ label, icon: Icon, id }) => {
           }}
           className="d-xl-none"
         >
-          <Icon />
+          {id == 7 ? (
+            <i className="icon icon-10"></i>
+          ) : id == 4339 ? (
+            <i className="icon icon-65"></i>
+          ) : (
+            <Icon />
+          )}
         </div>
         <span>{label}</span>
-      </Link>
+      </p>
     </li>
   );
 };

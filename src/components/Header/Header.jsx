@@ -96,6 +96,11 @@ const Header = () => {
     localStorage.setItem("group", 1);
     setSports(1);
   };
+  const kabbadiEndpoint = () => {
+    localStorage.removeItem("group");
+    localStorage.setItem("group", 5);
+    setSports(5);
+  };
   const tableTennisEndpoint = () => {
     localStorage.removeItem("group");
     localStorage.setItem("group", 8);
@@ -716,6 +721,36 @@ const Header = () => {
                           >
                             <div className="d-xl-none d-flex justify-content-center"></div>
                             {/* in notice.json if withdraw = true then show this link */}
+
+                            <div className="depowith">
+                              <div
+                                className="d-xl-none d-flex justify-content-center"
+                                style={{ gap: "10px" }}
+                              >
+                                {/* In notice.json if deposit = true then showDeposit */}
+                                {settings.deposit && (
+                                  <Link
+                                    style={{ padding: "2px 6px" }}
+                                    onClick={() => setOpen(!open)}
+                                    className="btn btn-success me-2"
+                                    to="/deposit"
+                                  >
+                                    Deposit
+                                  </Link>
+                                )}
+                                {/* In notice.json if withdraw = true then showDeposit */}
+                                {settings.withdraw && (
+                                  <Link
+                                    style={{ padding: "2px 6px" }}
+                                    onClick={() => setOpen(!open)}
+                                    className="btn btn-danger"
+                                    to="/withdraw"
+                                  >
+                                    Withdraw
+                                  </Link>
+                                )}
+                              </div>{" "}
+                            </div>
                             {settings.withdraw && (
                               <Link
                                 to="/withdraw-statement"
@@ -752,6 +787,17 @@ const Header = () => {
                                 className="dropdown-item"
                               >
                                 Account Statement
+                              </li>
+                            </Link>
+                            <Link
+                              onClick={() => setOpen(!open)}
+                              to="/current-bet"
+                            >
+                              <li
+                                data-rr-ui-dropdown-item=""
+                                className="dropdown-item"
+                              >
+                                Current Bets
                               </li>
                             </Link>
                             <Link
@@ -795,17 +841,6 @@ const Header = () => {
                               </li>
                             </Link>
 
-                            <Link
-                              onClick={() => setOpen(!open)}
-                              to="/current-bet"
-                            >
-                              <li
-                                data-rr-ui-dropdown-item=""
-                                className="dropdown-item"
-                              >
-                                Current Bet
-                              </li>
-                            </Link>
                             <Link
                               onClick={() => setOpen(!open)}
                               to="/activity-logs"
@@ -867,18 +902,23 @@ const Header = () => {
                               Balance
                               <div className="form-check float-end">
                                 <input
+                                  checked={balance}
                                   className="form-check-input"
                                   type="checkbox"
                                 />
                               </div>
                             </Link>
                             <Link
-                              onClick={() => setExp(!exp)}
+                              // onClick={() => setExp(!exp)}
                               className="dropdown-item d-xl-none"
                             >
                               Exposure
                               <div className="form-check float-end">
                                 <input
+                                  onChange={(e) =>
+                                    setExp(e.target.checked ? true : false)
+                                  }
+                                  checked={exp}
                                   className="form-check-input"
                                   type="checkbox"
                                 />
@@ -968,6 +1008,17 @@ const Header = () => {
                           </li>
                         </Link>
                         <Link
+                          onClick={() => setDropDown(!dropDown)}
+                          to="/current-bet"
+                        >
+                          <li
+                            data-rr-ui-dropdown-item=""
+                            className="dropdown-item"
+                          >
+                            Current Bets
+                          </li>
+                        </Link>
+                        <Link
                           to="/bonus-statement"
                           onClick={() => setDropDown(!dropDown)}
                         >
@@ -1007,17 +1058,7 @@ const Header = () => {
                             Referral Statement
                           </li>
                         </Link>
-                        <Link
-                          onClick={() => setDropDown(!dropDown)}
-                          to="/current-bet"
-                        >
-                          <li
-                            data-rr-ui-dropdown-item=""
-                            className="dropdown-item"
-                          >
-                            Current Bet
-                          </li>
-                        </Link>
+
                         <Link
                           onClick={() => setDropDown(!dropDown)}
                           to="/activity-logs"
@@ -1145,31 +1186,19 @@ const Header = () => {
               !settings.registration &&
               forceLoginSuccess) ||
             (forceLoginSuccess && token) ? (
-              <div className="search-box-container d-xl-none">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                className="search-box-container d-xl-none"
+              >
                 <SearchBox />
-                <div className="depowith">
-                  {" "}
-                  <div className="d-xl-none d-flex justify-content-center">
-                    {/* In notice.json if deposit = true then showDeposit */}
-                    {settings.deposit && (
-                      <Link className="btn btn-success me-2" to="/deposit">
-                        Deposit
-                      </Link>
-                    )}
-                    {/* In notice.json if withdraw = true then showDeposit */}
-                    {settings.withdraw && (
-                      <Link className="btn btn-danger" to="/withdraw">
-                        Withdraw
-                      </Link>
-                    )}
-                  </div>{" "}
-                </div>{" "}
+                {/* <div className="news"> */}
+                <marquee>{showNotification} </marquee>
+                {/* </div> */}
               </div>
             ) : null}
-
-            <div className="news">
-              <marquee>{showNotification} </marquee>
-            </div>
           </div>
           <div className="header-bottom d-none d-xl-block">
             <nav className="navbar navbar-expand">
@@ -1190,15 +1219,6 @@ const Header = () => {
                 </li>
                 <li className="nav-item">
                   <Link
-                    onClick={tennisEndpoint}
-                    className="nav-link"
-                    to="/tennis"
-                  >
-                    Tennis
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
                     onClick={footballEndpoint}
                     className="nav-link"
                     to="/football"
@@ -1206,6 +1226,36 @@ const Header = () => {
                     Football
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link
+                    onClick={tennisEndpoint}
+                    className="nav-link"
+                    to="/tennis"
+                  >
+                    Tennis
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link
+                    onClick={kabbadiEndpoint}
+                    className="nav-link"
+                    to="/kabaddi"
+                  >
+                    Kabbadi
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/horse">
+                    Horse
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/greyhound">
+                    Greyhound
+                  </Link>
+                </li>
+
                 <li className="nav-item">
                   <Link
                     onClick={tableTennisEndpoint}

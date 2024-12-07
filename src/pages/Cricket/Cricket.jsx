@@ -7,14 +7,14 @@ const Cricket = () => {
   const [data, setData] = useState([]);
   const group = JSON.parse(localStorage.getItem("group"));
   const [loading, setLoading] = useState(true);
-/* Cricket event */
+  /* Cricket event */
   useEffect(() => {
     const gamesData = async () => {
       if (group !== null) {
         const apiUrl = `${API.group}/${group}`;
         const res = await axios.get(apiUrl);
         const data = res.data;
-     
+
         setData(data);
         setLoading(false);
       }

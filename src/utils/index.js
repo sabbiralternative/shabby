@@ -44,6 +44,7 @@ export const API = {
   depositBreakdown: "",
   uploadScreenshot: "",
   withdrawBreakdown: "",
+  groupSportsBook: "",
 };
 
 export const settings = {

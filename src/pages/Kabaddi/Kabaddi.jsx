@@ -3,24 +3,24 @@ import axios from "axios";
 import BetTable from "../../components/BetTable/BetTable";
 import { API } from "../../utils";
 
-const TableTennis = () => {
+const Kabaddi = () => {
   const [data, setData] = useState([]);
-  const group = JSON.parse(localStorage.getItem("group"));
   const [loading, setLoading] = useState(true);
-
-  /* Get table tennis data */
+  /* Football events */
   useEffect(() => {
     const gamesData = async () => {
-      if (group !== null) {
-        const apiUrl = `${API.group}/${group}`;
-        const res = await axios.get(apiUrl);
-        const data = res.data;
-        setData(data);
-        setLoading(false);
-      }
+      const apiUrl = `${API.group}/${5}`;
+      const res = await axios.get(apiUrl);
+      const data = res.data;
+      setData(data);
+      setLoading(false);
     };
     gamesData();
-  }, [group]);
+    /* Refetch football api after one second */
+
+    const intervalId = setInterval(gamesData, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   if (loading) {
     return "";
@@ -46,7 +46,6 @@ const TableTennis = () => {
             </div>
             <div className="bet-table-body">
               {Object.values(data).length > 0 &&
-                group === 8 &&
                 Object.keys(data)
                   .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                   .map((key, index) => (
@@ -63,4 +62,4 @@ const TableTennis = () => {
   );
 };
 
-export default TableTennis;
+export default Kabaddi;

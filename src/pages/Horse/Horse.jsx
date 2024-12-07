@@ -1,30 +1,31 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import BetTable from "../../components/BetTable/BetTable";
 import { API } from "../../utils";
+import HorseGreyhound from "../../components/HorseGreyhound/HorseGreyhound";
+import handleDecryptData from "../../utils/handleDecryptData";
 
-const TableTennis = () => {
+const Horse = () => {
   const [data, setData] = useState([]);
-  const group = JSON.parse(localStorage.getItem("group"));
   const [loading, setLoading] = useState(true);
-
-  /* Get table tennis data */
+  /* Cricket event */
   useEffect(() => {
     const gamesData = async () => {
-      if (group !== null) {
-        const apiUrl = `${API.group}/${group}`;
-        const res = await axios.get(apiUrl);
-        const data = res.data;
-        setData(data);
-        setLoading(false);
-      }
+      const apiUrl = `${API.groupSportsBook}/${7}`;
+      const res = await axios.get(apiUrl);
+      const data = res.data;
+      const decryptionData = await handleDecryptData(JSON.stringify(data));
+
+      setData(decryptionData);
+      setLoading(false);
     };
     gamesData();
-  }, [group]);
+    /* Refetch cricket api after 1 second */
+  }, []);
 
   if (loading) {
-    return "";
+    return;
   }
+
   return (
     <div className="center-container" style={{ width: "100%" }}>
       <div className="tab-content mt-1">
@@ -45,16 +46,18 @@ const TableTennis = () => {
               </div>
             </div>
             <div className="bet-table-body">
-              {Object.values(data).length > 0 &&
-                group === 8 &&
-                Object.keys(data)
-                  .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                  .map((key, index) => (
-                    <BetTable key={index} keys={key} data={data} />
-                  ))}
-              {Object.values(data).length < 1 && (
+              {data?.length > 0 ? (
+                <HorseGreyhound
+                  data={data}
+                  eventTypeId={7}
+                  title="Horse Racing"
+                />
+              ) : (
                 <div className="bet-table-row">No Record Found</div>
               )}
+              {/* {Object.values(data).length < 1 && (
+                <div className="bet-table-row">No Record Found</div>
+              )} */}
             </div>
           </div>
         </div>
@@ -63,4 +66,4 @@ const TableTennis = () => {
   );
 };
 
-export default TableTennis;
+export default Horse;

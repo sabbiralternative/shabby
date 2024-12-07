@@ -24,7 +24,7 @@
       "referral": true,
       "paymentIntent": false,
       "registrationWhatsapp": true,
-      "build": "production"
+      "build": "development"
     },
 
     "endpoint": {
@@ -93,7 +93,8 @@
       "pgStatus": "https://api7.live/api/exchange/diamond/pgStatus",
       "depositBreakdown": "https://api7.live/api/exchange/diamond/depositBreakdown",
       "uploadScreenshot": "https://b2c.bet/deposit/up.php",
-      "withdrawBreakdown": "https://api7.live/api/exchange/diamond/withdrawBreakdown"
+      "withdrawBreakdown": "https://api7.live/api/exchange/diamond/withdrawBreakdown",
+      "groupSportsBook": "https://cache.api7.live/api/exchange/diamond/group/sportsbook"
     }
   },
   "success": true

@@ -10,6 +10,8 @@ import useLatestEvent from "../../hooks/useLatestEvent";
 import { useNavigate } from "react-router-dom";
 import UseBalance from "../../hooks/UseBalance";
 import { API, settings } from "../../utils";
+import handleDecryptData from "../../utils/handleDecryptData";
+import HorseGreyhound from "../../components/HorseGreyhound/HorseGreyhound";
 
 const HomePage = () => {
   const [casino_list, setCasino_list] = useState([]);
@@ -42,15 +44,15 @@ const HomePage = () => {
   useEffect(() => {
     const gameData = async () => {
       if (sports !== null) {
-        const apiUrl = `${API.group}/${sports}`;
+        const apiUrl = `${API.groupSportsBook}/${sports}`;
         const res = await axios.get(apiUrl);
         const data = res.data;
-        setData(data);
+        const decryptionData = await handleDecryptData(JSON.stringify(data));
+        setData(decryptionData);
       }
     };
     gameData();
-    /* Refetch odds api for cricket, football, and tennis */
-    if (sports === 4 || sports === 1 || sports === 2) {
+    if (sports !== 7 && sports !== 4339) {
       const intervalId = setInterval(gameData, settings.interval);
       return () => clearInterval(intervalId);
     }
@@ -110,93 +112,25 @@ const HomePage = () => {
             </div>
             <div className="bet-table-body position-relative">
               {/* Odds component for each sportsType */}
-              {data && Object.values(data).length > 0 && sports === 4
-                ? Object.keys(data)
-                    .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                    .map((key, index) => (
-                      <BetTable key={index} keys={key} data={data} />
-                    ))
-                : null}
-              {data && Object.values(data).length > 0 && sports === 0
-                ? Object.keys(data)
-                    .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                    .map((key, index) => (
-                      <BetTable key={index} keys={key} data={data} />
-                    ))
-                : null}
+              {data && sports === 7 ? (
+                <HorseGreyhound
+                  data={data}
+                  eventTypeId={7}
+                  title="Horse Racing"
+                />
+              ) : null}
+              {data && sports === 4339 ? (
+                <HorseGreyhound
+                  data={data}
+                  eventTypeId={4339}
+                  title="Greyhound Racing"
+                />
+              ) : null}
 
-              {data && Object.values(data).length > 0 && sports === 1
-                ? Object.keys(data)
-                    .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                    .map((key, index) => (
-                      <BetTable key={index} keys={key} data={data} />
-                    ))
-                : null}
-
-              {data && Object.values(data).length > 0 && sports === 2
-                ? Object.keys(data)
-                    .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                    .map((key, index) => (
-                      <BetTable key={index} keys={key} data={data} />
-                    ))
-                : null}
-
-              {data && Object.values(data).length > 0 && sports === 8
-                ? Object.keys(data)
-                    .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                    .map((key, index) => (
-                      <BetTable key={index} keys={key} data={data} />
-                    ))
-                : null}
-
-              {data && Object.values(data).length > 0 && sports === 15
-                ? Object.keys(data)
-                    .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                    .map((key, index) => (
-                      <BetTable key={index} keys={key} data={data} />
-                    ))
-                : null}
-
-              {data && Object.values(data).length > 0 && sports === 18
-                ? Object.keys(data)
-                    .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                    .map((key, index) => (
-                      <BetTable key={index} keys={key} data={data} />
-                    ))
-                : null}
-
-              {data && Object.values(data).length > 0 && sports === 59
-                ? Object.keys(data)
-                    .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                    .map((key, index) => (
-                      <BetTable key={index} keys={key} data={data} />
-                    ))
-                : null}
-
-              {data && Object.values(data).length > 0 && sports === 11
-                ? Object.keys(data)
-                    .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                    .map((key, index) => (
-                      <BetTable key={index} keys={key} data={data} />
-                    ))
-                : null}
-
-              {data && Object.values(data).length > 0 && sports === 9
-                ? Object.keys(data)
-                    .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                    .map((key, index) => (
-                      <BetTable key={index} keys={key} data={data} />
-                    ))
-                : null}
-              {data && Object.values(data).length > 0 && sports === 85
-                ? Object.keys(data)
-                    .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                    .map((key, index) => (
-                      <BetTable key={index} keys={key} data={data} />
-                    ))
-                : null}
-
-              {data && Object.values(data).length > 0 && sports === 99
+              {data &&
+              Object.values(data).length > 0 &&
+              sports !== 4339 &&
+              sports !== 7
                 ? Object.keys(data)
                     .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                     .map((key, index) => (

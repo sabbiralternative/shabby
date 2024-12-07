@@ -1299,7 +1299,7 @@
   }
   .user-balance .dropdown {
     display: inline-block;
-    margin-left: 5px;
+    /* margin-left: 5px; */
   }
   .user-balance > div:first-child {
     width: 100%;
@@ -1367,8 +1367,8 @@
   .sports-tab.nav-pills .show > .nav-link,
   .casino-tab.nav-pills .nav-link.active,
   .casino-tab.nav-pills .show > .nav-link {
-    background-color: var(--bg-primary65);
-    color: var(--text-primary);
+    background-color: var(--selected-tab);
+    color: black;
   }
   .center-container .nav.sports-tab,
   .center-container .nav.casino-tab {

@@ -4,7 +4,6 @@ import BetTable from "../../components/BetTable/BetTable";
 import { API } from "../../utils";
 
 const Football = () => {
-
   const [data, setData] = useState([]);
   const group = JSON.parse(localStorage.getItem("group"));
   const [loading, setLoading] = useState(true);
@@ -16,7 +15,7 @@ const Football = () => {
         const res = await axios.get(apiUrl);
         const data = res.data;
         setData(data);
-        setLoading(false)
+        setLoading(false);
       }
     };
     gamesData();
@@ -31,7 +30,7 @@ const Football = () => {
     return "";
   }
   return (
-    <div className="center-container">
+    <div className="center-container" style={{ width: "100%" }}>
       <div className="tab-content mt-1">
         <div className="tab-pane active">
           <div className="bet-table">

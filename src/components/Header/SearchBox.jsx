@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
+import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 
 const SearchBox = () => {
   const [showInput, setShowInput] = useState(false);
@@ -10,6 +11,11 @@ const SearchBox = () => {
   const token = localStorage.getItem("token");
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
+
+  const searchBoxRex = useRef();
+  useCloseModalClickOutside(searchBoxRex, () => {
+    setShowInput(false);
+  });
 
   useEffect(() => {
     /* if search input greater the 2. then run this function */
@@ -54,19 +60,17 @@ const SearchBox = () => {
   };
 
   return (
-    <div className="search-box">
+    <div ref={searchBoxRex} className="search-box">
       <input
         onChange={(e) => setSearchText(e.target.value)}
         type="search"
         placeholder="Search here"
         className={`form-control ${showInput ? "search-input-show" : ""}`}
       />
-
       <i
         onClick={() => setShowInput(!showInput)}
         className="fas fa-search-plus"
       ></i>
-
       {/*  */}
       {data?.length > 0 && localStorage.getItem("showSearchValue") && (
         <div className="search-list">
