@@ -24,6 +24,11 @@
       "referral": true,
       "paymentIntent": false,
       "registrationWhatsapp": true,
+      "ourCasino": true,
+      "liveCasino": true,
+      "slots": true,
+      "fantasy": true,
+      "ourVirtual": true,
       "build": "development"
     },
 

@@ -35,32 +35,42 @@ const Sidebar = () => {
           <div className="accordion-collapse collapse show">
             <div className="other-casino-list accordion-body">
               <ul>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/our-casino">
-                    <span className="blink_me">Our Casino</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/our-virtual">
-                    <span className="blink_me">Our Virtual</span>
-                  </Link>
-                </li>
+                {settings.ourCasino && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/our-casino">
+                      <span className="blink_me">Our Casino</span>
+                    </Link>
+                  </li>
+                )}
+                {settings.ourVirtual && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/our-virtual">
+                      <span className="blink_me">Our Virtual</span>
+                    </Link>
+                  </li>
+                )}
+                {settings.liveCasino && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/live-casino">
+                      <span>Live Casino</span>
+                    </Link>
+                  </li>
+                )}
+                {settings.slots && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/slot-games">
+                      <span>Slot Game</span>
+                    </Link>
+                  </li>
+                )}
+                {settings.fantasy && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/fantasy-games">
+                      <span>Fantasy Game</span>
+                    </Link>
+                  </li>
+                )}
 
-                <li className="nav-item">
-                  <Link className="nav-link" to="/live-casino">
-                    <span>Live Casino</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/slot-games">
-                    <span>Slot Game</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/fantasy-games">
-                    <span>Fantasy Game</span>
-                  </Link>
-                </li>
                 {settings.casinoCurrency === "INR" && settings.mac88 && (
                   <li className="nav-item">
                     <Link className="nav-link" to="/mac88">

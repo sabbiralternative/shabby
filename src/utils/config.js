@@ -75,6 +75,11 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         settings.referral = setting?.referral;
         settings.paymentIntent = setting?.paymentIntent;
         settings.registrationWhatsapp = setting?.registrationWhatsapp;
+        settings.ourVirtual = setting?.ourVirtual;
+        settings.fantasy = setting?.fantasy;
+        settings.slots = setting?.slots;
+        settings.liveCasino = setting?.liveCasino;
+        settings.ourCasino = setting?.ourCasino;
         setNoticeLoaded(true);
       }
     })

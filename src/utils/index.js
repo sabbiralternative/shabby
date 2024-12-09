@@ -67,4 +67,9 @@ export const settings = {
   referral: "",
   paymentIntent: "",
   registrationWhatsapp: "",
+  ourVirtual: "",
+  fantasy: "",
+  slots: "",
+  liveCasino: "",
+  ourCasino: "",
 };

@@ -10,26 +10,37 @@ const Category = () => {
             Sports
           </NavLink>
         </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/our-casino">
-            Our Casino
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/live-casino">
-            Live Casino
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/slot-games">
-            Slots
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/fantasy-games">
-            Fantasy
-          </NavLink>
-        </li>
+        {settings.ourCasino && (
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/our-casino">
+              Our Casino
+            </NavLink>
+          </li>
+        )}
+        {settings.liveCasino && (
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/live-casino">
+              Live Casino
+            </NavLink>
+          </li>
+        )}
+
+        {settings.slots && (
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/slot-games">
+              Slots
+            </NavLink>
+          </li>
+        )}
+
+        {settings.fantasy && (
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/fantasy-games">
+              Fantasy
+            </NavLink>
+          </li>
+        )}
+
         {settings.mac88 && settings.casinoCurrency === "INR" && (
           <li className="nav-item">
             <NavLink className="nav-link" to="/mac88">
