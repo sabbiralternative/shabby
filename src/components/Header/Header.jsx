@@ -13,6 +13,7 @@ import MyMarketModal from "../Modal/MyMarketModal";
 import { API, settings } from "../../utils";
 import AppPopup from "./AppPopUp";
 import Referral from "../Modal/Referral";
+import Marquee from "react-fast-marquee";
 const Header = () => {
   /* Open dropdown state for mobile version */
   const [showReferral, setShowReferral] = useState(false);
@@ -129,7 +130,7 @@ const Header = () => {
       setShowNotification(res?.data?.result[0].text);
     });
   }, [token]);
-
+  console.log(showNotification);
   /*handle Logout */
   const logOut = () => {
     localStorage.clear();
@@ -1195,11 +1196,19 @@ const Header = () => {
               >
                 <SearchBox />
                 {/* <div className="news"> */}
-                <marquee>{showNotification} </marquee>
+
+                {showNotification && <Marquee>{showNotification}</Marquee>}
                 {/* </div> */}
               </div>
             ) : null}
+            {showNotification && (
+              <div className="d-none d-xl-block">
+                {" "}
+                <Marquee>{showNotification}</Marquee>
+              </div>
+            )}
           </div>
+
           <div className="header-bottom d-none d-xl-block">
             <nav className="navbar navbar-expand">
               <ul className="navbar-nav">
