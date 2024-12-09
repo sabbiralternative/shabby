@@ -375,7 +375,9 @@ const BankAccounts = ({
               className="process-btn "
               disabled={!bank}
             >
-              <span className="">Proceed</span>
+              <span style={{ color: "white" }} className="">
+                Proceed
+              </span>
             </button>
           </div>
 

@@ -7,12 +7,15 @@ const WithdrawSuccess = ({ setWithdrawSuccess }) => {
       <div className="depositpop ng-tns-c159-13">
         <div className="depositbreak ng-tns-c159-13">
           <p className="ng-tns-c159-13">Congratulations!</p>
-          <div style={{cursor:'pointer'}}
-               onClick={() => {
-                setWithdrawSuccess(false);
-                navigate("/account");
-              }} className="close-svg ng-tns-c159-13">
-            <svg 
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              setWithdrawSuccess(false);
+              navigate("/account");
+            }}
+            className="close-svg ng-tns-c159-13"
+          >
+            <svg
               width="14"
               height="15"
               viewBox="0 0 14 15"
@@ -31,7 +34,14 @@ const WithdrawSuccess = ({ setWithdrawSuccess }) => {
           </div>
         </div>
         <div className="deposit-inner ng-tns-c159-13">
-          <div className="balancebox ng-tns-c159-13">
+          <div
+            className="balancebox ng-tns-c159-13"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <div className="congo-box">
               <div className="congo1 ng-tns-c159-7"></div>
               <div

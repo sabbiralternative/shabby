@@ -9,7 +9,6 @@ const ChangePassword = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-
   const {
     register,
     handleSubmit,
@@ -67,7 +66,7 @@ const ChangePassword = () => {
         />
       )}
       <div className="card">
-        <div className="card-header">
+        <div style={{ color: "black" }} className="card-header">
           <h4 className="card-title">Change Password</h4>
         </div>
         <div className="card-body">

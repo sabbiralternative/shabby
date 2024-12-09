@@ -85,7 +85,7 @@ const MobilePlaceBet = ({
                         <b>{placeBetValue?.selectedBetName}</b>
                       </div>
                       <div className="col-6">
-                        <div className="float-end">
+                        <div className="float-end" style={{ display: "flex" }}>
                           <button
                             onClick={handleDecreasePrice}
                             className="stakeactionminus btn"
@@ -169,7 +169,7 @@ const MobilePlaceBet = ({
                       }}
                       className="mt-3 d-flex justify-content-between align-items-center"
                     >
-                      <button className="btn btn-info">Edit</button>
+                      {/* <button className="btn btn-info">Edit</button> */}
                     </div>
 
                     {placeBetValue?.btype === "MATCH_ODDS" ||

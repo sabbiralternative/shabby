@@ -166,7 +166,9 @@ const WithdrawConfirm = ({
           className="proceed-btn"
           style={{ cursor: disable ? "not-allowed" : "pointer" }}
         >
-          <span className="">Proceed</span>
+          <span className="" style={{ color: "white" }}>
+            Proceed
+          </span>
         </button>
       </div>
       {withdrawSuccess && (
