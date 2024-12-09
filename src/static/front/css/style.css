@@ -2219,6 +2219,7 @@ tr {
   justify-content: space-between;
   position: relative;
   height: 79px;
+  padding-top: 20px;
 }
 
 .header-top .logo-header img {
