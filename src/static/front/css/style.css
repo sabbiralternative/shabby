@@ -2218,7 +2218,7 @@ tr {
   align-items: center;
   justify-content: space-between;
   position: relative;
-  height: 79px;
+  /* height: 79px; */
   padding-top: 20px;
 }
 
