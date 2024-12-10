@@ -100,6 +100,7 @@ const Login = () => {
       password: "",
       token: generatedToken,
       site: settings.siteUrl,
+      b2c: settings.b2c,
     });
     fetch(API.login, {
       method: "POST",
