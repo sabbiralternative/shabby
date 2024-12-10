@@ -21,7 +21,7 @@ const StateProvider = ({ children }) => {
   useEffect(() => {
     if (noticeLoaded) {
       /* Dynamically append  theme css  */
-      const logo = `${API.assets}/${settings.siteUrl}/logo.png`;
+      const logo = `${API.assets}/${settings.siteUrl}/logo.${settings.logoFormat}`;
       setLogo(logo);
       const link = document.createElement("link");
       link.rel = "stylesheet";

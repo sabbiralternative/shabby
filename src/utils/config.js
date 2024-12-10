@@ -80,6 +80,9 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         settings.slots = setting?.slots;
         settings.liveCasino = setting?.liveCasino;
         settings.ourCasino = setting?.ourCasino;
+        settings.logoFormat = setting?.logo?.format;
+        settings.logoHeight = setting?.logo?.height;
+        settings.logoWidth = setting?.logo?.width;
         setNoticeLoaded(true);
       }
     })

@@ -402,7 +402,15 @@ const Header = () => {
                 <i className="fas fa-home me-1"></i>
               </Link>
               <Link href="/">
-                <img src={logo} />
+                <img
+                  style={
+                    {
+                      // maxHeight: `${settings.logoHeight}px`,
+                      // maxWidth: `${settings.logoWidth}px`,
+                    }
+                  }
+                  src={logo}
+                />
               </Link>
             </div>
             {/* in notice.json if demoLogin,registration = false and force login success or forceLoginSuccess and token in locale storage then show search box  */}

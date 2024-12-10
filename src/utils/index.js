@@ -72,4 +72,7 @@ export const settings = {
   slots: "",
   liveCasino: "",
   ourCasino: "",
+  logoFormat: "",
+  logoHeight: "",
+  logoWidth: "",
 };

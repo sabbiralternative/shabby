@@ -22,6 +22,11 @@
       "betFairCashOut": true,
       "mac88": true,
       "referral": true,
+      "logo": {
+        "height": 65,
+        "width": 250,
+        "format": "png"
+      },
       "paymentIntent": false,
       "registrationWhatsapp": true,
       "ourCasino": true,
