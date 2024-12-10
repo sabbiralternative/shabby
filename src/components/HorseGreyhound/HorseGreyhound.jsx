@@ -71,7 +71,7 @@ const HorseGreyhound = ({ data, title, eventTypeId }) => {
             {data?.[0]?.childs?.map((horseRacing) => {
               return (
                 <li
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", flex: "none" }}
                   onClick={() => setSelectedCategory(horseRacing?.countryCode)}
                   key={horseRacing?.countryCode}
                   _ngcontent-wne-c149=""
