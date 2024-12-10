@@ -65,8 +65,11 @@ const ChangePassword = () => {
           setMessage={setSuccessMessage}
         />
       )}
-      <div className="card">
-        <div style={{ color: "black" }} className="card-header">
+      <div className="card" style={{ paddingLeft: "10px" }}>
+        <div
+          style={{ color: "black", paddingLeft: "0px" }}
+          className="card-header"
+        >
           <h4 className="card-title">Change Password</h4>
         </div>
         <div className="card-body">

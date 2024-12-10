@@ -34,7 +34,7 @@
       "slots": true,
       "fantasy": true,
       "ourVirtual": true,
-      "build": "development"
+      "build": "production"
     },
 
     "endpoint": {
