@@ -34,6 +34,7 @@
       "slots": true,
       "fantasy": true,
       "ourVirtual": true,
+      "b2c": true,
       "build": "production"
     },
 

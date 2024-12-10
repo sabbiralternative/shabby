@@ -83,6 +83,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         settings.logoFormat = setting?.logo?.format;
         settings.logoHeight = setting?.logo?.height;
         settings.logoWidth = setting?.logo?.width;
+        settings.b2c = setting?.b2c;
         setNoticeLoaded(true);
       }
     })

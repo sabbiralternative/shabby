@@ -34,7 +34,7 @@ const Login = () => {
       site: settings.siteUrl,
       password: password,
       token: generatedToken,
-      b2c: true,
+      b2c: settings.b2c,
     };
     /* Encrypted the post data */
     const encryptedData = UseEncryptData(loginData);
