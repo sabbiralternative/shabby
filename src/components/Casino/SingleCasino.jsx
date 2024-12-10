@@ -34,13 +34,13 @@ const SingleCasino = () => {
       });
       const link = res?.data?.result?.url;
       setLoading(false);
-      console.log(link);
+      // console.log(link);
       if (link) {
         setUrl(link);
       }
     };
     CasinoIFrame();
-  }, []);
+  }, [eventId, eventTypeId, token]);
 
   // if(loading){
   //   return <IFrameLoader/>
