@@ -12,7 +12,12 @@ const Football = () => {
     const gamesData = async () => {
       if (group !== null) {
         const apiUrl = `${API.group}/${group}`;
-        const res = await axios.get(apiUrl);
+        const res = await axios.get(apiUrl, {
+          headers: {
+            "Cache-Control": "public",
+            "max-age": 1,
+          },
+        });
         const data = res.data;
         setData(data);
         setLoading(false);

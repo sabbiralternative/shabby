@@ -94,7 +94,12 @@ const GameDetails = () => {
   /* Get game details */
   useEffect(() => {
     const getGameDetails = async () => {
-      const res = await axios.get(`${API.eventDetails}/${id}/${eventId}`);
+      const res = await axios.get(`${API.eventDetails}/${id}/${eventId}`, {
+        headers: {
+          "Cache-Control": "public",
+          "max-age": 1,
+        },
+      });
       const data = res.data;
       const decryptionData = await handleDecryptData(JSON.stringify(data));
       if (id == 7 || id == 4339) {
