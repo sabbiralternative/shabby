@@ -84,6 +84,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         settings.logoHeight = setting?.logo?.height;
         settings.logoWidth = setting?.logo?.width;
         settings.b2c = setting?.b2c;
+        settings.bookmakerCashOut = setting?.bookmakerCashOut;
         setNoticeLoaded(true);
       }
     })

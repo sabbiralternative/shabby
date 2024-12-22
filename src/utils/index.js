@@ -75,5 +75,6 @@ export const settings = {
   logoFormat: "",
   logoHeight: "",
   logoWidth: "",
-  b2c: true,
+  b2c: "",
+  bookmakerCashOut: "",
 };

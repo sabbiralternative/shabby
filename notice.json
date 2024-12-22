@@ -20,6 +20,7 @@
       "balanceApiLoop": false,
       "baseUrl": "",
       "betFairCashOut": true,
+      "bookmakerCashOut": true,
       "mac88": true,
       "referral": true,
       "logo": {

@@ -3,9 +3,9 @@ import UseState from "../../hooks/UseState";
 
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
-import { API } from "../../utils";
-// import { useNavigate, useParams } from "react-router-dom";
-// import handleCashoutPlaceBet from "../../utils/handleCashoutPlaceBet";
+import { API, settings } from "../../utils";
+import { useNavigate, useParams } from "react-router-dom";
+import handleCashoutPlaceBet from "../../utils/handleCashoutPlaceBet";
 
 const BookmarkerSection = ({
   bookmarker,
@@ -15,9 +15,9 @@ const BookmarkerSection = ({
   booksValue,
   totalSize,
 }) => {
-  // const navigate = useNavigate();
-  // const { eventId } = useParams();
-  // const [teamProfit, setTeamProfit] = useState([]);
+  const navigate = useNavigate();
+  const { eventId } = useParams();
+  const [teamProfit, setTeamProfit] = useState([]);
   const token = localStorage.getItem("token");
   const [showLadder, setShowLadder] = useState(false);
   const [ladderData, setLadderData] = useState([]);
@@ -96,101 +96,101 @@ const BookmarkerSection = ({
     setPreviousData(bookmarker);
   }, [bookmarker, previousData]);
 
-  // const computeExposureAndStake = (
-  //   exposureA,
-  //   exposureB,
-  //   runner1,
-  //   runner2,
-  //   gameId
-  // ) => {
-  //   let runner, largerExposure, layValue, oppositeLayValue, lowerExposure;
+  const computeExposureAndStake = (
+    exposureA,
+    exposureB,
+    runner1,
+    runner2,
+    gameId
+  ) => {
+    let runner, largerExposure, layValue, oppositeLayValue, lowerExposure;
 
-  //   const pnlArr = [exposureA, exposureB];
-  //   const isOnePositiveExposure = onlyOnePositive(pnlArr);
+    const pnlArr = [exposureA, exposureB];
+    const isOnePositiveExposure = onlyOnePositive(pnlArr);
 
-  //   if (exposureA > exposureB) {
-  //     // Team A has a larger exposure.
-  //     runner = runner1;
-  //     largerExposure = exposureA;
-  //     layValue = runner1?.lay?.[0]?.price;
-  //     oppositeLayValue = runner2?.lay?.[0]?.price;
-  //     lowerExposure = exposureB;
-  //   } else {
-  //     // Team B has a larger exposure.
-  //     runner = runner2;
-  //     largerExposure = exposureB;
-  //     layValue = runner2?.lay?.[0]?.price;
-  //     oppositeLayValue = runner1?.lay?.[0]?.price;
-  //     lowerExposure = exposureA;
-  //   }
+    if (exposureA > exposureB) {
+      // Team A has a larger exposure.
+      runner = runner1;
+      largerExposure = exposureA;
+      layValue = runner1?.lay?.[0]?.price;
+      oppositeLayValue = runner2?.lay?.[0]?.price;
+      lowerExposure = exposureB;
+    } else {
+      // Team B has a larger exposure.
+      runner = runner2;
+      largerExposure = exposureB;
+      layValue = runner2?.lay?.[0]?.price;
+      oppositeLayValue = runner1?.lay?.[0]?.price;
+      lowerExposure = exposureA;
+    }
 
-  //   // Compute the absolute value of the lower exposure.
-  //   let absLowerExposure = Math.abs(lowerExposure);
+    // Compute the absolute value of the lower exposure.
+    let absLowerExposure = Math.abs(lowerExposure);
 
-  //   // Compute the liability for the team with the initially larger exposure.
-  //   let liability = absLowerExposure * (layValue - 1);
+    // Compute the liability for the team with the initially larger exposure.
+    let liability = absLowerExposure * (layValue - 1);
 
-  //   // Compute the new exposure of the team with the initially larger exposure.
-  //   let newExposure = largerExposure - liability;
+    // Compute the new exposure of the team with the initially larger exposure.
+    let newExposure = largerExposure - liability;
 
-  //   // Compute the profit using the new exposure and the lay odds of the opposite team.
-  //   let profit = newExposure / layValue;
+    // Compute the profit using the new exposure and the lay odds of the opposite team.
+    let profit = newExposure / layValue;
 
-  //   // Calculate the new stake value for the opposite team by adding profit to the absolute value of its exposure.
-  //   let newStakeValue = absLowerExposure + profit;
+    // Calculate the new stake value for the opposite team by adding profit to the absolute value of its exposure.
+    let newStakeValue = absLowerExposure + profit;
 
-  //   // Return the results.
-  //   return {
-  //     runner,
-  //     newExposure,
-  //     profit,
-  //     newStakeValue,
-  //     oppositeLayValue,
-  //     gameId,
-  //     isOnePositiveExposure,
-  //   };
-  // };
-  // function onlyOnePositive(arr) {
-  //   let positiveCount = arr?.filter((num) => num > 0).length;
-  //   return positiveCount === 1;
-  // }
-  // useEffect(() => {
-  //   let results = [];
-  //   if (
-  //     bookmarker?.length > 0 &&
-  //     exposer?.pnlBySelection &&
-  //     Object.keys(exposer?.pnlBySelection)?.length > 0
-  //   ) {
-  //     bookmarker.forEach((game) => {
-  //       const runners = game?.runners || [];
-  //       if (runners?.length === 2) {
-  //         const runner1 = runners[0];
-  //         const runner2 = runners[1];
-  //         const pnl1 = pnlBySelection?.find(
-  //           (pnl) => pnl?.RunnerId === runner1?.id
-  //         )?.pnl;
-  //         const pnl2 = pnlBySelection?.find(
-  //           (pnl) => pnl?.RunnerId === runner2?.id
-  //         )?.pnl;
+    // Return the results.
+    return {
+      runner,
+      newExposure,
+      profit,
+      newStakeValue,
+      oppositeLayValue,
+      gameId,
+      isOnePositiveExposure,
+    };
+  };
+  function onlyOnePositive(arr) {
+    let positiveCount = arr?.filter((num) => num > 0).length;
+    return positiveCount === 1;
+  }
+  useEffect(() => {
+    let results = [];
+    if (
+      bookmarker?.length > 0 &&
+      exposer?.pnlBySelection &&
+      Object.keys(exposer?.pnlBySelection)?.length > 0
+    ) {
+      bookmarker.forEach((game) => {
+        const runners = game?.runners || [];
+        if (runners?.length === 2) {
+          const runner1 = runners[0];
+          const runner2 = runners[1];
+          const pnl1 = pnlBySelection?.find(
+            (pnl) => pnl?.RunnerId === runner1?.id
+          )?.pnl;
+          const pnl2 = pnlBySelection?.find(
+            (pnl) => pnl?.RunnerId === runner2?.id
+          )?.pnl;
 
-  //         if (pnl1 && pnl2 && runner1 && runner2) {
-  //           const result = computeExposureAndStake(
-  //             pnl1,
-  //             pnl2,
-  //             runner1,
-  //             runner2,
-  //             game?.id
-  //           );
-  //           results.push(result);
-  //         }
-  //       }
-  //     });
-  //     setTeamProfit(results);
-  //   } else {
-  //     setTeamProfit([]);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [bookmarker, eventId]);
+          if (pnl1 && pnl2 && runner1 && runner2) {
+            const result = computeExposureAndStake(
+              pnl1,
+              pnl2,
+              runner1,
+              runner2,
+              game?.id
+            );
+            results.push(result);
+          }
+        }
+      });
+      setTeamProfit(results);
+    } else {
+      setTeamProfit([]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bookmarker, eventId]);
   return (
     <>
       {showLadder && (
@@ -252,17 +252,17 @@ const BookmarkerSection = ({
         </>
       )}
       {bookmarker?.map((bookmark) => {
-        // const teamProfitForGame = teamProfit?.find(
-        //   (profit) =>
-        //     profit?.gameId === bookmark?.id && profit?.isOnePositiveExposure
-        // );
+        const teamProfitForGame = teamProfit?.find(
+          (profit) =>
+            profit?.gameId === bookmark?.id && profit?.isOnePositiveExposure
+        );
         return (
           <div key={bookmark?.id} className="game-market market-4">
             <div className="market-title">
               <span style={{ display: "flex", alignItems: "center" }}>
                 {bookmark?.name.toUpperCase()}
               </span>
-              {/* {settings.betFairCashOut && bookmark?.runners?.length !== 3 && (
+              {settings.bookmakerCashOut && bookmark?.runners?.length !== 3 && (
                 <button
                   onClick={() =>
                     handleCashoutPlaceBet(
@@ -326,7 +326,7 @@ const BookmarkerSection = ({
                     </div>
                   )}
                 </button>
-              )} */}
+              )}
             </div>
             <div className="market-header">
               <div className="market-nation-detail">
