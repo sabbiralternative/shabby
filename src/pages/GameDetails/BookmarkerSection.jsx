@@ -6,6 +6,7 @@ import UseEncryptData from "../../hooks/UseEncryptData";
 import { API, settings } from "../../utils";
 import { useNavigate, useParams } from "react-router-dom";
 import handleCashoutPlaceBet from "../../utils/handleCashoutPlaceBet";
+import { isGameSuspended } from "../../utils/isGameSuspended";
 
 const BookmarkerSection = ({
   bookmarker,
@@ -112,15 +113,15 @@ const BookmarkerSection = ({
       // Team A has a larger exposure.
       runner = runner1;
       largerExposure = exposureA;
-      layValue = runner1?.lay?.[0]?.price;
-      oppositeLayValue = runner2?.lay?.[0]?.price;
+      layValue = 1 + Number(runner1?.lay?.[0]?.price) / 100;
+      oppositeLayValue = 1 + Number(runner2?.lay?.[0]?.price) / 100;
       lowerExposure = exposureB;
     } else {
       // Team B has a larger exposure.
       runner = runner2;
       largerExposure = exposureB;
-      layValue = runner2?.lay?.[0]?.price;
-      oppositeLayValue = runner1?.lay?.[0]?.price;
+      layValue = 1 + Number(runner2?.lay?.[0]?.price) / 100;
+      oppositeLayValue = 1 + Number(runner1?.lay?.[0]?.price) / 100;
       lowerExposure = exposureA;
     }
 
@@ -166,6 +167,12 @@ const BookmarkerSection = ({
         if (runners?.length === 2) {
           const runner1 = runners[0];
           const runner2 = runners[1];
+
+          const runner1back = runner1?.back?.[0]?.price;
+          const runner1Lay = runner1?.lay?.[0]?.price;
+          const runner2back = runner2?.back?.[0]?.price;
+          const runner2Lay = runner2?.lay?.[0]?.price;
+
           const pnl1 = pnlBySelection?.find(
             (pnl) => pnl?.RunnerId === runner1?.id
           )?.pnl;
@@ -173,7 +180,16 @@ const BookmarkerSection = ({
             (pnl) => pnl?.RunnerId === runner2?.id
           )?.pnl;
 
-          if (pnl1 && pnl2 && runner1 && runner2) {
+          if (
+            pnl1 &&
+            pnl2 &&
+            runner1 &&
+            runner2 &&
+            runner1back &&
+            runner1Lay &&
+            runner2back &&
+            runner2Lay
+          ) {
             const result = computeExposureAndStake(
               pnl1,
               pnl2,
@@ -190,7 +206,8 @@ const BookmarkerSection = ({
       setTeamProfit([]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookmarker, eventId]);
+  }, [bookmarker, eventId, exposer]);
+
   return (
     <>
       {showLadder && (
@@ -278,8 +295,20 @@ const BookmarkerSection = ({
                     )
                   }
                   style={{
-                    cursor: `${!teamProfitForGame ? "not-allowed" : "pointer"}`,
-                    opacity: `${!teamProfitForGame ? "0.6" : "1"}`,
+                    cursor: `${
+                      !teamProfitForGame ||
+                      isGameSuspended(bookmark) ||
+                      teamProfitForGame?.profit === 0
+                        ? "not-allowed"
+                        : "pointer"
+                    }`,
+                    opacity: `${
+                      !teamProfitForGame ||
+                      isGameSuspended(bookmark) ||
+                      teamProfitForGame?.profit === 0
+                        ? "0.6"
+                        : "1"
+                    }`,
                     height: "30px",
                     display: "flex",
                     alignItems: "center",
@@ -287,7 +316,11 @@ const BookmarkerSection = ({
                     border: "none",
                     minWidth: "130px",
                   }}
-                  disabled={!teamProfitForGame}
+                  disabled={
+                    !teamProfitForGame ||
+                    isGameSuspended(bookmark) ||
+                    teamProfitForGame?.profit === 0
+                  }
                   type="button"
                   className={` ${
                     teamProfitForGame?.profit > 0
@@ -296,7 +329,8 @@ const BookmarkerSection = ({
                   }`}
                 >
                   <div>Cashout</div>
-                  {teamProfitForGame?.profit && (
+
+                  {teamProfitForGame?.profit !== 0 && (
                     <div
                       style={{
                         display: "flex",
