@@ -3,6 +3,7 @@ import UseState from "../../hooks/UseState";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
+import UseBalance from "../../hooks/UseBalance";
 
 const PlaceBetModal = ({
   showBets,
@@ -13,6 +14,7 @@ const PlaceBetModal = ({
   setSuccessMessage,
   setErrorMessage,
 }) => {
+  const [, refetchBalance] = UseBalance();
   /* price state */
   const [price, setPrice] = useState("");
   /* total size state */
@@ -25,7 +27,6 @@ const PlaceBetModal = ({
   const { buttonValue, SetButtonValue } = UseState();
   /* loading state */
   const [loader, setLoader] = useState(false);
-
 
   /* token */
   const token = localStorage.getItem("token");
@@ -66,7 +67,7 @@ const PlaceBetModal = ({
         token: generatedToken,
         maxLiabilityPerMarket: placeBetValue?.maxLiabilityPerMarket,
         isBettable: placeBetValue?.isBettable,
-        maxLiabilityPerBet:placeBetValue?.maxLiabilityPerBet
+        maxLiabilityPerBet: placeBetValue?.maxLiabilityPerBet,
       },
     ]);
 
@@ -84,7 +85,7 @@ const PlaceBetModal = ({
           /* refetch exposure and current bets after successfully placed bet */
           refetchExposure();
           refetchCurrentBets();
-      
+          refetchBalance();
           setLoader(false);
           setShowBets(false);
           /* set notification */
@@ -94,9 +95,8 @@ const PlaceBetModal = ({
           setErrorMessage(data?.error?.status[0]?.description);
           setLoader(false);
           setShowBets(false);
-          refetchExposure();
-          refetchCurrentBets();
-         
+          // refetchExposure();
+          // refetchCurrentBets();
         }
       });
   };

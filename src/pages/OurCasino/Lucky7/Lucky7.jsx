@@ -50,9 +50,9 @@ const Lucky7 = ({
                   back: true,
                   name: data[0]?.runners[0]?.name,
                   isWeak: data[0]?.isWeak,
-                  maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
-                  isBettable:data[0]?.isBettable,
-                  maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
+                  maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                  isBettable: data[0]?.isBettable,
+                  maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                 });
               }}
               className={`${
@@ -100,9 +100,9 @@ const Lucky7 = ({
                   back: true,
                   name: data[0]?.runners[1]?.name,
                   isWeak: data[0]?.isWeak,
-                  maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
-                  isBettable:data[0]?.isBettable,
-                  maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
+                  maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                  isBettable: data[0]?.isBettable,
+                  maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                 });
               }}
               className={`${
@@ -132,7 +132,6 @@ const Lucky7 = ({
                 <!-- winner  market end -->
 
                 <!-- even odd  market start --> */}
-
         <div className="casino-table-box mt-3">
           <div className="casino-table-left-box">
             <div className="lucky7odds">
@@ -154,9 +153,9 @@ const Lucky7 = ({
                     back: true,
                     name: data[1]?.runners[0]?.name,
                     isWeak: data[1]?.isWeak,
-                    maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
-                    isBettable:data[1]?.isBettable,
-                    maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[1]?.maxLiabilityPerMarket,
+                    isBettable: data[1]?.isBettable,
+                    maxLiabilityPerBet: data[1]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`${
@@ -201,9 +200,9 @@ const Lucky7 = ({
                     back: true,
                     name: data[1]?.runners[1]?.name,
                     isWeak: data[1]?.isWeak,
-                    maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
-                    isBettable:data[1]?.isBettable,
-                    maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[1]?.maxLiabilityPerMarket,
+                    isBettable: data[1]?.isBettable,
+                    maxLiabilityPerBet: data[1]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`${
@@ -253,9 +252,9 @@ const Lucky7 = ({
                     back: true,
                     name: data[2]?.runners[0]?.name,
                     isWeak: data[2]?.isWeak,
-                    maxLiabilityPerMarket:data[2]?.maxLiabilityPerMarket,
-                    isBettable:data[2]?.isBettable,
-                    maxLiabilityPerBet:data[2]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[2]?.maxLiabilityPerMarket,
+                    isBettable: data[2]?.isBettable,
+                    maxLiabilityPerBet: data[2]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`${
@@ -306,9 +305,9 @@ const Lucky7 = ({
                     back: true,
                     name: data[2]?.runners[1]?.name,
                     isWeak: data[2]?.isWeak,
-                    maxLiabilityPerMarket:data[2]?.maxLiabilityPerMarket,
-                    isBettable:data[2]?.isBettable,
-                    maxLiabilityPerBet:data[2]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[2]?.maxLiabilityPerMarket,
+                    isBettable: data[2]?.isBettable,
+                    maxLiabilityPerBet: data[2]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`${
@@ -342,11 +341,9 @@ const Lucky7 = ({
             </div>
           </div>
         </div>
-
         {/* <!-- color  market end -->
 
                 <!-- range  market start --> */}
-
         <div className="casino-table-box mt-3">
           <div className="lucky7cards">
             <div className="casino-odds w-100 text-center">
@@ -367,9 +364,9 @@ const Lucky7 = ({
                   back: true,
                   name: data[3]?.runners[0]?.name,
                   isWeak: data[3]?.isWeak,
-                  maxLiabilityPerMarket:data[3]?.maxLiabilityPerMarket,
-                  isBettable:data[3]?.isBettable,
-                  maxLiabilityPerBet:data[3]?.maxLiabilityPerBet
+                  maxLiabilityPerMarket: data[3]?.maxLiabilityPerMarket,
+                  isBettable: data[3]?.isBettable,
+                  maxLiabilityPerBet: data[3]?.maxLiabilityPerBet,
                 });
               }}
               className={`${
@@ -427,9 +424,9 @@ const Lucky7 = ({
                   back: true,
                   name: data[3]?.runners[1]?.name,
                   isWeak: data[3]?.isWeak,
-                  maxLiabilityPerMarket:data[3]?.maxLiabilityPerMarket,
-                  isBettable:data[3]?.isBettable,
-                  maxLiabilityPerBet:data[3]?.maxLiabilityPerBet
+                  maxLiabilityPerMarket: data[3]?.maxLiabilityPerMarket,
+                  isBettable: data[3]?.isBettable,
+                  maxLiabilityPerBet: data[3]?.maxLiabilityPerBet,
                 });
               }}
               className={`${
@@ -487,9 +484,9 @@ const Lucky7 = ({
                   back: true,
                   name: data[3]?.runners[2]?.name,
                   isWeak: data[3]?.isWeak,
-                  maxLiabilityPerMarket:data[3]?.maxLiabilityPerMarket,
-                  isBettable:data[3]?.isBettable,
-                  maxLiabilityPerBet:data[3]?.maxLiabilityPerBet
+                  maxLiabilityPerMarket: data[3]?.maxLiabilityPerMarket,
+                  isBettable: data[3]?.isBettable,
+                  maxLiabilityPerBet: data[3]?.maxLiabilityPerBet,
                 });
               }}
               className={`${
@@ -547,9 +544,9 @@ const Lucky7 = ({
                   back: true,
                   name: data[3]?.runners[3]?.name,
                   isWeak: data[3]?.isWeak,
-                  maxLiabilityPerMarket:data[3]?.maxLiabilityPerMarket,
-                  isBettable:data[3]?.isBettable,
-                  maxLiabilityPerBet:data[3]?.maxLiabilityPerBet
+                  maxLiabilityPerMarket: data[3]?.maxLiabilityPerMarket,
+                  isBettable: data[3]?.isBettable,
+                  maxLiabilityPerBet: data[3]?.maxLiabilityPerBet,
                 });
               }}
               className={`${
@@ -596,7 +593,6 @@ const Lucky7 = ({
 
 
                 <!-- card  market start --> */}
-
         <div className="casino-table-full-box lucky7acards mt-3">
           <div className="casino-odds w-100 text-center">
             {data[4]?.runners[0]?.back[0]?.price}
@@ -623,9 +619,9 @@ const Lucky7 = ({
                       back: true,
                       name: runner?.name,
                       isWeak: data[4]?.isWeak,
-                      maxLiabilityPerMarket:data[4]?.maxLiabilityPerMarket,
-                      isBettable:data[4]?.isBettable,
-                      maxLiabilityPerBet:data[4]?.maxLiabilityPerBet
+                      maxLiabilityPerMarket: data[4]?.maxLiabilityPerMarket,
+                      isBettable: data[4]?.isBettable,
+                      maxLiabilityPerBet: data[4]?.maxLiabilityPerBet,
                     });
                   }}
                   className={`${

@@ -3,6 +3,7 @@ import UseState from "../../hooks/UseState";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
+import UseBalance from "../../hooks/UseBalance";
 
 const PlaceBets = ({
   showBets,
@@ -13,6 +14,7 @@ const PlaceBets = ({
   setSuccessMessage,
   setErrorMessage,
 }) => {
+  const [, refetchBalance] = UseBalance();
   /* price state */
   const [price, setPrice] = useState("");
   /* total size state */
@@ -30,8 +32,8 @@ const PlaceBets = ({
 
   /* Set price in price state from placeBet value*/
   useEffect(() => {
-    setPrice(placeBetValue?.price)
-    setTotalSize(placeBetValue?.totalSize)
+    setPrice(placeBetValue?.price);
+    setTotalSize(placeBetValue?.totalSize);
   }, [placeBetValue]);
 
   /* Profit */
@@ -44,7 +46,6 @@ const PlaceBets = ({
     ) {
       const multiply = price * totalSize;
       setProfit(multiply - totalSize);
-
     }
   }, [price, totalSize, placeBetValue?.back, placeBetValue?.btype]);
 
@@ -83,7 +84,7 @@ const PlaceBets = ({
           /* refetch exposure and current bets after successfully placed bet */
           refetchExposure();
           refetchCurrentBets();
-
+          refetchBalance();
           setLoader(false);
           setShowBets(false);
           /* set notification */
@@ -93,8 +94,8 @@ const PlaceBets = ({
           setErrorMessage(data?.error?.status[0]?.description);
           setLoader(false);
           setShowBets(false);
-          refetchExposure();
-          refetchCurrentBets();
+          // refetchExposure();
+          // refetchCurrentBets();
         }
       });
   };
