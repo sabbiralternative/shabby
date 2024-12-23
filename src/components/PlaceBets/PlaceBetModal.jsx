@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import UseState from "../../hooks/UseState";
+// import UseState from "../../hooks/UseState";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
 import UseBalance from "../../hooks/UseBalance";
 
 const PlaceBetModal = ({
-  showBets,
+  // showBets,
   placeBetValue,
   setShowBets,
   refetchCurrentBets,
@@ -24,7 +24,7 @@ const PlaceBetModal = ({
   /* get button value from locale storage */
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
   /* Get button value state from context */
-  const { buttonValue, SetButtonValue } = UseState();
+  // const { buttonValue, SetButtonValue } = UseState();
   /* loading state */
   const [loader, setLoader] = useState(false);
 
@@ -258,7 +258,7 @@ const PlaceBetModal = ({
                     );
                   })}
                 </div>
-                <div
+                {/* <div
                   onClick={() => {
                     setShowBets(!showBets);
                     SetButtonValue(!buttonValue);
@@ -266,7 +266,7 @@ const PlaceBetModal = ({
                   className="mt-3 d-flex justify-content-between align-items-center"
                 >
                   <button className="btn btn-info">Edit</button>
-                </div>
+                </div> */}
                 {/* <div className="row mt-2">
                   <div className="col-4">
                     <span>Lazio</span>

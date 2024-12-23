@@ -487,7 +487,6 @@ const GameDetails = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  console.log(score);
 
   return (
     <>

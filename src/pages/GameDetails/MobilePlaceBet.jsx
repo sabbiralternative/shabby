@@ -200,36 +200,36 @@ const MobilePlaceBet = ({
                             <span id="oddOne">
                               {placeBetValue?.back &&
                                 oddStake !== 0 &&
-                                totalSize?.length > 0 &&
-                                selectionId.includes(".1") &&
+                                totalSize > 0 &&
+                                selectionId?.includes(".1") &&
                                 oddStake}
 
                               {placeBetValue?.back &&
                                 oddStake !== 0 &&
-                                totalSize?.length > 0 &&
+                                totalSize > 0 &&
                                 selectionId.includes(".2") &&
                                 oddStakeLay2}
 
                               {placeBetValue?.back &&
                                 oddStake !== 0 &&
-                                totalSize?.length > 0 &&
+                                totalSize > 0 &&
                                 selectionId.includes(".3") &&
                                 oddStakeLay1}
                               {placeBetValue?.lay &&
                                 oddStake !== 0 &&
-                                totalSize?.length > 0 &&
+                                totalSize > 0 &&
                                 selectionId.includes(".1") &&
                                 oddStake}
 
                               {placeBetValue?.lay &&
                                 oddStake !== 0 &&
-                                totalSize?.length > 0 &&
+                                totalSize > 0 &&
                                 selectionId.includes(".2") &&
                                 oddStakeLay2}
 
                               {placeBetValue?.lay &&
                                 oddStake !== 0 &&
-                                totalSize?.length > 0 &&
+                                totalSize > 0 &&
                                 selectionId.includes(".3") &&
                                 oddStakeLay1}
                             </span>
@@ -264,36 +264,36 @@ const MobilePlaceBet = ({
                             <span id="oddTwo">
                               {placeBetValue?.back &&
                                 oddStake !== 0 &&
-                                totalSize?.length > 0 &&
+                                totalSize > 0 &&
                                 selectionId.includes(".1") &&
                                 oddStakeLay1}
 
                               {placeBetValue?.back &&
                                 oddStake !== 0 &&
-                                totalSize?.length > 0 &&
+                                totalSize > 0 &&
                                 selectionId.includes(".2") &&
                                 oddStake}
                               {placeBetValue?.back &&
                                 oddStake !== 0 &&
-                                totalSize?.length > 0 &&
+                                totalSize > 0 &&
                                 selectionId.includes(".3") &&
                                 oddStakeLay2}
 
                               {placeBetValue?.lay &&
                                 oddStake !== 0 &&
-                                totalSize?.length > 0 &&
+                                totalSize > 0 &&
                                 selectionId.includes(".1") &&
                                 oddStakeLay1}
 
                               {placeBetValue?.lay &&
                                 oddStake !== 0 &&
-                                totalSize?.length > 0 &&
+                                totalSize > 0 &&
                                 selectionId.includes(".2") &&
                                 oddStake}
 
                               {placeBetValue?.lay &&
                                 oddStake !== 0 &&
-                                totalSize?.length > 0 &&
+                                totalSize > 0 &&
                                 selectionId.includes(".3") &&
                                 oddStakeLay2}
                             </span>
@@ -329,36 +329,36 @@ const MobilePlaceBet = ({
                               <span id="oddThree">
                                 {placeBetValue?.back &&
                                   oddStake !== 0 &&
-                                  totalSize?.length > 0 &&
+                                  totalSize > 0 &&
                                   selectionId.includes(".1") &&
                                   oddStakeLay2}
 
                                 {placeBetValue?.back &&
                                   oddStake !== 0 &&
-                                  totalSize?.length > 0 &&
+                                  totalSize > 0 &&
                                   selectionId.includes(".2") &&
                                   oddStakeLay1}
 
                                 {placeBetValue?.back &&
                                   oddStake !== 0 &&
-                                  totalSize?.length > 0 &&
+                                  totalSize > 0 &&
                                   selectionId.includes(".3") &&
                                   oddStake}
                                 {placeBetValue?.lay &&
                                   oddStake !== 0 &&
-                                  totalSize?.length > 0 &&
+                                  totalSize > 0 &&
                                   selectionId.includes(".1") &&
                                   oddStakeLay2}
 
                                 {placeBetValue?.lay &&
                                   oddStake !== 0 &&
-                                  totalSize?.length > 0 &&
+                                  totalSize > 0 &&
                                   selectionId.includes(".2") &&
                                   oddStakeLay1}
 
                                 {placeBetValue?.lay &&
                                   oddStake !== 0 &&
-                                  totalSize?.length > 0 &&
+                                  totalSize > 0 &&
                                   selectionId.includes(".3") &&
                                   oddStake}
                               </span>
