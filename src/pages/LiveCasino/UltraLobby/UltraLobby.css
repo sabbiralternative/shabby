@@ -60,7 +60,6 @@
 .ultra-lobby div,
 .ultra-lobby p,
 .ultra-lobby span {
-  font-family: "Lato" !important;
   font-weight: 500;
 }
 
@@ -81,7 +80,6 @@
   height: -moz-fit-content;
   height: fit-content;
   border-radius: 15px;
-  font-family: "Lato";
 }
 
 .ultra-lobby .report-header .report-img-title {
@@ -154,7 +152,6 @@
   /* color: #fff; */
   font-size: 13px;
   text-transform: uppercase;
-  font-family: var(--headers-font-family);
   font-weight: 900;
   margin-left: 5px;
 }
@@ -491,7 +488,6 @@
 
 .ultra-lobby .MuiTypography-body1 {
   font-size: 1rem;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0.00938em;

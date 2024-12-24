@@ -32,13 +32,17 @@ const HomePage = () => {
       const res = await axios.get(
         `${settings.casino == "aura" ? API.auraCasino : ""} ${
           settings.casino == "diamond" ? API.diamondCasino : ""
-        }  ${settings.casino == "test" ? API.testCasino : ""}`
+        }  ${settings.casino == "test" ? API.testCasino : ""} ${
+          settings?.casino === "mac88" ? API.mac88 : ""
+        }`
       );
       const data = res.data;
       setCasino_list(data);
     };
     getAuraCasino();
   }, []);
+
+  console.log(casino_list);
 
   /* Get game events */
   useEffect(() => {
@@ -152,12 +156,21 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="casino-list mt-2">
-        {/* Casino thumbnail component */}
-        {casino_list?.map((casino, i) => (
-          <CasinoList key={i} casino={casino} />
-        ))}
-      </div>
+      {/* Casino thumbnail component */}
+      {settings?.casino === "mac88" ? (
+        <div className="mac88-home-page mt-2">
+          {casino_list?.data?.map((casino, i) => (
+            <CasinoList key={i} casino={casino} />
+          ))}
+        </div>
+      ) : (
+        <div className="casino-list mt-2">
+          {" "}
+          {casino_list?.map((casino, i) => (
+            <CasinoList key={i} casino={casino} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
