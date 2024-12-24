@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { settings } from "../../utils";
 
 const CasinoList = ({ casino }) => {
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
   // let name = casino.name;
@@ -15,17 +16,21 @@ const CasinoList = ({ casino }) => {
   };
 
   const navigateToCasinoDetails = async () => {
-    if (settings.casino == "aura" || settings.casino === "test") {
-      navigate(`/casino/${casino?.eventId}/${casino?.eventTypeId}`);
-    } else if (settings.casino == "diamond") {
-      localStorage.removeItem("casino");
-      localStorage.removeItem("auraEventId");
-      localStorage.setItem("casino", JSON.stringify(diamondCasino));
-      navigate(`/our-casino/${casino?.slug}`);
-    } else if (settings.casino === "mac88") {
-      navigate(
-        `/mac88/${casino?.game_name.replace(/ /g, "")}/${casino?.game_id}`
-      );
+    if (token) {
+      if (settings.casino == "aura" || settings.casino === "test") {
+        navigate(`/casino/${casino?.eventId}/${casino?.eventTypeId}`);
+      } else if (settings.casino == "diamond") {
+        localStorage.removeItem("casino");
+        localStorage.removeItem("auraEventId");
+        localStorage.setItem("casino", JSON.stringify(diamondCasino));
+        navigate(`/our-casino/${casino?.slug}`);
+      } else if (settings.casino === "mac88") {
+        navigate(
+          `/mac88/${casino?.game_name.replace(/ /g, "")}/${casino?.game_id}`
+        );
+      }
+    } else {
+      navigate("/login");
     }
   };
 
@@ -49,7 +54,8 @@ const CasinoList = ({ casino }) => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: "var(--bg-primary)",
+                backgroundImage:
+                  "linear-gradient(var(--bg-primary), var(--bg-secondary))",
                 color: "white",
                 padding: "2px 0px",
               }}
