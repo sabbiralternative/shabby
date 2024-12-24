@@ -34,7 +34,8 @@
     "react-loader-spinner": "^6.1.6",
     "react-router-dom": "^6.16.0",
     "rsuite": "^5.74.2",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "swiper": "^11.1.15"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

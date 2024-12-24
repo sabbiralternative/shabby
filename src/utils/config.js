@@ -11,6 +11,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         const endPoints = data?.result?.endpoint;
         const setting = data?.result?.settings;
         API.withdrawBreakdown = endPoints?.withdrawBreakdown;
+        API.ultraLobby = endPoints?.ultraLobby;
         API.groupSportsBook = endPoints?.groupSportsBook;
         API.uploadScreenshot = endPoints?.uploadScreenshot;
         API.depositBreakdown = endPoints?.depositBreakdown;
@@ -85,6 +86,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         settings.logoWidth = setting?.logo?.width;
         settings.b2c = setting?.b2c;
         settings.bookmakerCashOut = setting?.bookmakerCashOut;
+        settings.liveCasinoType = setting?.liveCasinoType;
         setNoticeLoaded(true);
       }
     })

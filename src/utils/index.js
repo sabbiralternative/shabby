@@ -45,6 +45,7 @@ export const API = {
   uploadScreenshot: "",
   withdrawBreakdown: "",
   groupSportsBook: "",
+  ultraLobby: "",
 };
 
 export const settings = {
@@ -77,4 +78,5 @@ export const settings = {
   logoWidth: "",
   b2c: "",
   bookmakerCashOut: "",
+  liveCasinoType: "",
 };

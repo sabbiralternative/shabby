@@ -131,7 +131,7 @@ const Header = () => {
       setShowNotification(res?.data?.result[0].text);
     });
   }, [token]);
-  console.log(showNotification);
+
   /*handle Logout */
   const logOut = () => {
     localStorage.clear();
