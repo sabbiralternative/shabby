@@ -158,7 +158,7 @@ const HomePage = () => {
 
       {/* Casino thumbnail component */}
       {settings?.casino === "mac88" ? (
-        <div className="mac88-home-page mt-2">
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
           {casino_list?.data?.map((casino, i) => (
             <CasinoList key={i} casino={casino} />
           ))}

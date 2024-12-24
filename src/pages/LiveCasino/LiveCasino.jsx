@@ -5,10 +5,10 @@ import UltraLobby from "./UltraLobby/UltraLobby";
 const LiveCasino = () => {
   return (
     <>
-      {settings.liveCasinoType === "diamond" ? (
-        <DiamondCasino />
-      ) : (
+      {settings.liveCasinoType === "ultrawin" ? (
         <UltraLobby />
+      ) : (
+        <DiamondCasino />
       )}
     </>
   );

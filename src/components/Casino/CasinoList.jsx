@@ -36,25 +36,25 @@ const CasinoList = ({ casino }) => {
       {settings?.casino === "mac88" ? (
         <div
           onClick={navigateToCasinoDetails}
-          className="casino-list-item"
-          style={{ width: "100%" }}
+          className="casino-list-item-mac88"
         >
-          <div
-            className="casino-list-item-banner"
-            style={{
-              backgroundImage: `url(${casino.img})`,
-            }}
-          ></div>
-          <div
-            style={{
-              backgroundColor: "var(--bg-primary)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "white",
-            }}
-          >
-            {casino?.game_name}
+          <div style={{ width: "100%", padding: "1px" }}>
+            <img
+              class="img-fluid"
+              style={{ height: "110px" }}
+              src={casino?.img}
+            />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "var(--bg-primary)",
+                color: "white",
+              }}
+            >
+              {casino?.game_name}
+            </div>
           </div>
         </div>
       ) : (

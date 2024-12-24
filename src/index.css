@@ -348,26 +348,33 @@ button.btn {
 }
 /* referral modal */
 
-@media screen and (min-width: 720px) {
-  .mac88-home-page {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 8px;
+/* .home-page .casino-list-item-mac88 {
+  width: calc(10% - 10px);
+} */
+
+/* @media only screen and (min-width: 1400px) and (max-width: 1599px) {
+  .casino-list-item-mac88 {
+    width: calc(16.66% - 10px);
+  }
+} */
+
+.casino-list-item-mac88 {
+  width: calc(14.28% - 10px);
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+@media only screen and ((min-width: 360px) and (max-width : 800px)) {
+  .casino-list-item-mac88 {
+    width: calc(25% - 10px);
   }
 }
 
-@media screen and (max-width: 720px) {
-  .mac88-home-page {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 5px;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .mac88-home-page {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 5px;
+@media only screen and (max-width: 360px) {
+  .casino-list-item-mac88 {
+    width: calc(33.33% - 10px);
   }
 }
