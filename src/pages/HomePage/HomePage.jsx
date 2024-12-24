@@ -42,8 +42,6 @@ const HomePage = () => {
     getAuraCasino();
   }, []);
 
-  console.log(casino_list);
-
   /* Get game events */
   useEffect(() => {
     const gameData = async () => {

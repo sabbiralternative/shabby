@@ -29,8 +29,6 @@ const CasinoList = ({ casino }) => {
     }
   };
 
-  console.log(casino);
-
   return (
     <>
       {settings?.casino === "mac88" ? (
@@ -41,17 +39,19 @@ const CasinoList = ({ casino }) => {
         >
           <div style={{ width: "100%", padding: "1px" }}>
             <img
-              class="img-fluid"
+              className="img-fluid"
               style={{ height: "110px", width: "100%" }}
               src={casino?.img}
             />
             <div
+              className="casino-list-item-mac88-name"
               style={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 backgroundColor: "var(--bg-primary)",
                 color: "white",
+                padding: "2px 0px",
               }}
             >
               {casino?.game_name}

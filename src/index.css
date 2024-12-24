@@ -367,10 +367,16 @@ button.btn {
   .casino-list-item-mac88 {
     width: 25%;
   }
+  .casino-list-item-mac88-name {
+    font-size: 10px;
+  }
 }
 
 @media only screen and (max-width: 360px) {
   .casino-list-item-mac88 {
     width: 25%;
+  }
+  .casino-list-item-mac88-name {
+    font-size: 9px;
   }
 }
