@@ -35,13 +35,14 @@ const CasinoList = ({ casino }) => {
     <>
       {settings?.casino === "mac88" ? (
         <div
+          style={{ cursor: "pointer" }}
           onClick={navigateToCasinoDetails}
           className="casino-list-item-mac88"
         >
           <div style={{ width: "100%", padding: "1px" }}>
             <img
               class="img-fluid"
-              style={{ height: "110px" }}
+              style={{ height: "110px", width: "100%" }}
               src={casino?.img}
             />
             <div
