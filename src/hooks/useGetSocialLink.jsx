@@ -1,29 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import UseTokenGenerator from "./UseTokenGenerator";
-
-import UseEncryptData from "./UseEncryptData";
-import axios from "axios";
-import { API, settings } from "../utils";
+import { API } from "../utils";
+import { AxiosSecure } from "../lib/AxiosSecure";
 
 const useGetSocialLink = () => {
-  const token = localStorage.getItem("token");
-
   /* get whats app link */
   const { data: socialLink, refetch: refetchSocialLinks } = useQuery({
     queryKey: ["whatsApp"],
     queryFn: async () => {
-      /* random token function */
-      const generatedToken = UseTokenGenerator();
-      /* Encryption post data */
-      const encryptedVideoData = UseEncryptData({
-        site: settings.siteUrl,
-        token: generatedToken,
-      });
-      const res = await axios.post(API.whatsapp, encryptedVideoData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await AxiosSecure.post(API.whatsapp);
 
       const data = res.data;
       if (data?.success) {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import LiveSlotModal from "../../../components/Modal/LiveSlotModal";
 import { API, settings } from "../../../utils";
+import { AxiosInstance } from "../../../lib/AxiosInstance";
 
 const DiamondCasino = () => {
   const [product, setProduct] = useState("All");
@@ -13,7 +13,7 @@ const DiamondCasino = () => {
   /* Get live casino */
   useEffect(() => {
     const getLiveCasino = async () => {
-      const res = await axios.post(`${API.liveCasinoWolf}`, {
+      const res = await AxiosInstance.post(`${API.liveCasinoWolf}`, {
         gameList: "All",
         product: product,
         isHome: false,

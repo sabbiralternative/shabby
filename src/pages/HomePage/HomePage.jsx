@@ -4,7 +4,6 @@ import { useState } from "react";
 import CasinoList from "../../components/Casino/CasinoList";
 import UseState from "../../hooks/UseState";
 import TabPanel from "./TabPanel";
-import { tabPanel } from "../../static/tabs/tabs";
 import BetTable from "../../components/BetTable/BetTable";
 import useLatestEvent from "../../hooks/useLatestEvent";
 import { useNavigate } from "react-router-dom";
@@ -12,8 +11,24 @@ import UseBalance from "../../hooks/UseBalance";
 import { API, settings } from "../../utils";
 import handleDecryptData from "../../utils/handleDecryptData";
 import HorseGreyhound from "../../components/HorseGreyhound/HorseGreyhound";
+import useLanguage from "../../hooks/useLanguage";
+import { MdSportsCricket, MdSportsKabaddi } from "react-icons/md";
+import { BiBasketball } from "react-icons/bi";
+import { GiBasketballBall, GiVolleyballBall } from "react-icons/gi";
+import { TbClover } from "react-icons/tb";
+import {
+  IoGameController,
+  IoFootballOutline,
+  IoFootball,
+  IoTennisballSharp,
+} from "react-icons/io5";
+import { FaPlayCircle } from "react-icons/fa";
+import { FaTableTennisPaddleBall } from "react-icons/fa6";
+import { languageValue } from "../../utils/language";
+import { LanguageKey } from "../../constant";
 
 const HomePage = () => {
+  const { valueByLanguage } = useLanguage();
   const [casino_list, setCasino_list] = useState([]);
   const { sports } = UseState();
   const [data, setData] = useState([]);
@@ -64,6 +79,93 @@ const HomePage = () => {
       return () => clearInterval(intervalId);
     }
   }, [sports]);
+
+  const tabPanel = [
+    {
+      label: "In-Play",
+      icon: FaPlayCircle,
+      to: "",
+      id: 0,
+    },
+    {
+      label: languageValue(valueByLanguage, LanguageKey.CRICKET),
+      icon: MdSportsCricket,
+      to: "",
+      id: 4,
+    },
+    {
+      label: languageValue(valueByLanguage, LanguageKey.FOOTBALL),
+      icon: IoFootball,
+      to: "football",
+      id: 1,
+    },
+    {
+      label: languageValue(valueByLanguage, LanguageKey.TENNIS),
+      icon: IoTennisballSharp,
+      to: "tennis",
+      id: 2,
+    },
+    {
+      label: languageValue(valueByLanguage, LanguageKey.KABADDI),
+      icon: MdSportsKabaddi,
+      to: "kabaddi",
+      id: 5,
+    },
+    {
+      label: languageValue(valueByLanguage, LanguageKey.HORSE),
+      icon: MdSportsKabaddi,
+      to: "horse",
+      id: 7,
+    },
+    {
+      label: languageValue(valueByLanguage, LanguageKey.GREYHOUND),
+      icon: MdSportsKabaddi,
+      to: "kabaddi",
+      id: 4339,
+    },
+    {
+      label: "Table Tennis",
+      icon: FaTableTennisPaddleBall,
+      to: "tableTennis",
+      id: 8,
+    },
+    {
+      label: "Basketball",
+      icon: GiBasketballBall,
+      to: "basketball",
+      id: 15,
+    },
+    {
+      label: "Volleyball",
+      icon: GiVolleyballBall,
+      to: "volleyball",
+      id: 18,
+    },
+    {
+      label: "Snooker",
+      icon: TbClover,
+      to: "snooker",
+      id: 59,
+    },
+    {
+      label: "E Games",
+      icon: IoGameController,
+      to: "eGames",
+      id: 11,
+    },
+    {
+      label: "Futsal",
+      icon: IoFootballOutline,
+      to: "futsal",
+      id: 9,
+    },
+    {
+      label: "Handball",
+      icon: BiBasketball,
+      to: "handball",
+      id: 85,
+    },
+  ];
 
   return (
     <div className="center-container">

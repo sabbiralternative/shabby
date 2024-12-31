@@ -1,36 +1,30 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-
-import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import NavbarWithIFrame from "./NavbarWithIFrame";
 import Sidebar from "../Sidebar/Sidebar";
 import IFrameLoader from "../Loader/IFrameLoader";
 import { API } from "../../utils";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const LiveCasinoVideo = () => {
   const { eventId, name } = useParams();
   const location = useLocation();
-
   const [videoUrl, setVideoUrl] = useState("");
   const [loading, setLoading] = useState(false);
-  const token = localStorage.getItem("token");
+
   /* Get live casino video */
   useEffect(() => {
-    console.log("api call");
     const getLiveCasinoVideo = async () => {
       setLoading(true);
       let additionalData = {};
       if (location.pathname?.includes("/fantasy-games")) {
         additionalData = { providerId: name };
       }
-      /* Random token */
-      const generatedToken = UseTokenGenerator();
+
       /* Encrypt post data */
-      const encryptedData = UseEncryptData({
+      const payload = UseEncryptData({
         gameId: eventId,
-        token: generatedToken,
         isHome: false,
         mobileOnly: true,
         ...additionalData,
@@ -42,16 +36,14 @@ const LiveCasinoVideo = () => {
       //   mobileOnly: true,
       //   ...additionalData,
       // });
-      const res = await axios.post(API.liveCasinoIframe, encryptedData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await AxiosSecure.post(API.liveCasinoIframe, payload);
       const data = res.data;
       console.log(data);
       setVideoUrl(data?.gameUrl);
       setLoading(false);
     };
     getLiveCasinoVideo();
-  }, []);
+  }, [eventId, location, name]);
   // token, eventId, liveCasinoIframeApi, name, location.pathname
 
   // if(loading){

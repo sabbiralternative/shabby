@@ -1,9 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import moment from "moment";
-import UseTokenGenerator from "./UseTokenGenerator";
-import UseEncryptData from "./UseEncryptData";
-import { API, settings } from "../utils";
+import { API } from "../utils";
+import { AxiosInstance } from "../lib/AxiosInstance";
 
 const useGetReferralStatement = (
   from_date,
@@ -11,25 +9,17 @@ const useGetReferralStatement = (
   fetchData,
   setFetchData
 ) => {
-  const token = localStorage.getItem("token");
   const { data, refetch, isLoading } = useQuery({
     queryKey: ["ReferralStatement"],
     enabled: fetchData,
     queryFn: async () => {
-      const generatedToken = UseTokenGenerator();
-      const encryptedPostData = UseEncryptData({
-        site: settings.siteUrl,
-        token: generatedToken,
+      const payload = {
         type: "referral_statement",
         from_date: moment(from_date).format("YYYY-MM-DD"),
         to_date: moment(to_date).format("YYYY-MM-DD"),
-      });
+      };
 
-      const res = await axios.post(API.index, encryptedPostData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await AxiosInstance.post(API.index, payload);
       const result = res?.data;
       setFetchData(false);
       if (result?.success) {

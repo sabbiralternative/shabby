@@ -20,8 +20,11 @@ import handleDecryptData from "../../utils/handleDecryptData";
 import HorseGreyhound from "./HorseGreyhoynd";
 import Tracker from "./Tracker";
 import MyBets from "./MyBets";
+import { AxiosSecure } from "../../lib/AxiosSecure";
+import useLanguage from "../../hooks/useLanguage";
 
 const GameDetails = () => {
+  const { language } = useLanguage();
   const { id, eventId } = useParams();
   const [horseGreyhound, setHorseGreyhound] = useState([]);
   const token = localStorage.getItem("token");
@@ -154,28 +157,15 @@ const GameDetails = () => {
 
   /* Get video */
   useEffect(() => {
-    const getVideo = () => {
-      /* random token */
-      const generatedToken = UseTokenGenerator();
-      /* Encrypt post data */
-      const encryptedVideoData = UseEncryptData({
+    const getVideo = async () => {
+      const payload = {
         eventTypeId: id,
         eventId: eventId,
         type: "video",
-        token: generatedToken,
-      });
+      };
       if (showTv || showMobileTv) {
-        fetch(API.accessToken, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(encryptedVideoData),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            setVideoUrl(data?.result);
-          });
+        const { data } = await AxiosSecure.post(API.accessToken, payload);
+        setVideoUrl(data?.result);
       }
     };
     getVideo();
@@ -185,19 +175,7 @@ const GameDetails = () => {
   const { data: exposer = [], refetch: refetchExposure } = useQuery({
     queryKey: ["exposure"],
     queryFn: async () => {
-      /* Random token */
-      const generatedToken = UseTokenGenerator();
-      /* Encrypt post data */
-      const encryptedData = UseEncryptData(generatedToken);
-      const res = await axios.post(
-        `${API.exposure}/${eventId}`,
-        encryptedData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await AxiosSecure.post(`${API.exposure}/${eventId}`);
       const data = res.data;
 
       if (data.success) {
@@ -225,6 +203,7 @@ const GameDetails = () => {
         maxLiabilityPerMarket: placeBetValue?.maxLiabilityPerMarket,
         isBettable: placeBetValue?.isBettable,
         maxLiabilityPerBet: placeBetValue?.maxLiabilityPerBet,
+        language,
       },
     ]);
     setLoader(true);
@@ -260,19 +239,9 @@ const GameDetails = () => {
     queryKey: ["currentBets"],
     queryFn: async () => {
       try {
-        /* Random token */
-        const generatedToken = UseTokenGenerator();
-        /* Encrypt post data */
-        const encryptedData = UseEncryptData(generatedToken);
-        const response = await fetch(`${API.currentBets}/${eventId}`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(encryptedData),
-        });
-
-        const data = await response.json();
+        const { data } = await AxiosSecure.post(
+          `${API.currentBets}/${eventId}`
+        );
 
         if (data.success) {
           return data.result;

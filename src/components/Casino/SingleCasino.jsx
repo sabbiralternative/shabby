@@ -1,12 +1,10 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import UseTokenGenerator from "../../hooks/UseTokenGenerator";
-import UseEncryptData from "../../hooks/UseEncryptData";
 import { useParams } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import NavbarWithIFrame from "./NavbarWithIFrame";
 import IFrameLoader from "../Loader/IFrameLoader";
 import { API } from "../../utils";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const SingleCasino = () => {
   const [url, setUrl] = useState(null);
@@ -19,19 +17,13 @@ const SingleCasino = () => {
     const CasinoIFrame = async () => {
       /* Random token */
       setLoading(true);
-      const generatedToken = UseTokenGenerator();
       /* Encryp */
-      const encryptedData = UseEncryptData({
+      const payload = {
         eventId: eventId,
         eventTypeId: eventTypeId,
-        token: generatedToken,
         mobileOnly: true,
-      });
-      const res = await axios.post(API.accessToken, encryptedData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      };
+      const res = await AxiosSecure.post(API.accessToken, payload);
       const link = res?.data?.result?.url;
       setLoading(false);
       // console.log(link);

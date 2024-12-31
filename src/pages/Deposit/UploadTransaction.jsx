@@ -1,13 +1,11 @@
 /* eslint-disable react/no-unknown-property */
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import toast from "react-hot-toast";
-import handleRandomToken from "../../utils/handleRandomToken";
 import { FaSpinner } from "react-icons/fa";
-import handleEncryptData from "../../utils/handleEncryptData";
-import { API, settings } from "../../utils";
+import { API } from "../../utils";
+import { AxiosSecure } from "../../lib/AxiosSecure";
+import { AxiosInstance } from "../../lib/AxiosInstance";
 
 const UploadTransaction = ({ paymentId, amount }) => {
   const token = localStorage.getItem("token");
@@ -24,11 +22,7 @@ const UploadTransaction = ({ paymentId, amount }) => {
       const handleSubmitImage = async () => {
         const formData = new FormData();
         formData.append("image", image);
-        const res = await axios.post(API.uploadScreenshot, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await AxiosInstance.post(API.uploadScreenshot, formData);
         const data = res.data;
         if (data?.success) {
           setLoading(false);
@@ -59,22 +53,15 @@ const UploadTransaction = ({ paymentId, amount }) => {
       return;
     }
     if (uploadedImage || utr) {
-      const generatedToken = handleRandomToken();
       const screenshotPostData = {
         type: "depositSubmit",
         paymentId,
         amount: amount,
         fileName: uploadedImage,
         utr: parseFloat(utr),
-        token: generatedToken,
-        site: settings.siteUrl,
       };
-      const encryptedData = handleEncryptData(screenshotPostData);
-      const res = await axios.post(API.bankAccount, encryptedData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+
+      const res = await AxiosSecure.post(API.bankAccount, screenshotPostData);
       const result = res?.data;
       if (result?.success) {
         setUtr(null);

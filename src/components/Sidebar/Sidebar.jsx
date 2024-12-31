@@ -2,8 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API, settings } from "../../utils";
+import useLanguage from "../../hooks/useLanguage";
+import { languageValue } from "../../utils/language";
+import { LanguageKey } from "../../constant";
 
 const Sidebar = () => {
+  const { valueByLanguage } = useLanguage();
   const [sportsLink, setSportsLink] = useState(true);
   const [menu, setMenu] = useState([]);
 
@@ -52,7 +56,13 @@ const Sidebar = () => {
                 {settings.liveCasino && (
                   <li className="nav-item">
                     <Link className="nav-link" to="/live-casino">
-                      <span>Live Casino</span>
+                      <span>
+                        {" "}
+                        {languageValue(
+                          valueByLanguage,
+                          LanguageKey.LIVE_CASINO
+                        )}
+                      </span>
                     </Link>
                   </li>
                 )}
@@ -74,7 +84,10 @@ const Sidebar = () => {
                 {settings.casinoCurrency === "INR" && settings.mac88 && (
                   <li className="nav-item">
                     <Link className="nav-link" to="/mac88">
-                      <span>Mac88</span>
+                      <span>
+                        {" "}
+                        {languageValue(valueByLanguage, LanguageKey.MAC88)}
+                      </span>
                     </Link>
                   </li>
                 )}

@@ -46,6 +46,7 @@ export const API = {
   withdrawBreakdown: "",
   groupSportsBook: "",
   ultraLobby: "",
+  language: "",
 };
 
 export const settings = {
@@ -79,4 +80,5 @@ export const settings = {
   b2c: "",
   bookmakerCashOut: "",
   liveCasinoType: "",
+  language: "",
 };

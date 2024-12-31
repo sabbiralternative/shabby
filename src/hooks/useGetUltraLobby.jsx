@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { API } from "../utils";
+import { AxiosInstance } from "../lib/AxiosInstance";
 
 const useGetUltraLobby = () => {
   const {
@@ -11,7 +11,7 @@ const useGetUltraLobby = () => {
     queryKey: ["ultraLobby"],
 
     queryFn: async () => {
-      const res = await axios.post(API.ultraLobby);
+      const res = await AxiosInstance.post(API.ultraLobby);
       const result = res?.data;
       return result;
     },

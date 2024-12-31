@@ -1,14 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import UseTokenGenerator from "../../hooks/UseTokenGenerator";
-import UseEncryptData from "../../hooks/UseEncryptData";
 import { useForm } from "react-hook-form";
 import Notification from "../Notification/Notification";
 import UseState from "../../hooks/UseState";
 import { API, settings } from "../../utils";
 import useGetSocialLink from "../../hooks/useGetSocialLink";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 const Register = () => {
   const referralCode = localStorage.getItem("referralCode");
   const { refetchSocialLinks } = useGetSocialLink();
@@ -42,14 +40,7 @@ const Register = () => {
   const { data: whatsAppLink } = useQuery({
     queryKey: ["whatsApp"],
     queryFn: async () => {
-      /* random token */
-      const generatedToken = UseTokenGenerator();
-      /* encrypted data */
-      const encryptedVideoData = UseEncryptData({
-        site: settings.siteUrl,
-        token: generatedToken,
-      });
-      const res = await axios.post(API.whatsapp, encryptedVideoData);
+      const res = await AxiosSecure.post(API.whatsapp);
       const data = res.data;
 
       if (data?.success) {
@@ -82,7 +73,7 @@ const Register = () => {
   // };
 
   /* Handle register */
-  const onSubmit = () => {
+  const onSubmit = async () => {
     setConfirmPasswordErr("");
     setPassword("");
     setMobile("");
@@ -109,87 +100,66 @@ const Register = () => {
     } else if (user?.otp?.length > 4 || user?.otp?.length < 4) {
       return setOtpField("Enter four digit OTP no");
     } else {
-      /* Get random token */
-      const generatedToken = UseTokenGenerator();
       const registerData = {
         password: user?.password,
         confirmPassword: user?.confirmPassword,
         mobile: user?.mobileNo,
-        site: settings.siteUrl,
-        token: generatedToken,
         otp: user?.otp,
         referralCode: referralCode || user.referralCode,
       };
-      /* Encrypted post data */
-      const encryptedData = UseEncryptData(registerData);
-      fetch(API.register, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(encryptedData),
-      })
-        .then((res) => res.json())
+      const { data } = await AxiosSecure.post(API.register, registerData);
+      if (data?.success) {
+        refetchSocialLinks();
+        /* Set token to localeStorage */
+        localStorage.setItem("token", data.result.token);
+        /* Set login name to locale storage */
+        localStorage.setItem("loginName", data.result.loginName);
+        const buttonValue = JSON.stringify(data.result.buttonValue.game);
+        /* set button value to locale storage */
+        localStorage.setItem("buttonValue", buttonValue);
+        const modal = [
+          { banner: data?.result?.banner },
+          { bannerTitle: data?.result?.bannerTitle },
+        ];
+        /* set modal picture to locale storage for the open modal in home page */
+        localStorage.setItem("modal", JSON.stringify(modal));
+        if (
+          localStorage.getItem("token") &&
+          localStorage.getItem("loginName") &&
+          data?.result?.changePassword === true
+        ) {
+          /* if token, login name, and result.password === true then navigation change-password-login page */
+          navigate("/change-password-login");
+        } else if (
+          localStorage.getItem("token") &&
+          localStorage.getItem("loginName") &&
+          data?.result?.changePassword === false
+        ) {
+          if (localStorage.getItem("forceLogin")) {
+            localStorage.removeItem("forceLogin");
+            localStorage.setItem("forceLoginSuccess", "true");
+            /* if token, login name, and result.password === false then navigation home page */
+            setSuccessRegister("User created successfully");
 
-        .then((data) => {
-          if (data?.success) {
-            refetchSocialLinks();
-            /* Set token to localeStorage */
-            localStorage.setItem("token", data.result.token);
-            /* Set login name to locale storage */
-            localStorage.setItem("loginName", data.result.loginName);
-            const buttonValue = JSON.stringify(data.result.buttonValue.game);
-            /* set button value to locale storage */
-            localStorage.setItem("buttonValue", buttonValue);
-            const modal = [
-              { banner: data?.result?.banner },
-              { bannerTitle: data?.result?.bannerTitle },
-            ];
-            /* set modal picture to locale storage for the open modal in home page */
-            localStorage.setItem("modal", JSON.stringify(modal));
-            if (
-              localStorage.getItem("token") &&
-              localStorage.getItem("loginName") &&
-              data?.result?.changePassword === true
-            ) {
-              /* if token, login name, and result.password === true then navigation change-password-login page */
-              navigate("/change-password-login");
-            } else if (
-              localStorage.getItem("token") &&
-              localStorage.getItem("loginName") &&
-              data?.result?.changePassword === false
-            ) {
-              if (localStorage.getItem("forceLogin")) {
-                localStorage.removeItem("forceLogin");
-                localStorage.setItem("forceLoginSuccess", "true");
-                /* if token, login name, and result.password === false then navigation home page */
-                setSuccessRegister("User created successfully");
-
-                navigate("/");
-              } else {
-                localStorage.setItem("forceLoginSuccess", "true");
-                setSuccessRegister("User created successfully");
-                navigate("/");
-              }
-            }
-          } else if (!data?.success) {
-            setErrRegister(data?.error?.description);
+            navigate("/");
+          } else {
+            localStorage.setItem("forceLoginSuccess", "true");
+            setSuccessRegister("User created successfully");
+            navigate("/");
           }
-        });
+        }
+      } else if (!data?.success) {
+        setErrRegister(data?.error?.description);
+      }
     }
   };
 
   /* Get whats app api */
   const getOtp = async () => {
-    /* random token */
-    const generatedToken = UseTokenGenerator();
     const otpData = {
       mobile: user?.mobileNo,
-      token: generatedToken,
     };
-    /* Encrypt post data */
-    const encryptedData = UseEncryptData(otpData);
-    const res = await axios.post(API.otp, encryptedData);
+    const res = await AxiosSecure.post(API.otp, otpData);
     const data = res.data;
     if (data?.success) {
       setOtp(data?.result?.message);

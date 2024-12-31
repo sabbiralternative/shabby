@@ -1,11 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
-
-import handleRandomToken from "../../utils/handleRandomToken";
-import handleEncryptData from "../../utils/handleEncryptData";
 import { API, settings } from "../../utils";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const AddBank = ({ setAddBank, refetchBankData }) => {
   /* Handle close modal click outside */
@@ -14,7 +11,6 @@ const AddBank = ({ setAddBank, refetchBankData }) => {
     setAddBank(false);
   });
   const [isFormValid, setIsFormValid] = useState(false);
-  const token = localStorage.getItem("token");
   const [bankDetails, setBankDetails] = useState({
     accountName: "",
     ifsc: "",
@@ -30,22 +26,16 @@ const AddBank = ({ setAddBank, refetchBankData }) => {
       toast.success("Bank account number did not matched!");
     }
     /* generating random token for post data */
-    const generatedToken = handleRandomToken();
+
     const bankData = {
       accountName: bankDetails.accountName,
       ifsc: bankDetails.ifsc,
       accountNumber: bankDetails.accountNumber,
       upiId: bankDetails.upiId,
       type: "addBankAccount",
-      token: generatedToken,
       site: settings.siteUrl,
     };
-    const encryptedData = handleEncryptData(bankData);
-    const res = await axios.post(API.bankAccount, encryptedData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await AxiosSecure.post(API.bankAccount, bankData);
     const data = res?.data;
 
     if (data?.success) {

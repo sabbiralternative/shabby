@@ -15,8 +15,15 @@ import AppPopup from "./AppPopUp";
 import Referral from "../Modal/Referral";
 import Marquee from "react-fast-marquee";
 import MobileDropdown from "./MobileDropdown";
+import useLanguage from "../../hooks/useLanguage";
+import Language from "../Modal/Language";
+import { languageValue } from "../../utils/language";
+import { LanguageKey } from "../../constant";
 const Header = () => {
   /* Open dropdown state for mobile version */
+  const { language, valueByLanguage } = useLanguage();
+  const [showLanguage, setShowLanguage] = useState(false);
+
   const [showReferral, setShowReferral] = useState(false);
   const location = useLocation();
   const [open, setOpen] = useState(false);
@@ -379,6 +386,13 @@ const Header = () => {
           position: "relative",
         }}
       >
+        {showLanguage && (
+          <Language
+            windowWidth={windowWidth}
+            showAppPopUp={showAppPopUp}
+            setShowLanguage={setShowLanguage}
+          />
+        )}
         {showReferral && <Referral setShowReferral={setShowReferral} />}
         {settings?.apkLink && showAppPopUp && windowWidth < 600 && (
           <AppPopup setShowAppPopUp={setShowAppPopUp} />
@@ -429,7 +443,7 @@ const Header = () => {
                 >
                   <div>
                     <Link className="rules-link pointer">
-                      <b>Rules</b>
+                      <b>{languageValue(valueByLanguage, LanguageKey.RULES)}</b>
                     </Link>
                   </div>
                 </div>
@@ -437,20 +451,22 @@ const Header = () => {
                   {/* In notice.json if deposit = true then showing deposit button */}
                   {settings.deposit && (
                     <Link className="btn btn-success me-2" to="/deposit">
-                      Deposit
+                      {languageValue(valueByLanguage, LanguageKey.DEPOSIT)}
                     </Link>
                   )}
                   {/* In notice.json if withdraw = true then showing withdraw button */}
                   {settings.withdraw && (
                     <Link className="btn btn-danger" to="/withdraw">
-                      Withdraw
+                      {languageValue(valueByLanguage, LanguageKey.WITHDRAW)}
                     </Link>
                   )}
                 </div>
                 <div className="user-balance ms-1 ms-xl-3">
                   {balance && (
                     <div>
-                      <span>Balance:</span>
+                      <span>
+                        {languageValue(valueByLanguage, LanguageKey.BALANCE)}:
+                      </span>
                       <b>{balanceData?.creditLimit}</b>
                     </div>
                   )}
@@ -729,6 +745,7 @@ const Header = () => {
                     {role}
                     <i className="fas fa-chevron-down ms-1"></i>
                   </div>
+
                   {/* open dropdown for desktop version */}
                   {dropDown && (
                     <div className="show dropdown">
@@ -756,7 +773,10 @@ const Header = () => {
                               data-rr-ui-dropdown-item=""
                               className="dropdown-item"
                             >
-                              Withdraw Statement
+                              {languageValue(
+                                valueByLanguage,
+                                LanguageKey.WITHDRAW_STATMENT
+                              )}
                             </li>
                           </Link>
                         )}
@@ -770,7 +790,10 @@ const Header = () => {
                               data-rr-ui-dropdown-item=""
                               className="dropdown-item"
                             >
-                              Deposit Statement
+                              {languageValue(
+                                valueByLanguage,
+                                LanguageKey.DEPOSIT_STATEMENT
+                              )}
                             </li>
                           </Link>
                         )}
@@ -804,7 +827,10 @@ const Header = () => {
                             data-rr-ui-dropdown-item=""
                             className="dropdown-item"
                           >
-                            Bonus Statement
+                            {languageValue(
+                              valueByLanguage,
+                              LanguageKey.BONUS_STATEMENT
+                            )}
                           </li>
                         </Link>
                         {settings.referral && (
@@ -877,19 +903,25 @@ const Header = () => {
                             data-rr-ui-dropdown-item=""
                             className="dropdown-item"
                           >
-                            Change Password
+                            {languageValue(
+                              valueByLanguage,
+                              LanguageKey.CHANGE_PASSWORD
+                            )}
                           </li>
                         </Link>
 
                         <div className="d-xl-none">
-                          <li className="dropdown-item">Rules</li>
+                          <li className="dropdown-item">
+                            {" "}
+                            {languageValue(valueByLanguage, LanguageKey.RULES)}
+                          </li>
                         </div>
 
                         <Link
                           onClick={() => setBalance(!balance)}
                           className="dropdown-item d-xl-none"
                         >
-                          Balance
+                          {languageValue(valueByLanguage, LanguageKey.BALANCE)}
                           <div className="form-check float-end">
                             <input
                               className="form-check-input"
@@ -901,7 +933,7 @@ const Header = () => {
                           onClick={() => setExp(!exp)}
                           className="dropdown-item d-xl-none"
                         >
-                          Exposure
+                          {languageValue(valueByLanguage, LanguageKey.EXPOSURE)}
                           <div className="form-check float-end">
                             <input
                               className="form-check-input"
@@ -915,12 +947,47 @@ const Header = () => {
                           data-rr-ui-dropdown-item=""
                           className="dropdown-item"
                         >
-                          SignOut
+                          {languageValue(valueByLanguage, LanguageKey.LOGOUT)}
                         </li>
                       </ul>
                     </div>
                   )}
                 </div>
+                {settings.language && (
+                  <a
+                    style={{ background: "none" }}
+                    onClick={() => setShowLanguage(true)}
+                    className="btn-home-login"
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <img
+                        style={{
+                          height: "15px",
+                          width: "15px",
+                        }}
+                        src="/assets/globe.gif"
+                        alt=""
+                      />
+                      <p
+                        style={{
+                          margin: "0px",
+                          fontSize: "10px",
+                          color: "white",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        {language || "EN"}
+                      </p>
+                    </div>
+                  </a>
+                )}
               </div>
             ) : null}
 
@@ -939,7 +1006,7 @@ const Header = () => {
                   {/* if register = true in notice.json then show register button */}
                   {settings.registration && (
                     <Link className="btn-home-login" to="/register">
-                      Register
+                      {languageValue(valueByLanguage, LanguageKey.REGISTER)}
                     </Link>
                   )}
 
@@ -948,12 +1015,46 @@ const Header = () => {
                     className="btn-home-login"
                     to="/login"
                   >
-                    Login
+                    {languageValue(valueByLanguage, LanguageKey.LOGIN)}
                   </Link>
                   {/* notice.json --> demoLogin = true then show the button */}
                   {settings.demoLogin && (
                     <a onClick={loginWithDemo} className="btn-home-login">
                       Demo
+                    </a>
+                  )}
+                  {settings.language && (
+                    <a
+                      onClick={() => setShowLanguage(true)}
+                      className="btn-home-login"
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <img
+                          style={{
+                            height: "15px",
+                            width: "15px",
+                          }}
+                          src="/assets/globe.gif"
+                          alt=""
+                        />
+                        <p
+                          style={{
+                            margin: "0px",
+                            fontSize: "10px",
+                            color: "white",
+                            textTransform: "capitalize",
+                          }}
+                        >
+                          {language || "EN"}
+                        </p>
+                      </div>
                     </a>
                   )}
                 </div>
@@ -991,7 +1092,7 @@ const Header = () => {
               <ul className="navbar-nav">
                 <li className="nav-item">
                   <Link className="nav-link" to="/">
-                    Home
+                    {languageValue(valueByLanguage, LanguageKey.HOME)}
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -1000,7 +1101,7 @@ const Header = () => {
                     className="nav-link"
                     to="/cricket"
                   >
-                    Cricket
+                    {languageValue(valueByLanguage, LanguageKey.CRICKET)}
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -1009,7 +1110,7 @@ const Header = () => {
                     className="nav-link"
                     to="/football"
                   >
-                    Football
+                    {languageValue(valueByLanguage, LanguageKey.FOOTBALL)}
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -1018,7 +1119,7 @@ const Header = () => {
                     className="nav-link"
                     to="/tennis"
                   >
-                    Tennis
+                    {languageValue(valueByLanguage, LanguageKey.TENNIS)}
                   </Link>
                 </li>
 
@@ -1028,17 +1129,17 @@ const Header = () => {
                     className="nav-link"
                     to="/kabaddi"
                   >
-                    Kabbadi
+                    {languageValue(valueByLanguage, LanguageKey.KABADDI)}
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/horse">
-                    Horse
+                    {languageValue(valueByLanguage, LanguageKey.HORSE)}
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/greyhound">
-                    Greyhound
+                    {languageValue(valueByLanguage, LanguageKey.GREYHOUND)}
                   </Link>
                 </li>
 

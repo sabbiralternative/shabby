@@ -9,7 +9,7 @@
       "siteUrl": "my99exch.club",
       "interval": "600",
       "casino": "mac88",
-      "liveCasinoType": "ultrawin",
+      "liveCasinoType": "diamond",
       "registration": true,
       "forceLogin": false,
       "demoLogin": true,
@@ -37,6 +37,7 @@
       "fantasy": true,
       "ourVirtual": true,
       "b2c": true,
+      "language": true,
       "build": "production"
     },
 
@@ -108,7 +109,8 @@
       "uploadScreenshot": "https://b2c.bet/deposit/up.php",
       "withdrawBreakdown": "https://api7.live/api/exchange/diamond/withdrawBreakdown",
       "groupSportsBook": "https://cache7.live/api/exchange/diamond/group/sportsbook",
-      "ultraLobby": "https://api7.live/api/exchange/diamond/ultra_lobby.php"
+      "ultraLobby": "https://api7.live/api/exchange/diamond/ultra_lobby.php",
+      "language": "https://api7.live/api/exchange/diamond/language"
     }
   },
   "success": true

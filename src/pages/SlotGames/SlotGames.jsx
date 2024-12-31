@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import axios from "axios";
 import { useState } from "react";
 import LiveSlotModal from "../../components/Modal/LiveSlotModal";
-import UseLiveSlotFantasyNewTab from "../../hooks/useLiveSlotFantasyNewTab";
 import { Link, useNavigate } from "react-router-dom";
 import { API, settings } from "../../utils";
+import UseLiveSlotFantasyNewTab from "../../hooks/UseLiveSlotFantasyNewTab";
+import { AxiosInstance } from "../../lib/AxiosInstance";
 
 const SlotGames = () => {
   const [slotGames, setSlotGames] = useState({});
@@ -16,7 +16,7 @@ const SlotGames = () => {
   /* Get slot games */
   useEffect(() => {
     const getSlotCasino = async () => {
-      const res = await axios.post(API.slotsWolf, {
+      const res = await AxiosInstance.post(API.slotsWolf, {
         gameList: "All",
         product,
         isHome: false,

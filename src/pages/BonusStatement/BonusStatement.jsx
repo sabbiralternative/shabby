@@ -1,16 +1,14 @@
-import axios from "axios";
-import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import useBonusStatement from "../../hooks/useBonusStatement";
 import { API } from "../../utils";
 import { useState } from "react";
 import Notification from "../../components/Notification/Notification";
 import moment from "moment";
+import { AxiosInstance } from "../../lib/AxiosInstance";
 
 const BonusStatement = () => {
   const [success, setSuccess] = useState("");
   const [err, setErr] = useState("");
   const { data, refetch } = useBonusStatement();
-  const token = localStorage.getItem("token");
 
   const handleShowMessage = (item) => {
     if (item?.is_claimed == 1) {
@@ -44,19 +42,12 @@ const BonusStatement = () => {
   };
 
   const handleClaimBonus = async (item) => {
-    const generatedToken = UseTokenGenerator();
     const payload = {
       type: "claimBonus",
       bonus_statement_id: item?.bonus_statement_id,
-      token: generatedToken,
     };
 
-    const result = await axios.post(API.bonus, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log(result);
+    const result = await AxiosInstance.post(API.bonus, payload);
     if (result?.data?.success) {
       refetch();
       setSuccess(result?.data?.result);
