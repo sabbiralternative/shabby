@@ -185,12 +185,15 @@ const PlaceBetModal = ({
                   </div>
                   <div className="col-6">
                     <div className="float-end">
-                      <button
-                        onClick={handleDecreasePrice}
-                        className="stakeactionminus btn"
-                      >
-                        <span className="fa fa-minus"></span>
-                      </button>
+                      {placeBetValue?.btype !== "CASINO" && (
+                        <button
+                          onClick={handleDecreasePrice}
+                          className="stakeactionminus btn"
+                        >
+                          <span className="fa fa-minus"></span>
+                        </button>
+                      )}
+
                       <input
                         onChange={(e) => setPrice(e.target.value)}
                         type="text"
@@ -198,12 +201,14 @@ const PlaceBetModal = ({
                         disabled=""
                         value={price}
                       />
-                      <button
-                        onClick={handleIncreasePrice}
-                        className="stakeactionminus btn"
-                      >
-                        <span className="fa fa-plus"></span>
-                      </button>
+                      {placeBetValue?.btype !== "CASINO" && (
+                        <button
+                          onClick={handleIncreasePrice}
+                          className="stakeactionminus btn"
+                        >
+                          <span className="fa fa-plus"></span>
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

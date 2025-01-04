@@ -142,6 +142,8 @@ const PlaceBets = ({
     }
   };
 
+  console.log(placeBetValue);
+
   return (
     <>
       <div className="sidebar-box place-bet-container">
@@ -178,14 +180,16 @@ const PlaceBets = ({
                 disabled=""
                 value={price}
               />
-              <div className="spinner-buttons input-group-btn btn-group-vertical">
-                <button onClick={handleIncreasePrice} className="btn-default">
-                  <i className="fa fa-angle-up"></i>
-                </button>
-                <button onClick={handleDecreasePrice} className="btn-default">
-                  <i className="fa fa-angle-down"></i>
-                </button>
-              </div>
+              {placeBetValue?.btype !== "CASINO" && (
+                <div className="spinner-buttons input-group-btn btn-group-vertical">
+                  <button onClick={handleIncreasePrice} className="btn-default">
+                    <i className="fa fa-angle-up"></i>
+                  </button>
+                  <button onClick={handleDecreasePrice} className="btn-default">
+                    <i className="fa fa-angle-down"></i>
+                  </button>
+                </div>
+              )}
             </div>
             <div className="place-bet-stake">
               <input
