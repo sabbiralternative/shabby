@@ -9,11 +9,11 @@ import UseBalance from "../../hooks/UseBalance";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import Notification from "../Notification/Notification";
+import SiteNotification from "./Notification";
 import MyMarketModal from "../Modal/MyMarketModal";
 import { API, settings } from "../../utils";
 import AppPopup from "./AppPopUp";
 import Referral from "../Modal/Referral";
-import Marquee from "react-fast-marquee";
 import MobileDropdown from "./MobileDropdown";
 import useLanguage from "../../hooks/useLanguage";
 import Language from "../Modal/Language";
@@ -39,7 +39,7 @@ const Header = () => {
   const token = localStorage.getItem("token");
   const { register, handleSubmit } = useForm();
   /* notification state */
-  const [showNotification, setShowNotification] = useState("");
+
   /* this are coming from context */
   const { buttonValue, SetButtonValue, setSports, logo } = UseState();
 
@@ -133,11 +133,6 @@ const Header = () => {
   }, []);
 
   /* Get marquee notification */
-  useEffect(() => {
-    axios.get(API.notification).then((res) => {
-      setShowNotification(res?.data?.result[0].text);
-    });
-  }, [token]);
 
   /*handle Logout */
   const logOut = () => {
@@ -1061,30 +1056,7 @@ const Header = () => {
               </div>
             ) : null}
             {/* in notice.json if demoLogin or register = false and forceLogin(localeStorage) success or  token, forceLoginSuccess = true then show below html */}
-            {(!settings.demoLogin &&
-              !settings.registration &&
-              forceLoginSuccess) ||
-            (forceLoginSuccess && token) ? (
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-                className="search-box-container d-xl-none"
-              >
-                <SearchBox />
-                {/* <div className="news"> */}
-
-                {showNotification && <Marquee>{showNotification}</Marquee>}
-                {/* </div> */}
-              </div>
-            ) : null}
-            {showNotification && (
-              <div className="d-none d-xl-block">
-                {" "}
-                <Marquee>{showNotification}</Marquee>
-              </div>
-            )}
+            <SiteNotification />
           </div>
 
           <div className="header-bottom d-none d-xl-block">
