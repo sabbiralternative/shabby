@@ -54,7 +54,7 @@ const PlaceBetDiamond = () => {
   const { eventTypeId, eventId, type } = JSON.parse(
     localStorage.getItem("casino")
   );
-
+  console.log(type);
   const { slug } = useParams();
   const [url, setUrl] = useState("");
   const [data, setData] = useState([]);
@@ -628,6 +628,7 @@ const PlaceBetDiamond = () => {
       const data = res.data;
 
       if (data.success) {
+        console.log(data);
         setUrl(data?.result?.url);
       }
     };
@@ -807,11 +808,43 @@ const PlaceBetDiamond = () => {
                   {/* Iframe video */}
                   <div className="casino-video-box">
                     {type === "ourCasino" && (
-                      <iframe
-                        allow="fullscreen;"
-                        src={url}
-                        style={{ widows: "100%", border: "0px" }}
-                      ></iframe>
+                      // <iframe
+                      //   allow="fullscreen;"
+                      //   src={url}
+                      //   style={{ widows: "100%", border: "0px" }}
+                      // ></iframe>
+                      // <video
+                      //   style={{ width: "100%", border: "0px", height: "100%" }}
+                      //   disablePictureInPicture
+                      //   playsInline
+                      //   className="KPCas Rl_wI"
+                      //   crossOrigin="use-credentials"
+                      //   src="https://1app.live/live/play.html?id=stream1"
+                      //   autoPlay
+                      //   muted
+                      // />
+
+                      <video
+                        autoPlay
+                        muted
+                        disableRemotePlayback
+                        id="h5live-nstpaOfIYI"
+                        playsInline
+                        style={{
+                          backgroundColor: "black",
+                          display: "block",
+                          width: "100%",
+                          height: "100%",
+                          position: "absolute",
+                          left: "50%",
+                          top: "50%",
+                          marginRight: "-50%",
+                          transform:
+                            "translate(-50%, -50%) scaleX(1) scaleY(1) rotate(0deg)",
+                        }}
+                      >
+                        <source src="https://media.geeksforgeeks.org/wp-content/uploads/20190616234019/Canvas.move_.mp4" />
+                      </video>
                     )}
                     {type === "virtual" && (
                       <img

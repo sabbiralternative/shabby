@@ -69,8 +69,6 @@ const Notification = () => {
     setShowNotification(false);
   };
 
-  console.log(notification);
-
   return (
     <>
       {(!settings.demoLogin && !settings.registration && forceLoginSuccess) ||
@@ -102,9 +100,7 @@ const Notification = () => {
           {" "}
           <Marquee>
             {filteredNotification?.map((item) => (
-              <p key={item?.id} style={{ marginRight: "100vw" }}>
-                {item?.text}
-              </p>
+              <p key={item?.id}>{item?.text}</p>
             ))}
           </Marquee>
           <RxCross2
