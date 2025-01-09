@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { API } from "../../utils";
 import { AxiosSecure } from "../../lib/AxiosSecure";
-import { AxiosInstance } from "../../lib/AxiosInstance";
+import axios from "axios";
 
 const UploadTransaction = ({ paymentId, amount }) => {
   const token = localStorage.getItem("token");
@@ -22,7 +22,11 @@ const UploadTransaction = ({ paymentId, amount }) => {
       const handleSubmitImage = async () => {
         const formData = new FormData();
         formData.append("image", image);
-        const res = await AxiosInstance.post(API.uploadScreenshot, formData);
+        const res = await axios.post(API.uploadScreenshot, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const data = res.data;
         if (data?.success) {
           setLoading(false);
