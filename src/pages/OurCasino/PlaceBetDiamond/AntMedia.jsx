@@ -9,7 +9,7 @@ const AntMedia = () => {
     const playOrderLocal = ["webrtc", "hls", "dash"];
     embeddedPlayerRef.current = new WebPlayer(
       {
-        streamId: "football2",
+        streamId: "stream1",
         httpBaseURL: "https://1app.live/live/",
         videoHTMLContent:
           '<video id="video-player" class="video-js vjs-default-skin vjs-big-play-centered"  playsinline style="width:100%;height:100%;object-fit:cover"></video>',
