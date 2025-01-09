@@ -44,6 +44,7 @@ import TeenPattiTwoPointZero from "../TeenPattiTwoPointZero/TeenPattiTwoPointZer
 import { API, settings } from "../../../utils/index.js";
 import { AxiosSecure } from "../../../lib/AxiosSecure.jsx";
 import { AxiosInstance } from "../../../lib/AxiosInstance.jsx";
+import AntMedia from "./AntMedia.jsx";
 
 const PlaceBetDiamond = () => {
   /* Reset scroll */
@@ -808,11 +809,12 @@ const PlaceBetDiamond = () => {
                   {/* Iframe video */}
                   <div className="casino-video-box">
                     {type === "ourCasino" && (
-                      <iframe
-                        allow="fullscreen;"
-                        src={url}
-                        style={{ widows: "100%", border: "0px" }}
-                      ></iframe>
+                      // <iframe
+                      //   allow="fullscreen;"
+                      //   src={url}
+                      //   style={{ widows: "100%", border: "0px" }}
+                      // ></iframe>
+                      <AntMedia />
                       // <video
                       //   style={{ width: "100%", border: "0px", height: "100%" }}
                       //   disablePictureInPicture
