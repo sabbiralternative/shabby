@@ -9,8 +9,8 @@ const AntMedia = () => {
     const playOrderLocal = ["webrtc", "hls", "dash"];
     embeddedPlayerRef.current = new WebPlayer(
       {
-        streamId: "stream1",
-        httpBaseURL: "https://1app.live/live/",
+        streamId: "test1",
+        httpBaseURL: "https://1app.live/LiveApp/",
         videoHTMLContent:
           '<video id="video-player" class="video-js vjs-default-skin vjs-big-play-centered"  playsinline style="width:100%;height:100%;object-fit:cover"></video>',
         playOrder: playOrderLocal,
@@ -44,10 +44,10 @@ const AntMedia = () => {
       style={{
         width: "100%",
         height: "100%",
-        // position: "absolute",
-        // top: 0,
-        // right: 0,
-        // left: 0,
+        position: "absolute",
+        top: 0,
+        right: 0,
+        left: 0,
         // display: "none",
       }}
       ref={bigVideo}
