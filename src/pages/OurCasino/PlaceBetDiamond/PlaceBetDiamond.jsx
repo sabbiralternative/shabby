@@ -762,7 +762,7 @@ const PlaceBetDiamond = () => {
         ${slug == "card32" || slug == "card32eu" ? "cards32a" : ""} 
         ${slug == "teensin" ? "baccarat29" : ""} 
         ${slug == "teen6" ? "teenpatti2" : ""} 
-        ${slug == "teen41" ? "teenpatti2" : ""} 
+        ${slug == "teen41" || slug === "teen42" ? "teenpatti2" : ""} 
    
         `}
         >
@@ -1216,7 +1216,7 @@ const PlaceBetDiamond = () => {
                     sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
                   />
                 ) : null}
-                {slug == "teen41" ? (
+                {slug == "teen41" || slug === "teen42" ? (
                   <TopQueenTeenPatti
                     data={data}
                     setPlaceBetValue={setPlaceBetValue}
