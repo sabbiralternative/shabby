@@ -47,6 +47,7 @@ export const API = {
   groupSportsBook: "",
   ultraLobby: "",
   language: "",
+  singleDiamond: "",
 };
 
 export const settings = {

@@ -1,8 +1,66 @@
+import axios from "axios";
+import { API } from "../../../utils";
+import { useEffect, useRef, useState } from "react";
+import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
+
 const LastResult = ({ data }) => {
+  const singleDiamondRef = useRef();
+  useCloseModalClickOutside(singleDiamondRef, () => {
+    setSingleDiamond("");
+  });
+
+  const [singleDiamond, setSingleDiamond] = useState("");
   const { eventId } = JSON.parse(localStorage.getItem("casino"));
+  const getSingleDiamond = async (roundId) => {
+    const { data } = await axios.get(`${API.singleDiamond}/${roundId}`);
+    if (data?.success) {
+      console.log(data);
+      setSingleDiamond(data?.result?.html);
+    }
+  };
+
+  useEffect(() => {
+    const button = document.getElementsByClassName("btn-close")[0];
+
+    const handleClick = () => {
+      setSingleDiamond("");
+    };
+
+    if (button) {
+      button.addEventListener("click", handleClick);
+    }
+
+    // Cleanup the event listener
+    return () => {
+      if (button) {
+        button.removeEventListener("click", handleClick);
+      }
+    };
+  }, [singleDiamond]);
 
   return (
     <>
+      {singleDiamond && (
+        <>
+          <div className="fade modal-backdrop show"></div>
+          <div
+            role="dialog"
+            aria-modal="true"
+            className="fade modal show"
+            tabIndex="-1"
+            style={{ display: "block" }}
+          >
+            <div className="modal-dialog modal-xl">
+              <div
+                ref={singleDiamondRef}
+                dangerouslySetInnerHTML={{
+                  __html: singleDiamond,
+                }}
+              ></div>
+            </div>
+          </div>
+        </>
+      )}
       <div className="casino-last-result-title">
         <span>Last Result</span>
         <span>
@@ -12,9 +70,10 @@ const LastResult = ({ data }) => {
       <div className="casino-last-results">
         {data &&
           data?.length > 0 &&
-          data[0]?.recent_winner?.map(({ winner }, i) => {
+          data[0]?.recent_winner?.map(({ winner, roundId }, i) => {
             return (
               <span
+                onClick={() => getSingleDiamond(roundId)}
                 key={i}
                 className={`result 
        
