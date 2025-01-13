@@ -45,6 +45,7 @@ import { API, settings } from "../../../utils/index.js";
 import { AxiosSecure } from "../../../lib/AxiosSecure.jsx";
 import { AxiosInstance } from "../../../lib/AxiosInstance.jsx";
 import AntMedia from "./AntMedia.jsx";
+import TopQueenTeenPatti from "../TopQueenTeenPatti/TopQueenTeenPatti.jsx";
 
 const PlaceBetDiamond = () => {
   /* Reset scroll */
@@ -55,7 +56,7 @@ const PlaceBetDiamond = () => {
   const { eventTypeId, eventId, type } = JSON.parse(
     localStorage.getItem("casino")
   );
-  console.log(type);
+
   const { slug } = useParams();
   const [url, setUrl] = useState("");
   const [data, setData] = useState([]);
@@ -761,6 +762,7 @@ const PlaceBetDiamond = () => {
         ${slug == "card32" || slug == "card32eu" ? "cards32a" : ""} 
         ${slug == "teensin" ? "baccarat29" : ""} 
         ${slug == "teen6" ? "teenpatti2" : ""} 
+        ${slug == "teen41" ? "teenpatti2" : ""} 
    
         `}
         >
@@ -1212,6 +1214,17 @@ const PlaceBetDiamond = () => {
                     fiveIndexOneRunnersEx={fiveIndexOneRunnersEx}
                     sixIndexOneRunnersEx={sixIndexOneRunnersEx}
                     sixIndexZeroRunnersEx={sixIndexZeroRunnersEx}
+                  />
+                ) : null}
+                {slug == "teen41" ? (
+                  <TopQueenTeenPatti
+                    data={data}
+                    setPlaceBetValue={setPlaceBetValue}
+                    setShowBets={setShowBets}
+                    lowExposure={lowExposure}
+                    highExposure={highExposure}
+                    evenExposure={evenExposure}
+                    redExposure={redExposure}
                   />
                 ) : null}
                 {slug == "teen" ? (
