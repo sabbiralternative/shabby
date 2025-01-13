@@ -738,7 +738,10 @@ const PlaceBetDiamond = () => {
         ${slug == "teen1" ? "onecard1day" : ""} 
         ${slug == "teen120" ? "onecard20" : ""} 
         ${
-          slug == "teen" || slug == "teen3" || slug == "teen32"
+          slug == "teen" ||
+          slug == "teen3" ||
+          slug == "teen32" ||
+          slug === "teen33"
             ? "teenpatti1day"
             : ""
         } 
@@ -1188,7 +1191,7 @@ const PlaceBetDiamond = () => {
                     oddExposure={oddExposure}
                   />
                 ) : null}
-                {slug == "teen3" || slug == "teen32" ? (
+                {slug == "teen3" || slug == "teen32" || slug === "teen33" ? (
                   <InstantTeenPatti
                     data={data}
                     setPlaceBetValue={setPlaceBetValue}

@@ -294,7 +294,8 @@ const Card = ({ slug, data, one }) => {
       slug == "teen32" ||
       slug == "teenmuf" ||
       slug === "teen41" ||
-      slug === "teen42" ? (
+      slug === "teen42" ||
+      slug === "teen33" ? (
         <>
           <div className="">
             <h5 className="">Player A</h5>
