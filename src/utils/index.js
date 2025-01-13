@@ -48,6 +48,7 @@ export const API = {
   ultraLobby: "",
   language: "",
   singleDiamond: "",
+  singleDiamondRules: "",
 };
 
 export const settings = {

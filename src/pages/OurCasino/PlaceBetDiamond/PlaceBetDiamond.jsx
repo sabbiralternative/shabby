@@ -732,7 +732,7 @@ const PlaceBetDiamond = () => {
         } 
         ${slug == "aaa2" || slug == "aaa" ? "aaa" : ""} 
         ${slug == "dt202" || slug == "dt20" ? "dt20" : ""} 
-        ${slug == "btable" ? "bollywood" : ""} 
+        ${slug == "btable" || slug === "btable2" ? "bollywood" : ""} 
         ${slug == "dt6" ? "dt1day" : ""} 
         ${slug == "dtl20" ? "dtl20" : ""} 
         ${slug == "teen1" ? "onecard1day" : ""} 
@@ -1362,7 +1362,7 @@ const PlaceBetDiamond = () => {
                 ) : null}
 
                 {/* Bollywood casino */}
-                {slug == "btable" ? (
+                {slug == "btable" || slug === "btable2" ? (
                   <Bollywood
                     data={data}
                     setShowBets={setShowBets}

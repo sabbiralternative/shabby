@@ -14,7 +14,7 @@ const WarGames = ({
             <div className="flip-card-inner">
               <div className="flip-card-front">
                 {data[0]?.runners[0]?.card?.length > 0 ? (
-                  <img src={`/cards/${data[0]?.indexCard[0]}.jpg`} />
+                  <img src={`/cards/${data[0]?.runners?.[0]?.card[0]}.jpg`} />
                 ) : (
                   <img src={one} />
                 )}
@@ -29,7 +29,7 @@ const WarGames = ({
             <div className="flip-card-inner">
               {data[1]?.runners[0]?.card?.length > 0 ? (
                 <div className="flip-card-front">
-                  <img src={`/cards/${data[0]?.runners[0]?.card[0]}.jpg`} />
+                  <img src={`/cards/${data[1]?.runners[0]?.card[0]}.jpg`} />
                   {/* <!-- key0 runner2 card--> */}
                 </div>
               ) : (
@@ -46,7 +46,7 @@ const WarGames = ({
             <div className="flip-card-inner">
               {data[2]?.runners[0]?.card?.length > 0 ? (
                 <div className="flip-card-front">
-                  <img src={`/cards/${data[0]?.runners[0]?.card[0]}.jpg`} />
+                  <img src={`/cards/${data[2]?.runners[0]?.card[0]}.jpg`} />
                   {/* <!-- key0 runner2 card--> */}
                 </div>
               ) : (
@@ -63,7 +63,7 @@ const WarGames = ({
             <div className="flip-card-inner">
               {data[3]?.runners[0]?.card?.length > 0 ? (
                 <div className="flip-card-front">
-                  <img src={`/cards/${data[0]?.runners[0]?.card[0]}.jpg`} />
+                  <img src={`/cards/${data[3]?.runners[0]?.card[0]}.jpg`} />
                   {/* <!-- key0 runner2 card--> */}
                 </div>
               ) : (
@@ -80,7 +80,7 @@ const WarGames = ({
             <div className="flip-card-inner">
               {data[4]?.runners[0]?.card?.length > 0 ? (
                 <div className="flip-card-front">
-                  <img src={`/cards/${data[0]?.runners[0]?.card[0]}.jpg`} />
+                  <img src={`/cards/${data[4]?.runners[0]?.card[0]}.jpg`} />
                   {/* <!-- key0 runner2 card--> */}
                 </div>
               ) : (
@@ -97,7 +97,7 @@ const WarGames = ({
             <div className="flip-card-inner">
               {data[5]?.runners[0]?.card?.length > 0 ? (
                 <div className="flip-card-front">
-                  <img src={`/cards/${data[0]?.runners[0]?.card[0]}.jpg`} />
+                  <img src={`/cards/${data[5]?.runners[0]?.card[0]}.jpg`} />
                   {/* <!-- key0 runner2 card--> */}
                 </div>
               ) : (
@@ -149,9 +149,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
-                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
-                        isBettable:game?.isBettable,
-                        maxLiabilityPerBet:game?.maxLiabilityPerBet
+                        maxLiabilityPerMarket: game?.maxLiabilityPerMarket,
+                        isBettable: game?.isBettable,
+                        maxLiabilityPerBet: game?.maxLiabilityPerBet,
                       });
                     }}
                     key={i}
@@ -222,9 +222,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
-                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
-                        isBettable:game?.isBettable,
-                        maxLiabilityPerBet:game?.maxLiabilityPerBet
+                        maxLiabilityPerMarket: game?.maxLiabilityPerMarket,
+                        isBettable: game?.isBettable,
+                        maxLiabilityPerBet: game?.maxLiabilityPerBet,
                       });
                     }}
                     key={i}
@@ -295,9 +295,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
-                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
-                        isBettable:game?.isBettable,
-                        maxLiabilityPerBet:game?.maxLiabilityPerBet
+                        maxLiabilityPerMarket: game?.maxLiabilityPerMarket,
+                        isBettable: game?.isBettable,
+                        maxLiabilityPerBet: game?.maxLiabilityPerBet,
                       });
                     }}
                     key={i}
@@ -362,9 +362,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
-                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
-                        isBettable:game?.isBettable,
-                        maxLiabilityPerBet:game?.maxLiabilityPerBet
+                        maxLiabilityPerMarket: game?.maxLiabilityPerMarket,
+                        isBettable: game?.isBettable,
+                        maxLiabilityPerBet: game?.maxLiabilityPerBet,
                       });
                     }}
                     key={i}
@@ -429,9 +429,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
-                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
-                        isBettable:game?.isBettable,
-                        maxLiabilityPerBet:game?.maxLiabilityPerBet
+                        maxLiabilityPerMarket: game?.maxLiabilityPerMarket,
+                        isBettable: game?.isBettable,
+                        maxLiabilityPerBet: game?.maxLiabilityPerBet,
                       });
                     }}
                     key={i}
@@ -495,9 +495,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
-                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
-                        isBettable:game?.isBettable,
-                        maxLiabilityPerBet:game?.maxLiabilityPerBet
+                        maxLiabilityPerMarket: game?.maxLiabilityPerMarket,
+                        isBettable: game?.isBettable,
+                        maxLiabilityPerBet: game?.maxLiabilityPerBet,
                       });
                     }}
                     key={i}
@@ -562,9 +562,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
-                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
-                        isBettable:game?.isBettable,
-                        maxLiabilityPerBet:game?.maxLiabilityPerBet
+                        maxLiabilityPerMarket: game?.maxLiabilityPerMarket,
+                        isBettable: game?.isBettable,
+                        maxLiabilityPerBet: game?.maxLiabilityPerBet,
                       });
                     }}
                     key={i}
@@ -628,9 +628,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
-                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
-                        isBettable:game?.isBettable,
-                        maxLiabilityPerBet:game?.maxLiabilityPerBet
+                        maxLiabilityPerMarket: game?.maxLiabilityPerMarket,
+                        isBettable: game?.isBettable,
+                        maxLiabilityPerBet: game?.maxLiabilityPerBet,
                       });
                     }}
                     key={i}
@@ -695,9 +695,9 @@ const WarGames = ({
                         back: true,
                         name: runner?.name,
                         isWeak: game?.isWeak,
-                        maxLiabilityPerMarket:game?.maxLiabilityPerMarket,
-                        isBettable:game?.isBettable,
-                        maxLiabilityPerBet:game?.maxLiabilityPerBet
+                        maxLiabilityPerMarket: game?.maxLiabilityPerMarket,
+                        isBettable: game?.isBettable,
+                        maxLiabilityPerBet: game?.maxLiabilityPerBet,
                       });
                     }}
                     key={i}

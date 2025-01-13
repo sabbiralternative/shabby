@@ -166,6 +166,7 @@ const Card = ({ slug, data, one }) => {
         ) : null}
         {/* <!-- card html start --> */}
         {slug === "btable" ||
+        slug === "btable2" ||
         slug == "aaa2" ||
         slug == "lucky7eu" ||
         slug == "lucky7eu2" ||

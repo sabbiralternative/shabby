@@ -12,6 +12,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         const setting = data?.result?.settings;
         API.withdrawBreakdown = endPoints?.withdrawBreakdown;
         API.singleDiamond = endPoints?.singleDiamond;
+        API.singleDiamondRules = endPoints?.singleDiamondRules;
         API.language = endPoints?.language;
         API.ultraLobby = endPoints?.ultraLobby;
         API.groupSportsBook = endPoints?.groupSportsBook;
