@@ -745,7 +745,7 @@ const PlaceBetDiamond = () => {
             ? "teenpatti1day"
             : ""
         } 
-        ${slug == "teen20" ? "teenpatti20" : ""} 
+        ${slug == "teen20" || slug === "teen20c" ? "teenpatti20" : ""} 
         ${slug == "vlucky7" ? "lucky7a vcasino" : ""} 
         ${slug == "vaaa" ? "aaa vcasino" : ""} 
         ${slug == "vbtable" ? "bollywood vcasino" : ""} 
@@ -1200,7 +1200,7 @@ const PlaceBetDiamond = () => {
                     highExposure={highExposure}
                   />
                 ) : null}
-                {slug == "teen20" ? (
+                {slug == "teen20" || slug === "teen20c" ? (
                   <TeenPatti20
                     data={data}
                     setPlaceBetValue={setPlaceBetValue}

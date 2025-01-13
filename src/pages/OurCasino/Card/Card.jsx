@@ -291,6 +291,7 @@ const Card = ({ slug, data, one }) => {
       </div>
       {slug == "teen" ||
       slug == "teen20" ||
+      slug === "teen20c" ||
       slug == "teen3" ||
       slug == "teen32" ||
       slug == "teenmuf" ||
