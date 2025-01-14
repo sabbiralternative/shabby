@@ -58,7 +58,7 @@ const PlaceBetDiamond = () => {
   );
 
   const { slug } = useParams();
-  const [url, setUrl] = useState("");
+  // const [url, setUrl] = useState("");
   const [data, setData] = useState([]);
   const [showBets, setShowBets] = useState(false);
   const {
@@ -620,22 +620,22 @@ const PlaceBetDiamond = () => {
   }, [data]);
 
   /* Get video */
-  useEffect(() => {
-    const payload = {
-      eventId: eventId,
-      eventTypeId: eventTypeId,
-    };
-    const getCasinoVideo = async () => {
-      const res = await AxiosSecure.post(API.accessToken, payload);
-      const data = res.data;
+  // useEffect(() => {
+  //   const payload = {
+  //     eventId: eventId,
+  //     eventTypeId: eventTypeId,
+  //   };
+  //   const getCasinoVideo = async () => {
+  //     const res = await AxiosSecure.post(API.accessToken, payload);
+  //     const data = res.data;
 
-      if (data.success) {
-        console.log(data);
-        setUrl(data?.result?.url);
-      }
-    };
-    getCasinoVideo();
-  }, [eventId, eventTypeId]);
+  //     if (data.success) {
+  //       // console.log(data);
+  //       setUrl(data?.result?.url);
+  //     }
+  //   };
+  //   getCasinoVideo();
+  // }, [eventId, eventTypeId]);
 
   /* Get odds */
   useEffect(() => {
@@ -694,7 +694,7 @@ const PlaceBetDiamond = () => {
     refetchExposure,
     setRefetchBetsExposure,
   ]);
-
+  console.log(data);
   return (
     <>
       <div className="center-container">
@@ -819,7 +819,10 @@ const PlaceBetDiamond = () => {
                       //   src={url}
                       //   style={{ widows: "100%", border: "0px" }}
                       // ></iframe>
-                      <AntMedia />
+                      <AntMedia
+                        server={data?.[0]?.server}
+                        streamKey={data?.[0]?.streamKey}
+                      />
                       // <video
                       //   style={{ width: "100%", border: "0px", height: "100%" }}
                       //   disablePictureInPicture

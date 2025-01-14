@@ -1,32 +1,35 @@
 import { WebPlayer } from "@antmedia/web_player";
 import { useEffect, useRef } from "react";
 
-const AntMedia = () => {
+const AntMedia = ({ server, streamKey }) => {
+  console.log(streamKey, server);
   const bigVideo = useRef(null);
   const embeddedPlayerRef = useRef(null);
 
   useEffect(() => {
-    const playOrderLocal = ["webrtc", "hls", "dash"];
-    embeddedPlayerRef.current = new WebPlayer(
-      {
-        streamId: "test1",
-        httpBaseURL: "https://1app.live/LiveApp/",
-        videoHTMLContent:
-          '<video id="video-player" class="video-js vjs-default-skin vjs-big-play-centered"  playsinline style="width:100%;height:100%;object-fit:cover"></video>',
-        playOrder: playOrderLocal,
-      },
-      bigVideo.current
-    );
+    if (server && streamKey) {
+      const playOrderLocal = ["webrtc", "hls", "dash"];
+      embeddedPlayerRef.current = new WebPlayer(
+        {
+          streamId: streamKey,
+          httpBaseURL: server,
+          videoHTMLContent:
+            '<video id="video-player" class="video-js vjs-default-skin vjs-big-play-centered"  playsinline style="width:100%;height:100%;object-fit:cover"></video>',
+          playOrder: playOrderLocal,
+        },
+        bigVideo.current
+      );
 
-    embeddedPlayerRef.current
-      .initialize()
-      .then(() => {
-        embeddedPlayerRef.current.play();
-      })
-      .catch((error) => {
-        console.error("Error while initializing embedded player: " + error);
-      });
-  }, []);
+      embeddedPlayerRef.current
+        .initialize()
+        .then(() => {
+          embeddedPlayerRef.current.play();
+        })
+        .catch((error) => {
+          console.error("Error while initializing embedded player: " + error);
+        });
+    }
+  }, [server, streamKey]);
 
   useEffect(() => {
     if (bigVideo.current) {
