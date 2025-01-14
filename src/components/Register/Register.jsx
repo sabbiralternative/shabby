@@ -30,6 +30,10 @@ const Register = () => {
   const [mobile, setMobile] = useState("");
   // const [userName, setUserName] = useState("");
   const [otpField, setOtpField] = useState("");
+  const [order, setOrder] = useState({
+    orderId: "",
+    otpMethod: "",
+  });
 
   /* set site title  */
   useEffect(() => {
@@ -106,7 +110,10 @@ const Register = () => {
         mobile: user?.mobileNo,
         otp: user?.otp,
         referralCode: referralCode || user.referralCode,
+        orderId: order.orderId,
+        otpMethod: order.otpMethod,
       };
+
       const { data } = await AxiosSecure.post(API.register, registerData);
       if (data?.success) {
         refetchSocialLinks();
@@ -162,6 +169,10 @@ const Register = () => {
     const res = await AxiosSecure.post(API.otp, otpData);
     const data = res.data;
     if (data?.success) {
+      setOrder({
+        orderId: data?.result?.orderId,
+        otpMethod: "sms",
+      });
       setOtp(data?.result?.message);
     } else {
       setErrOtp(data?.error?.description);
