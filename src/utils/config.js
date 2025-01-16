@@ -91,6 +91,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         settings.bookmakerCashOut = setting?.bookmakerCashOut;
         settings.liveCasinoType = setting?.liveCasinoType;
         settings.language = setting?.language;
+        settings.betDelay = setting?.betDelay;
         setNoticeLoaded(true);
       }
     })

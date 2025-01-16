@@ -83,4 +83,5 @@ export const settings = {
   bookmakerCashOut: "",
   liveCasinoType: "",
   language: "",
+  betDelay: "",
 };

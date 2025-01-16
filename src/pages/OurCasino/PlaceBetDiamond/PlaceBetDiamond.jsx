@@ -640,6 +640,7 @@ const PlaceBetDiamond = () => {
   /* Get odds */
   useEffect(() => {
     const getGameDetails = async () => {
+      console.log(`${API.odds}/${eventTypeId}/${eventId}`);
       const res = await AxiosInstance.get(
         `${API.odds}/${eventTypeId}/${eventId}`
       );

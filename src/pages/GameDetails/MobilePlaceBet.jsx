@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+import { FaSpinner } from "react-icons/fa";
 
 const MobilePlaceBet = ({
+  betDelay,
   showBets,
   setShowBets,
   placeBetValue,
@@ -76,7 +78,27 @@ const MobilePlaceBet = ({
                     {loader && (
                       <div id="loader-section">
                         <div id="load-inner">
-                          <i className="fa fa-spinner fa-spin"></i>
+                          <span style={{ position: "relative" }}>
+                            <FaSpinner size={25} />
+                            <span
+                              style={{
+                                position: "absolute",
+                                right: "9px",
+                                top: "4px",
+                              }}
+                            >
+                              {betDelay > 0 && betDelay}
+                            </span>
+                          </span>
+                          <span style={{ fontWeight: "500" }}>
+                            Your bet is being processed...
+                          </span>
+                          <span
+                            style={{ fontWeight: "500" }}
+                            className="font-semibold"
+                          >
+                            Please Wait...
+                          </span>
                         </div>
                       </div>
                     )}

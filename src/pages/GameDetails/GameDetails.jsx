@@ -5,6 +5,7 @@ import MatchOddsSection from "./MatchOddsSection";
 import BookmarkerSection from "./BookmarkerSection";
 import BookmarkerTwoSection from "./BookmarkerTwoSection";
 import NormalSection from "./NormalSection";
+import { v4 as uuidv4 } from "uuid";
 import OverByOver from "./OverByOver";
 import FancyOne from "./FancyOne";
 import UseState from "../../hooks/UseState";
@@ -48,6 +49,7 @@ const GameDetails = () => {
   const [profit, setProfit] = useState("");
   const [loader, setLoader] = useState(false);
   const [oddStake, setOddStake] = useState("");
+  const [betDelay, setBetDelay] = useState("");
   const [oddStakeLay1, setOddStakeLay1] = useState("");
   const [oddStakeLay2, setOddStakeLay2] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -214,34 +216,40 @@ const GameDetails = () => {
         isBettable: placeBetValue?.isBettable,
         maxLiabilityPerBet: placeBetValue?.maxLiabilityPerBet,
         language,
+        nounce: uuidv4(),
+        isbetDelay: settings.betDelay,
       },
     ]);
+    setBetDelay(placeBetValue?.betDelay);
+    const delay = settings.betDelay ? placeBetValue?.betDelay * 1000 : 0;
     setLoader(true);
-    fetch(API.order, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(encryptedData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.success) {
-          refetchExposure();
-          refetchCurrentBets();
-          refetchBalance();
-          setLoader(false);
-          setShowBets(false);
-          setSuccessMessage("Bet Place Successfully !");
-        } else {
-          setErrorMessage(data?.error?.status[0]?.description);
-          setLoader(false);
-          setShowBets(false);
-          refetchExposure();
-          refetchBalance();
-          refetchCurrentBets();
-        }
-      });
+    setTimeout(() => {
+      fetch(API.order, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(encryptedData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data?.success) {
+            refetchExposure();
+            refetchCurrentBets();
+            refetchBalance();
+            setLoader(false);
+            setShowBets(false);
+            setSuccessMessage("Bet Place Successfully !");
+          } else {
+            setErrorMessage(data?.error?.status[0]?.description);
+            setLoader(false);
+            setShowBets(false);
+            refetchExposure();
+            refetchBalance();
+            refetchCurrentBets();
+          }
+        });
+    }, delay);
   };
 
   /* Fetch Current Bets */
@@ -466,6 +474,16 @@ const GameDetails = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    if (betDelay > 0) {
+      setTimeout(() => {
+        setBetDelay((prev) => prev - 1);
+      }, 1000);
+    } else {
+      setBetDelay(null);
+    }
+  }, [setBetDelay, betDelay]);
 
   return (
     <>
@@ -740,6 +758,7 @@ const GameDetails = () => {
 
         {/* Mobile place bet starts */}
         <MobilePlaceBet
+          betDelay={betDelay}
           showBets={showBets}
           setShowBets={setShowBets}
           placeBetValue={placeBetValue}
@@ -795,6 +814,7 @@ const GameDetails = () => {
 
         {/* Place bet start */}
         <DesktopPlaceBet
+          betDelay={betDelay}
           showBets={showBets}
           placeBetValue={placeBetValue}
           loader={loader}

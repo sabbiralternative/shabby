@@ -57,9 +57,9 @@ const DragonOneDay = ({
                     back: true,
                     name: data[0]?.runners[0]?.name,
                     isWeak: data[0]?.isWeak,
-                    maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
-                    isBettable:data[0]?.isBettable,
-                    maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                    isBettable: data[0]?.isBettable,
+                    maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -90,9 +90,9 @@ const DragonOneDay = ({
                     lay: true,
                     name: data[0]?.runners[0]?.name,
                     isWeak: data[0]?.isWeak,
-                    maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
-                    isBettable:data[0]?.isBettable,
-                    maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                    isBettable: data[0]?.isBettable,
+                    maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box lay ${
@@ -139,9 +139,9 @@ const DragonOneDay = ({
                     back: true,
                     name: data[0]?.runners[1]?.name,
                     isWeak: data[0]?.isWeak,
-                    maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
-                    isBettable:data[0]?.isBettable,
-                    maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                    isBettable: data[0]?.isBettable,
+                    maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -172,9 +172,9 @@ const DragonOneDay = ({
                     lay: true,
                     name: data[0]?.runners[1]?.name,
                     isWeak: data[0]?.isWeak,
-                    maxLiabilityPerMarket:data[0]?.maxLiabilityPerMarket,
-                    isBettable:data[0]?.isBettable,
-                    maxLiabilityPerBet:data[0]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[0]?.maxLiabilityPerMarket,
+                    isBettable: data[0]?.isBettable,
+                    maxLiabilityPerBet: data[0]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box lay ${
@@ -214,9 +214,9 @@ const DragonOneDay = ({
                 back: true,
                 name: data[1]?.runners[0]?.name,
                 isWeak: data[1]?.isWeak,
-                maxLiabilityPerMarket:data[1]?.maxLiabilityPerMarket,
-                isBettable:data[1]?.isBettable,
-                maxLiabilityPerBet:data[1]?.maxLiabilityPerBet
+                maxLiabilityPerMarket: data[1]?.maxLiabilityPerMarket,
+                isBettable: data[1]?.isBettable,
+                maxLiabilityPerBet: data[1]?.maxLiabilityPerBet,
               });
             }}
             className={`casino-odds-box back casino-odds-box-theme ${
@@ -263,16 +263,16 @@ const DragonOneDay = ({
                     price: data[2]?.runners[0]?.back[0]?.price,
                     side: 0,
                     selectionId: data[2]?.runners[0]?.id,
-                    btype: data[1]?.btype,
+                    btype: data[2]?.btype,
                     eventTypeId: data[2]?.eventTypeId,
                     betDelay: data[2]?.betDelay,
                     marketId: data[2]?.id,
                     back: true,
                     name: data[2]?.runners[0]?.name,
                     isWeak: data[2]?.isWeak,
-                    maxLiabilityPerMarket:data[2]?.maxLiabilityPerMarket,
-                    isBettable:data[2]?.isBettable,
-                    maxLiabilityPerBet:data[2]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[2]?.maxLiabilityPerMarket,
+                    isBettable: data[2]?.isBettable,
+                    maxLiabilityPerBet: data[2]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -315,9 +315,9 @@ const DragonOneDay = ({
                     back: true,
                     name: data[2]?.runners[1]?.name,
                     isWeak: data[2]?.isWeak,
-                    maxLiabilityPerMarket:data[2]?.maxLiabilityPerMarket,
-                    isBettable:data[2]?.isBettable,
-                    maxLiabilityPerBet:data[2]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[2]?.maxLiabilityPerMarket,
+                    isBettable: data[2]?.isBettable,
+                    maxLiabilityPerBet: data[2]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -364,9 +364,9 @@ const DragonOneDay = ({
                     back: true,
                     name: data[3]?.runners[0]?.name,
                     isWeak: data[3]?.isWeak,
-                    maxLiabilityPerMarket:data[3]?.maxLiabilityPerMarket,
-                    isBettable:data[3]?.isBettable,
-                    maxLiabilityPerBet:data[3]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[3]?.maxLiabilityPerMarket,
+                    isBettable: data[3]?.isBettable,
+                    maxLiabilityPerBet: data[3]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -408,9 +408,9 @@ const DragonOneDay = ({
                     back: true,
                     name: data[3]?.runners[1]?.name,
                     isWeak: data[3]?.isWeak,
-                    maxLiabilityPerMarket:data[3]?.maxLiabilityPerMarket,
-                    isBettable:data[3]?.isBettable,
-                    maxLiabilityPerBet:data[3]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[3]?.maxLiabilityPerMarket,
+                    isBettable: data[3]?.isBettable,
+                    maxLiabilityPerBet: data[3]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -483,9 +483,9 @@ const DragonOneDay = ({
                     back: true,
                     name: data[4]?.runners[0]?.name,
                     isWeak: data[4]?.isWeak,
-                    maxLiabilityPerMarket:data[4]?.maxLiabilityPerMarket,
-                    isBettable:data[4]?.isBettable,
-                    maxLiabilityPerBet:data[4]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[4]?.maxLiabilityPerMarket,
+                    isBettable: data[4]?.isBettable,
+                    maxLiabilityPerBet: data[4]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -530,9 +530,9 @@ const DragonOneDay = ({
                     back: true,
                     name: data[4]?.runners[1]?.name,
                     isWeak: data[4]?.isWeak,
-                    maxLiabilityPerMarket:data[4]?.maxLiabilityPerMarket,
-                    isBettable:data[4]?.isBettable,
-                    maxLiabilityPerBet:data[4]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[4]?.maxLiabilityPerMarket,
+                    isBettable: data[4]?.isBettable,
+                    maxLiabilityPerBet: data[4]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -581,9 +581,9 @@ const DragonOneDay = ({
                     back: true,
                     name: data[5]?.runners[0]?.name,
                     isWeak: data[5]?.isWeak,
-                    maxLiabilityPerMarket:data[5]?.maxLiabilityPerMarket,
-                    isBettable:data[5]?.isBettable,
-                    maxLiabilityPerBet:data[5]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[5]?.maxLiabilityPerMarket,
+                    isBettable: data[5]?.isBettable,
+                    maxLiabilityPerBet: data[5]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -628,9 +628,9 @@ const DragonOneDay = ({
                     back: true,
                     name: data[5]?.runners[1]?.name,
                     isWeak: data[5]?.isWeak,
-                    maxLiabilityPerMarket:data[5]?.maxLiabilityPerMarket,
-                    isBettable:data[5]?.isBettable,
-                    maxLiabilityPerBet:data[5]?.maxLiabilityPerBet
+                    maxLiabilityPerMarket: data[5]?.maxLiabilityPerMarket,
+                    isBettable: data[5]?.isBettable,
+                    maxLiabilityPerBet: data[5]?.maxLiabilityPerBet,
                   });
                 }}
                 className={`casino-odds-box back ${
@@ -714,9 +714,9 @@ const DragonOneDay = ({
                       back: true,
                       name: runner?.name,
                       isWeak: data[6]?.isWeak,
-                      maxLiabilityPerMarket:data[6]?.maxLiabilityPerMarket,
-                      isBettable:data[6]?.isBettable,
-                      maxLiabilityPerBet:data[6]?.maxLiabilityPerBet
+                      maxLiabilityPerMarket: data[6]?.maxLiabilityPerMarket,
+                      isBettable: data[6]?.isBettable,
+                      maxLiabilityPerBet: data[6]?.maxLiabilityPerBet,
                     });
                   }}
                   key={i}
@@ -775,9 +775,9 @@ const DragonOneDay = ({
                       back: true,
                       name: runner?.name,
                       isWeak: data[7]?.isWeak,
-                      maxLiabilityPerMarket:data[7]?.maxLiabilityPerMarket,
-                      isBettable:data[7]?.isBettable,
-                      maxLiabilityPerBet:data[7]?.maxLiabilityPerBet
+                      maxLiabilityPerMarket: data[7]?.maxLiabilityPerMarket,
+                      isBettable: data[7]?.isBettable,
+                      maxLiabilityPerBet: data[7]?.maxLiabilityPerBet,
                     });
                   }}
                   key={i}
