@@ -120,6 +120,11 @@ const MobileDropdown = ({
                 Current Bets
               </li>
             </Link>
+            <Link to="/my-bank-details" onClick={() => setOpen(!open)}>
+              <li data-rr-ui-dropdown-item="" className="dropdown-item">
+                My Bank Details
+              </li>
+            </Link>
             <Link to="/bonus-statement" onClick={() => setOpen(!open)}>
               <li data-rr-ui-dropdown-item="" className="dropdown-item">
                 Bonus Statement

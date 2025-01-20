@@ -815,6 +815,20 @@ const Header = () => {
                           </li>
                         </Link>
                         <Link
+                          to="/my-bank-details"
+                          onClick={() => setDropDown(!dropDown)}
+                        >
+                          <li
+                            data-rr-ui-dropdown-item=""
+                            className="dropdown-item"
+                          >
+                            {languageValue(
+                              valueByLanguage,
+                              LanguageKey.MY_BANK_DETAILS
+                            )}
+                          </li>
+                        </Link>
+                        <Link
                           to="/bonus-statement"
                           onClick={() => setDropDown(!dropDown)}
                         >

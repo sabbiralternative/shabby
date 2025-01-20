@@ -35,6 +35,7 @@ import ReferralStatement from "../pages/ReferralStatement/ReferralStatement.jsx"
 import Kabaddi from "../pages/Kabaddi/Kabaddi.jsx";
 import Greyhound from "../pages/Greyhound/Greyhound.jsx";
 import Horse from "../pages/Horse/Horse.jsx";
+import MyBankDetails from "../pages/MyBankDetails/MyBankDetails.jsx";
 
 const router = createBrowserRouter(
   [
@@ -158,6 +159,10 @@ const router = createBrowserRouter(
           path: "/referral-statement",
           element: <ReferralStatement />,
         },
+        {
+          path: "/my-bank-details",
+          element: <MyBankDetails />,
+        },
       ],
     },
     {
@@ -180,6 +185,7 @@ const router = createBrowserRouter(
       path: "/change-Password-login",
       element: <ChangePasswordLogin />,
     },
+
     {
       path: "/apk",
       element: <APK />,
