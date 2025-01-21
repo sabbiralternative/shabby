@@ -1,11 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { API, settings } from "../../utils";
+import { API } from "../../utils";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
+import { jwtDecode } from "jwt-decode";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const AddBank = ({ setAddBank, refetchBankData }) => {
   /* Handle close modal click outside */
+  const [mobile, setMobile] = useState("null");
+  const token = localStorage.getItem("token");
+  const [orderId, setOrderId] = useState(null);
+  const [timer, setTimer] = useState(null);
+
   const addBankRef = useRef();
   useCloseModalClickOutside(addBankRef, () => {
     setAddBank(false);
@@ -17,6 +23,7 @@ const AddBank = ({ setAddBank, refetchBankData }) => {
     accountNumber: "",
     confirmAccountNumber: "",
     upiId: "",
+    otp: "",
   });
 
   /* Handle add bank function */
@@ -25,16 +32,25 @@ const AddBank = ({ setAddBank, refetchBankData }) => {
     if (bankDetails.accountNumber !== bankDetails.confirmAccountNumber) {
       toast.success("Bank account number did not matched!");
     }
+    if (mobile && !bankDetails.otp) {
+      return toast.error("Please enter otp to add new account");
+    }
+
     /* generating random token for post data */
 
-    const bankData = {
+    let bankData = {
       accountName: bankDetails.accountName,
       ifsc: bankDetails.ifsc,
       accountNumber: bankDetails.accountNumber,
       upiId: bankDetails.upiId,
       type: "addBankAccount",
-      site: settings.siteUrl,
     };
+    if (mobile) {
+      bankData.mobile = mobile;
+      bankData.otp = bankDetails.otp;
+      bankData.orderId = orderId;
+    }
+
     const res = await AxiosSecure.post(API.bankAccount, bankData);
     const data = res?.data;
 
@@ -56,14 +72,54 @@ const AddBank = ({ setAddBank, refetchBankData }) => {
     const isaccountNameFilled = bankDetails.accountName.trim() !== "";
     const isaccountNumberFilled = bankDetails.accountNumber.trim() !== "";
     const isIfscFilled = bankDetails.ifsc.trim() !== "";
+    const isOTPFilled = mobile ? bankDetails.otp.trim() !== "" : true;
     const isFormValid =
-      isaccountNameFilled && isIfscFilled && isaccountNumberFilled;
+      isaccountNameFilled &&
+      isIfscFilled &&
+      isaccountNumberFilled &&
+      isOTPFilled;
     setIsFormValid(isFormValid);
   };
 
   useEffect(() => {
     validateForm(bankDetails);
   }, [bankDetails]);
+
+  const getOtp = async () => {
+    const otpData = {
+      mobile,
+    };
+
+    const res = await AxiosSecure.post(API.otp, otpData);
+    const data = res.data;
+    if (data?.success) {
+      setTimer(60);
+      setOrderId(data?.result?.orderId);
+      toast.success(data?.result?.message);
+    } else {
+      toast.error(data?.error?.errorMessage);
+    }
+  };
+
+  useEffect(() => {
+    const getMobile = () => {
+      const decode = jwtDecode(token);
+      if (decode?.mobile) {
+        setMobile(decode?.mobile);
+      }
+    };
+    getMobile();
+  }, [token]);
+
+  useEffect(() => {
+    if (timer > 0) {
+      setTimeout(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else {
+      setTimer(null);
+    }
+  }, [timer]);
   return (
     <div className="Modal-Background  ">
       <div className="card-add-bank" ref={addBankRef}>
@@ -151,14 +207,78 @@ const AddBank = ({ setAddBank, refetchBankData }) => {
               >
                 <input type="text" placeholder="Enter IFSC" name="" />
               </div>
+              {mobile && (
+                <div style={{ position: "relative" }} className="input-box ">
+                  <input
+                    readOnly
+                    type="text"
+                    placeholder="Phone Number"
+                    value={mobile}
+                  />
+                  {timer ? (
+                    <div
+                      style={{
+                        backgroundColor: "var(--bg-primary)",
+                        borderRadius: "4px",
+                        padding: "6px 0px",
+                        width: "80px",
+                        color: "white",
+                        fontSize: "11px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginRight: "10px",
+                      }}
+                    >
+                      Retry in {timer}
+                    </div>
+                  ) : (
+                    <button
+                      onClick={getOtp}
+                      style={{
+                        backgroundColor: "var(--bg-primary)",
+                        borderRadius: "4px",
+                        padding: "6px 0px",
+                        width: "80px",
+                        color: "white",
+                        fontSize: "11px",
+                        border: "none",
+                        marginRight: "10px",
+                      }}
+                      type="button"
+                    >
+                      Get OTP
+                    </button>
+                  )}
+                </div>
+              )}
+              {mobile && (
+                <div
+                  onChange={(e) => {
+                    setBankDetails({
+                      ...bankDetails,
+                      otp: e.target.value,
+                    });
+                  }}
+                  className="input-box "
+                >
+                  <input type="text" placeholder="Enter OTP" name="" />
+                </div>
+              )}
               <div className="btn-box ">
                 <button
+                  style={{ border: "none" }}
                   onClick={() => setAddBank(false)}
                   className="cancel-btn "
                 >
                   <span className="">Cancel</span>
                 </button>
                 <button
+                  style={{
+                    border: "none",
+                    cursor: !isFormValid ? "not-allowed" : "pointer",
+                    opacity: !isFormValid ? "0.5" : "1",
+                  }}
                   disabled={!isFormValid}
                   className="add-btn "
                   type="submit"

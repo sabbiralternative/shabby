@@ -1149,7 +1149,7 @@
   align-self: stretch;
   border-radius: 0.5rem;
 
-  background: var(--color1);
+  background: var(--bg-primary);
 }
 .add-btn > span {
   color: var(--white, #fff);
