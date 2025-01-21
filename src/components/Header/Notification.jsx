@@ -86,7 +86,10 @@ const Notification = () => {
           {showNotification && filteredNotification?.length > 0 && (
             <Marquee>
               {filteredNotification?.map((item) => (
-                <p key={item?.id} style={{ marginRight: "100vw" }}>
+                <p
+                  key={item?.id}
+                  style={{ marginRight: "100vw", backgroundColor: "#353535" }}
+                >
                   {item?.text}
                 </p>
               ))}
@@ -96,7 +99,10 @@ const Notification = () => {
         </div>
       ) : null}
       {showNotification && filteredNotification?.length > 0 && (
-        <div className="d-none d-xl-block">
+        <div
+          className="d-none d-xl-block"
+          style={{ backgroundColor: "#353535" }}
+        >
           {" "}
           <Marquee>
             {filteredNotification?.map((item) => (
@@ -106,10 +112,11 @@ const Notification = () => {
           <RxCross2
             style={{
               position: "absolute",
-              right: "10",
+              right: "15",
               bottom: "10",
               zIndex: "999",
               marginLeft: "20px",
+              fontWeight: "800",
             }}
             onClick={closeNotification}
             size={20}
