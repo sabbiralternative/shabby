@@ -218,8 +218,10 @@ const GameDetails = () => {
         language,
         nounce: uuidv4(),
         isbetDelay: settings.betDelay,
+        cashout: placeBetValue.cashout || false,
       },
     ]);
+
     setBetDelay(placeBetValue?.betDelay);
     const delay = settings.betDelay ? placeBetValue?.betDelay * 1000 : 0;
     setLoader(true);

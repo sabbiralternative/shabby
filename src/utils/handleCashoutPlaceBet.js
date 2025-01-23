@@ -48,6 +48,7 @@ const handleCashoutPlaceBet = (
         isBettable: games?.isBettable,
         maxLiabilityPerBet: games?.maxLiabilityPerBet,
         totalSize: team?.newStakeValue,
+        cashout: true,
       });
     }
   } else {
