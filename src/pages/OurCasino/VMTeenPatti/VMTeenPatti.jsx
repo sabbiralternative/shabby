@@ -9,7 +9,6 @@ const VMTeenPatti = ({
   a23Exposure,
   oddExposure,
 }) => {
-
   return (
     <div className="casino-table">
       <div className="casino-table-box">
@@ -249,15 +248,15 @@ const VMTeenPatti = ({
                   setShowBets(true);
                   setPlaceBetValue({});
                   setPlaceBetValue({
-                    price: data[1]?.runners[0]?.back[0]?.price,
+                    price: data[1]?.runners[1]?.back[0]?.price,
                     side: 0,
-                    selectionId: data[1]?.runners[0]?.id,
+                    selectionId: data[1]?.runners[1]?.id,
                     btype: data[1]?.btype,
                     eventTypeId: data[1]?.eventTypeId,
                     betDelay: data[1]?.betDelay,
                     marketId: data[1]?.id,
                     back: true,
-                    name: data[1]?.runners[0]?.name,
+                    name: data[1]?.runners[1]?.name,
                     isWeak: data[1]?.isWeak,
                     maxLiabilityPerMarket: data[1]?.maxLiabilityPerMarket,
                     isBettable: data[1]?.isBettable,
@@ -270,7 +269,7 @@ const VMTeenPatti = ({
               >
                 {/* <!-- key0 status--> */}
                 <span className="casino-odds">
-                  {data[1]?.runners[0]?.back[0]?.price}
+                  {data[1]?.runners[1]?.back[0]?.price}
                 </span>
                 {/* <!-- key0 >> runner0 >>back--> */}
                 <div className="casino-nation-book text-center">

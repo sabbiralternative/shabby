@@ -640,7 +640,6 @@ const PlaceBetDiamond = () => {
   /* Get odds */
   useEffect(() => {
     const getGameDetails = async () => {
-      console.log(`${API.odds}/${eventTypeId}/${eventId}`);
       const res = await AxiosInstance.get(
         `${API.odds}/${eventTypeId}/${eventId}`
       );
@@ -695,7 +694,7 @@ const PlaceBetDiamond = () => {
     refetchExposure,
     setRefetchBetsExposure,
   ]);
-  console.log(data);
+
   return (
     <>
       <div className="center-container">

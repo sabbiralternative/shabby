@@ -2,7 +2,6 @@ import { WebPlayer } from "@antmedia/web_player";
 import { useEffect, useRef } from "react";
 
 const AntMedia = ({ server, streamKey }) => {
-  console.log(streamKey, server);
   const bigVideo = useRef(null);
   const embeddedPlayerRef = useRef(null);
 
