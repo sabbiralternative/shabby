@@ -181,7 +181,7 @@ const Card = ({ slug, data, one }) => {
               ) : (
                 <div className="flip-card-front">
                   <img
-                    src={`/cards/${data[0]?.indedt6xCard[0]}.jpg`}
+                    src={`/cards/${data?.[0]?.indexCard?.[0]}.jpg`}
                     alt={`Card`}
                   />
                 </div>
