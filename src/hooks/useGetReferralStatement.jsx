@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import { API } from "../utils";
-import { AxiosInstance } from "../lib/AxiosInstance";
+import { AxiosSecure } from "../lib/AxiosSecure";
 
 const useGetReferralStatement = (
   from_date,
@@ -19,7 +19,7 @@ const useGetReferralStatement = (
         to_date: moment(to_date).format("YYYY-MM-DD"),
       };
 
-      const res = await AxiosInstance.post(API.index, payload);
+      const res = await AxiosSecure.post(API.index, payload);
       const result = res?.data;
       setFetchData(false);
       if (result?.success) {

@@ -3,7 +3,7 @@ import { API } from "../../utils";
 import { useState } from "react";
 import Notification from "../../components/Notification/Notification";
 import moment from "moment";
-import { AxiosInstance } from "../../lib/AxiosInstance";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const BonusStatement = () => {
   const [success, setSuccess] = useState("");
@@ -47,7 +47,7 @@ const BonusStatement = () => {
       bonus_statement_id: item?.bonus_statement_id,
     };
 
-    const result = await AxiosInstance.post(API.bonus, payload);
+    const result = await AxiosSecure.post(API.bonus, payload);
     if (result?.data?.success) {
       refetch();
       setSuccess(result?.data?.result);
