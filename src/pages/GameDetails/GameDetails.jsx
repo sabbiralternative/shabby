@@ -58,6 +58,7 @@ const GameDetails = () => {
   const [, refetchBalance] = UseBalance();
   const [booksValue, setBooksValue] = useState([]);
   const [isSticky, setSticky] = useState(false);
+  const [fetchVideo, setFetchVideo] = useState(false);
 
   /* Get casino thumbnail for home page */
 
@@ -169,19 +170,21 @@ const GameDetails = () => {
 
   /* Get video */
   useEffect(() => {
-    const getVideo = async () => {
-      const payload = {
-        eventTypeId: id,
-        eventId: eventId,
-        type: "video",
-      };
-      if (showTv || showMobileTv) {
+    if ((showTv || showMobileTv) && fetchVideo) {
+      const getVideo = async () => {
+        const payload = {
+          eventTypeId: id,
+          eventId: eventId,
+          type: "video",
+        };
+
         const { data } = await AxiosSecure.post(API.accessToken, payload);
         setVideoUrl(data?.result);
-      }
-    };
-    getVideo();
-  }, [eventId, id, showTv, token, showMobileTv]);
+        setFetchVideo(false);
+      };
+      getVideo();
+    }
+  }, [eventId, id, showTv, token, showMobileTv, fetchVideo]);
 
   /* Get exposure data */
   const { data: exposer = [], refetch: refetchExposure } = useQuery({
@@ -541,6 +544,7 @@ const GameDetails = () => {
             {score?.hasVideo && (
               <li
                 onClick={() => {
+                  setFetchVideo(true);
                   setShowTv(!showTv);
                   setTabs("tv");
                 }}
@@ -791,7 +795,10 @@ const GameDetails = () => {
             style={{
               cursor: "pointer",
             }}
-            onClick={() => setShowMobileTv(!showMobileTv)}
+            onClick={() => {
+              setShowMobileTv(!showMobileTv);
+              setFetchVideo(true);
+            }}
             className="sidebar-box"
           >
             <div className="sidebar-title">
