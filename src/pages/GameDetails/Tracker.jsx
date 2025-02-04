@@ -1,10 +1,8 @@
-import { useState } from "react";
-
 const Tracker = ({ score }) => {
-  const [showTracker, setShowTracker] = useState(false);
+  // const [showTracker, setShowTracker] = useState(true);
   return (
     <>
-      {score?.tracker && (
+      {/* {score?.tracker && (
         <div
           onClick={() => setShowTracker((prev) => !prev)}
           style={{
@@ -52,9 +50,9 @@ const Tracker = ({ score }) => {
             </svg>
           </div>
         </div>
-      )}
+      )} */}
 
-      {score && score?.tracker !== null && showTracker && (
+      {score && score?.tracker !== null && (
         <div
           style={{
             width: "100%",
