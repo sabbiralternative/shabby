@@ -26,6 +26,7 @@ import { FaPlayCircle } from "react-icons/fa";
 import { FaTableTennisPaddleBall } from "react-icons/fa6";
 import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
+import CasinoHighLight from "./CasinoHighLight";
 
 const HomePage = () => {
   const { valueByLanguage } = useLanguage();
@@ -56,7 +57,7 @@ const HomePage = () => {
     };
     getAuraCasino();
   }, []);
-  console.log(casino_list);
+
   /* Get game events */
   useEffect(() => {
     const gameData = async () => {
@@ -255,7 +256,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-
+      {settings.liveCasinoType === "ultrawin" && <CasinoHighLight />}
       {/* Casino thumbnail component */}
       {settings?.casino === "mac88" ? (
         <div style={{ display: "flex", flexWrap: "wrap" }}>
