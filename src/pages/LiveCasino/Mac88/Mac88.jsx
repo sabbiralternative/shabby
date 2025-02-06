@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unknown-property */
-import "./Mac88.css";
 import FirstTab from "./FirstTab";
 
 const Mac88 = () => {
