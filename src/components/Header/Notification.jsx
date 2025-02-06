@@ -86,10 +86,7 @@ const Notification = () => {
           {showNotification && filteredNotification?.length > 0 && (
             <Marquee>
               {filteredNotification?.map((item) => (
-                <p
-                  key={item?.id}
-                  style={{ marginRight: "100vw", backgroundColor: "#353535" }}
-                >
+                <p key={item?.id} style={{ marginRight: "100vw" }}>
                   {item?.text}
                 </p>
               ))}
@@ -101,7 +98,7 @@ const Notification = () => {
       {showNotification && filteredNotification?.length > 0 && (
         <div
           className="d-none d-xl-block"
-          style={{ backgroundColor: "#353535" }}
+          // style={{ backgroundColor: "#353535" }}
         >
           {" "}
           <Marquee>

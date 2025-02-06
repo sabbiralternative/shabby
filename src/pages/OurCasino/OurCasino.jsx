@@ -20,14 +20,18 @@ const OurCasino = () => {
           settings.casino == "diamond" ? API.diamondCasino : ""
         } 
         ${settings.casino == "test" ? API.testCasino : ""}
+        ${settings?.casino === "mac88" ? API.mac88 : ""}
         `
       );
 
       const data = res.data;
-
-      const sort = data.sort((Link, b) => Link.sort - b.sort);
-      setData(sort);
-      setCasino_list(sort);
+      if (settings?.casino === "mac88") {
+        setData(data?.data);
+      } else {
+        const sort = data.sort((Link, b) => Link.sort - b.sort);
+        setData(sort);
+        setCasino_list(sort);
+      }
     };
     getAuraCasino();
   }, [filterGames]);
@@ -104,6 +108,13 @@ const OurCasino = () => {
             })}
           </ul>
         </div>
+        {settings?.casino === "mac88" && (
+          <div style={{ display: "flex", flexWrap: "wrap" }}>
+            {data?.map((casino, i) => (
+              <CasinoList key={i} casino={casino} />
+            ))}
+          </div>
+        )}
 
         {settings.casino == "diamond" && (
           <div className="tab-content mt-xl-2 mt-1">
