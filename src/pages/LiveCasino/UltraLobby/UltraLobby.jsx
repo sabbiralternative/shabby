@@ -135,7 +135,12 @@ const UltraLobby = () => {
                     }}
                   >
                     <div className="dc-ctn">
-                      <div className="report-header">
+                      <div
+                        className="report-header"
+                        style={{
+                          backgroundColor: "#cccccc",
+                        }}
+                      >
                         <div className="report-img-title">
                           <div className="report-img-div-title">
                             <div className="report-img-div">
@@ -189,7 +194,12 @@ const UltraLobby = () => {
                       </div>
 
                       {/* Tab */}
-                      <div className="casino-filter-section">
+                      <div
+                        className="casino-filter-section"
+                        style={{
+                          backgroundColor: "#cccccc",
+                        }}
+                      >
                         <Swiper
                           slidesPerView="auto"
                           pagination={{
@@ -274,7 +284,9 @@ const UltraLobby = () => {
                             >
                               <button
                                 className={`cw-ct ${
-                                  selectedCategory === "all" ? "cw-ct-sel" : ""
+                                  selectedCategory === "all"
+                                    ? "cw-ct-sel"
+                                    : "bg-gray"
                                 }`}
                               >
                                 <div className="tab-icon-ctn">
@@ -315,7 +327,7 @@ const UltraLobby = () => {
                                     className={`cw-ct ${
                                       selectedCategory === category
                                         ? "cw-ct-sel "
-                                        : ""
+                                        : "bg-gray"
                                     }`}
                                   >
                                     <div className="tab-icon-ctn">

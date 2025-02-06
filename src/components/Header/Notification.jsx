@@ -71,30 +71,32 @@ const Notification = () => {
 
   return (
     <>
-      {(!settings.demoLogin && !settings.registration && forceLoginSuccess) ||
-      (forceLoginSuccess && token) ? (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-          }}
-          className="search-box-container d-xl-none"
-        >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
+        className="search-box-container d-xl-none"
+      >
+        {(!settings.demoLogin && !settings.registration && forceLoginSuccess) ||
+        (forceLoginSuccess && token) ? (
           <SearchBox />
-          {/* <div className="news"> */}
+        ) : null}
 
-          {showNotification && filteredNotification?.length > 0 && (
-            <Marquee>
-              {filteredNotification?.map((item) => (
-                <p key={item?.id} style={{ marginRight: "100vw" }}>
-                  {item?.text}
-                </p>
-              ))}
-            </Marquee>
-          )}
-          {/* </div> */}
-        </div>
-      ) : null}
+        {/* <div className="news"> */}
+
+        {showNotification && filteredNotification?.length > 0 && (
+          <Marquee>
+            {filteredNotification?.map((item) => (
+              <p key={item?.id} style={{ marginRight: "100vw" }}>
+                {item?.text}
+              </p>
+            ))}
+          </Marquee>
+        )}
+        {/* </div> */}
+      </div>
+
       {showNotification && filteredNotification?.length > 0 && (
         <div
           className="d-none d-xl-block"

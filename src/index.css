@@ -499,3 +499,7 @@ button.btn {
     transform: translate(109%);
   }
 }
+
+.bg-gray {
+  background-color: #cccccc !important;
+}
