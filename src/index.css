@@ -504,11 +504,7 @@ button.btn {
   background-color: #cccccc !important;
 }
 
-.cash-out-positive {
+.cash-out-theme-bg {
   background-color: var(--cash-out-bg);
   color: var(--cash-out-text);
-}
-.cash-out-negative {
-  background-color: var(--bg-danger);
-  color: #fff;
 }
