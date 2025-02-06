@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./UltraLobby.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
@@ -11,6 +11,9 @@ import LiveSlotModal from "../../../components/Modal/LiveSlotModal";
 import IFrameLoader from "../../../components/Loader/IFrameLoader";
 
 const UltraLobby = () => {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const category = params.get("category");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [showModal, setShowModal] = useState(false);
@@ -101,6 +104,12 @@ const UltraLobby = () => {
       navigate("/login");
     }
   };
+
+  useEffect(() => {
+    if (category) {
+      setSelectedCategory(category);
+    }
+  }, [category]);
 
   return (
     <>

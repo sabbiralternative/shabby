@@ -1,4 +1,4 @@
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
@@ -11,6 +11,7 @@ import { settings } from "../utils";
 import useGetSocialLink from "../hooks/useGetSocialLink";
 
 const Main = () => {
+  const location = useLocation();
   const { socialLink } = useGetSocialLink();
   const params = useParams();
   const [relativeURL, setRelativeURL] = useState("");
@@ -73,6 +74,10 @@ const Main = () => {
       window.open(socialLink?.whatsapplink, "_blank");
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   return (
     <div>

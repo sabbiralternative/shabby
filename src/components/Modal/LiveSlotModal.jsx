@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
 const LiveSlotModal = ({ setShowModal, casinoId }) => {
-
   const navigate = useNavigate();
   const handleNavigate = async () => {
     setShowModal(false);
@@ -40,6 +39,10 @@ const LiveSlotModal = ({ setShowModal, casinoId }) => {
                 over 1000 games available, the fun never ends....
                 <div className="disconnected-buttons mt-3">
                   <button
+                    style={{
+                      backgroundColor: "var(--bg-primary)",
+                      color: "white",
+                    }}
                     onClick={handleNavigate}
                     type="button"
                     className="btn btn-outline-primary"

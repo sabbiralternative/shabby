@@ -1,15 +1,29 @@
 /* eslint-disable react/no-unknown-property */
 
+import { useNavigate } from "react-router-dom";
+import { settings } from "../../utils";
+
 const CasinoHighLight = () => {
+  const navigate = useNavigate();
+  const handleNavigate = (link) => {
+    if (settings.liveCasinoType === "ultrawin") {
+      navigate(link);
+    }
+  };
   return (
     <>
       {window.innerWidth < 1200 ? (
         <div>
           <div _ngcontent-llj-c97 className="row mx-0 mt-1">
             <div
+              onClick={() => handleNavigate("/live-casino?category=Aviator")}
               _ngcontent-llj-c97
               className="col-6 position-relative"
-              style={{ paddingRight: "1px", paddingLeft: "1px" }}
+              style={{
+                paddingRight: "1px",
+                paddingLeft: "1px",
+                cursor: "pointer",
+              }}
               tabIndex={0}
             >
               <img
@@ -80,10 +94,16 @@ const CasinoHighLight = () => {
               className="img-fluid"
             />
           </div>
+
           <div
+            onClick={() => handleNavigate("/live-casino?category=Aviator")}
             _ngcontent-skb-c99
             className="col-3 position-relative"
-            style={{ paddingLeft: "1px", paddingRight: "1px" }}
+            style={{
+              paddingLeft: "1px",
+              paddingRight: "1px",
+              cursor: "pointer",
+            }}
             tabIndex={0}
           >
             <img
