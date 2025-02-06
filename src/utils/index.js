@@ -49,6 +49,7 @@ export const API = {
   language: "",
   singleDiamond: "",
   singleDiamondRules: "",
+  mac88All: "",
 };
 
 export const settings = {

@@ -9,7 +9,7 @@
       "siteUrl": "winbuzz365.co",
       "interval": "600",
       "casino": "mac88",
-      "liveCasinoType": "ultrawin",
+      "liveCasinoType": "mac88",
       "registration": true,
       "forceLogin": false,
       "demoLogin": true,
@@ -113,7 +113,8 @@
       "ultraLobby": "https://api7.live/api/exchange/diamond/ultra_lobby.php",
       "language": "https://api7.live/api/exchange/diamond/language",
       "singleDiamond": "https://api7.live/api/exchange/diamond/singleResult",
-      "singleDiamondRules": "https://api7.live/api/exchange/diamond/rules"
+      "singleDiamondRules": "https://api7.live/api/exchange/diamond/rules",
+      "mac88All": "https://cache7.live/api/exchange/diamond/mac88"
     }
   },
   "success": true
