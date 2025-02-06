@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 import useDepositBreakDown from "../../hooks/useDepositBreakDown";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 const DepositModal = ({ setShowModal, setPaymentMethods, amount }) => {
   const { depositBreakdown } = useDepositBreakDown(amount);
@@ -172,6 +172,7 @@ const DepositModal = ({ setShowModal, setPaymentMethods, amount }) => {
           </div>
         </div>
       )}
+      <Toaster />
     </>
   );
 };

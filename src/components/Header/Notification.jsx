@@ -88,7 +88,10 @@ const Notification = () => {
         {showNotification && filteredNotification?.length > 0 && (
           <Marquee>
             {filteredNotification?.map((item) => (
-              <p key={item?.id} style={{ marginRight: "100vw" }}>
+              <p
+                key={item?.id}
+                style={{ marginRight: "100vw", marginTop: "10px" }}
+              >
                 {item?.text}
               </p>
             ))}

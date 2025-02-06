@@ -14,6 +14,7 @@ const UltraLobby = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const category = params.get("category");
+  const provider = params.get("provider");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [showModal, setShowModal] = useState(false);
@@ -109,7 +110,10 @@ const UltraLobby = () => {
     if (category) {
       setSelectedCategory(category);
     }
-  }, [category]);
+    if (provider) {
+      setSelectedSubProvider(provider);
+    }
+  }, [category, provider]);
 
   return (
     <>

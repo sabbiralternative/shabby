@@ -1,5 +1,5 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import WithdrawSuccess from "../../components/Modal/WithdrawSuccess";
 import { API } from "../../utils";
 import { AxiosSecure } from "../../lib/AxiosSecure";
@@ -161,6 +161,7 @@ const WithdrawConfirm = ({
           </span>
         </button>
       </div>
+      <Toaster />
       {withdrawSuccess && (
         <WithdrawSuccess setWithdrawSuccess={setWithdrawSuccess} />
       )}

@@ -10,6 +10,7 @@ const CasinoHighLight = () => {
       navigate(link);
     }
   };
+
   return (
     <>
       {window.innerWidth < 1200 ? (
@@ -33,9 +34,14 @@ const CasinoHighLight = () => {
               />
             </div>
             <div
+              onClick={() => handleNavigate("/live-casino?provider=SPRIBE")}
               _ngcontent-llj-c97
               className="col-6 position-relative"
-              style={{ paddingLeft: "1px", paddingRight: "1px" }}
+              style={{
+                paddingLeft: "1px",
+                paddingRight: "1px",
+                cursor: "pointer",
+              }}
               tabIndex={0}
             >
               <img
@@ -51,9 +57,14 @@ const CasinoHighLight = () => {
             style={{ marginTop: "2px" }}
           >
             <div
+              onClick={() => handleNavigate("/live-casino?provider=Turbogames")}
               _ngcontent-llj-c97
               className="col-6 position-relative popularDiv"
-              style={{ paddingRight: "1px", paddingLeft: "1px" }}
+              style={{
+                paddingRight: "1px",
+                paddingLeft: "1px",
+                cursor: "pointer",
+              }}
               tabIndex={0}
             >
               <img
@@ -63,9 +74,14 @@ const CasinoHighLight = () => {
               />
             </div>
             <div
+              onClick={() => handleNavigate("/live-casino?provider=Monk88")}
               _ngcontent-llj-c97
               className="col-6 position-relative popularDiv"
-              style={{ paddingLeft: "1px", paddingRight: "1px" }}
+              style={{
+                paddingLeft: "1px",
+                paddingRight: "1px",
+                cursor: "pointer",
+              }}
               tabIndex={0}
             >
               <img
@@ -83,9 +99,14 @@ const CasinoHighLight = () => {
           style={{ marginBottom: "2px" }}
         >
           <div
+            onClick={() => handleNavigate("/live-casino?provider=SPRIBE")}
             _ngcontent-skb-c99
             className="col-3 position-relative"
-            style={{ paddingLeft: "1px", paddingRight: "1px" }}
+            style={{
+              paddingLeft: "1px",
+              paddingRight: "1px",
+              cursor: "pointer",
+            }}
             tabIndex={0}
           >
             <img
@@ -113,9 +134,14 @@ const CasinoHighLight = () => {
             />
           </div>
           <div
+            onClick={() => handleNavigate("/live-casino?provider=Turbogames")}
             _ngcontent-skb-c99
             className="col-3 position-relative"
-            style={{ paddingLeft: "1px", paddingRight: "1px" }}
+            style={{
+              paddingLeft: "1px",
+              paddingRight: "1px",
+              cursor: "pointer",
+            }}
             tabIndex={0}
           >
             <img
@@ -125,9 +151,14 @@ const CasinoHighLight = () => {
             />
           </div>
           <div
+            onClick={() => handleNavigate("/live-casino?provider=Monk88")}
             _ngcontent-skb-c99
             className="col-3 position-relative"
-            style={{ paddingLeft: "1px", paddingRight: "1px" }}
+            style={{
+              paddingLeft: "1px",
+              paddingRight: "1px",
+              cursor: "pointer",
+            }}
             tabIndex={0}
           >
             <img

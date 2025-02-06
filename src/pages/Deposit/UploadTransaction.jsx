@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { API } from "../../utils";
 import { AxiosSecure } from "../../lib/AxiosSecure";
@@ -97,6 +97,7 @@ const UploadTransaction = ({ paymentId, amount }) => {
   };
   return (
     <>
+      <Toaster />
       {!filePath && !loading && (
         <div className="utrbox ng-tns-c159-0">
           <div className="utrtxt ng-tns-c159-0">

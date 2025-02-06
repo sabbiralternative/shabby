@@ -407,10 +407,10 @@ const Header = () => {
               <RulesModal ruleModal={ruleModal} setRuleModal={setRuleModal} />
             )}
             <div className="logo-header">
-              <Link className="d-xl-none" href="/">
+              <Link className="d-xl-none" to="/">
                 <i className="fas fa-home me-1"></i>
               </Link>
-              <Link href="/">
+              <Link to="/">
                 <img
                   style={
                     {

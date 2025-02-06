@@ -4,7 +4,7 @@ import { IoMdArrowDropdown, IoMdArrowDropright } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { AxiosSecure } from "../../lib/AxiosSecure";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import AddBank from "../../components/Modal/AddBank";
 import { API } from "../../utils";
 
@@ -79,235 +79,241 @@ const MyBankDetails = () => {
     });
   };
   return (
-    <div className="center-container" style={{ width: "100%" }}>
-      {showAddBank && (
-        <AddBank
-          setAddBank={setShowAddBank}
-          refetchBankData={refetchBankData}
-        />
-      )}
+    <>
+      <div className="center-container" style={{ width: "100%" }}>
+        {showAddBank && (
+          <AddBank
+            setAddBank={setShowAddBank}
+            refetchBankData={refetchBankData}
+          />
+        )}
 
-      <div className="deposit-withdraw-btns">
-        <div className="btns-animation ">
-          <div className="btnBox ">
-            <button
-              style={{ background: "transparent", border: "none" }}
-              onClick={() => setTab(1)}
-              className="btn-inactive "
-            >
-              <span className="">Active</span>
-            </button>
-            <button
-              style={{ background: "transparent", border: "none" }}
-              onClick={() => setTab(2)}
-              className="btn-inactive "
-            >
-              <span className="">Deleted</span>
-            </button>
-          </div>
-          <div
-            className={` ${tab === 1 ? "animation-div-1" : "animation-div-2"}`}
-          ></div>
-        </div>
-      </div>
-      <div style={{ margin: "10px" }}>
-        <button
-          onClick={() => setShowAddBank(true)}
-          className="btn"
-          style={{
-            background: "var(--bg-primary)",
-            color: "white",
-            fontSize: "16px",
-            fontWeight: "500",
-          }}
-        >
-          Add New Bank
-        </button>
-        <h2
-          style={{
-            marginTop: "10px",
-            fontWeight: "500",
-            fontSize: "20px",
-          }}
-        >
-          Bank Details
-        </h2>
-
-        {bankData?.length > 0 &&
-          bankData?.map((bank, i) => {
-            return (
-              <div
-                style={{
-                  marginTop: "10px",
-                  background: "white",
-                  padding: "10px",
-                  cursor: "pointer",
-                  borderTopLeftRadius: "10px",
-                  borderTopRightRadius: "10px",
-                  fontSize: "12px",
-                  backgroundColor: "#e5e5e5",
-                }}
-                key={i}
+        <div className="deposit-withdraw-btns">
+          <div className="btns-animation ">
+            <div className="btnBox ">
+              <button
+                style={{ background: "transparent", border: "none" }}
+                onClick={() => setTab(1)}
+                className="btn-inactive "
               >
+                <span className="">Active</span>
+              </button>
+              <button
+                style={{ background: "transparent", border: "none" }}
+                onClick={() => setTab(2)}
+                className="btn-inactive "
+              >
+                <span className="">Deleted</span>
+              </button>
+            </div>
+            <div
+              className={` ${
+                tab === 1 ? "animation-div-1" : "animation-div-2"
+              }`}
+            ></div>
+          </div>
+        </div>
+        <div style={{ margin: "10px" }}>
+          <button
+            onClick={() => setShowAddBank(true)}
+            className="btn"
+            style={{
+              background: "var(--bg-primary)",
+              color: "white",
+              fontSize: "16px",
+              fontWeight: "500",
+            }}
+          >
+            Add New Bank
+          </button>
+          <h2
+            style={{
+              marginTop: "10px",
+              fontWeight: "500",
+              fontSize: "20px",
+            }}
+          >
+            Bank Details
+          </h2>
+
+          {bankData?.length > 0 &&
+            bankData?.map((bank, i) => {
+              return (
                 <div
-                  onClick={() => handleShowDetails(i)}
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    paddingBottom: "5px",
+                    marginTop: "10px",
+                    background: "white",
+                    padding: "10px",
+                    cursor: "pointer",
+                    borderTopLeftRadius: "10px",
+                    borderTopRightRadius: "10px",
+                    fontSize: "12px",
+                    backgroundColor: "#e5e5e5",
                   }}
+                  key={i}
                 >
                   <div
+                    onClick={() => handleShowDetails(i)}
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: "3px",
+                      justifyContent: "space-between",
+                      paddingBottom: "5px",
                     }}
                   >
-                    <img
+                    <div
                       style={{
-                        height: "30px",
-                        width: "30px",
-                        objectFit: "contain",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "3px",
                       }}
-                      alt="Bank Icon"
-                      src={`/src/assets/img/${bank?.bankCode}.png`}
-                    />
-                    <div>
-                      <p> {bank?.bankName}</p>
-                      {bank?.isDefault === 1 && (
-                        <span style={{ color: "#488feb" }}>Default</span>
+                    >
+                      <img
+                        style={{
+                          height: "30px",
+                          width: "30px",
+                          objectFit: "contain",
+                        }}
+                        alt="Bank Icon"
+                        src={`/src/assets/img/${bank?.bankCode}.png`}
+                      />
+                      <div>
+                        <p> {bank?.bankName}</p>
+                        {bank?.isDefault === 1 && (
+                          <span style={{ color: "#488feb" }}>Default</span>
+                        )}
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "4px",
+                      }}
+                    >
+                      {tab === 1 && (
+                        <button
+                          onClick={() => handleDeleteBank(bank?.bankId)}
+                          style={{
+                            backgroundColor: "white",
+                            padding: "5px",
+                            borderRadius: "50%",
+                            border: "none",
+                          }}
+                        >
+                          {" "}
+                          <MdDelete size={20} />
+                        </button>
+                      )}
+
+                      {showDetails === i ? (
+                        <IoMdArrowDropdown size={20} />
+                      ) : (
+                        <IoMdArrowDropright size={20} />
                       )}
                     </div>
                   </div>
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "4px",
+                      marginTop: "5px",
+                      paddingTop: "5px",
+                      borderTop: "1px solid gray",
+                      display: showDetails === i ? "block" : "none",
                     }}
                   >
-                    {tab === 1 && (
-                      <button
-                        onClick={() => handleDeleteBank(bank?.bankId)}
-                        style={{
-                          backgroundColor: "white",
-                          padding: "5px",
-                          borderRadius: "50%",
-                          border: "none",
-                        }}
-                      >
-                        {" "}
-                        <MdDelete size={20} />
-                      </button>
-                    )}
-
-                    {showDetails === i ? (
-                      <IoMdArrowDropdown size={20} />
-                    ) : (
-                      <IoMdArrowDropright size={20} />
-                    )}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    marginTop: "5px",
-                    paddingTop: "5px",
-                    borderTop: "1px solid gray",
-                    display: showDetails === i ? "block" : "none",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <p>Account Holder Name: </p> <p>{bank?.bankAccountName}</p>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginTop: "4px",
-                    }}
-                  >
-                    {" "}
-                    <p> Account number: </p> <p>{bank?.accountNumber}</p>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginTop: "4px",
-                    }}
-                  >
-                    {" "}
-                    <p> IFSC Code: </p> <p>{bank?.ifsc}</p>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginTop: "4px",
-                    }}
-                  >
-                    {" "}
-                    <p> Bank Branch: </p> <p>{bank?.bankBranch}</p>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginTop: "4px",
-                    }}
-                  >
-                    {" "}
-                    <p> Account added on: </p> <p>{bank?.dateAdded}</p>
-                  </div>
-                  {bank?.isDefault === 0 && tab === 1 && (
-                    <button
-                      onClick={() => handleMakeDefault(bank?.bankId)}
-                      className="btn"
+                    <div
                       style={{
-                        background: "var(--bg-primary)",
-                        color: "white",
-                        marginTop: "15px",
-                        fontSize: "15px",
-                        fontWeight: "500",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
                       }}
                     >
-                      Default
-                    </button>
-                  )}
+                      <p>Account Holder Name: </p>{" "}
+                      <p>{bank?.bankAccountName}</p>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {" "}
+                      <p> Account number: </p> <p>{bank?.accountNumber}</p>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {" "}
+                      <p> IFSC Code: </p> <p>{bank?.ifsc}</p>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {" "}
+                      <p> Bank Branch: </p> <p>{bank?.bankBranch}</p>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginTop: "4px",
+                      }}
+                    >
+                      {" "}
+                      <p> Account added on: </p> <p>{bank?.dateAdded}</p>
+                    </div>
+                    {bank?.isDefault === 0 && tab === 1 && (
+                      <button
+                        onClick={() => handleMakeDefault(bank?.bankId)}
+                        className="btn"
+                        style={{
+                          background: "var(--bg-primary)",
+                          color: "white",
+                          marginTop: "15px",
+                          fontSize: "15px",
+                          fontWeight: "500",
+                        }}
+                      >
+                        Default
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        {bankData?.length === 0 && isFetched && (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: "30px",
-              fontSize: "12px",
-            }}
-          >
-            {tab === 1
-              ? `No Bank Details found! Adding Bank Details is mandatory for
+              );
+            })}
+          {bankData?.length === 0 && isFetched && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: "30px",
+                fontSize: "12px",
+              }}
+            >
+              {tab === 1
+                ? `No Bank Details found! Adding Bank Details is mandatory for
                  processing withdrawals`
-              : `No deleted bank data available`}
-          </div>
-        )}
+                : `No deleted bank data available`}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+      <Toaster />
+    </>
   );
 };
 

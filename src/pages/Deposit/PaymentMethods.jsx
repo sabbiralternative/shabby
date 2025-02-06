@@ -8,7 +8,7 @@ import institution from "/assets/institution.svg";
 import { handleCopyToClipBoard } from "../../utils/handleCopyToClipBoard";
 import { FaQrcode } from "react-icons/fa";
 import { CiBank } from "react-icons/ci";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 // import QRCode from "qrcode.react";
 import { isDesktop, isAndroid } from "react-device-detect";
@@ -1178,6 +1178,7 @@ const PaymentMethods = ({
           </div>
         </div>
       )}
+      <Toaster />
     </>
   );
 };

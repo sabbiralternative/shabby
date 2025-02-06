@@ -6,6 +6,7 @@ import CloseModalClickOutside from "../../hooks/CloseModalClickOutside";
 import { handleCopyToClipBoard } from "../../utils/handleCopyToClipBoard";
 import Notification from "../Notification/Notification";
 import UseState from "../../hooks/UseState";
+import { Toaster } from "react-hot-toast";
 
 const Referral = ({ setShowReferral }) => {
   const [success, setSuccess] = useState("");
@@ -149,6 +150,7 @@ const Referral = ({ setShowReferral }) => {
           </div>
         </div>
       </div>
+      <Toaster />
     </>
   );
 };
