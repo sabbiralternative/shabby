@@ -38,7 +38,7 @@
       "ourVirtual": true,
       "b2c": false,
       "language": false,
-      "build": "production",
+      "build": "development",
       "betDelay": false
     },
 

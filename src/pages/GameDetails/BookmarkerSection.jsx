@@ -324,8 +324,8 @@ const BookmarkerSection = ({
                   type="button"
                   className={` ${
                     teamProfitForGame?.profit > 0
-                      ? "btn-success"
-                      : " btn-danger"
+                      ? "cash-out-positive"
+                      : "cash-out-negative"
                   }`}
                 >
                   <div>Cashout</div>
