@@ -15,7 +15,6 @@ const BetTable = ({ data, keys }) => {
     navigate(`/game-details/${data[keys]?.eventTypeId}/${keys}`);
   };
 
-
   return (
     <>
       <div className="bet-table-row">

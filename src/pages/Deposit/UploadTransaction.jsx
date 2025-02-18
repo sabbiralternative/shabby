@@ -62,7 +62,7 @@ const UploadTransaction = ({ paymentId, amount }) => {
         paymentId,
         amount: amount,
         fileName: uploadedImage,
-        utr: parseFloat(utr),
+        utr: String(utr),
       };
 
       const res = await AxiosSecure.post(API.bankAccount, screenshotPostData);
