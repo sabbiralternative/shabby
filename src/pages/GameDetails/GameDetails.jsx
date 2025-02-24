@@ -42,21 +42,26 @@ const GameDetails = () => {
   const [videoUrl, setVideoUrl] = useState();
   const [showMobileTv, setShowMobileTv] = useState(false);
   const [showBets, setShowBets] = useState(false);
-  const { buttonValue, SetButtonValue } = UseState();
-  const { placeBetValue } = UseState();
+  const {
+    buttonValue,
+    SetButtonValue,
+    predictOdds,
+    setPredictOdds,
+    placeBetValue,
+  } = UseState();
+
   const [price, setPrice] = useState("");
   const [totalSize, setTotalSize] = useState("");
   const [profit, setProfit] = useState("");
   const [loader, setLoader] = useState(false);
-  const [oddStake, setOddStake] = useState("");
+
   const [betDelay, setBetDelay] = useState("");
-  const [oddStakeLay1, setOddStakeLay1] = useState("");
-  const [oddStakeLay2, setOddStakeLay2] = useState("");
+
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [tabs, setTabs] = useState("odds");
   const [, refetchBalance] = UseBalance();
-  const [booksValue, setBooksValue] = useState([]);
+
   const [isSticky, setSticky] = useState(false);
   const [fetchVideo, setFetchVideo] = useState(false);
 
@@ -100,6 +105,7 @@ const GameDetails = () => {
   /* Get game details */
   useEffect(() => {
     const getGameDetails = async () => {
+      console.log(`${API.eventDetails}/${id}/${eventId}`);
       const res = await axios.get(`${API.eventDetails}/${id}/${eventId}`, {
         headers: {
           "Cache-Control": "public",
@@ -317,23 +323,13 @@ const GameDetails = () => {
     }
   };
 
-  /* Place bet calculate */
-  const pnl1 =
-    placeBetValue?.pnl && placeBetValue?.pnl[0] ? placeBetValue?.pnl[0] : 0;
-  const pnl2 =
-    placeBetValue?.pnl && placeBetValue?.pnl[1] ? placeBetValue?.pnl[1] : 0;
-  const pnl3 =
-    placeBetValue?.pnl && placeBetValue?.pnl[2] ? placeBetValue?.pnl[2] : 0;
-  const selectionId = placeBetValue?.selectionId?.toString();
-
   useEffect(() => {
+    let total;
     if (
       placeBetValue?.btype === "MATCH_ODDS" ||
       placeBetValue?.btype === "BOOKMAKER"
     ) {
       if (placeBetValue?.back) {
-        let total;
-
         if (placeBetValue?.btype === "MATCH_ODDS") {
           total = price * totalSize - totalSize;
         }
@@ -342,54 +338,23 @@ const GameDetails = () => {
           total = bookmaker * totalSize - totalSize;
         }
 
-        if (selectionId && selectionId.includes(".1")) {
-          setOddStake(formatNumber(total + pnl1));
-          setOddStakeLay1(formatNumber(pnl2 + -1 * totalSize));
-          setOddStakeLay2(formatNumber(pnl3 + -1 * totalSize));
-          setBooksValue([
-            { odd: formatNumber(total + pnl1), id: placeBetValue?.runnerId[0] },
-            {
-              odd: formatNumber(pnl2 + -1 * totalSize),
-              id: placeBetValue?.runnerId[1],
-            },
-            {
-              odd: formatNumber(pnl3 + -1 * totalSize),
-              id: placeBetValue?.runnerId[2],
-            },
-          ]);
-        } else if (selectionId && selectionId.includes(".2")) {
-          setOddStake(formatNumber(total + pnl2));
-          setOddStakeLay1(formatNumber(pnl3 + -1 * totalSize));
-          setOddStakeLay2(formatNumber(pnl2 + -1 * totalSize));
-          setBooksValue([
-            {
-              odd: formatNumber(pnl2 + -1 * totalSize),
-              id: placeBetValue?.runnerId[2],
-            },
-            { odd: formatNumber(total + pnl2), id: placeBetValue?.runnerId[1] },
-            {
-              odd: formatNumber(pnl3 + -1 * totalSize),
-              id: placeBetValue?.runnerId[0],
-            },
-          ]);
-        } else {
-          setOddStake(formatNumber(total + pnl3));
-          setOddStakeLay1(formatNumber(pnl1 + -1 * totalSize));
-          setOddStakeLay2(formatNumber(pnl2 + -1 * totalSize));
-          setBooksValue([
-            {
-              odd: formatNumber(pnl1 + -1 * totalSize),
-              id: placeBetValue?.runnerId[0],
-            },
-            {
-              odd: formatNumber(pnl2 + -1 * totalSize),
-              id: placeBetValue?.runnerId[1],
-            },
-            { odd: formatNumber(total + pnl3), id: placeBetValue?.runnerId[2] },
-          ]);
-        }
+        const currentExposure = placeBetValue?.exposure?.map((exp) => {
+          return {
+            updatedExposure: totalSize
+              ? exp?.isBettingOnThisRunner
+                ? formatNumber(exp?.exposure + total)
+                : formatNumber(exp?.exposure + -1 * totalSize)
+              : null,
+
+            id: exp?.id,
+            isBettingOnThisRunner: exp?.isBettingOnThisRunner,
+            name: exp?.name,
+            exposure: exp?.exposure,
+          };
+        });
+
+        setPredictOdds(currentExposure);
       } else if (placeBetValue?.lay) {
-        let total;
         if (placeBetValue?.btype === "MATCH_ODDS") {
           total = -1 * (price * totalSize - totalSize);
         }
@@ -398,64 +363,23 @@ const GameDetails = () => {
           total = -1 * (bookmaker * totalSize - totalSize);
         }
 
-        if (selectionId && selectionId.includes(".1")) {
-          setOddStake(formatNumber(total + pnl1));
-          setOddStakeLay1(formatNumber(1 * pnl2 + 1 * totalSize));
-          setOddStakeLay2(formatNumber(1 * pnl3 + 1 * totalSize));
-          setBooksValue([
-            { odd: formatNumber(total + pnl1), id: placeBetValue?.runnerId[0] },
-            {
-              odd: formatNumber(formatNumber(1 * pnl2 + 1 * totalSize)),
-              id: placeBetValue?.runnerId[1],
-            },
-            {
-              odd: formatNumber(formatNumber(1 * pnl3 + 1 * totalSize)),
-              id: placeBetValue?.runnerId[2],
-            },
-          ]);
-        } else if (selectionId && selectionId.includes(".2")) {
-          setOddStake(formatNumber(total + pnl2));
-          setOddStakeLay1(formatNumber(1 * pnl3 + 1 * totalSize));
-          setOddStakeLay2(formatNumber(1 * pnl1 + 1 * totalSize));
-          setBooksValue([
-            {
-              odd: formatNumber(formatNumber(1 * pnl1 + 1 * totalSize)),
-              id: placeBetValue?.runnerId[2],
-            },
-            { odd: formatNumber(total + pnl2), id: placeBetValue?.runnerId[1] },
-            {
-              odd: formatNumber(formatNumber(1 * pnl3 + 1 * totalSize)),
-              id: placeBetValue?.runnerId[0],
-            },
-          ]);
-        } else {
-          setOddStake(formatNumber(total + pnl3));
-          setOddStakeLay1(formatNumber(1 * pnl1 + 1 * totalSize));
-          setOddStakeLay2(formatNumber(1 * pnl2 + 1 * totalSize));
-          setBooksValue([
-            {
-              odd: formatNumber(formatNumber(1 * pnl1 + 1 * totalSize)),
-              id: placeBetValue?.runnerId[0],
-            },
-            {
-              odd: formatNumber(formatNumber(1 * pnl2 + 1 * totalSize)),
-              id: placeBetValue?.runnerId[1],
-            },
-            { odd: formatNumber(total + pnl3), id: placeBetValue?.runnerId[2] },
-          ]);
-        }
+        const currentExposure = placeBetValue?.exposure?.map((exp) => {
+          return {
+            updatedExposure: totalSize
+              ? exp?.isBettingOnThisRunner
+                ? formatNumber(exp?.exposure + total)
+                : formatNumber(1 * exp?.exposure + 1 * totalSize)
+              : null,
+            id: exp?.id,
+            isBettingOnThisRunner: exp?.isBettingOnThisRunner,
+            name: exp?.name,
+            exposure: exp?.exposure,
+          };
+        });
+        setPredictOdds(currentExposure);
       }
     }
-  }, [
-    price,
-    totalSize,
-    placeBetValue,
-    pnl1,
-    pnl2,
-    pnl3,
-    selectionId,
-    oddStake,
-  ]);
+  }, [price, totalSize, placeBetValue, setPredictOdds]);
 
   /* Format number */
   const formatNumber = (value) => {
@@ -685,7 +609,7 @@ const GameDetails = () => {
               id={id}
               eventId={eventId}
               setTotalSize={setTotalSize}
-              booksValue={booksValue}
+              booksValue={predictOdds}
               totalSize={totalSize}
             />
           ) : null}
@@ -699,7 +623,7 @@ const GameDetails = () => {
               showBets={showBets}
               setShowBets={setShowBets}
               setTotalSize={setTotalSize}
-              booksValue={booksValue}
+              booksValue={predictOdds}
               totalSize={totalSize}
             />
           ) : null}
@@ -780,10 +704,7 @@ const GameDetails = () => {
           buttonValues={buttonValues}
           SetButtonValue={SetButtonValue}
           buttonValue={buttonValue}
-          oddStake={oddStake}
-          oddStakeLay1={oddStakeLay1}
-          oddStakeLay2={oddStakeLay2}
-          selectionId={placeBetValue?.selectionId}
+          predictOdds={predictOdds}
         />
 
         {/* Mobile place bet ends */}

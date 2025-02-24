@@ -426,15 +426,17 @@ const BookmarkerSection = ({
                             </span>
                           );
                         })}
-                        {oddValues?.map(({ odd, id }) => {
+                        {oddValues?.map(({ updatedExposure, id }) => {
                           return (
                             <span
                               key={id}
                               className={`market-live-book d-none d-xl-block  ${
-                                odd > 0 ? "text-success" : "text-danger"
+                                updatedExposure > 0
+                                  ? "text-success"
+                                  : "text-danger"
                               }`}
                             >
-                              {totalSize != 0 && odd}
+                              {totalSize != 0 && updatedExposure}
                             </span>
                           );
                         })}
@@ -463,12 +465,25 @@ const BookmarkerSection = ({
                             return;
                           }
                           const updatedPnl = [];
-                          bookmark?.runners?.forEach((runner) => {
+                          bookmark?.runners?.forEach((rnr) => {
                             const pnl = pnlBySelection?.find(
-                              (p) => p?.RunnerId === runner?.id
+                              (p) => p?.RunnerId === rnr?.id
                             );
                             if (pnl) {
-                              updatedPnl.push(pnl?.pnl);
+                              updatedPnl.push({
+                                exposure: pnl?.pnl,
+                                id: pnl?.RunnerId,
+                                isBettingOnThisRunner: rnr?.id === runner?.id,
+                                name: rnr?.name,
+                                updatedExposure: pnl?.pnl,
+                              });
+                            } else {
+                              updatedPnl.push({
+                                exposure: 0,
+                                id: rnr?.id,
+                                isBettingOnThisRunner: rnr?.id === runner?.id,
+                                name: rnr?.name,
+                              });
                             }
                           });
                           setTotalSize("");
@@ -481,7 +496,7 @@ const BookmarkerSection = ({
                             btype: bookmark?.btype,
                             eventTypeId: bookmark?.eventTypeId,
                             betDelay: bookmark?.betDelay,
-                            pnl: updatedPnl,
+                            exposure: updatedPnl,
                             selectedBetName: runner?.name,
                             marketId: bookmark?.id,
                             back: true,
@@ -540,12 +555,25 @@ const BookmarkerSection = ({
                           return;
                         }
                         const updatedPnl = [];
-                        bookmark?.runners?.forEach((runner) => {
+                        bookmark?.runners?.forEach((rnr) => {
                           const pnl = pnlBySelection?.find(
-                            (p) => p?.RunnerId === runner?.id
+                            (p) => p?.RunnerId === rnr?.id
                           );
                           if (pnl) {
-                            updatedPnl.push(pnl?.pnl);
+                            updatedPnl.push({
+                              exposure: pnl?.pnl,
+                              id: pnl?.RunnerId,
+                              isBettingOnThisRunner: rnr?.id === runner?.id,
+                              name: rnr?.name,
+                              updatedExposure: pnl?.pnl,
+                            });
+                          } else {
+                            updatedPnl.push({
+                              exposure: 0,
+                              id: rnr?.id,
+                              isBettingOnThisRunner: rnr?.id === runner?.id,
+                              name: rnr?.name,
+                            });
                           }
                         });
                         setTotalSize("");
@@ -560,7 +588,7 @@ const BookmarkerSection = ({
                           eventTypeId: bookmark?.eventTypeId,
                           betDelay: bookmark?.betDelay,
                           marketId: bookmark?.id,
-                          pnl: updatedPnl,
+                          exposure: updatedPnl,
                           lay: true,
                           name: bookmark.runners.map((runner) => runner.name),
                           selectedBetName: runner?.name,

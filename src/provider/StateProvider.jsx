@@ -4,6 +4,7 @@ import { API, settings } from "../utils";
 import notice from "../../notice.json";
 export const StateContext = createContext(null);
 const StateProvider = ({ children }) => {
+  const [predictOdds, setPredictOdds] = useState([]);
   const [sports, setSports] = useState(4);
   const [addBank, setAddBank] = useState(false);
   const [buttonValue, SetButtonValue] = useState(false);
@@ -327,6 +328,8 @@ const StateProvider = ({ children }) => {
     setSixteenIndexZeroEx,
     seventeenIndexZeroRunnersEx,
     setSeventeenIndexZeroEx,
+    predictOdds,
+    setPredictOdds,
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

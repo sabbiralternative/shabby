@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { FaSpinner } from "react-icons/fa";
 
 const MobilePlaceBet = ({
@@ -18,31 +17,8 @@ const MobilePlaceBet = ({
   buttonValues,
   SetButtonValue,
   buttonValue,
-  oddStake,
-  oddStakeLay1,
-  oddStakeLay2,
-  selectionId,
+  predictOdds,
 }) => {
-  /* Adding red or green color on odd */
-  const updateElementClass = (elementId) => {
-    const element = document.getElementById(elementId);
-    if (element) {
-      if (parseFloat(element.innerText) > 0) {
-        element.removeAttribute("class");
-        element.classList.add("text-success");
-      } else {
-        element.removeAttribute("class");
-        element.classList.add("text-danger");
-      }
-    }
-  };
-
-  useEffect(() => {
-    updateElementClass("oddOne");
-    updateElementClass("oddTwo");
-    updateElementClass("oddThree");
-  }, [oddStake, oddStakeLay1, oddStakeLay2]);
-
   return (
     <>
       {showBets && window.innerWidth < 1200 && placeBetValue && (
@@ -198,195 +174,44 @@ const MobilePlaceBet = ({
                     placeBetValue?.btype === "BOOKMAKER" ||
                     placeBetValue?.btype === "BOOKMAKER2" ? (
                       <>
-                        <div className="row mt-2">
-                          <div className="col-4">
-                            <span>{placeBetValue?.name[0]}</span>
-                          </div>
+                        {predictOdds?.map((predictOdd, i) => {
+                          return (
+                            <div key={i} className="row mt-2">
+                              <div className="col-4">
+                                <span>{predictOdd?.name}</span>
+                              </div>
 
-                          <div className="col-4 text-center">
-                            {placeBetValue?.pnl?.length > 0 && (
-                              <span
-                                className={`${
-                                  placeBetValue?.pnl &&
-                                  placeBetValue?.pnl[0] > 0
-                                    ? "text-success"
-                                    : "text-danger"
-                                }`}
-                              >
-                                {placeBetValue?.pnl[0]}
-                              </span>
-                            )}
-                          </div>
+                              <div className="col-4 text-center">
+                                {predictOdd?.exposure > 0 && (
+                                  <span
+                                    className={`${
+                                      predictOdd?.exposure &&
+                                      predictOdd?.exposure > 0
+                                        ? "text-success"
+                                        : "text-danger"
+                                    }`}
+                                  >
+                                    {predictOdd?.exposure !== 0 &&
+                                      predictOdd?.exposure}
+                                  </span>
+                                )}
+                              </div>
 
-                          <div className="col-4 text-end">
-                            <span id="oddOne">
-                              {placeBetValue?.back &&
-                                oddStake !== 0 &&
-                                totalSize > 0 &&
-                                selectionId?.includes(".1") &&
-                                oddStake}
-
-                              {placeBetValue?.back &&
-                                oddStake !== 0 &&
-                                totalSize > 0 &&
-                                selectionId.includes(".2") &&
-                                oddStakeLay2}
-
-                              {placeBetValue?.back &&
-                                oddStake !== 0 &&
-                                totalSize > 0 &&
-                                selectionId.includes(".3") &&
-                                oddStakeLay1}
-                              {placeBetValue?.lay &&
-                                oddStake !== 0 &&
-                                totalSize > 0 &&
-                                selectionId.includes(".1") &&
-                                oddStake}
-
-                              {placeBetValue?.lay &&
-                                oddStake !== 0 &&
-                                totalSize > 0 &&
-                                selectionId.includes(".2") &&
-                                oddStakeLay2}
-
-                              {placeBetValue?.lay &&
-                                oddStake !== 0 &&
-                                totalSize > 0 &&
-                                selectionId.includes(".3") &&
-                                oddStakeLay1}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="row mt-2">
-                          <div className="col-4">
-                            <span>
-                              {placeBetValue?.name?.length > 0
-                                ? placeBetValue?.name[1]
-                                : null}
-                            </span>
-                          </div>
-
-                          <div className="col-4 text-center">
-                            {placeBetValue?.pnl?.length > 1 && (
-                              <span
-                                className={`${
-                                  placeBetValue?.pnl &&
-                                  placeBetValue?.pnl[1] > 0
-                                    ? "text-success"
-                                    : "text-danger"
-                                }`}
-                              >
-                                {placeBetValue?.pnl[1]}
-                              </span>
-                            )}
-                          </div>
-
-                          <div className="col-4 text-end">
-                            <span id="oddTwo">
-                              {placeBetValue?.back &&
-                                oddStake !== 0 &&
-                                totalSize > 0 &&
-                                selectionId.includes(".1") &&
-                                oddStakeLay1}
-
-                              {placeBetValue?.back &&
-                                oddStake !== 0 &&
-                                totalSize > 0 &&
-                                selectionId.includes(".2") &&
-                                oddStake}
-                              {placeBetValue?.back &&
-                                oddStake !== 0 &&
-                                totalSize > 0 &&
-                                selectionId.includes(".3") &&
-                                oddStakeLay2}
-
-                              {placeBetValue?.lay &&
-                                oddStake !== 0 &&
-                                totalSize > 0 &&
-                                selectionId.includes(".1") &&
-                                oddStakeLay1}
-
-                              {placeBetValue?.lay &&
-                                oddStake !== 0 &&
-                                totalSize > 0 &&
-                                selectionId.includes(".2") &&
-                                oddStake}
-
-                              {placeBetValue?.lay &&
-                                oddStake !== 0 &&
-                                totalSize > 0 &&
-                                selectionId.includes(".3") &&
-                                oddStakeLay2}
-                            </span>
-                          </div>
-                        </div>
-
-                        {placeBetValue?.name?.length > 2 && (
-                          <div className="row mt-2">
-                            <div className="col-4">
-                              <span>
-                                {placeBetValue?.name?.length > 2
-                                  ? placeBetValue?.name[2]
-                                  : null}
-                              </span>
-                            </div>
-
-                            <div className="col-4 text-center">
-                              {placeBetValue?.pnl?.length > 0 && (
+                              <div className="col-4 text-end">
                                 <span
                                   className={`${
-                                    placeBetValue?.pnl &&
-                                    placeBetValue?.pnl[2] > 0
+                                    predictOdd?.updateExposure &&
+                                    predictOdd?.updateExposure > 0
                                       ? "text-success"
                                       : "text-danger"
                                   }`}
                                 >
-                                  {placeBetValue?.pnl[2]}
+                                  {predictOdd?.updateExposure}
                                 </span>
-                              )}
+                              </div>
                             </div>
-
-                            <div className="col-4 text-end">
-                              <span id="oddThree">
-                                {placeBetValue?.back &&
-                                  oddStake !== 0 &&
-                                  totalSize > 0 &&
-                                  selectionId.includes(".1") &&
-                                  oddStakeLay2}
-
-                                {placeBetValue?.back &&
-                                  oddStake !== 0 &&
-                                  totalSize > 0 &&
-                                  selectionId.includes(".2") &&
-                                  oddStakeLay1}
-
-                                {placeBetValue?.back &&
-                                  oddStake !== 0 &&
-                                  totalSize > 0 &&
-                                  selectionId.includes(".3") &&
-                                  oddStake}
-                                {placeBetValue?.lay &&
-                                  oddStake !== 0 &&
-                                  totalSize > 0 &&
-                                  selectionId.includes(".1") &&
-                                  oddStakeLay2}
-
-                                {placeBetValue?.lay &&
-                                  oddStake !== 0 &&
-                                  totalSize > 0 &&
-                                  selectionId.includes(".2") &&
-                                  oddStakeLay1}
-
-                                {placeBetValue?.lay &&
-                                  oddStake !== 0 &&
-                                  totalSize > 0 &&
-                                  selectionId.includes(".3") &&
-                                  oddStake}
-                              </span>
-                            </div>
-                          </div>
-                        )}
+                          );
+                        })}
                       </>
                     ) : null}
 

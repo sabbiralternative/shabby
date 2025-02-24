@@ -405,15 +405,17 @@ const MatchOddsSection = ({
                               </span>
                             );
                           })}
-                        {oddValues?.map(({ odd, id }) => {
+                        {oddValues?.map(({ updatedExposure, id }) => {
                           return (
                             <span
                               key={id}
                               className={`market-live-book d-none d-xl-block  ${
-                                odd > 0 ? "text-success" : "text-danger"
+                                updatedExposure > 0
+                                  ? "text-success"
+                                  : "text-danger"
                               }`}
                             >
-                              {totalSize != 0 && odd}
+                              {totalSize != 0 && updatedExposure}
                             </span>
                           );
                         })}
@@ -444,12 +446,25 @@ const MatchOddsSection = ({
                             return;
                           }
                           const updatedPnl = [];
-                          item?.runners?.forEach((runner) => {
+                          item?.runners?.forEach((rnr) => {
                             const pnl = pnlBySelection?.find(
-                              (p) => p?.RunnerId === runner?.id
+                              (p) => p?.RunnerId === rnr?.id
                             );
                             if (pnl) {
-                              updatedPnl.push(pnl?.pnl);
+                              updatedPnl.push({
+                                exposure: pnl?.pnl,
+                                id: pnl?.RunnerId,
+                                isBettingOnThisRunner: rnr?.id === runner?.id,
+                                name: rnr?.name,
+                                updatedExposure: pnl?.pnl,
+                              });
+                            } else {
+                              updatedPnl.push({
+                                exposure: 0,
+                                id: rnr?.id,
+                                isBettingOnThisRunner: rnr?.id === runner?.id,
+                                name: rnr?.name,
+                              });
                             }
                           });
 
@@ -468,7 +483,7 @@ const MatchOddsSection = ({
                             name: item.runners.map((runner) => runner.name),
                             runnerId: item.runners.map((runner) => runner.id),
                             selectedBetName: runner?.name,
-                            pnl: updatedPnl,
+                            exposure: updatedPnl,
                             isWeak: item?.isWeak,
                             maxLiabilityPerMarket: item?.maxLiabilityPerMarket,
                             isBettable: item?.isBettable,
@@ -518,12 +533,25 @@ const MatchOddsSection = ({
                           return;
                         }
                         const updatedPnl = [];
-                        item?.runners?.forEach((runner) => {
+                        item?.runners?.forEach((rnr) => {
                           const pnl = pnlBySelection?.find(
-                            (p) => p?.RunnerId === runner?.id
+                            (p) => p?.RunnerId === rnr?.id
                           );
                           if (pnl) {
-                            updatedPnl.push(pnl?.pnl);
+                            updatedPnl.push({
+                              exposure: pnl?.pnl,
+                              id: pnl?.RunnerId,
+                              isBettingOnThisRunner: rnr?.id === runner?.id,
+                              name: rnr?.name,
+                              updatedExposure: pnl?.pnl,
+                            });
+                          } else {
+                            updatedPnl.push({
+                              exposure: 0,
+                              id: rnr?.id,
+                              isBettingOnThisRunner: rnr?.id === runner?.id,
+                              name: rnr?.name,
+                            });
                           }
                         });
 
@@ -538,7 +566,7 @@ const MatchOddsSection = ({
                           eventTypeId: item?.eventTypeId,
                           betDelay: item?.betDelay,
                           marketId: item?.id,
-                          pnl: updatedPnl,
+                          exposure: updatedPnl,
                           lay: true,
                           selectedBetName: runner?.name,
                           name: item.runners.map((runner) => runner.name),

@@ -16,10 +16,23 @@ const handleCashoutPlaceBet = (
         return;
       }
       const updatedPnl = [];
-      games?.runners?.forEach((runner) => {
-        const pnl = pnlBySelection?.find((p) => p?.RunnerId === runner?.id);
+      games?.runners?.forEach((rnr) => {
+        const pnl = pnlBySelection?.find((p) => p?.RunnerId === rnr?.id);
         if (pnl) {
-          updatedPnl.push(pnl?.pnl);
+          updatedPnl.push({
+            exposure: pnl?.pnl,
+            id: pnl?.RunnerId,
+            isBettingOnThisRunner: rnr?.id === team?.runner?.id,
+            name: rnr?.name,
+            updatedExposure: pnl?.pnl,
+          });
+        } else {
+          updatedPnl.push({
+            exposure: 0,
+            id: rnr?.id,
+            isBettingOnThisRunner: rnr?.id === team?.runner?.id,
+            name: rnr?.name,
+          });
         }
       });
 
@@ -42,7 +55,7 @@ const handleCashoutPlaceBet = (
         name: games.runners.map((runner) => runner.name),
         runnerId: games.runners.map((runner) => runner.id),
         selectedBetName: team?.runner?.name,
-        pnl: updatedPnl,
+        exposure: updatedPnl,
         isWeak: games?.isWeak,
         maxLiabilityPerMarket: games?.maxLiabilityPerMarket,
         isBettable: games?.isBettable,
