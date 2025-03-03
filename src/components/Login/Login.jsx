@@ -213,7 +213,11 @@ const Login = () => {
             </div>
             <div className="d-grid">
               <button
-                style={{ borderRadius: "0px", fontWeight: "400" }}
+                style={{
+                  borderRadius: "0px",
+                  fontWeight: "400",
+                  fontSize: "16px",
+                }}
                 type="submit"
                 className="btn btn-primary btn-block"
               >
@@ -222,12 +226,16 @@ const Login = () => {
               {/* if in notice.json demoLogin true then show button value  */}
               {settings.demoLogin && (
                 <button
-                  style={{ borderRadius: "0px", fontWeight: "400" }}
+                  style={{
+                    borderRadius: "0px",
+                    fontWeight: "400",
+                    fontSize: "16px",
+                  }}
                   onClick={loginWithDemo}
                   type="button"
                   className="btn btn-primary btn-block mt-2"
                 >
-                  Demo
+                  Login With demo ID
                   <i className="fas fa-sign-in-alt float-end mt-1"></i>
                 </button>
               )}
@@ -235,6 +243,7 @@ const Login = () => {
               {settings.registration && (
                 <div className="d-grid">
                   <Link
+                    style={{ fontSize: "16px" }}
                     to="/register"
                     className="btn btn-secondary btn-block mt-2"
                   >
