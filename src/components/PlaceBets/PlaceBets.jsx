@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
-import { API } from "../../utils";
+import { API, settings } from "../../utils";
 import UseBalance from "../../hooks/UseBalance";
 
 const PlaceBets = ({
@@ -68,6 +68,7 @@ const PlaceBets = ({
         maxLiabilityPerMarket: placeBetValue?.maxLiabilityPerMarket,
         isBettable: placeBetValue?.isBettable,
         maxLiabilityPerBet: placeBetValue?.maxLiabilityPerBet,
+        b2c: settings.b2c,
       },
     ]);
     setLoader(true);
@@ -141,8 +142,6 @@ const PlaceBets = ({
       setPrice(parseFloat(price) - 1);
     }
   };
-
-  console.log(placeBetValue);
 
   return (
     <>

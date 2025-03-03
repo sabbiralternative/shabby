@@ -6,8 +6,10 @@ import { FaSpinner } from "react-icons/fa";
 import { API } from "../../utils";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 import axios from "axios";
+import useUTR from "../../hooks/utr";
 
 const UploadTransaction = ({ paymentId, amount }) => {
+  const { mutate: getUTR } = useUTR();
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [utr, setUtr] = useState(null);
@@ -29,9 +31,16 @@ const UploadTransaction = ({ paymentId, amount }) => {
         });
         const data = res.data;
         if (data?.success) {
+          getUTR(data?.filePath, {
+            onSuccess: (data) => {
+              if (data?.success) {
+                setUtr(data?.utr);
+              }
+            },
+          });
           setLoading(false);
           setUploadedImage(data?.fileName);
-          setUtr(data?.utr);
+
           setFilePath(data?.filePath);
           setImage(null);
         } else {
@@ -45,7 +54,7 @@ const UploadTransaction = ({ paymentId, amount }) => {
       };
       handleSubmitImage();
     }
-  }, [image, token]);
+  }, [image, token, getUTR]);
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);

@@ -11,6 +11,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         const endPoints = data?.result?.endpoint;
         const setting = data?.result?.settings;
         API.mac88All = endPoints?.mac88All;
+        API.utr = endPoints?.utr;
         API.withdrawBreakdown = endPoints?.withdrawBreakdown;
         API.singleDiamond = endPoints?.singleDiamond;
         API.singleDiamondRules = endPoints?.singleDiamondRules;

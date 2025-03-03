@@ -50,6 +50,7 @@ export const API = {
   singleDiamond: "",
   singleDiamondRules: "",
   mac88All: "",
+  utr: "",
 };
 
 export const settings = {
