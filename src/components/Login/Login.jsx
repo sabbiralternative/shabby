@@ -212,12 +212,17 @@ const Login = () => {
               )}
             </div>
             <div className="d-grid">
-              <button type="submit" className="btn btn-primary btn-block">
+              <button
+                style={{ borderRadius: "0px", fontWeight: "400" }}
+                type="submit"
+                className="btn btn-primary btn-block"
+              >
                 Login<i className="fas fa-sign-in-alt float-end mt-1"></i>
               </button>
               {/* if in notice.json demoLogin true then show button value  */}
               {settings.demoLogin && (
                 <button
+                  style={{ borderRadius: "0px", fontWeight: "400" }}
                   onClick={loginWithDemo}
                   type="button"
                   className="btn btn-primary btn-block mt-2"
