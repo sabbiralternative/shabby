@@ -5,6 +5,7 @@ import { API, settings } from "../../utils";
 import useLanguage from "../../hooks/useLanguage";
 import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
+import HorseGreyhoundMenu from "./HorseGreyhoundMenu";
 
 const Sidebar = () => {
   const { valueByLanguage } = useLanguage();
@@ -24,7 +25,8 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="accordion"></div>
+      <HorseGreyhoundMenu />
+
       <div className="accordion">
         <div className="accordion-item">
           <h2 className="sidebar-title accordion-header">

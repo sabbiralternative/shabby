@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import UseBalance from "../../hooks/UseBalance";
 import { API, settings } from "../../utils";
 import handleDecryptData from "../../utils/handleDecryptData";
-import HorseGreyhound from "../../components/HorseGreyhound/HorseGreyhound";
+
 import useLanguage from "../../hooks/useLanguage";
 import { MdSportsCricket, MdSportsKabaddi } from "react-icons/md";
 import { BiBasketball } from "react-icons/bi";
@@ -27,6 +27,7 @@ import { FaTableTennisPaddleBall } from "react-icons/fa6";
 import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
 import CasinoHighLight from "./CasinoHighLight";
+import HorseGreyhound from "../../components/HorseGreyhound/HorseGreyhound";
 
 const HomePage = () => {
   const { valueByLanguage } = useLanguage();
@@ -203,59 +204,61 @@ const HomePage = () => {
         ))}
       </ul>
 
-      <div className="tab-content mt-1 ">
-        <div className="tab-pane active">
-          <div className="bet-table">
-            <div className="bet-table-header">
-              <div className="bet-nation-name">
-                <b>Game</b>
+      {sports !== 7 && sports !== 4339 ? (
+        <div className="tab-content mt-1 ">
+          <div className="tab-pane active">
+            <div className="bet-table">
+              <div className="bet-table-header">
+                <div className="bet-nation-name">
+                  <b>Game</b>
+                </div>
+                <div className="bet-nation-odd">
+                  <b>1</b>
+                </div>
+                <div className="bet-nation-odd">
+                  <b>X</b>
+                </div>
+                <div className="bet-nation-odd">
+                  <b>2</b>
+                </div>
               </div>
-              <div className="bet-nation-odd">
-                <b>1</b>
-              </div>
-              <div className="bet-nation-odd">
-                <b>X</b>
-              </div>
-              <div className="bet-nation-odd">
-                <b>2</b>
-              </div>
-            </div>
-            <div className="bet-table-body position-relative">
-              {/* Odds component for each sportsType */}
-              {data && sports === 7 ? (
-                <HorseGreyhound
-                  data={data}
-                  eventTypeId={7}
-                  title="Horse Racing"
-                />
-              ) : null}
-              {data && sports === 4339 ? (
-                <HorseGreyhound
-                  data={data}
-                  eventTypeId={4339}
-                  title="Greyhound Racing"
-                />
-              ) : null}
+              <div className="bet-table-body position-relative">
+                {/* Odds component for each sportsType */}
 
-              {data &&
-              Object.values(data).length > 0 &&
-              sports !== 4339 &&
-              sports !== 7
-                ? Object.keys(data)
-                    ?.filter((key) => {
-                      return data?.[key]?.visible === true;
-                    })
-                    .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                    .map((key, index) => (
-                      <BetTable key={index} keys={key} data={data} />
-                    ))
-                : null}
+                {data &&
+                Object.values(data).length > 0 &&
+                sports !== 4339 &&
+                sports !== 7
+                  ? Object.keys(data)
+                      ?.filter((key) => {
+                        return data?.[key]?.visible === true;
+                      })
+                      .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
+                      .map((key, index) => (
+                        <BetTable key={index} keys={key} data={data} />
+                      ))
+                  : null}
 
-              {!data && <div className="bet-table-row">No Record Found</div>}
+                {!data && <div className="bet-table-row">No Record Found</div>}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <>
+          {data && sports === 7 ? (
+            <HorseGreyhound data={data} eventTypeId={7} title="Horse Racing" />
+          ) : null}
+          {data && sports === 4339 ? (
+            <HorseGreyhound
+              data={data}
+              eventTypeId={4339}
+              title="Greyhound Racing"
+            />
+          ) : null}
+        </>
+      )}
+
       {settings.liveCasinoType === "ultrawin" && <CasinoHighLight />}
       {/* Casino thumbnail component */}
       {settings?.casino === "mac88" ? (
