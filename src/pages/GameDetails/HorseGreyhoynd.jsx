@@ -61,8 +61,6 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
     setPreviousData(data);
   }, [data, previousData]);
 
-  console.log(data);
-
   return (
     <div className="center-container" style={{ width: "100%" }}>
       <div className="detail-page-container">

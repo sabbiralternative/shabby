@@ -72,6 +72,7 @@ const HomePage = () => {
         });
         const data = res.data;
         const decryptionData = await handleDecryptData(JSON.stringify(data));
+
         setData(decryptionData);
       }
     };
@@ -246,16 +247,9 @@ const HomePage = () => {
         </div>
       ) : (
         <>
-          {data && sports === 7 ? (
-            <HorseGreyhound data={data} eventTypeId={7} title="Horse Racing" />
-          ) : null}
-          {data && sports === 4339 ? (
-            <HorseGreyhound
-              data={data}
-              eventTypeId={4339}
-              title="Greyhound Racing"
-            />
-          ) : null}
+          {data?.length > 0 && (
+            <HorseGreyhound data={data} eventTypeId={sports} />
+          )}
         </>
       )}
 
