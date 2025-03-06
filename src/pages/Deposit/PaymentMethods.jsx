@@ -111,7 +111,11 @@ const PaymentMethods = ({
 
       const data = res?.data;
       if (data?.success) {
-        setDepositData(data?.result);
+        if (method?.type === "whatsapp") {
+          window.location.href = data?.result?.link;
+        } else {
+          setDepositData(data?.result);
+        }
       }
     }
   };
@@ -168,6 +172,12 @@ const PaymentMethods = ({
                       <img
                         style={{ height: "20px", width: "20px" }}
                         src="/assets/usdt.png"
+                      />
+                    ) : null}
+                    {method?.type == "whatsapp" ? (
+                      <img
+                        style={{ height: "23px", width: "23px" }}
+                        src={"/assets/wp_support.webp"}
                       />
                     ) : null}
                   </div>
