@@ -231,8 +231,26 @@ const GameDetails = () => {
       },
     ]);
 
-    setBetDelay(placeBetValue?.betDelay);
-    const delay = settings.betDelay ? placeBetValue?.betDelay * 1000 : 0;
+    let delay = 0;
+    if (
+      (id == 4 || id == 2) &&
+      placeBetValue?.btype === "MATCH_ODDS" &&
+      price > 3 &&
+      placeBetValue?.name?.length === 2
+    ) {
+      delay = 9000;
+    }
+    if (
+      (id == 4 || id == 2) &&
+      placeBetValue?.btype === "MATCH_ODDS" &&
+      price > 7 &&
+      placeBetValue?.name?.length === 3
+    ) {
+      delay = 9000;
+    } else {
+      setBetDelay(placeBetValue?.betDelay);
+      delay = settings.betDelay ? placeBetValue?.betDelay * 1000 : 0;
+    }
     setLoader(true);
     setTimeout(() => {
       fetch(API.order, {
