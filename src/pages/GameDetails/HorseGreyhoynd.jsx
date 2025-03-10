@@ -169,7 +169,7 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
                       {timeDiff?.minute} <small>Minutes</small>
                     </span>
                   )}
-                  {timeDiff?.second > 0 && (
+                  {timeDiff?.hour === 0 && timeDiff?.minute < 60 && (
                     <span>
                       {timeDiff?.second} <small>Seconds</small>
                     </span>
