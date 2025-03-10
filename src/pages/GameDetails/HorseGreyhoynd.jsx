@@ -5,33 +5,48 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
   const [previousData, setPreviousData] = useState(data);
   const [changedPrices, setChangedPrices] = useState({});
   const { setPlaceBetValue, placeBetValue } = UseState();
-  const [timeLeft, setTimeLeft] = useState({ minutes: 0, seconds: 0 });
-
-  function getTimeRemaining(targetTime) {
-    const now = new Date().getTime();
-    const difference = targetTime - now;
-
-    if (difference <= 0) {
-      return { minutes: 0, seconds: 0 };
-    }
-
-    return {
-      minutes: Math.floor((difference / 1000 / 60) % 60),
-      seconds: Math.floor((difference / 1000) % 60),
-    };
-  }
+  const [timeDiff, setTimeDiff] = useState({
+    day: 0,
+    hour: 0,
+    minute: 0,
+    second: 0,
+  });
 
   useEffect(() => {
     if (!data?.[0]?.openDate) return;
-    const targetTime = new Date(data[0].openDate).getTime();
-    const updateTimer = () => {
-      const result = getTimeRemaining(targetTime);
-      setTimeLeft(result);
-    };
-    updateTimer();
-    const interval = setInterval(updateTimer, 1000);
 
-    return () => clearInterval(interval);
+    const targetDateStr = data[0].openDate;
+    const [date, time] = targetDateStr.split(" ");
+    const [day, month, year] = date.split("/");
+    const [hour, minute, second] = time.split(":");
+
+    const targetDate = new Date(year, month - 1, day, hour, minute, second);
+
+    const initialTimeout = setTimeout(() => {
+      const interval = setInterval(() => {
+        const currentDate = new Date();
+        const diffInMs = targetDate - currentDate;
+
+        if (diffInMs <= 0) {
+          clearInterval(interval);
+          setTimeDiff({ day: 0, hour: 0, minute: 0, second: 0 });
+          return;
+        }
+
+        const day = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+        const hour = Math.floor(
+          (diffInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minute = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
+        const second = Math.floor((diffInMs % (1000 * 60)) / 1000);
+
+        setTimeDiff({ day, hour, minute, second });
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }, 1000);
+
+    return () => clearTimeout(initialTimeout);
   }, [data]);
 
   /* exposer */
@@ -133,14 +148,34 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
           />
           <div className="horse-banner-detail">
             <div className="text-success">OPEN</div>
-            <div className="horse-timer">
-              <span>
-                &nbsp;{timeLeft?.minutes} <small>Minutes</small>&nbsp;
-                {timeLeft.seconds}
-                <small>Seconds</small>
-              </span>
-              <span>Remaining</span>
-            </div>
+            {timeDiff?.second && (
+              <div className="horse-timer">
+                <span style={{ display: "flex", gap: "5px" }}>
+                  {timeDiff?.day > 0 && (
+                    <span>
+                      {timeDiff?.day} <small>Day</small>
+                    </span>
+                  )}
+                  {timeDiff?.hour > 0 && (
+                    <span>
+                      {timeDiff?.hour} <small>Hour</small>
+                    </span>
+                  )}
+                  {timeDiff?.minute > 0 && (
+                    <span>
+                      {timeDiff?.minute} <small>Minutes</small>
+                    </span>
+                  )}
+                  {timeDiff?.second > 0 && (
+                    <span>
+                      {timeDiff?.second} <small>Seconds</small>
+                    </span>
+                  )}
+                </span>
+                <span>Remaining</span>
+              </div>
+            )}
+
             <div className="time-detail">
               <p>{data?.[0]?.eventName}</p>
               <h5>
@@ -231,18 +266,24 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
                                 </span>
                               </span>
                               <div className="jockey-detail d-none d-md-flex">
-                                <span className="jockey-detail-box">
-                                  <b>Jockey:</b>
-                                  <span>{runner?.jocky}</span>
-                                </span>
-                                <span className="jockey-detail-box">
-                                  <b>Trainer:</b>
-                                  <span>{runner?.trainer}</span>
-                                </span>
-                                <span className="jockey-detail-box">
-                                  <b>Age:</b>
-                                  <span>{runner?.age}</span>
-                                </span>
+                                {runner?.jocky && (
+                                  <span className="jockey-detail-box">
+                                    <b>Jockey:</b>
+                                    <span>{runner?.jocky}</span>
+                                  </span>
+                                )}
+                                {runner?.trainer && (
+                                  <span className="jockey-detail-box">
+                                    <b>Trainer:</b>
+                                    <span>{runner?.trainer}</span>
+                                  </span>
+                                )}
+                                {runner?.age && (
+                                  <span className="jockey-detail-box">
+                                    <b>Age:</b>
+                                    <span>{runner?.age}</span>
+                                  </span>
+                                )}
                               </div>
                             </div>
                           </label>

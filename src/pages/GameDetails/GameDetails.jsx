@@ -689,7 +689,7 @@ const GameDetails = () => {
             />
           ) : null}
 
-          {id == 7 || id == 4339 ? (
+          {(id == 7 || id == 4339) && data?.length > 0 ? (
             <HorseGreyhound
               exposer={exposer}
               showBets={showBets}
