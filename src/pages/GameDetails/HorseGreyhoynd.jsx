@@ -5,6 +5,34 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
   const [previousData, setPreviousData] = useState(data);
   const [changedPrices, setChangedPrices] = useState({});
   const { setPlaceBetValue, placeBetValue } = UseState();
+  const [timeLeft, setTimeLeft] = useState({ minutes: 0, seconds: 0 });
+
+  function getTimeRemaining(targetTime) {
+    const now = new Date().getTime();
+    const difference = targetTime - now;
+
+    if (difference <= 0) {
+      return { minutes: 0, seconds: 0 };
+    }
+
+    return {
+      minutes: Math.floor((difference / 1000 / 60) % 60),
+      seconds: Math.floor((difference / 1000) % 60),
+    };
+  }
+
+  useEffect(() => {
+    if (!data?.[0]?.openDate) return;
+    const targetTime = new Date(data[0].openDate).getTime();
+    const updateTimer = () => {
+      const result = getTimeRemaining(targetTime);
+      setTimeLeft(result);
+    };
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(interval);
+  }, [data]);
 
   /* exposer */
   let pnlBySelection;
@@ -107,16 +135,17 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
             <div className="text-success">OPEN</div>
             <div className="horse-timer">
               <span>
-                &nbsp;28 <small>Minutes</small>&nbsp;10
+                &nbsp;{timeLeft?.minutes} <small>Minutes</small>&nbsp;
+                {timeLeft.seconds}
                 <small>Seconds</small>
               </span>
               <span>Remaining</span>
             </div>
             <div className="time-detail">
-              <p>AU &gt; Bathurst</p>
+              <p>{data?.[0]?.eventName}</p>
               <h5>
-                <span>05/03/2025 16:47:00</span>
-                <span>| R10 1730m Pace M</span>
+                <span>{data?.[0]?.openDate}</span>
+                <span>| {data?.[0]?.raceType}</span>
               </h5>
             </div>
           </div>

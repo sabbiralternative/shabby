@@ -111,6 +111,7 @@ const GameDetails = () => {
         },
       });
       const data = res.data;
+
       const decryptionData = await handleDecryptData(JSON.stringify(data));
 
       if (decryptionData.success) {
