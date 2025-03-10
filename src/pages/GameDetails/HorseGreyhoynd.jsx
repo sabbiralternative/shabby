@@ -18,8 +18,8 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
     data?.forEach((item, index) => {
       item?.runners?.forEach((runner, runnerIndex) => {
         if (placeBetValue?.selectionId) {
-          if (placeBetValue?.selectionId === runner?.selectionId) {
-            if (runner?.status !== "ACTIVE") {
+          if (placeBetValue?.selectionId === runner?.id) {
+            if (item?.status !== "OPEN") {
               setShowBets(false);
               setPlaceBetValue({});
             }
@@ -31,12 +31,10 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
             previousRunner?.ex?.availableToBack?.[backIndex];
 
           if (backItem?.price !== previousBackItem?.price) {
-            newChangedPrices[`back-${runner?.selectionId}-${backIndex}`] = true;
+            newChangedPrices[`back-${runner?.id}-${backIndex}`] = true;
             setChangedPrices({ ...newChangedPrices });
             setTimeout(() => {
-              newChangedPrices[
-                `back-${runner?.selectionId}-${backIndex}`
-              ] = false;
+              newChangedPrices[`back-${runner?.id}-${backIndex}`] = false;
 
               setChangedPrices({ ...newChangedPrices });
             }, 300);
@@ -46,12 +44,10 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
           const previousLayItem =
             previousRunner?.ex?.availableToLay?.[layIndex];
           if (layItem?.price !== previousLayItem?.price) {
-            newChangedPrices[`lay-${runner?.selectionId}-${layIndex}`] = true;
+            newChangedPrices[`lay-${runner?.id}-${layIndex}`] = true;
             setChangedPrices({ ...newChangedPrices });
             setTimeout(() => {
-              newChangedPrices[
-                `lay-${runner?.selectionId}-${layIndex}`
-              ] = false;
+              newChangedPrices[`lay-${runner?.id}-${layIndex}`] = false;
               setChangedPrices({ ...newChangedPrices });
             }, 300);
           }
@@ -60,6 +56,44 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
     });
     setPreviousData(data);
   }, [data, previousData]);
+
+  const handlePlaceBet = (game, runner, price, type) => {
+    if (game?.status !== "OPEN") {
+      return;
+    }
+    const updatedPnl = [];
+    game?.runners?.forEach((runner) => {
+      const pnl = pnlBySelection?.find(
+        (p) => p?.RunnerId === runner?.selectionId
+      );
+      if (pnl) {
+        updatedPnl.push(pnl?.pnl);
+      }
+    });
+
+    setTotalSize("");
+    setShowBets(true);
+    setPlaceBetValue({});
+    setPlaceBetValue({
+      price: price,
+      side: 0,
+      selectionId: runner?.id,
+      btype: game?.btype,
+      eventTypeId: game?.eventTypeId,
+      betDelay: game?.betDelay,
+      marketId: game?.id,
+      back: type === "back",
+      lay: type === "lay",
+      name: game.runners.map((runner) => runner.horse_name),
+      runnerId: game.runners.map((runner) => runner.id),
+      selectedBetName: runner?.horse_name,
+      pnl: updatedPnl,
+      isWeak: game?.isWeak,
+      maxLiabilityPerMarket: game?.maxLiabilityPerMarket,
+      isBettable: game?.isBettable,
+      maxLiabilityPerBet: game?.maxLiabilityPerBet,
+    });
+  };
 
   return (
     <div className="center-container" style={{ width: "100%" }}>
@@ -104,929 +138,236 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
             </a>
           </li>
         </ul>
-        <div className="game-market market-12">
-          <div className="market-title">
-            <span>MATCH_ODDS</span>
-          </div>
-          <div className="market-header">
-            <div className="market-nation-detail">
-              <span className="market-nation-name">Max: 25K</span>
-            </div>
-            <div className="market-odd-box no-border d-none d-md-flex"></div>
-            <div className="market-odd-box no-border d-none d-md-flex"></div>
-            <div className="market-odd-box back">
-              <b>Back</b>
-            </div>
-            <div className="market-odd-box lay">
-              <b>Lay</b>
-            </div>
-            <div className="market-odd-box d-none d-md-flex"></div>
-            <div className="market-odd-box no-border d-none d-md-flex"></div>
-          </div>
-          <div className="market-body" data-title="OPEN">
-            <div className="market-row" data-title="ACTIVE">
-              <div className="market-nation-detail">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="checkbox-runner-0"
-                    id="checkbox-runner-0"
-                    value='{"mid":7737765680340,"sid":513570,"tno":0}'
-                  />
-                  <label className="form-check-label">
-                    <div>
-                      1<br />
-                      (1)
-                    </div>
-                    <div>
-                      <img src="https://sitethemedata.com/race_icons/7737765680340/513570.png" />
-                    </div>
-                    <div>
-                      <span className="market-nation-name">
-                        <span>1. Domus Angeli</span>
-                        <span className="d-md-none horse-detail-arrow ms-1">
-                          <i className="fas fa-angle-down"></i>
+        {data?.map((game) => {
+          return (
+            <div key={game?.id} className="game-market market-12">
+              <div className="market-title">
+                <span>{game?.btype}</span>
+              </div>
+              <div className="market-header">
+                <div className="market-nation-detail">
+                  <span className="market-nation-name">
+                    Max: {game?.maxLiabilityPerBet}
+                  </span>
+                </div>
+                <div className="market-odd-box no-border d-none d-md-flex"></div>
+                <div className="market-odd-box no-border d-none d-md-flex"></div>
+                <div className="market-odd-box back">
+                  <b>Back</b>
+                </div>
+                <div className="market-odd-box lay">
+                  <b>Lay</b>
+                </div>
+                <div className="market-odd-box d-none d-md-flex"></div>
+                <div className="market-odd-box no-border d-none d-md-flex"></div>
+              </div>
+
+              <div className="market-body" data-title="OPEN">
+                {/* Desktop */}
+                {game?.runners?.map((runner, idx) => {
+                  return (
+                    <div
+                      key={runner?.id}
+                      className={`${
+                        game?.status === "OPEN"
+                          ? "market-row"
+                          : " market-row suspended-row"
+                      }`}
+                      data-title={`${
+                        game?.status === "OPEN" ? "ACTIVATE" : "SUSPENDED"
+                      }`}
+                    >
+                      <div className="market-nation-detail">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            name="checkbox-runner-0"
+                            id="checkbox-runner-0"
+                            value='{"mid":7737765680340,"sid":513570,"tno":0}'
+                          />
+                          <label className="form-check-label">
+                            <div>
+                              {idx + 1}
+                              <br />({idx + 1})
+                            </div>
+                            <div>
+                              <img src={runner?.image_id} />
+                            </div>
+                            <div>
+                              <span className="market-nation-name">
+                                <span>{runner?.horse_name}</span>
+                                <span className="d-md-none horse-detail-arrow ms-1">
+                                  <i className="fas fa-angle-down"></i>
+                                </span>
+                              </span>
+                              <div className="jockey-detail d-none d-md-flex">
+                                <span className="jockey-detail-box">
+                                  <b>Jockey:</b>
+                                  <span>{runner?.jocky}</span>
+                                </span>
+                                <span className="jockey-detail-box">
+                                  <b>Trainer:</b>
+                                  <span>{runner?.trainer}</span>
+                                </span>
+                                <span className="jockey-detail-box">
+                                  <b>Age:</b>
+                                  <span>{runner?.age}</span>
+                                </span>
+                              </div>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        onClick={() =>
+                          handlePlaceBet(
+                            game,
+                            runner,
+                            runner?.back?.[2]?.price,
+                            "back"
+                          )
+                        }
+                        className={`market-odd-box back2 d-none d-md-flex ${
+                          changedPrices[`back-${runner?.id}-${idx}`]
+                            ? "blink"
+                            : ""
+                        }`}
+                      >
+                        <span className="market-odd">
+                          {runner?.back?.[2]?.price}
                         </span>
-                      </span>
-                      <div className="jockey-detail d-none d-md-flex">
-                        <span className="jockey-detail-box">
-                          <b>Jockey:</b>
-                          <span>Jye Coney</span>
+                        <span className="market-volume">
+                          {runner?.back?.[2]?.size}
                         </span>
-                        <span className="jockey-detail-box">
-                          <b>Trainer:</b>
-                          <span>Josh Turnbull</span>
+                      </div>
+                      <div
+                        onClick={() =>
+                          handlePlaceBet(
+                            game,
+                            runner,
+                            runner?.back?.[1]?.price,
+                            "back"
+                          )
+                        }
+                        className={`market-odd-box back1 d-none d-md-flex ${
+                          changedPrices[`back-${runner?.id}-${idx}`]
+                            ? "blink"
+                            : ""
+                        }`}
+                      >
+                        <span className="market-odd">
+                          {" "}
+                          {runner?.back?.[1]?.price}
                         </span>
-                        <span className="jockey-detail-box">
-                          <b>Age:</b>
-                          <span>3</span>
+                        <span className="market-volume">
+                          {" "}
+                          {runner?.back?.[1]?.size}
+                        </span>
+                      </div>
+                      <div
+                        onClick={() =>
+                          handlePlaceBet(
+                            game,
+                            runner,
+                            runner?.back?.[0]?.price,
+                            "back"
+                          )
+                        }
+                        className={`market-odd-box back ${
+                          changedPrices[`back-${runner?.id}-${idx}`]
+                            ? "blink"
+                            : ""
+                        }`}
+                      >
+                        <span className="market-odd">
+                          {" "}
+                          {runner?.back?.[0]?.price}
+                        </span>
+                        <span className="market-volume">
+                          {" "}
+                          {runner?.back?.[0]?.size}
+                        </span>
+                      </div>
+                      <div
+                        onClick={() =>
+                          handlePlaceBet(
+                            game,
+                            runner,
+                            runner?.lay?.[0]?.price,
+                            "lay"
+                          )
+                        }
+                        className={`market-odd-box lay ${
+                          changedPrices[`lay-${runner.id}-${idx}`]
+                            ? "blink"
+                            : ""
+                        }`}
+                      >
+                        <span className="market-odd">
+                          {" "}
+                          {runner?.lay?.[0]?.price}
+                        </span>
+                        <span className="market-volume">
+                          {" "}
+                          {runner?.lay?.[0]?.size}
+                        </span>
+                      </div>
+                      <div
+                        onClick={() =>
+                          handlePlaceBet(
+                            game,
+                            runner,
+                            runner?.lay?.[1]?.price,
+                            "lay"
+                          )
+                        }
+                        className={`market-odd-box lay1 d-none d-md-flex ${
+                          changedPrices[`lay-${runner.id}-${idx}`]
+                            ? "blink"
+                            : ""
+                        }`}
+                      >
+                        <span className="market-odd">
+                          {" "}
+                          {runner?.lay?.[1]?.price}
+                        </span>
+                        <span className="market-volume">
+                          {" "}
+                          {runner?.lay?.[1]?.size}
+                        </span>
+                      </div>
+                      <div
+                        onClick={() =>
+                          handlePlaceBet(
+                            game,
+                            runner,
+                            runner?.lay?.[2]?.price,
+                            "lay"
+                          )
+                        }
+                        className={`market-odd-box lay1 d-none d-md-flex ${
+                          changedPrices[`lay-${runner.id}-${idx}`]
+                            ? "blink"
+                            : ""
+                        }`}
+                      >
+                        <span className="market-odd">
+                          {" "}
+                          {runner?.lay?.[2]?.price}
+                        </span>
+                        <span className="market-volume">
+                          {" "}
+                          {runner?.lay?.[2]?.size}
                         </span>
                       </div>
                     </div>
-                  </label>
-                </div>
-              </div>
-              <div className="market-odd-box back2 d-none d-md-flex">
-                <span className="market-odd">15</span>
-                <span className="market-volume">9.18</span>
-              </div>
-              <div className="market-odd-box back1 d-none d-md-flex">
-                <span className="market-odd">19</span>
-                <span className="market-volume">12.25</span>
-              </div>
-              <div className="market-odd-box back">
-                <span className="market-odd">23</span>
-                <span className="market-volume">4.46</span>
-              </div>
-              <div className="market-odd-box lay">
-                <span className="market-odd">190</span>
-                <span className="market-volume">4.98</span>
-              </div>
-              <div className="market-odd-box lay1 d-none d-md-flex">
-                <span className="market-odd">990</span>
-                <span className="market-volume">1.45</span>
-              </div>
-              <div className="market-odd-box lay2 d-none d-md-flex">
-                <span className="market-odd">-</span>
+                  );
+                })}
               </div>
             </div>
-            <div className="jockey-detail d-md-none collapse">
-              <span className="jockey-detail-box">
-                <b>Jockey:</b>
-                <span>Jye Coney</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Trainer:</b>
-                <span>Josh Turnbull</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Age:</b>
-                <span>3</span>
-              </span>
-            </div>
-            <div className="market-row" data-title="ACTIVE">
-              <div className="market-nation-detail">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="checkbox-runner-1"
-                    id="checkbox-runner-1"
-                    value='{"mid":7737765680340,"sid":867201,"tno":0}'
-                  />
-                  <label className="form-check-label">
-                    <div>
-                      2<br />
-                      (2)
-                    </div>
-                    <div>
-                      <img src="https://sitethemedata.com/race_icons/7737765680340/867201.png" />
-                    </div>
-                    <div>
-                      <span className="market-nation-name">
-                        <span>2. Teeswift</span>
-                        <span className="d-md-none horse-detail-arrow ms-1">
-                          <i className="fas fa-angle-down"></i>
-                        </span>
-                      </span>
-                      <div className="jockey-detail d-none d-md-flex">
-                        <span className="jockey-detail-box">
-                          <b>Jockey:</b>
-                          <span>Mat Rue</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Trainer:</b>
-                          <span>Mat Rue</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Age:</b>
-                          <span>3</span>
-                        </span>
-                      </div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-              <div className="market-odd-box back2 d-none d-md-flex">
-                <span className="market-odd">2.54</span>
-                <span className="market-volume">45.11</span>
-              </div>
-              <div className="market-odd-box back1 d-none d-md-flex">
-                <span className="market-odd">2.56</span>
-                <span className="market-volume">1.5</span>
-              </div>
-              <div className="market-odd-box back">
-                <span className="market-odd">2.58</span>
-                <span className="market-volume">2.26</span>
-              </div>
-              <div className="market-odd-box lay">
-                <span className="market-odd">3.4</span>
-                <span className="market-volume">5.44</span>
-              </div>
-              <div className="market-odd-box lay1 d-none d-md-flex">
-                <span className="market-odd">5</span>
-                <span className="market-volume">3.16</span>
-              </div>
-              <div className="market-odd-box lay2 d-none d-md-flex">
-                <span className="market-odd">5.1</span>
-                <span className="market-volume">1.9</span>
-              </div>
-            </div>
-            <div className="jockey-detail d-md-none collapse">
-              <span className="jockey-detail-box">
-                <b>Jockey:</b>
-                <span>Mat Rue</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Trainer:</b>
-                <span>Mat Rue</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Age:</b>
-                <span>3</span>
-              </span>
-            </div>
-            <div className="market-row" data-title="ACTIVE">
-              <div className="market-nation-detail">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="checkbox-runner-2"
-                    id="checkbox-runner-2"
-                    value='{"mid":7737765680340,"sid":780452,"tno":0}'
-                  />
-                  <label className="form-check-label">
-                    <div>
-                      3<br />
-                      (3)
-                    </div>
-                    <div>
-                      <img src="https://sitethemedata.com/race_icons/7737765680340/780452.png" />
-                    </div>
-                    <div>
-                      <span className="market-nation-name">
-                        <span>3. Faith In Karlee</span>
-                        <span className="d-md-none horse-detail-arrow ms-1">
-                          <i className="fas fa-angle-down"></i>
-                        </span>
-                      </span>
-                      <div className="jockey-detail d-none d-md-flex">
-                        <span className="jockey-detail-box">
-                          <b>Jockey:</b>
-                          <span>Jason Hewitt</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Trainer:</b>
-                          <span>L D Battle</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Age:</b>
-                          <span>5</span>
-                        </span>
-                      </div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-              <div className="market-odd-box back2 d-none d-md-flex">
-                <span className="market-odd">23</span>
-                <span className="market-volume">9.44</span>
-              </div>
-              <div className="market-odd-box back1 d-none d-md-flex">
-                <span className="market-odd">28</span>
-                <span className="market-volume">3.29</span>
-              </div>
-              <div className="market-odd-box back">
-                <span className="market-odd">29</span>
-                <span className="market-volume">3.32</span>
-              </div>
-              <div className="market-odd-box lay">
-                <span className="market-odd">260</span>
-                <span className="market-volume">3.62</span>
-              </div>
-              <div className="market-odd-box lay1 d-none d-md-flex">
-                <span className="market-odd">270</span>
-                <span className="market-volume">2.45</span>
-              </div>
-              <div className="market-odd-box lay2 d-none d-md-flex">
-                <span className="market-odd">970</span>
-                <span className="market-volume">2.33</span>
-              </div>
-            </div>
-            <div className="jockey-detail d-md-none collapse">
-              <span className="jockey-detail-box">
-                <b>Jockey:</b>
-                <span>Jason Hewitt</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Trainer:</b>
-                <span>L D Battle</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Age:</b>
-                <span>5</span>
-              </span>
-            </div>
-            <div className="market-row" data-title="ACTIVE">
-              <div className="market-nation-detail">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="checkbox-runner-3"
-                    id="checkbox-runner-3"
-                    value='{"mid":7737765680340,"sid":808823,"tno":0}'
-                  />
-                  <label className="form-check-label">
-                    <div>
-                      4<br />
-                      (4)
-                    </div>
-                    <div>
-                      <img src="https://sitethemedata.com/race_icons/7737765680340/808823.png" />
-                    </div>
-                    <div>
-                      <span className="market-nation-name">
-                        <span>4. A True Love</span>
-                        <span className="d-md-none horse-detail-arrow ms-1">
-                          <i className="fas fa-angle-down"></i>
-                        </span>
-                      </span>
-                      <div className="jockey-detail d-none d-md-flex">
-                        <span className="jockey-detail-box">
-                          <b>Jockey:</b>
-                          <span>T G Rue</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Trainer:</b>
-                          <span>G J Rue</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Age:</b>
-                          <span>3</span>
-                        </span>
-                      </div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-              <div className="market-odd-box back2 d-none d-md-flex">
-                <span className="market-odd">5.2</span>
-                <span className="market-volume">49.43</span>
-              </div>
-              <div className="market-odd-box back1 d-none d-md-flex">
-                <span className="market-odd">5.7</span>
-                <span className="market-volume">18.93</span>
-              </div>
-              <div className="market-odd-box back">
-                <span className="market-odd">5.8</span>
-                <span className="market-volume">12.22</span>
-              </div>
-              <div className="market-odd-box lay">
-                <span className="market-odd">8.8</span>
-                <span className="market-volume">4.9</span>
-              </div>
-              <div className="market-odd-box lay1 d-none d-md-flex">
-                <span className="market-odd">17</span>
-                <span className="market-volume">1.62</span>
-              </div>
-              <div className="market-odd-box lay2 d-none d-md-flex">
-                <span className="market-odd">17.5</span>
-                <span className="market-volume">2.45</span>
-              </div>
-            </div>
-            <div className="jockey-detail d-md-none collapse">
-              <span className="jockey-detail-box">
-                <b>Jockey:</b>
-                <span>T G Rue</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Trainer:</b>
-                <span>G J Rue</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Age:</b>
-                <span>3</span>
-              </span>
-            </div>
-            <div className="market-row" data-title="ACTIVE">
-              <div className="market-nation-detail">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="checkbox-runner-4"
-                    id="checkbox-runner-4"
-                    value='{"mid":7737765680340,"sid":604104,"tno":0}'
-                  />
-                  <label className="form-check-label">
-                    <div>
-                      5<br />
-                      (5)
-                    </div>
-                    <div>
-                      <img src="https://sitethemedata.com/race_icons/7737765680340/604104.png" />
-                    </div>
-                    <div>
-                      <span className="market-nation-name">
-                        <span>5. Pyekakariki</span>
-                        <span className="d-md-none horse-detail-arrow ms-1">
-                          <i className="fas fa-angle-down"></i>
-                        </span>
-                      </span>
-                      <div className="jockey-detail d-none d-md-flex">
-                        <span className="jockey-detail-box">
-                          <b>Jockey:</b>
-                          <span>Nathan Turnbull</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Trainer:</b>
-                          <span>K E Rue</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Age:</b>
-                          <span>5</span>
-                        </span>
-                      </div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-              <div className="market-odd-box back2 d-none d-md-flex">
-                <span className="market-odd">9.6</span>
-                <span className="market-volume">4.9</span>
-              </div>
-              <div className="market-odd-box back1 d-none d-md-flex">
-                <span className="market-odd">9.8</span>
-                <span className="market-volume">5.48</span>
-              </div>
-              <div className="market-odd-box back">
-                <span className="market-odd">10.5</span>
-                <span className="market-volume">1.01</span>
-              </div>
-              <div className="market-odd-box lay">
-                <span className="market-odd">34</span>
-                <span className="market-volume">6.1</span>
-              </div>
-              <div className="market-odd-box lay1 d-none d-md-flex">
-                <span className="market-odd">36</span>
-                <span className="market-volume">1.33</span>
-              </div>
-              <div className="market-odd-box lay2 d-none d-md-flex">
-                <span className="market-odd">40</span>
-                <span className="market-volume">2.45</span>
-              </div>
-            </div>
-            <div className="jockey-detail d-md-none collapse">
-              <span className="jockey-detail-box">
-                <b>Jockey:</b>
-                <span>Nathan Turnbull</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Trainer:</b>
-                <span>K E Rue</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Age:</b>
-                <span>5</span>
-              </span>
-            </div>
-            <div className="market-row" data-title="ACTIVE">
-              <div className="market-nation-detail">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="checkbox-runner-5"
-                    id="checkbox-runner-5"
-                    value='{"mid":7737765680340,"sid":86915,"tno":0}'
-                  />
-                  <label className="form-check-label">
-                    <div>
-                      6<br />
-                      (6)
-                    </div>
-                    <div>
-                      <img src="https://sitethemedata.com/race_icons/7737765680340/86915.png" />
-                    </div>
-                    <div>
-                      <span className="market-nation-name">
-                        <span>6. Toothsville</span>
-                        <span className="d-md-none horse-detail-arrow ms-1">
-                          <i className="fas fa-angle-down"></i>
-                        </span>
-                      </span>
-                      <div className="jockey-detail d-none d-md-flex">
-                        <span className="jockey-detail-box">
-                          <b>Jockey:</b>
-                          <span>Jason Turnbull</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Trainer:</b>
-                          <span>G F Bullock</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Age:</b>
-                          <span>5</span>
-                        </span>
-                      </div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-              <div className="market-odd-box back2 d-none d-md-flex">
-                <span className="market-odd">23</span>
-                <span className="market-volume">9.44</span>
-              </div>
-              <div className="market-odd-box back1 d-none d-md-flex">
-                <span className="market-odd">28</span>
-                <span className="market-volume">3.29</span>
-              </div>
-              <div className="market-odd-box back">
-                <span className="market-odd">29</span>
-                <span className="market-volume">3.31</span>
-              </div>
-              <div className="market-odd-box lay">
-                <span className="market-odd">260</span>
-                <span className="market-volume">4.66</span>
-              </div>
-              <div className="market-odd-box lay1 d-none d-md-flex">
-                <span className="market-odd">970</span>
-                <span className="market-volume">2.07</span>
-              </div>
-              <div className="market-odd-box lay2 d-none d-md-flex">
-                <span className="market-odd">1000</span>
-                <span className="market-volume">1.39</span>
-              </div>
-            </div>
-            <div className="jockey-detail d-md-none collapse">
-              <span className="jockey-detail-box">
-                <b>Jockey:</b>
-                <span>Jason Turnbull</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Trainer:</b>
-                <span>G F Bullock</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Age:</b>
-                <span>5</span>
-              </span>
-            </div>
-            <div className="market-row" data-title="ACTIVE">
-              <div className="market-nation-detail">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="checkbox-runner-6"
-                    id="checkbox-runner-6"
-                    value='{"mid":7737765680340,"sid":53146,"tno":0}'
-                  />
-                  <label className="form-check-label">
-                    <div>
-                      7<br />
-                      (7)
-                    </div>
-                    <div>
-                      <img src="https://sitethemedata.com/race_icons/7737765680340/53146.png" />
-                    </div>
-                    <div>
-                      <span className="market-nation-name">
-                        <span>7. Boomer Shannon</span>
-                        <span className="d-md-none horse-detail-arrow ms-1">
-                          <i className="fas fa-angle-down"></i>
-                        </span>
-                      </span>
-                      <div className="jockey-detail d-none d-md-flex">
-                        <span className="jockey-detail-box">
-                          <b>Jockey:</b>
-                          <span>Travis Bullock</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Trainer:</b>
-                          <span>Peter Bullock</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Age:</b>
-                          <span>6</span>
-                        </span>
-                      </div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-              <div className="market-odd-box back2 d-none d-md-flex">
-                <span className="market-odd">18</span>
-                <span className="market-volume">5.23</span>
-              </div>
-              <div className="market-odd-box back1 d-none d-md-flex">
-                <span className="market-odd">18.5</span>
-                <span className="market-volume">2.45</span>
-              </div>
-              <div className="market-odd-box back">
-                <span className="market-odd">19</span>
-                <span className="market-volume">1.89</span>
-              </div>
-              <div className="market-odd-box lay">
-                <span className="market-odd">120</span>
-                <span className="market-volume">3.63</span>
-              </div>
-              <div className="market-odd-box lay1 d-none d-md-flex">
-                <span className="market-odd">140</span>
-                <span className="market-volume">3.51</span>
-              </div>
-              <div className="market-odd-box lay2 d-none d-md-flex">
-                <span className="market-odd">440</span>
-                <span className="market-volume">1.63</span>
-              </div>
-            </div>
-            <div className="jockey-detail d-md-none collapse">
-              <span className="jockey-detail-box">
-                <b>Jockey:</b>
-                <span>Travis Bullock</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Trainer:</b>
-                <span>Peter Bullock</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Age:</b>
-                <span>6</span>
-              </span>
-            </div>
-            <div className="market-row" data-title="ACTIVE">
-              <div className="market-nation-detail">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="checkbox-runner-7"
-                    id="checkbox-runner-7"
-                    value='{"mid":7737765680340,"sid":65557,"tno":0}'
-                  />
-                  <label className="form-check-label">
-                    <div>
-                      8<br />
-                      (8)
-                    </div>
-                    <div>
-                      <img src="https://sitethemedata.com/race_icons/7737765680340/65557.png" />
-                    </div>
-                    <div>
-                      <span className="market-nation-name">
-                        <span>8. Ultimate Cookie</span>
-                        <span className="d-md-none horse-detail-arrow ms-1">
-                          <i className="fas fa-angle-down"></i>
-                        </span>
-                      </span>
-                      <div className="jockey-detail d-none d-md-flex">
-                        <span className="jockey-detail-box">
-                          <b>Jockey:</b>
-                          <span>Jett Turnbull</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Trainer:</b>
-                          <span>Josh Turnbull</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Age:</b>
-                          <span>4</span>
-                        </span>
-                      </div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-              <div className="market-odd-box back2 d-none d-md-flex">
-                <span className="market-odd">2.66</span>
-                <span className="market-volume">3.14</span>
-              </div>
-              <div className="market-odd-box back1 d-none d-md-flex">
-                <span className="market-odd">2.68</span>
-                <span className="market-volume">2.18</span>
-              </div>
-              <div className="market-odd-box back">
-                <span className="market-odd">2.74</span>
-                <span className="market-volume">6.09</span>
-              </div>
-              <div className="market-odd-box lay">
-                <span className="market-odd">6</span>
-                <span className="market-volume">3.3</span>
-              </div>
-              <div className="market-odd-box lay1 d-none d-md-flex">
-                <span className="market-odd">6.2</span>
-                <span className="market-volume">1.89</span>
-              </div>
-              <div className="market-odd-box lay2 d-none d-md-flex">
-                <span className="market-odd">6.8</span>
-                <span className="market-volume">8.33</span>
-              </div>
-            </div>
-            <div className="jockey-detail d-md-none collapse">
-              <span className="jockey-detail-box">
-                <b>Jockey:</b>
-                <span>Jett Turnbull</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Trainer:</b>
-                <span>Josh Turnbull</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Age:</b>
-                <span>4</span>
-              </span>
-            </div>
-            <div className="market-row" data-title="ACTIVE">
-              <div className="market-nation-detail">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="checkbox-runner-8"
-                    id="checkbox-runner-8"
-                    value='{"mid":7737765680340,"sid":658478,"tno":0}'
-                  />
-                  <label className="form-check-label">
-                    <div>
-                      9<br />
-                      (9)
-                    </div>
-                    <div>
-                      <img src="https://sitethemedata.com/race_icons/7737765680340/658478.png" />
-                    </div>
-                    <div>
-                      <span className="market-nation-name">
-                        <span>9. Never Happy</span>
-                        <span className="d-md-none horse-detail-arrow ms-1">
-                          <i className="fas fa-angle-down"></i>
-                        </span>
-                      </span>
-                      <div className="jockey-detail d-none d-md-flex">
-                        <span className="jockey-detail-box">
-                          <b>Jockey:</b>
-                          <span>Mitch Turnbull</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Trainer:</b>
-                          <span>Steve Turnbull</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Age:</b>
-                          <span>3</span>
-                        </span>
-                      </div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-              <div className="market-odd-box back2 d-none d-md-flex">
-                <span className="market-odd">28</span>
-                <span className="market-volume">1.42</span>
-              </div>
-              <div className="market-odd-box back1 d-none d-md-flex">
-                <span className="market-odd">32</span>
-                <span className="market-volume">2.87</span>
-              </div>
-              <div className="market-odd-box back">
-                <span className="market-odd">34</span>
-                <span className="market-volume">3.19</span>
-              </div>
-              <div className="market-odd-box lay">
-                <span className="market-odd">300</span>
-                <span className="market-volume">3.54</span>
-              </div>
-              <div className="market-odd-box lay1 d-none d-md-flex">
-                <span className="market-odd">310</span>
-                <span className="market-volume">2.45</span>
-              </div>
-              <div className="market-odd-box lay2 d-none d-md-flex">
-                <span className="market-odd">990</span>
-                <span className="market-volume">2.46</span>
-              </div>
-            </div>
-            <div className="jockey-detail d-md-none collapse">
-              <span className="jockey-detail-box">
-                <b>Jockey:</b>
-                <span>Mitch Turnbull</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Trainer:</b>
-                <span>Steve Turnbull</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Age:</b>
-                <span>3</span>
-              </span>
-            </div>
-            <div className="market-row" data-title="ACTIVE">
-              <div className="market-nation-detail">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="checkbox-runner-9"
-                    id="checkbox-runner-9"
-                    value='{"mid":7737765680340,"sid":627349,"tno":0}'
-                  />
-                  <label className="form-check-label">
-                    <div>
-                      10
-                      <br />
-                      (10)
-                    </div>
-                    <div>
-                      <img src="https://sitethemedata.com/race_icons/7737765680340/627349.png" />
-                    </div>
-                    <div>
-                      <span className="market-nation-name">
-                        <span>10. Jets Reason</span>
-                        <span className="d-md-none horse-detail-arrow ms-1">
-                          <i className="fas fa-angle-down"></i>
-                        </span>
-                      </span>
-                      <div className="jockey-detail d-none d-md-flex">
-                        <span className="jockey-detail-box">
-                          <b>Jockey:</b>
-                          <span>John OShea</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Trainer:</b>
-                          <span>Veronica Fisher</span>
-                        </span>
-                        <span className="jockey-detail-box">
-                          <b>Age:</b>
-                          <span>4</span>
-                        </span>
-                      </div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-              <div className="market-odd-box back2 d-none d-md-flex">
-                <span className="market-odd">16</span>
-                <span className="market-volume">3</span>
-              </div>
-              <div className="market-odd-box back1 d-none d-md-flex">
-                <span className="market-odd">36</span>
-                <span className="market-volume">5.4</span>
-              </div>
-              <div className="market-odd-box back">
-                <span className="market-odd">70</span>
-                <span className="market-volume">5.2</span>
-              </div>
-              <div className="market-odd-box lay">
-                <span className="market-odd">760</span>
-                <span className="market-volume">2.49</span>
-              </div>
-              <div className="market-odd-box lay1 d-none d-md-flex">
-                <span className="market-odd">980</span>
-                <span className="market-volume">1.36</span>
-              </div>
-              <div className="market-odd-box lay2 d-none d-md-flex">
-                <span className="market-odd">-</span>
-              </div>
-            </div>
-            <div className="jockey-detail d-md-none collapse">
-              <span className="jockey-detail-box">
-                <b>Jockey:</b>
-                <span>John OShea</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Trainer:</b>
-                <span>Veronica Fisher</span>
-              </span>
-              <span className="jockey-detail-box">
-                <b>Age:</b>
-                <span>4</span>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div className="game-market market-4">
-          <div className="market-title">
-            <span>MATCH_BET</span>
-          </div>
-          <div className="market-header">
-            <div className="market-nation-detail">
-              <span className="market-nation-name">Max: 5K</span>
-            </div>
-            <div className="market-odd-box no-border d-none d-md-block"></div>
-            <div className="market-odd-box no-border d-none d-md-block"></div>
-            <div className="market-odd-box back">
-              <b>Back</b>
-            </div>
-            <div className="market-odd-box lay">
-              <b>Lay</b>
-            </div>
-            <div className="market-odd-box"></div>
-            <div className="market-odd-box no-border"></div>
-          </div>
-          <div className="market-body" data-title="OPEN">
-            <div className="market-row" data-title="ACTIVE">
-              <div className="market-nation-detail">
-                <span className="market-nation-name">4. A True Love</span>
-                <div className="market-nation-book"></div>
-              </div>
-              <div className="market-odd-box back2">
-                <span className="market-odd">1.32</span>
-                <span className="market-volume">32.2</span>
-              </div>
-              <div className="market-odd-box back1">
-                <span className="market-odd">1.42</span>
-                <span className="market-volume">43.41</span>
-              </div>
-              <div className="market-odd-box back">
-                <span className="market-odd">1.43</span>
-                <span className="market-volume">28.36</span>
-              </div>
-              <div className="market-odd-box lay">
-                <span className="market-odd">2.22</span>
-                <span className="market-volume">5.16</span>
-              </div>
-              <div className="market-odd-box lay1">
-                <span className="market-odd">2.4</span>
-                <span className="market-volume">3.65</span>
-              </div>
-              <div className="market-odd-box lay2">
-                <span className="market-odd">4.8</span>
-                <span className="market-volume">5.55</span>
-              </div>
-            </div>
-            <div className="market-row" data-title="ACTIVE">
-              <div className="market-nation-detail">
-                <span className="market-nation-name">5. Pyekakariki</span>
-                <div className="market-nation-book"></div>
-              </div>
-              <div className="market-odd-box back2">
-                <span className="market-odd">1.27</span>
-                <span className="market-volume">20.96</span>
-              </div>
-              <div className="market-odd-box back1">
-                <span className="market-odd">1.72</span>
-                <span className="market-volume">5.1</span>
-              </div>
-              <div className="market-odd-box back">
-                <span className="market-odd">1.82</span>
-                <span className="market-volume">6.29</span>
-              </div>
-              <div className="market-odd-box lay">
-                <span className="market-odd">3.35</span>
-                <span className="market-volume">20.11</span>
-              </div>
-              <div className="market-odd-box lay1">
-                <span className="market-odd">3.4</span>
-                <span className="market-volume">10.25</span>
-              </div>
-              <div className="market-odd-box lay2">
-                <span className="market-odd">4.2</span>
-                <span className="market-volume">10.12</span>
-              </div>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </div>
   );

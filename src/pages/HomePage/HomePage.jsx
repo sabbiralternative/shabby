@@ -64,6 +64,7 @@ const HomePage = () => {
     const gameData = async () => {
       if (sports !== null) {
         const apiUrl = `${API.groupSportsBook}/${sports}`;
+        console.log(apiUrl);
         const res = await axios.get(apiUrl, {
           headers: {
             "Cache-Control": "public",
@@ -72,7 +73,6 @@ const HomePage = () => {
         });
         const data = res.data;
         const decryptionData = await handleDecryptData(JSON.stringify(data));
-
         setData(decryptionData);
       }
     };

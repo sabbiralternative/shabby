@@ -27,7 +27,6 @@ import useLanguage from "../../hooks/useLanguage";
 const GameDetails = () => {
   const { language } = useLanguage();
   const { id, eventId } = useParams();
-  const [horseGreyhound, setHorseGreyhound] = useState([]);
   const token = localStorage.getItem("token");
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
   const [data, setData] = useState([]);
@@ -105,7 +104,6 @@ const GameDetails = () => {
   /* Get game details */
   useEffect(() => {
     const getGameDetails = async () => {
-      console.log(`${API.eventDetails}/${id}/${eventId}`);
       const res = await axios.get(`${API.eventDetails}/${id}/${eventId}`, {
         headers: {
           "Cache-Control": "public",
@@ -114,9 +112,6 @@ const GameDetails = () => {
       });
       const data = res.data;
       const decryptionData = await handleDecryptData(JSON.stringify(data));
-      if (id == 7 || id == 4339) {
-        setHorseGreyhound(decryptionData);
-      }
 
       if (decryptionData.success) {
         setData(decryptionData.result);
@@ -699,7 +694,7 @@ const GameDetails = () => {
               showBets={showBets}
               setShowBets={setShowBets}
               setTotalSize={setTotalSize}
-              data={horseGreyhound}
+              data={data}
             />
           ) : null}
         </div>
