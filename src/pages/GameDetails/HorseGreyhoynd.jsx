@@ -47,7 +47,7 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
     }, 1000);
 
     return () => clearTimeout(initialTimeout);
-  }, [data]);
+  }, []);
 
   /* exposer */
   let pnlBySelection;
@@ -148,7 +148,10 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
           />
           <div className="horse-banner-detail">
             <div className="text-success">OPEN</div>
-            {timeDiff?.second && (
+            {timeDiff?.day ||
+            timeDiff?.hour ||
+            timeDiff?.minute ||
+            timeDiff?.second ? (
               <div className="horse-timer">
                 <span style={{ display: "flex", gap: "5px" }}>
                   {timeDiff?.day > 0 && (
@@ -174,7 +177,7 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
                 </span>
                 <span>Remaining</span>
               </div>
-            )}
+            ) : null}
 
             <div className="time-detail">
               <p>{data?.[0]?.eventName}</p>

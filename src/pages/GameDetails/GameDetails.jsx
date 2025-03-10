@@ -446,12 +446,15 @@ const GameDetails = () => {
           />
         )}
         <div className="detail-page-container">
-          <div className="game-header">
-            <span>{data?.length > 0 && data[0]?.eventName}</span>
-            <span className="float-right">
-              {data?.length > 0 && data[0]?.openDate}
-            </span>
-          </div>
+          {id != 7 && id != 4339 && (
+            <div className="game-header">
+              <span>{data?.length > 0 && data[0]?.eventName}</span>
+              <span className="float-right">
+                {data?.length > 0 && data[0]?.openDate}
+              </span>
+            </div>
+          )}
+
           <ul className="nav nav-tabs d-xl-none menu-tabs">
             <li
               onClick={() => setTabs("odds")}
