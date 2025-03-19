@@ -27,8 +27,13 @@ const StateProvider = ({ children }) => {
   useEffect(() => {
     if (noticeLoaded) {
       /* Dynamically append  theme css  */
-      const logo = `${API.assets}/${settings.siteUrl}/logo.${settings.logoFormat}`;
-      setLogo(logo);
+      if (settings.build === "production") {
+        const logo = `${API.assets}/${settings.siteUrl}/logo.${settings.logoFormat}`;
+        setLogo(logo);
+      } else {
+        setLogo("/assets/logo.png");
+      }
+
       const link = document.createElement("link");
       link.rel = "stylesheet";
       link.type = "text/css";

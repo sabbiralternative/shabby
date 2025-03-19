@@ -292,6 +292,7 @@ const HorseGreyhound = ({ data, exposer, setShowBets, setTotalSize }) => {
                           </label>
                         </div>
                       </div>
+
                       <div
                         onClick={() =>
                           handlePlaceBet(
