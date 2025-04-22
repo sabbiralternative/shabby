@@ -120,14 +120,19 @@ const Referral = ({ setShowReferral }) => {
                           className="referral-code"
                         >
                           <p
-                            style={{ textTransform: "lowercase" }}
+                            style={{
+                              textTransform: "lowercase",
+                              color: "black",
+                            }}
                             _ngcontent-ng-c526813732=""
                             className="refer-code-text"
                           >
                             {data?.link}
                           </p>
                           <button
-                            style={{ color: "white" }}
+                            style={{
+                              color: "white",
+                            }}
                             onClick={() =>
                               handleCopyToClipBoard(data?.text, setSuccess)
                             }
