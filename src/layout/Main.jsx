@@ -153,6 +153,18 @@ const Main = () => {
         </div>
       </div>
       <Footer />
+      {socialLink?.instagramLink ? (
+        <a
+          style={{ cursor: "pointer", bottom: "30%", right: "4.5%" }}
+          className="whatsapp_link"
+          onClick={() => window.open(socialLink?.instagramLink, "_blank")}
+        >
+          <img
+            style={{ filter: "none", height: "60px", width: "60px" }}
+            src="/assets/instagram.png"
+          />
+        </a>
+      ) : null}
       {socialLink?.telegramLink ? (
         <a
           style={{ cursor: "pointer", bottom: "17%", right: "4.5%" }}
