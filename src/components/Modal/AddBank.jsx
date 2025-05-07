@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { API } from "../../utils";
+import { API, settings } from "../../utils";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import { jwtDecode } from "jwt-decode";
 import { AxiosSecure } from "../../lib/AxiosSecure";
@@ -208,7 +208,7 @@ const AddBank = ({ setAddBank, refetchBankData }) => {
                 >
                   <input type="text" placeholder="Enter IFSC" name="" />
                 </div>
-                {mobile && (
+                {mobile && settings.otp && (
                   <div style={{ position: "relative" }} className="input-box ">
                     <input
                       readOnly
@@ -253,7 +253,7 @@ const AddBank = ({ setAddBank, refetchBankData }) => {
                     )}
                   </div>
                 )}
-                {mobile && (
+                {mobile && settings.otp && (
                   <div
                     onChange={(e) => {
                       setBankDetails({

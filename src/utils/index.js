@@ -86,4 +86,5 @@ export const settings = {
   liveCasinoType: "",
   language: "",
   betDelay: "",
+  otp: "",
 };
