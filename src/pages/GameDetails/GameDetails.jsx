@@ -23,6 +23,7 @@ import Tracker from "./Tracker";
 import MyBets from "./MyBets";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 import useLanguage from "../../hooks/useLanguage";
+import SportsBook from "./SportsBook/SportsBook";
 
 const GameDetails = () => {
   const { language } = useLanguage();
@@ -31,6 +32,7 @@ const GameDetails = () => {
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
   const [data, setData] = useState([]);
   const [score, setScore] = useState();
+  const [sportsBook, setSportsBook] = useState();
   const [match_odds, setMatch_odds] = useState([]);
   const [bookmarker, setBookmarker] = useState([]);
   const [bookmarker2, setBookmarker2] = useState([]);
@@ -117,6 +119,7 @@ const GameDetails = () => {
       if (decryptionData.success) {
         setData(decryptionData.result);
         setScore(decryptionData.score);
+        setSportsBook(decryptionData?.sportsbook?.Result);
       }
     };
     getGameDetails();
@@ -701,6 +704,9 @@ const GameDetails = () => {
               data={data}
             />
           ) : null}
+          {sportsBook && (
+            <SportsBook setShowBets={setShowBets} sportsBook={sportsBook} />
+          )}
         </div>
 
         {/* Mobile place bet starts */}
