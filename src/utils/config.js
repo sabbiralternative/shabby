@@ -62,7 +62,9 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         API.withdrawIframe = endPoints?.withdrawIframe;
         API.assets = endPoints?.assets;
         API.mac88 = endPoints?.mac88;
+        API.otpless = endPoints?.otpless;
         settings.otp = setting?.otp;
+        settings.otpWhatsapp = setting?.otpWhatsapp;
         settings.casino = setting?.casino;
         settings.build = setting?.build;
         settings.siteTitle = setting?.siteTitle;

@@ -51,6 +51,7 @@ export const API = {
   singleDiamondRules: "",
   mac88All: "",
   utr: "",
+  otpless: "",
 };
 
 export const settings = {
@@ -87,4 +88,5 @@ export const settings = {
   language: "",
   betDelay: "",
   otp: "",
+  otpWhatsapp: "",
 };

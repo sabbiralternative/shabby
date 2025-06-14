@@ -7,6 +7,7 @@ import UseState from "../../hooks/UseState";
 import { API, settings } from "../../utils";
 import useGetSocialLink from "../../hooks/useGetSocialLink";
 import { AxiosSecure } from "../../lib/AxiosSecure";
+import getOtpOnWhatsapp from "../../utils/getOtpOnWhatsapp";
 const Register = () => {
   const referralCode = localStorage.getItem("referralCode");
   const { refetchSocialLinks } = useGetSocialLink();
@@ -179,6 +180,9 @@ const Register = () => {
     }
   };
 
+  const handleGetOtpOnWhatsapp = async () => {
+    await getOtpOnWhatsapp(user.mobileNo, setOrder, setOtp);
+  };
   return (
     <div className="wrapper">
       {errOtp && (
@@ -239,12 +243,24 @@ const Register = () => {
                 <span className="input-group-text">
                   <i className="fas fa-phone"></i>
                 </span>
+                {settings.otpWhatsapp && (
+                  <button
+                    style={{ marginBottom: "2px" }}
+                    disabled={user.mobileNo.length < 10}
+                    onClick={handleGetOtpOnWhatsapp}
+                    className="btn btn-primary btn-block"
+                    type="button"
+                  >
+                    Get OTP Whatsapp
+                  </button>
+                )}
+
                 <button
                   onClick={getOtp}
                   className="btn btn-primary btn-block"
                   type="button"
                 >
-                  Get OTP
+                  Get OTP Message
                 </button>
                 {mobile && (
                   <p className="success-form text-danger">{mobile} </p>
