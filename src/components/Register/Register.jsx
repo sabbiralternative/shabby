@@ -310,9 +310,10 @@ const Register = () => {
                 <input
                   onChange={(e) => setUser({ ...user, otp: e.target.value })}
                   name="otp"
-                  type="number"
+                  type="text"
                   className="form-control PhoneInput"
                   placeholder="OTP"
+                  maxLength={6}
                 />
                 <span className="input-group-text">
                   <i className="fas fa-key"></i>
