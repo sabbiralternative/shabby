@@ -18277,12 +18277,13 @@
   display: flex;
   overflow: hidden;
   position: relative;
-  font-size: 14px;
+  font-size: 12px;
   background: none;
   box-sizing: border-box;
   align-items: center;
   font-weight: 600;
   line-height: 17px;
+  padding-top: 10px;
 }
 
 .a23_css .bt12690 {
@@ -18311,7 +18312,7 @@
 
 .a23_css .bt12695 {
   display: flex;
-  margin-bottom: 16px;
+  margin-bottom: 5px;
   justify-content: space-between;
 }
 
@@ -18336,12 +18337,13 @@
   display: flex;
   overflow: hidden;
   position: relative;
-  font-size: 14px;
+  font-size: 12px;
   background: none;
   box-sizing: border-box;
   align-items: center;
   font-weight: 600;
   line-height: 17px;
+  padding-top: 10px;
 }
 
 .a23_css .bt12690 {

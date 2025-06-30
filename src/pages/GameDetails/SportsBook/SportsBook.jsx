@@ -47,7 +47,7 @@ const SportsBook = ({ sportsBook, setShowBets }) => {
             const isOpen = openItems[iIdx];
 
             return (
-              <div style={{ width: "100%" }} key={iIdx}>
+              <div style={{ width: "100%", marginBottom: "10px" }} key={iIdx}>
                 <div className="a23_css bt12687">
                   <div onClick={() => toggleItem(iIdx)} className="bt12695">
                     <div
