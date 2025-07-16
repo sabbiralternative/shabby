@@ -47,6 +47,7 @@ const ChangePasswordLogin = () => {
           /* After change password , logout user, navigation user to login page */
           setTimeout(() => {
             localStorage.clear();
+            localStorage.removeItem("changePassword");
             navigate("/login");
           }, 1000);
         } else {

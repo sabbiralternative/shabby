@@ -70,6 +70,7 @@ const Login = () => {
             data?.result?.changePassword === true
           ) {
             /* if token, login name, and result.password === true then navigation change-password-login page */
+            localStorage.setItem("changePassword", true);
             navigate("/change-password-login");
           } else if (
             localStorage.getItem("token") &&

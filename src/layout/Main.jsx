@@ -79,6 +79,13 @@ const Main = () => {
     window.scrollTo(0, 0);
   }, [location]);
 
+  useEffect(() => {
+    const changePassword = localStorage.getItem("changePassword");
+    if (changePassword) {
+      navigate("/change-password-login");
+    }
+  }, [location.pathname, navigate]);
+
   return (
     <div>
       <Header />
