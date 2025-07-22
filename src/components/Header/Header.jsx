@@ -373,6 +373,14 @@ const Header = () => {
       }
     }
   }, [windowWidth, showAppPopUp, location?.state?.pathname, location.pathname]);
+
+  const handleNavigateToIFrame = (name, id) => {
+    if (token) {
+      navigate(`/casino/${name}/${id}`);
+    } else {
+      navigate("/login");
+    }
+  };
   return (
     <>
       <div
@@ -1107,6 +1115,14 @@ const Header = () => {
                   >
                     {languageValue(valueByLanguage, LanguageKey.TENNIS)}
                   </Link>
+                </li>
+                <li
+                  onClick={() => handleNavigateToIFrame("sportsbook", "550000")}
+                  className="nav-item"
+                >
+                  <a className="nav-link" to="/tennis">
+                    Sportsbook
+                  </a>
                 </li>
 
                 <li className="nav-item">

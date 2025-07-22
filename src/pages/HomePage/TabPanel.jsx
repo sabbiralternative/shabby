@@ -1,10 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import UseState from "../../hooks/UseState";
 
-const TabPanel = ({ label, icon: Icon, id }) => {
+const TabPanel = ({ label, icon: Icon, id, path }) => {
   const { setSports, sports } = UseState();
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    if (path) {
+      navigate(path);
+    } else {
+      setSports(id);
+    }
+  };
 
   return (
-    <li onClick={() => setSports(id)} className="nav-item">
+    <li onClick={handleNavigate} className="nav-item">
       <p className={`nav-link ${sports === id ? "active" : ""}`}>
         <div
           style={{

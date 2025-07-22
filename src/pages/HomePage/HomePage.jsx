@@ -22,7 +22,7 @@ import {
   IoFootball,
   IoTennisballSharp,
 } from "react-icons/io5";
-import { FaPlayCircle } from "react-icons/fa";
+import { FaPlayCircle, FaTrophy } from "react-icons/fa";
 import { FaTableTennisPaddleBall } from "react-icons/fa6";
 import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
@@ -107,6 +107,13 @@ const HomePage = () => {
       icon: IoTennisballSharp,
       to: "tennis",
       id: 2,
+    },
+    {
+      label: "Sportsbook",
+      icon: FaTrophy,
+      to: "sportsbook",
+      id: 299,
+      path: "/casino/sportsbook/550000",
     },
     {
       label: languageValue(valueByLanguage, LanguageKey.KABADDI),
@@ -201,6 +208,7 @@ const HomePage = () => {
             to={tab.to}
             key={tab.label}
             id={tab.id}
+            path={tab?.path}
           />
         ))}
       </ul>
