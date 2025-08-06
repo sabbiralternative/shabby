@@ -546,13 +546,13 @@ const GameDetails = () => {
             </div>
           )}
 
-          {(match_odds?.length > 0 &&
-            match_odds[0]?.score?.length !== 0 &&
+          {(data?.[0]?.score?.length > 0 &&
+            data?.[0]?.score?.length !== 0 &&
             tabs === "odds" &&
             id == "4") ||
           tabs === "tv" ? (
             <div className="scorecard">
-              {match_odds?.[0]?.score?.map((scoreInfo, i) => {
+              {data?.[0]?.score?.map((scoreInfo, i) => {
                 return (
                   <div key={i} className="row">
                     <div className="col-12 col-md-6">
