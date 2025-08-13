@@ -24,6 +24,7 @@ import MyBets from "./MyBets";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 import useLanguage from "../../hooks/useLanguage";
 import SportsBook from "./SportsBook/SportsBook";
+import CricketScore from "./CricketScore";
 
 const GameDetails = () => {
   const { language } = useLanguage();
@@ -32,6 +33,7 @@ const GameDetails = () => {
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
   const [data, setData] = useState([]);
   const [score, setScore] = useState();
+  const [iScore, setIScore] = useState();
   const [sportsBook, setSportsBook] = useState();
   const [match_odds, setMatch_odds] = useState([]);
   const [bookmarker, setBookmarker] = useState([]);
@@ -117,6 +119,7 @@ const GameDetails = () => {
       const decryptionData = await handleDecryptData(JSON.stringify(data));
 
       if (decryptionData.success) {
+        setIScore(decryptionData?.iscore);
         setData(decryptionData.result);
         setScore(decryptionData.score);
         setSportsBook(decryptionData?.sportsbook?.Result);
@@ -545,7 +548,7 @@ const GameDetails = () => {
               ></iframe>
             </div>
           )}
-
+          {id == 4 && iScore && <CricketScore iscore={iScore} />}
           {(data?.[0]?.score?.length > 0 &&
             data?.[0]?.score?.length !== 0 &&
             tabs === "odds" &&
