@@ -37,7 +37,7 @@ const Cricket = () => {
   }
 
   return (
-    <div className="center-container">
+    <div className="center-container" style={{ width: "100%" }}>
       <div className="tab-content mt-1">
         <div className="tab-pane active">
           <div className="bet-table">
@@ -59,6 +59,9 @@ const Cricket = () => {
               {Object.values(data).length > 0 ? (
                 group === 4 &&
                 Object.keys(data)
+                  ?.filter((key) => {
+                    return data?.[key]?.visible === true;
+                  })
                   .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                   .map((key, index) => (
                     <BetTable key={index} keys={key} data={data} />
@@ -66,9 +69,11 @@ const Cricket = () => {
               ) : (
                 <div className="bet-table-row">No Record Found</div>
               )}
-              {/* {Object.values(data).length < 1 && (
+              {Object.keys(data)?.filter((key) => {
+                return data?.[key]?.visible === true;
+              }).length < 1 && (
                 <div className="bet-table-row">No Record Found</div>
-              )} */}
+              )}
             </div>
           </div>
         </div>

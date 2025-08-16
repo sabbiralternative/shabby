@@ -52,11 +52,17 @@ const Kabaddi = () => {
             <div className="bet-table-body">
               {Object.values(data).length > 0 &&
                 Object.keys(data)
+                  ?.filter((key) => {
+                    return data?.[key]?.visible === true;
+                  })
                   .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
                   .map((key, index) => (
                     <BetTable key={index} keys={key} data={data} />
                   ))}
-              {Object.values(data).length < 1 && (
+
+              {Object.keys(data)?.filter((key) => {
+                return data?.[key]?.visible === true;
+              }).length < 1 && (
                 <div className="bet-table-row">No Record Found</div>
               )}
             </div>
