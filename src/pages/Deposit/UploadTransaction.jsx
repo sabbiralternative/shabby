@@ -99,16 +99,10 @@ const UploadTransaction = ({ paymentId, amount, tabs }) => {
   };
   const handleUTRChange = (e) => {
     const value = e.target.value;
-    if (/^[0-9]*$/.test(value)) {
-      console.log(value);
-      setUtr(value);
-    }
+
+    setUtr(value);
   };
-  const handleKeyDown = (e) => {
-    if (!/[0-9]/.test(e.key) && e.key !== "Backspace" && e.key !== "Delete") {
-      e.preventDefault();
-    }
-  };
+
   return (
     <>
       <Toaster />
@@ -258,7 +252,6 @@ const UploadTransaction = ({ paymentId, amount, tabs }) => {
               <div className="utrinput form-control-bc ng-tns-c159-0 ng-pristine ng-invalid ng-touched">
                 <input
                   onChange={handleUTRChange}
-                  onKeyDown={handleKeyDown}
                   id="utrnumber"
                   name="utrnumber"
                   type="text"
