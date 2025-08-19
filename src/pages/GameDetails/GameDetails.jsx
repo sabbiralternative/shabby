@@ -549,7 +549,7 @@ const GameDetails = () => {
             </div>
           )}
           {id == 4 && iScore && <CricketScore iscore={iScore} />}
-          {(data?.[0]?.score?.length > 0 &&
+          {/* {(data?.[0]?.score?.length > 0 &&
             data?.[0]?.score?.length !== 0 &&
             tabs === "odds" &&
             id == "4") ||
@@ -618,7 +618,7 @@ const GameDetails = () => {
                 );
               })}
             </div>
-          ) : null}
+          ) : null} */}
           <Tracker score={score} />
 
           {/* Match odds */}
