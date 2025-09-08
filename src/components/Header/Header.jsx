@@ -1090,6 +1090,16 @@ const Header = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
+                  <Link className="nav-link" to="/game-details/4/1755194820">
+                    CPL
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/game-details/4/28871646">
+                    Asia Cup
+                  </Link>
+                </li>
+                <li className="nav-item">
                   <Link
                     onClick={cricketEndpoint}
                     className="nav-link"
