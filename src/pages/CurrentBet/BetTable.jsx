@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 const BetTable = ({ data }) => {
+  const navigate = useNavigate();
   const {
     amount,
     // betId,
@@ -11,9 +14,18 @@ const BetTable = ({ data }) => {
     sports,
     userRate,
   } = data;
+
+  const navigateGameList = (item) => {
+    navigate(`/game-details/${item?.eventTypeId}/${item?.eventId}`);
+  };
+
   return (
     <>
-      <tr role="row" className={`${betType === "Lay" ? 'lay':'back'}`}>
+      <tr
+        onClick={() => navigateGameList(data)}
+        role="row"
+        className={`${betType === "Lay" ? "lay" : "back"}`}
+      >
         <td role="cell" className="report-sport">
           {sports}
         </td>
@@ -23,13 +35,13 @@ const BetTable = ({ data }) => {
           <span role="cell">{nation}</span>
         </td>
         <td role="cell" className="report-amount text-end">
-        {userRate}
+          {userRate}
         </td>
         <td role="cell" className="report-amount text-end">
-     {amount}
+          {amount}
         </td>
         <td role="cell" className="report-date">
-        {placeDate}
+          {placeDate}
         </td>
         <td role="cell" className="report-action">
           <div className="text-end">
