@@ -1096,6 +1096,11 @@ const Header = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
+                  <Link className="nav-link" to="/game-details/5/1756414503">
+                    PKL
+                  </Link>
+                </li>
+                <li className="nav-item">
                   <Link
                     onClick={cricketEndpoint}
                     className="nav-link"
