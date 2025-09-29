@@ -1091,11 +1091,6 @@ const Header = () => {
                 </li>
 
                 <li className="nav-item">
-                  <Link className="nav-link" to="/game-details/4/28871646">
-                    Asia Cup
-                  </Link>
-                </li>
-                <li className="nav-item">
                   <Link className="nav-link" to="/game-details/5/1756414503">
                     PKL
                   </Link>
