@@ -7,8 +7,9 @@ import UseState from "../../hooks/UseState";
 import { API, settings } from "../../utils";
 import useGetSocialLink from "../../hooks/useGetSocialLink";
 import { AxiosSecure } from "../../lib/AxiosSecure";
-import getOtpOnWhatsapp from "../../utils/getOtpOnWhatsapp";
+// import getOtpOnWhatsapp from "../../utils/getOtpOnWhatsapp";
 const Register = () => {
+  const token = localStorage.getItem("token");
   const referralCode = localStorage.getItem("referralCode");
   const { refetchSocialLinks } = useGetSocialLink();
   // const [userExist, setUserExist] = useState(false);
@@ -180,9 +181,9 @@ const Register = () => {
     }
   };
 
-  const handleGetOtpOnWhatsapp = async () => {
-    await getOtpOnWhatsapp(user.mobileNo, setOrder, setOtp);
-  };
+  // const handleGetOtpOnWhatsapp = async () => {
+  //   await getOtpOnWhatsapp(user.mobileNo, setOrder, setOtp);
+  // };
   return (
     <div className="wrapper">
       {errOtp && (
@@ -209,25 +210,27 @@ const Register = () => {
             </h4>
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* <!-- whatsapp start--> */}
-              {whatsAppLink?.whatsapplink && settings?.registrationWhatsapp && (
-                <div className="whatsapp-box">
-                  <div>
-                    <span>Register as New User</span>
-                    <h4>Get your instant ID from whatsapp</h4>
-                  </div>
-                  <Link
-                    onClick={() =>
-                      window.open(whatsAppLink?.whatsapplink, "_blank")
-                    }
-                    className="create-whatsapp-link"
-                  >
-                    <div className="whatsapp-icon">
-                      <i className="fab fa-whatsapp"></i>
+              {!token &&
+                whatsAppLink?.whatsapplink &&
+                settings?.registrationWhatsapp && (
+                  <div className="whatsapp-box">
+                    <div>
+                      <span>Register as New User</span>
+                      <h4>Get your instant ID from whatsapp</h4>
                     </div>
-                    <div className="click-here">click here</div>
-                  </Link>
-                </div>
-              )}
+                    <Link
+                      onClick={() =>
+                        window.open(whatsAppLink?.whatsapplink, "_blank")
+                      }
+                      className="create-whatsapp-link"
+                    >
+                      <div className="whatsapp-icon">
+                        <i className="fab fa-whatsapp"></i>
+                      </div>
+                      <div className="click-here">click here</div>
+                    </Link>
+                  </div>
+                )}
               {/* <!-- whatsapp end--> */}
 
               <div className="mb-4 input-group position-relative username-text">
@@ -243,7 +246,7 @@ const Register = () => {
                 <span className="input-group-text">
                   <i className="fas fa-phone"></i>
                 </span>
-                {settings.otpWhatsapp && (
+                {/* {settings.otpWhatsapp && (
                   <button
                     style={{ marginBottom: "2px" }}
                     disabled={user.mobileNo.length < 10}
@@ -253,7 +256,7 @@ const Register = () => {
                   >
                     Get OTP Whatsapp
                   </button>
-                )}
+                )} */}
 
                 <button
                   onClick={getOtp}

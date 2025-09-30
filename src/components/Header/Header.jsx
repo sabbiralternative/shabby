@@ -19,7 +19,10 @@ import useLanguage from "../../hooks/useLanguage";
 import Language from "../Modal/Language";
 import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
+import useGetSocialLink from "../../hooks/useGetSocialLink";
 const Header = () => {
+  const { socialLink } = useGetSocialLink();
+  console.log(socialLink);
   /* Open dropdown state for mobile version */
   const { language, valueByLanguage } = useLanguage();
   const [showLanguage, setShowLanguage] = useState(false);
@@ -380,6 +383,10 @@ const Header = () => {
     } else {
       navigate("/login");
     }
+  };
+
+  const openWhatsAppLink = (link) => {
+    window.open(link, "_blank");
   };
   return (
     <>
@@ -1040,6 +1047,18 @@ const Header = () => {
                       Demo
                     </a>
                   )}
+                  {settings.registrationWhatsapp &&
+                    socialLink?.whatsapplink &&
+                    !token && (
+                      <a
+                        onClick={() =>
+                          openWhatsAppLink(socialLink?.whatsapplink)
+                        }
+                        className="btn-home-login"
+                      >
+                        Get ID
+                      </a>
+                    )}
                   {settings.language && (
                     <a
                       onClick={() => setShowLanguage(true)}
