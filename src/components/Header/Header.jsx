@@ -1110,6 +1110,11 @@ const Header = () => {
                 </li>
 
                 <li className="nav-item">
+                  <Link className="nav-link" to="/game-details/4/34766450">
+                    WWC
+                  </Link>
+                </li>
+                <li className="nav-item">
                   <Link className="nav-link" to="/game-details/5/1756414503">
                     PKL
                   </Link>

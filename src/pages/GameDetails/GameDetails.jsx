@@ -135,7 +135,9 @@ const GameDetails = () => {
   useEffect(() => {
     const filterMatch_odds = data?.filter(
       (match_odd) =>
-        match_odd.btype === "MATCH_ODDS" && match_odd?.visible == true
+        match_odd.btype === "MATCH_ODDS" &&
+        match_odd?.visible == true &&
+        match_odd?.name !== "tied match"
     );
     setMatch_odds(filterMatch_odds);
 
@@ -175,6 +177,13 @@ const GameDetails = () => {
     );
     setOverByOver(overByOverFilter);
   }, [data]);
+
+  const tiedMatch = data?.filter(
+    (match_odd) =>
+      match_odd.btype === "MATCH_ODDS" &&
+      match_odd?.visible == true &&
+      match_odd?.name === "tied match"
+  );
 
   /* Get video */
   useEffect(() => {
@@ -710,6 +719,21 @@ const GameDetails = () => {
           {sportsBook && (
             <SportsBook setShowBets={setShowBets} sportsBook={sportsBook} />
           )}
+
+          {(tiedMatch && tiedMatch?.length > 0 && tabs === "odds") ||
+          tabs === "tv" ? (
+            <MatchOddsSection
+              match_odds={tiedMatch}
+              exposer={exposer}
+              showBets={showBets}
+              setShowBets={setShowBets}
+              id={id}
+              eventId={eventId}
+              setTotalSize={setTotalSize}
+              booksValue={predictOdds}
+              totalSize={totalSize}
+            />
+          ) : null}
         </div>
 
         {/* Mobile place bet starts */}
