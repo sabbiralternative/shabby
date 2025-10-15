@@ -63,7 +63,9 @@ const Login = () => {
             { bannerTitle: data?.result?.bannerTitle },
           ];
           /* set modal picture to locale storage for the open modal in home page */
-          localStorage.setItem("modal", JSON.stringify(modal));
+          if (data?.result?.banner) {
+            localStorage.setItem("modal", JSON.stringify(modal));
+          }
           if (
             localStorage.getItem("token") &&
             localStorage.getItem("loginName") &&
@@ -126,7 +128,9 @@ const Login = () => {
           { banner: data?.result?.banner },
           { bannerTitle: data?.result?.bannerTitle },
         ];
-        localStorage.setItem("modal", JSON.stringify(modal));
+        if (data?.result?.banner) {
+          localStorage.setItem("modal", JSON.stringify(modal));
+        }
         if (
           localStorage.getItem("token") &&
           localStorage.getItem("loginName") &&

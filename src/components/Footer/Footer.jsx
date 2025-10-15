@@ -47,7 +47,7 @@ const Footer = () => {
 
   return (
     <>
-      {showModal && token && (
+      {showModal && token && modal && (
         <>
           <div className={`fade modal-backdrop show`}></div>
           <div
