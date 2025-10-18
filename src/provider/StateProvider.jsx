@@ -31,7 +31,7 @@ const StateProvider = ({ children }) => {
         const logo = `${API.assets}/${settings.siteUrl}/logo.${settings.logoFormat}`;
         setLogo(logo);
       } else {
-        setLogo("/assets/logo.png");
+        setLogo(`/assets/logo.${settings.logoFormat}`);
       }
 
       const link = document.createElement("link");
