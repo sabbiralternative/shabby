@@ -1,7 +1,7 @@
 import { FaSpinner } from "react-icons/fa";
 
 const MobilePlaceBet = ({
-  betDelay,
+  // betDelay,
   showBets,
   setShowBets,
   placeBetValue,
@@ -56,7 +56,7 @@ const MobilePlaceBet = ({
                         <div id="load-inner">
                           <span style={{ position: "relative" }}>
                             <FaSpinner size={25} />
-                            <span
+                            {/* <span
                               style={{
                                 position: "absolute",
                                 right: "9px",
@@ -64,7 +64,7 @@ const MobilePlaceBet = ({
                               }}
                             >
                               {betDelay > 0 && betDelay}
-                            </span>
+                            </span> */}
                           </span>
                           <span style={{ fontWeight: "500" }}>
                             Your bet is being processed...
