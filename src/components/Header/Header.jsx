@@ -774,6 +774,21 @@ const Header = () => {
                       >
                         <div className="d-xl-none d-flex justify-content-center"></div>
                         {/* notice.json if withdraw = true then show withdraw button */}
+
+                        {socialLink?.branchWhatsapplink && (
+                          <Link
+                            onClick={() =>
+                              openWhatsAppLink(socialLink?.branchWhatsapplink)
+                            }
+                          >
+                            <li
+                              data-rr-ui-dropdown-item=""
+                              className="dropdown-item"
+                            >
+                              Deposit Support
+                            </li>
+                          </Link>
+                        )}
                         {settings.withdraw && (
                           <Link
                             to="/withdraw-statement"
@@ -933,7 +948,20 @@ const Header = () => {
                             )}
                           </li>
                         </Link>
-
+                        {socialLink?.whatsapplink && (
+                          <Link
+                            onClick={() =>
+                              openWhatsAppLink(socialLink?.whatsapplink)
+                            }
+                          >
+                            <li
+                              data-rr-ui-dropdown-item=""
+                              className="dropdown-item"
+                            >
+                              All Support
+                            </li>
+                          </Link>
+                        )}
                         <div className="d-xl-none">
                           <li className="dropdown-item">
                             {" "}

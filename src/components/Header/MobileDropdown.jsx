@@ -3,6 +3,7 @@ import { settings } from "../../utils";
 import useLanguage from "../../hooks/useLanguage";
 import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
+import useGetSocialLink from "../../hooks/useGetSocialLink";
 
 const MobileDropdown = ({
   openModalRef,
@@ -21,8 +22,13 @@ const MobileDropdown = ({
   exp,
   logOut,
 }) => {
+  const { socialLink } = useGetSocialLink();
   const { valueByLanguage } = useLanguage();
-
+  const handleOpenSocialLink = (link) => {
+    if (link) {
+      window.open(link, "_blank");
+    }
+  };
   return (
     <div ref={openModalRef} className="dropdown">
       <div
@@ -89,6 +95,17 @@ const MobileDropdown = ({
                 )}
               </div>{" "}
             </div>
+            {socialLink?.branchWhatsapplink && (
+              <Link
+                onClick={() =>
+                  handleOpenSocialLink(socialLink?.branchWhatsapplink)
+                }
+              >
+                <li data-rr-ui-dropdown-item="" className="dropdown-item">
+                  Deposit Support
+                </li>
+              </Link>
+            )}
             {settings.withdraw && (
               <Link to="/withdraw-statement" onClick={() => setOpen(!open)}>
                 <li data-rr-ui-dropdown-item="" className="dropdown-item">
@@ -99,6 +116,7 @@ const MobileDropdown = ({
                 </li>
               </Link>
             )}
+
             {/* in notice.json if deposit = true then show this link */}
             {settings.deposit && (
               <Link to="/deposit-statement" onClick={() => setOpen(!open)}>
@@ -218,6 +236,15 @@ const MobileDropdown = ({
                 />
               </div>
             </div>
+            {socialLink?.whatsapplink && (
+              <Link
+                onClick={() => handleOpenSocialLink(socialLink?.whatsapplink)}
+              >
+                <li data-rr-ui-dropdown-item="" className="dropdown-item">
+                  All Support
+                </li>
+              </Link>
+            )}
             <hr className="dropdown-divider" role="separator" />
             <li
               onClick={logOut}
