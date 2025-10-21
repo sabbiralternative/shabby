@@ -48,7 +48,7 @@ const AppPopup = ({ setShowAppPopUp }) => {
         </div>
         <div className="app-text">
           <h2>Download Android Application</h2>
-          <span>Instant Download on your device</span>
+
           <div className="star">
             <img src="/assets/app-star.svg" alt="star" />
             <img src="/assets/app-star.svg" alt="star" />
