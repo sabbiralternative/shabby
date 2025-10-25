@@ -236,7 +236,7 @@ const MobileDropdown = ({
                 />
               </div>
             </div>
-            {socialLink?.whatsapplink && (
+            {/* {socialLink?.whatsapplink && (
               <Link
                 onClick={() => handleOpenSocialLink(socialLink?.whatsapplink)}
               >
@@ -244,7 +244,7 @@ const MobileDropdown = ({
                   All Support
                 </li>
               </Link>
-            )}
+            )} */}
             <hr className="dropdown-divider" role="separator" />
             <li
               onClick={logOut}

@@ -948,7 +948,7 @@ const Header = () => {
                             )}
                           </li>
                         </Link>
-                        {socialLink?.whatsapplink && (
+                        {/* {socialLink?.whatsapplink && (
                           <Link
                             onClick={() =>
                               openWhatsAppLink(socialLink?.whatsapplink)
@@ -961,7 +961,7 @@ const Header = () => {
                               All Support
                             </li>
                           </Link>
-                        )}
+                        )} */}
                         <div className="d-xl-none">
                           <li className="dropdown-item">
                             {" "}
