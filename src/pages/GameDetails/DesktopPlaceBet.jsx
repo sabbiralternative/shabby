@@ -65,23 +65,33 @@ const DesktopPlaceBet = ({
               </div>
               <div className="place-bet-odds">
                 <input
+                  readOnly={placeBetValue?.cashout}
                   onChange={(e) => setPrice(e.target.value)}
                   type="text"
                   className="form-control"
                   disabled=""
                   value={price}
                 />
-                <div className="spinner-buttons input-group-btn btn-group-vertical">
-                  <button onClick={handleIncreasePrice} className="btn-default">
-                    <i className="fa fa-angle-up"></i>
-                  </button>
-                  <button onClick={handleDecreasePrice} className="btn-default">
-                    <i className="fa fa-angle-down"></i>
-                  </button>
-                </div>
+                {!placeBetValue?.isWeak && !placeBetValue?.cashout && (
+                  <div className="spinner-buttons input-group-btn btn-group-vertical">
+                    <button
+                      onClick={handleIncreasePrice}
+                      className="btn-default"
+                    >
+                      <i className="fa fa-angle-up"></i>
+                    </button>
+                    <button
+                      onClick={handleDecreasePrice}
+                      className="btn-default"
+                    >
+                      <i className="fa fa-angle-down"></i>
+                    </button>
+                  </div>
+                )}
               </div>
               <div className="place-bet-stake">
                 <input
+                  readOnly={placeBetValue?.cashout}
                   onChange={(e) => setTotalSize(e.target.value)}
                   type="number"
                   className="form-control"
@@ -118,6 +128,7 @@ const DesktopPlaceBet = ({
                 return (
                   <>
                     <button
+                      disabled={placeBetValue?.cashout}
                       onClick={() => handleButtonValue(buttonVal)}
                       className="btn btn-place-bet"
                     >

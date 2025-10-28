@@ -69,6 +69,7 @@ const PlaceBets = ({
         isBettable: placeBetValue?.isBettable,
         maxLiabilityPerBet: placeBetValue?.maxLiabilityPerBet,
         b2c: settings.b2c,
+        cashout: placeBetValue?.cashout || false,
       },
     ]);
     setLoader(true);

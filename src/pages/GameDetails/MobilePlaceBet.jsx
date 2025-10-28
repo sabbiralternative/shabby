@@ -84,31 +84,40 @@ const MobilePlaceBet = ({
                       </div>
                       <div className="col-6">
                         <div className="float-end" style={{ display: "flex" }}>
-                          <button
-                            onClick={handleDecreasePrice}
-                            className="stakeactionminus btn"
-                          >
-                            <span className="fa fa-minus"></span>
-                          </button>
+                          {!placeBetValue?.isWeak &&
+                            !placeBetValue?.cashout && (
+                              <button
+                                onClick={handleDecreasePrice}
+                                className="stakeactionminus btn"
+                              >
+                                <span className="fa fa-minus"></span>
+                              </button>
+                            )}
+
                           <input
+                            readOnly={placeBetValue?.cashout}
                             onChange={(e) => setPrice(e.target.value)}
                             type="text"
                             className="stakeinput"
                             disabled=""
                             value={price}
                           />
-                          <button
-                            onClick={handleIncreasePrice}
-                            className="stakeactionminus btn"
-                          >
-                            <span className="fa fa-plus"></span>
-                          </button>
+                          {!placeBetValue?.isWeak &&
+                            !placeBetValue?.cashout && (
+                              <button
+                                onClick={handleIncreasePrice}
+                                className="stakeactionminus btn"
+                              >
+                                <span className="fa fa-plus"></span>
+                              </button>
+                            )}
                         </div>
                       </div>
                     </div>
                     <div className="row mt-2">
                       <div className="col-4">
                         <input
+                          readOnly={placeBetValue?.cashout}
                           onChange={(e) => setTotalSize(e.target.value)}
                           type="number"
                           className="stakeinput w-100"
@@ -151,6 +160,7 @@ const MobilePlaceBet = ({
                         };
                         return (
                           <button
+                            disabled={placeBetValue?.cashout}
                             key={i}
                             onClick={() => handleButtonValue(buttonVal)}
                             className="btn btn-place-bet"
