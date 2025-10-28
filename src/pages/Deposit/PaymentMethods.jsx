@@ -11,11 +11,11 @@ import { CiBank } from "react-icons/ci";
 import toast, { Toaster } from "react-hot-toast";
 
 // import QRCode from "qrcode.react";
-import { isDesktop, isAndroid } from "react-device-detect";
-import { ProgressBar } from "react-loader-spinner";
-import { useNavigate } from "react-router-dom";
-import useGetPGStatus from "../../hooks/useGetPGStatus";
-import { API, settings } from "../../utils";
+// import { isDesktop } from "react-device-detect";
+// import { ProgressBar } from "react-loader-spinner";
+// import { useNavigate } from "react-router-dom";
+// import useGetPGStatus from "../../hooks/useGetPGStatus";
+import { API } from "../../utils";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 
 /* eslint-disable react/no-unknown-property */
@@ -36,13 +36,13 @@ const PaymentMethods = ({
     amount,
   });
   const paymentMethodRef = useRef();
-  const [qrcode, setQrcode] = useState("");
+  // const [qrcode, setQrcode] = useState("");
   const [depositData, setDepositData] = useState({});
   const [time, setTime] = useState(null);
-  const navigate = useNavigate();
-  const [orderId, setOrderId] = useState("");
-  const [pgPaymentMethods, setPgPaymentMethods] = useState({});
-  const { pgStatus } = useGetPGStatus(orderId, tabs);
+  // const navigate = useNavigate();
+  // const [orderId, setOrderId] = useState("");
+  // const [pgPaymentMethods, setPgPaymentMethods] = useState({});
+  // const { pgStatus } = useGetPGStatus(orderId, tabs);
 
   useEffect(() => {
     refetchBankData();
@@ -58,31 +58,31 @@ const PaymentMethods = ({
     }
   }, [time, tabs]);
 
-  useEffect(() => {
-    if (time === 0) {
-      navigate("/account");
-    } else if (pgStatus?.success) {
-      setTabs("");
-      setOrderId("");
-      toast.success(pgStatus?.result?.message);
-      navigate("/account");
-    }
-  }, [time, navigate, pgStatus]);
+  // useEffect(() => {
+  //   if (time === 0) {
+  //     navigate("/account");
+  //   } else if (pgStatus?.success) {
+  //     setTabs("");
+  //     setOrderId("");
+  //     toast.success(pgStatus?.result?.message);
+  //     navigate("/account");
+  //   }
+  // }, [time, navigate, pgStatus]);
 
-  const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    return `${minutes.toString().padStart(2, "0")}:${seconds
-      .toString()
-      .padStart(2, "0")}`;
-  };
+  // const formatTime = (time) => {
+  //   const minutes = Math.floor(time / 60);
+  //   const seconds = time % 60;
+  //   return `${minutes.toString().padStart(2, "0")}:${seconds
+  //     .toString()
+  //     .padStart(2, "0")}`;
+  // };
 
   const handleVisibleBankMethod = async (e, method) => {
     e.preventDefault();
     setTabs(method?.type);
     setPaymentId(method?.paymentId);
 
-    if (method?.type === "pg") {
+    if (method?.type === "upigateway") {
       const depositDetailForPg = {
         paymentId: method?.paymentId,
         amount,
@@ -91,14 +91,13 @@ const PaymentMethods = ({
       const data = res?.data;
 
       if (data?.success) {
-        if (settings?.paymentIntent) {
-          setPgPaymentMethods(data?.result);
-          setTime(60 * 20);
-          setQrcode(data?.result?.upi);
-          setOrderId(data?.result?.orderId);
-        } else {
-          window.location.href = data?.result?.link;
-        }
+        // if (settings?.paymentIntent) {
+        //   setPgPaymentMethods(data?.result);
+        //   setTime(60 * 20);
+        //   setQrcode(data?.result?.upi);
+        //   setOrderId(data?.result?.orderId);
+        // }
+        window.location.href = data?.result?.link;
       } else {
         toast.error(data?.result?.message);
       }
@@ -122,12 +121,17 @@ const PaymentMethods = ({
     }
   };
 
-  const navigatePGLink = (link) => {
-    window.location.href = link;
-  };
+  // const navigatePGLink = (link) => {
+  //   window.location.href = link;
+  // };
 
   useEffect(() => {
-    if (paymentMethodRef && paymentMethodRef.current && tabs && tabs !== "pg") {
+    if (
+      paymentMethodRef &&
+      paymentMethodRef.current &&
+      tabs &&
+      tabs !== "upigateway"
+    ) {
       paymentMethodRef.current.scrollIntoView({
         behavior: "smooth",
       });
@@ -196,6 +200,12 @@ const PaymentMethods = ({
                         <img
                           style={{ height: "23px", width: "23px" }}
                           src={"/assets/wp_support.webp"}
+                        />
+                      ) : null}
+                      {method?.type == "upigateway" ? (
+                        <img
+                          style={{ height: "23px", width: "23px" }}
+                          src={"/assets/brand-sm.svg"}
                         />
                       ) : null}
                     </div>
@@ -1009,7 +1019,7 @@ const PaymentMethods = ({
             </div>
           </div>
         ) : null}
-        {tabs === "pg" && qrcode && isDesktop && (
+        {/* {tabs === "pg" && qrcode && isDesktop && (
           <div _ngcontent-kdb-c159="" className="paymethod ng-tns-c159-13">
             <div
               _ngcontent-kdb-c159=""
@@ -1049,7 +1059,7 @@ const PaymentMethods = ({
                     _ngcontent-kdb-c159=""
                     className="ng-tns-c159-13"
                   >
-                    {/* <QRCode size={200} value={qrcode} /> */}
+               
                   </div>
                 </div>
                 <div
@@ -1117,9 +1127,9 @@ const PaymentMethods = ({
               </div>
             </div>
           </div>
-        )}
-        {tabs === "pg" && qrcode && isAndroid && (
-          <div _ngcontent-kdb-c159="" className="paymethod ng-tns-c159-13">
+        )} */}
+        {/* {tabs === "pg" && qrcode && isAndroid && (
+          <div  _ngcontent-kdb-c159="" className="paymethod ng-tns-c159-13">
             <div
               _ngcontent-kdb-c159=""
               className="accountdetail ng-tns-c159-13"
@@ -1231,50 +1241,10 @@ const PaymentMethods = ({
                   </div>
                 </div>
               )}
-              {/* <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              _ngcontent-kdb-c159=""
-              className="accountdetailss ng-tns-c159-13 ng-star-inserted"
-            > */}
-
-              {/*   <div
-                _ngcontent-kdb-c159=""
-                className="accountnum ng-tns-c159-13"
-                style={{ width: "100%", justifyContent: "center" }}
-              >
-                <div
-                  onClick={navigatePGLink}
-                  _ngcontent-kdb-c159=""
-                  className="makepayment ng-tns-c159-13"
-                  style={{ marginTop: "10px" }}
-                >
-                  <div
-                    _ngcontent-kdb-c159=""
-                    className="madepay ng-tns-c159-13"
-                  >
-                    <button _ngcontent-kdb-c159="" className="ng-tns-c159-13">
-                      Pay with any UPI app
-                    </button>
-                  </div>
-                </div>
-              </div> */}
-
-              {/*     <div
-                style={{ display: "flex", alignItems: "center", gap: "10px" }}
-              >
-                <img style={{ height: "40px" }} src={images.phonePay} alt="" />
-                <img style={{ height: "40px" }} src={images.paytm} alt="" />
-                <img style={{ height: "40px" }} src={images.gpay} alt="" />
-                <img style={{ height: "40px" }} src={images.bhim} alt="" />
-              </div> */}
-              {/* </div> */}
+      
             </div>
           </div>
-        )}
+        )} */}
       </div>
       <Toaster />
     </>
