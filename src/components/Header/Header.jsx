@@ -1142,7 +1142,7 @@ const Header = () => {
                     Bihar Election
                   </Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link className="nav-link" to="/game-details/4/34644908">
                     WWC
                   </Link>
@@ -1151,7 +1151,7 @@ const Header = () => {
                   <Link className="nav-link" to="/game-details/5/1756414503">
                     PKL
                   </Link>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <Link
                     onClick={cricketEndpoint}
