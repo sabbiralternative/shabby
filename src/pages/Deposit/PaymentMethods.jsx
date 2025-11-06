@@ -82,10 +82,11 @@ const PaymentMethods = ({
     setTabs(method?.type);
     setPaymentId(method?.paymentId);
 
-    if (method?.type === "upigateway") {
+    if (method?.type === "upigateway" || method?.type === "toitgateway") {
       const depositDetailForPg = {
         paymentId: method?.paymentId,
         amount,
+        method: method?.type,
       };
       const res = await AxiosSecure.post(API.pg, depositDetailForPg);
       const data = res?.data;
@@ -130,7 +131,8 @@ const PaymentMethods = ({
       paymentMethodRef &&
       paymentMethodRef.current &&
       tabs &&
-      tabs !== "upigateway"
+      tabs !== "upigateway" &&
+      tabs !== "toitgateway"
     ) {
       paymentMethodRef.current.scrollIntoView({
         behavior: "smooth",
@@ -202,7 +204,8 @@ const PaymentMethods = ({
                           src={"/assets/wp_support.webp"}
                         />
                       ) : null}
-                      {method?.type == "upigateway" ? (
+                      {method?.type == "upigateway" ||
+                      method?.type === "toitgateway" ? (
                         <img
                           style={{ height: "23px", width: "23px" }}
                           src={"/assets/bhim.png"}
