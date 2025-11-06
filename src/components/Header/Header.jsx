@@ -1136,22 +1136,18 @@ const Header = () => {
                     {languageValue(valueByLanguage, LanguageKey.HOME)}
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/game-details/4/28045743">
+                    WBBL
+                  </Link>
+                </li>
 
                 <li className="nav-item">
                   <Link className="nav-link" to="/game-details/4/1759935118">
                     Bihar Election
                   </Link>
                 </li>
-                {/* <li className="nav-item">
-                  <Link className="nav-link" to="/game-details/4/34644908">
-                    WWC
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/game-details/5/1756414503">
-                    PKL
-                  </Link>
-                </li> */}
+
                 <li className="nav-item">
                   <Link
                     onClick={cricketEndpoint}
