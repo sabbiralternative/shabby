@@ -258,13 +258,7 @@ const AccountStatement = () => {
                       >
                         Pts
                       </th>
-                      <th
-                        className="report-amount text-end"
-                        colSpan="1"
-                        role="columnheader"
-                      >
-                        Time
-                      </th>
+
                       <th colSpan="1" role="columnheader">
                         Remark
                       </th>
@@ -286,8 +280,12 @@ const AccountStatement = () => {
                           ) => {
                             return (
                               <tr key={i} role="row">
-                                <td role="cell" className="report-date">
-                                  {settledTime}
+                                <td
+                                  style={{ width: "190px" }}
+                                  role="cell"
+                                  className="report-date"
+                                >
+                                  {settledTime} {time}
                                 </td>
                                 <td role="cell" className="report-sr text-end">
                                   {i + 1}
@@ -317,14 +315,7 @@ const AccountStatement = () => {
                                     {balance}
                                   </span>
                                 </td>
-                                <td
-                                  role="cell"
-                                  className="report-amount text-end"
-                                >
-                                  <span role="cell" className="">
-                                    {time}
-                                  </span>
-                                </td>
+
                                 <td role="cell">
                                   <span
                                     style={{
