@@ -102,6 +102,7 @@ const AccountStatement = () => {
   const hasNextPage = currentPage < getLastPage();
 
   /* Pagination  end*/
+
   return (
     <>
       <div className="center-container">
@@ -257,6 +258,13 @@ const AccountStatement = () => {
                       >
                         Pts
                       </th>
+                      <th
+                        className="report-amount text-end"
+                        colSpan="1"
+                        role="columnheader"
+                      >
+                        Time
+                      </th>
                       <th colSpan="1" role="columnheader">
                         Remark
                       </th>
@@ -272,6 +280,7 @@ const AccountStatement = () => {
                               memberWin,
                               narration,
                               settledTime,
+                              time,
                             },
                             i
                           ) => {
@@ -306,6 +315,14 @@ const AccountStatement = () => {
                                 >
                                   <span role="cell" className="text-success">
                                     {balance}
+                                  </span>
+                                </td>
+                                <td
+                                  role="cell"
+                                  className="report-amount text-end"
+                                >
+                                  <span role="cell" className="">
+                                    {time}
                                   </span>
                                 </td>
                                 <td role="cell">
