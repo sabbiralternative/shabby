@@ -7,9 +7,11 @@ import { AxiosSecure } from "../../lib/AxiosSecure";
 import toast, { Toaster } from "react-hot-toast";
 import AddBank from "../../components/Modal/AddBank";
 import { API } from "../../utils";
+import AddUSDTAccount from "../../components/Modal/AddUSDTAccount";
 
 const MyBankDetails = () => {
   const [showAddBank, setShowAddBank] = useState(false);
+  const [showUSDTModal, setShowUSDTModal] = useState(false);
   const [showDetails, setShowDetails] = useState(null);
   const [tab, setTab] = useState(1);
   const { bankData, refetchBankData, isFetched } = useBankAccount({
@@ -87,6 +89,12 @@ const MyBankDetails = () => {
             refetchBankData={refetchBankData}
           />
         )}
+        {showUSDTModal && (
+          <AddUSDTAccount
+            setShowUSDTModal={setShowUSDTModal}
+            refetchBankData={refetchBankData}
+          />
+        )}
 
         <div className="deposit-withdraw-btns">
           <div className="btns-animation ">
@@ -125,6 +133,19 @@ const MyBankDetails = () => {
             }}
           >
             Add New Bank
+          </button>
+          <button
+            onClick={() => setShowUSDTModal(true)}
+            className="btn"
+            style={{
+              background: "var(--bg-primary)",
+              color: "white",
+              fontSize: "16px",
+              fontWeight: "500",
+              marginTop: "5px",
+            }}
+          >
+            Add USDT Account
           </button>
           <h2
             style={{
@@ -168,7 +189,7 @@ const MyBankDetails = () => {
                         gap: "3px",
                       }}
                     >
-                      <img
+                      {/* <img
                         style={{
                           height: "30px",
                           width: "30px",
@@ -176,7 +197,7 @@ const MyBankDetails = () => {
                         }}
                         alt="Bank Icon"
                         src={`/src/assets/img/${bank?.bankCode}.png`}
-                      />
+                      /> */}
                       <div>
                         <p> {bank?.bankName}</p>
                         {bank?.isDefault === 1 && (

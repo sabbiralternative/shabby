@@ -31,6 +31,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [mobile, setMobile] = useState("");
   // const [userName, setUserName] = useState("");
+  const [timer, setTimer] = useState(null);
   const [otpField, setOtpField] = useState("");
   const [order, setOrder] = useState({
     orderId: "",
@@ -179,6 +180,7 @@ const Register = () => {
     const res = await AxiosSecure.post(API.otp, otpData);
     const data = res.data;
     if (data?.success) {
+      setTimer(60);
       setOrder({
         orderId: data?.result?.orderId,
         otpMethod: "sms",
@@ -192,6 +194,15 @@ const Register = () => {
   // const handleGetOtpOnWhatsapp = async () => {
   //   await getOtpOnWhatsapp(user.mobileNo, setOrder, setOtp);
   // };
+  useEffect(() => {
+    if (timer > 0) {
+      setTimeout(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else {
+      setTimer(null);
+    }
+  }, [timer]);
   return (
     <div className="wrapper">
       {errOtp && (
@@ -265,14 +276,24 @@ const Register = () => {
                     Get OTP Whatsapp
                   </button>
                 )} */}
+                {timer ? (
+                  <button
+                    style={{ cursor: "auto" }}
+                    className="btn btn-primary btn-block"
+                    type="button"
+                  >
+                    Retry in {timer}
+                  </button>
+                ) : (
+                  <button
+                    onClick={getOtp}
+                    className="btn btn-primary btn-block"
+                    type="button"
+                  >
+                    Get OTP Message
+                  </button>
+                )}
 
-                <button
-                  onClick={getOtp}
-                  className="btn btn-primary btn-block"
-                  type="button"
-                >
-                  Get OTP Message
-                </button>
                 {mobile && (
                   <p className="success-form text-danger">{mobile} </p>
                 )}
