@@ -1,12 +1,13 @@
 /* eslint-disable react/no-unknown-property */
 
 import { useRef, useState } from "react";
-import useGetIndex from "../../hooks/useGetIndex";
+
 import CloseModalClickOutside from "../../hooks/CloseModalClickOutside";
 import { handleCopyToClipBoard } from "../../utils/handleCopyToClipBoard";
 import Notification from "../Notification/Notification";
 import UseState from "../../hooks/UseState";
 import { Toaster } from "react-hot-toast";
+import { useGetIndex } from "../../hooks";
 
 const Referral = ({ setShowReferral }) => {
   const [success, setSuccess] = useState("");
@@ -16,8 +17,9 @@ const Referral = ({ setShowReferral }) => {
   CloseModalClickOutside(referralRef, () => {
     setShowReferral(false);
   });
-  const { data } = useGetIndex();
-  console.log(data);
+
+  const { data } = useGetIndex({ type: "get_referral_code" });
+
   return (
     <>
       {success && (

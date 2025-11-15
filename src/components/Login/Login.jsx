@@ -37,7 +37,6 @@ const Login = () => {
       b2c: settings.b2c,
     };
 
-    console.log(loginData);
     /* Encrypted the post data */
     const encryptedData = UseEncryptData(loginData);
     fetch(API.login, {

@@ -1,70 +1,19 @@
-import "../../static/front/css/depositWithdraw.css";
-
-import { useEffect, useState } from "react";
-import SelectAmount from "./SelectAmount";
-import BankAccounts from "./BankAccounts";
-import useBankAccount from "../../hooks/useBankAccount";
-import WithdrawConfirm from "./WithdrawConfirm";
-import AddBank from "../../components/Modal/AddBank";
-import UseState from "../../hooks/UseState";
+import { useState } from "react";
+import ChooseAmount from "./ChoseAmount";
+import BankAccount from "./BankAccount";
+import { Toaster } from "react-hot-toast";
+import "./withdraw.css";
 
 const Withdraw = () => {
   const [amount, setAmount] = useState("");
-  const [showBankAccount, setShowBankAccount] = useState(false);
-  const [confirmWithdraw, setConfirmWithdraw] = useState(false);
-  const [bank, setBank] = useState("");
-  const { addBank, setAddBank } = UseState();
-  const payload = {
-    type: "getBankAccounts",
-    status: "1",
-  };
-  const { bankData, refetchBankData } = useBankAccount(payload);
-
-  useEffect(() => {
-    setShowBankAccount(false);
-    setConfirmWithdraw(false);
-  }, []);
-
-  useEffect(() => {
-    if (showBankAccount && bankData?.length < 1) {
-      setShowBankAccount(false);
-      setAddBank(true);
-    }
-  }, [bankData, setAddBank, showBankAccount]);
-
+  const [tab, setTab] = useState("choseAmount");
   return (
-    <div className="center-container">
-      {!showBankAccount && !confirmWithdraw && (
-        <SelectAmount
-          setShowBankAccount={setShowBankAccount}
-          setAmount={setAmount}
-          amount={amount}
-        />
+    <div className="center-container withdraw-main-wrapper">
+      {tab === "choseAmount" && (
+        <ChooseAmount amount={amount} setAmount={setAmount} setTab={setTab} />
       )}
-      {showBankAccount && bankData?.length > 0 && (
-        <BankAccounts
-          refetchBankData={refetchBankData}
-          setAmount={setAmount}
-          bankData={bankData}
-          setConfirmWithdraw={setConfirmWithdraw}
-          setShowBankAccount={setShowBankAccount}
-          bank={bank}
-          setBank={setBank}
-        />
-      )}
-      {addBank && bankData?.length < 1 && (
-        <AddBank setAddBank={setAddBank} refetchBankData={refetchBankData} />
-      )}
-      {confirmWithdraw && (
-        <WithdrawConfirm
-          amount={amount}
-          bank={bank}
-          setAmount={setAmount}
-          setShowBankAccount={setShowBankAccount}
-          setConfirmWithdraw={setConfirmWithdraw}
-          setBank={setBank}
-        />
-      )}
+      {tab === "bank" && <BankAccount amount={amount} />}
+      <Toaster />
     </div>
   );
 };

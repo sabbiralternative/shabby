@@ -14,7 +14,6 @@ const LastResult = ({ data }) => {
   const getSingleDiamond = async (roundId) => {
     const { data } = await axios.get(`${API.singleDiamond}/${roundId}`);
     if (data?.success) {
-      console.log(data);
       setSingleDiamond(data?.result?.html);
     }
   };

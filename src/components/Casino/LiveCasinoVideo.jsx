@@ -29,16 +29,10 @@ const LiveCasinoVideo = () => {
         mobileOnly: true,
         ...additionalData,
       });
-      // console.log({
-      //   gameId: eventId,
-      //   token: generatedToken,
-      //   isHome: false,
-      //   mobileOnly: true,
-      //   ...additionalData,
-      // });
+
       const res = await AxiosSecure.post(API.liveCasinoIframe, payload);
       const data = res.data;
-      console.log(data);
+
       setVideoUrl(data?.gameUrl);
       setLoading(false);
     };

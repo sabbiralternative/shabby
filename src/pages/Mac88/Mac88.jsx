@@ -4,7 +4,7 @@ import useGetMac88 from "../../hooks/useGetMac88";
 const Mac88 = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  console.log(token);
+
   const { data } = useGetMac88();
   const navigateLiveCasinoVideo = (id, name) => {
     if (token) {

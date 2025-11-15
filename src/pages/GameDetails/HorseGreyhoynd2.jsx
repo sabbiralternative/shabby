@@ -61,8 +61,6 @@ const HorseGreyhound2 = ({ data, exposer, setShowBets, setTotalSize }) => {
     setPreviousData(data);
   }, [data, previousData]);
 
-  console.log(data);
-
   return (
     <>
       {data?.map((item) => {

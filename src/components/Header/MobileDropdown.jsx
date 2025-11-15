@@ -10,8 +10,8 @@ const MobileDropdown = ({
   setOpen,
   role,
   open,
-  setDropDown,
-  setShowReferral,
+  // setDropDown,
+  // setShowReferral,
   SetButtonValue,
   buttonValue,
   setRuleModal,
@@ -148,7 +148,15 @@ const MobileDropdown = ({
                 Bonus Statement
               </li>
             </Link>
+
             {settings.referral && (
+              <Link to="/affiliate" onClick={() => setOpen(!open)}>
+                <li data-rr-ui-dropdown-item="" className="dropdown-item">
+                  Affiliate
+                </li>
+              </Link>
+            )}
+            {/* {settings.referral && (
               <a
                 onClick={() => {
                   setShowReferral(true);
@@ -159,9 +167,9 @@ const MobileDropdown = ({
                   Referral
                 </li>
               </a>
-            )}
+            )} */}
 
-            <Link
+            {/* <Link
               to="/referral-statement"
               onClick={() => {
                 setDropDown(false);
@@ -170,7 +178,7 @@ const MobileDropdown = ({
               <li data-rr-ui-dropdown-item="" className="dropdown-item">
                 Referral Statement
               </li>
-            </Link>
+            </Link> */}
 
             <Link onClick={() => setOpen(!open)} to="/activity-logs">
               <li data-rr-ui-dropdown-item="" className="dropdown-item">

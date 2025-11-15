@@ -22,7 +22,7 @@ import { LanguageKey } from "../../constant";
 import useGetSocialLink from "../../hooks/useGetSocialLink";
 const Header = () => {
   const { socialLink } = useGetSocialLink();
-  console.log(socialLink);
+
   /* Open dropdown state for mobile version */
   const { language, valueByLanguage } = useLanguage();
   const [showLanguage, setShowLanguage] = useState(false);
@@ -343,7 +343,7 @@ const Header = () => {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = res?.data?.result;
-    // console.log(data);
+
     setMyMarketData(data);
   };
 
@@ -873,22 +873,20 @@ const Header = () => {
                           </li>
                         </Link>
                         {settings.referral && (
-                          <a
-                            onClick={() => {
-                              setShowReferral(true);
-                              setDropDown(false);
-                            }}
+                          <Link
+                            to="/affiliate"
+                            onClick={() => setDropDown(!dropDown)}
                           >
                             <li
                               data-rr-ui-dropdown-item=""
                               className="dropdown-item"
                             >
-                              Referral
+                              Affiliate
                             </li>
-                          </a>
+                          </Link>
                         )}
 
-                        <Link
+                        {/* <Link
                           to="/referral-statement"
                           onClick={() => {
                             setDropDown(false);
@@ -900,7 +898,7 @@ const Header = () => {
                           >
                             Referral Statement
                           </li>
-                        </Link>
+                        </Link> */}
 
                         <Link
                           onClick={() => setDropDown(!dropDown)}

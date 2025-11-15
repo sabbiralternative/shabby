@@ -36,6 +36,7 @@ import Kabaddi from "../pages/Kabaddi/Kabaddi.jsx";
 import Greyhound from "../pages/Greyhound/Greyhound.jsx";
 import Horse from "../pages/Horse/Horse.jsx";
 import MyBankDetails from "../pages/MyBankDetails/MyBankDetails.jsx";
+import Affiliate from "../pages/Affiliate/Affiliate.jsx";
 
 const router = createBrowserRouter(
   [
@@ -162,6 +163,10 @@ const router = createBrowserRouter(
         {
           path: "/my-bank-details",
           element: <MyBankDetails />,
+        },
+        {
+          path: "/affiliate",
+          element: <Affiliate />,
         },
       ],
     },

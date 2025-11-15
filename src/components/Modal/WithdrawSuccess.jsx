@@ -11,7 +11,7 @@ const WithdrawSuccess = ({ setWithdrawSuccess }) => {
             style={{ cursor: "pointer" }}
             onClick={() => {
               setWithdrawSuccess(false);
-              navigate("/account");
+              navigate("/");
             }}
             className="close-svg ng-tns-c159-13"
           >

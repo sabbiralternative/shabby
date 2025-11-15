@@ -181,7 +181,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                 const pnl = pnlBySelection?.filter(
                   (pnl) => pnl?.MarketId === fancyGame?.id
                 );
-                // console.log(fancyGame);
+
                 return (
                   <div key={fancyGame.id} className="col-md-6">
                     <div

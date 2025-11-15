@@ -26,7 +26,7 @@ const SingleCasino = () => {
       const res = await AxiosSecure.post(API.accessToken, payload);
       const link = res?.data?.result?.url;
       setLoading(false);
-      // console.log(link);
+
       if (link) {
         setUrl(link);
       }

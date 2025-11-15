@@ -630,7 +630,7 @@ const PlaceBetDiamond = () => {
   //     const data = res.data;
 
   //     if (data.success) {
-  //       // console.log(data);
+
   //       setUrl(data?.result?.url);
   //     }
   //   };
