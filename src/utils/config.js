@@ -63,6 +63,8 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         API.assets = endPoints?.assets;
         API.mac88 = endPoints?.mac88;
         API.otpless = endPoints?.otpless;
+        API.fast_cashout = endPoints?.fast_cashout;
+        API.sb_cashout = endPoints?.sb_cashout;
         settings.otp = setting?.otp;
         settings.otpWhatsapp = setting?.otpWhatsapp;
         settings.casino = setting?.casino;

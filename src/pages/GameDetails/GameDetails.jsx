@@ -25,6 +25,9 @@ import { AxiosSecure } from "../../lib/AxiosSecure";
 import useLanguage from "../../hooks/useLanguage";
 import SportsBook from "./SportsBook/SportsBook";
 import CricketScore from "./CricketScore";
+import { Toaster } from "react-hot-toast";
+import MatchedBet from "./MatchedBet";
+import LiveMatch from "./LiveMatch";
 
 const GameDetails = () => {
   const { language } = useLanguage();
@@ -515,33 +518,11 @@ const GameDetails = () => {
           </ul>
 
           {tabs === "matchBets" && (
-            <div className="table-responsive w-100">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Matched Bet</th>
-                    <th className="text-end">Odds</th>
-                    <th className="text-end">Stake</th>
-                  </tr>
-                </thead>
-                {myBets.length > 0 && Array.isArray(myBets) && (
-                  <tbody>
-                    {myBets?.map(({ nation, userRate, amount, betType }, i) => {
-                      return (
-                        <tr
-                          key={i}
-                          className={`${betType === "Lay" ? "lay" : "back"}`}
-                        >
-                          <td>{nation}</td>
-                          <td className="text-end">{userRate}</td>
-                          <td className="text-end">{amount}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                )}
-              </table>
-            </div>
+            <MatchedBet
+              myBets={myBets}
+              refetchCurrentBets={refetchCurrentBets}
+              sportsBook={sportsBook}
+            />
           )}
           {showTv && tabs === "tv" && (
             <div className="live-tv d-xl-none">
@@ -762,34 +743,12 @@ const GameDetails = () => {
 
       <div className={`sidebar right-sidebar ${isSticky ? "sticky" : ""}`}>
         {score?.hasVideo && (
-          <div
-            style={{
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              setShowMobileTv(!showMobileTv);
-              setFetchVideo(true);
-            }}
-            className="sidebar-box"
-          >
-            <div className="sidebar-title">
-              <h4>Live Match</h4>
-            </div>
-            {showMobileTv && (
-              <div className="live-tv">
-                <iframe
-                  src={videoUrl?.url}
-                  referrerPolicy={
-                    videoUrl?.ref === false ? "no-referrer" : "no-referrer"
-                  }
-                  style={{
-                    width: "100%",
-                    border: "0px",
-                  }}
-                ></iframe>
-              </div>
-            )}
-          </div>
+          <LiveMatch
+            setFetchVideo={setFetchVideo}
+            setShowMobileTv={setShowMobileTv}
+            showMobileTv={showMobileTv}
+            videoUrl={videoUrl}
+          />
         )}
 
         {/* Place bet start */}
@@ -813,8 +772,13 @@ const GameDetails = () => {
         />
         {/* Place bet end */}
 
-        <MyBets myBets={myBets} />
+        <MyBets
+          myBets={myBets}
+          refetchCurrentBets={refetchCurrentBets}
+          sportsBook={sportsBook}
+        />
       </div>
+      <Toaster />
     </>
   );
 };

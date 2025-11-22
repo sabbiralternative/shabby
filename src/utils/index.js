@@ -52,6 +52,8 @@ export const API = {
   mac88All: "",
   utr: "",
   otpless: "",
+  sb_cashout: "",
+  fast_cashout: "",
 };
 
 export const settings = {
