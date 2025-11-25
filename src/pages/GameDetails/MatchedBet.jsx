@@ -86,9 +86,8 @@ const MatchedBet = ({ myBets, refetchCurrentBets, sportsBook }) => {
               });
 
               const price = (
-                0.92 *
-                bet?.amount *
-                (bet?.userRate / column?.Price)
+                0.92 * bet?.amount * (bet?.userRate / column?.Price) -
+                bet?.amount
               )?.toFixed(2);
               return (
                 <tr
@@ -98,7 +97,7 @@ const MatchedBet = ({ myBets, refetchCurrentBets, sportsBook }) => {
                   <td>{bet?.nation}</td>
                   <td className="text-end">
                     {" "}
-                    {bet?.cashout && eventId && id && (
+                    {bet?.cashout && eventId && id && column && (
                       <button
                         onClick={() =>
                           handleCashOut({
