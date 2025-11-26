@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import UseState from "../../hooks/UseState";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
-import { API, settings } from "../../utils";
+import { API } from "../../utils";
 import UseBalance from "../../hooks/UseBalance";
 
 const PlaceBets = ({
@@ -68,8 +68,6 @@ const PlaceBets = ({
         maxLiabilityPerMarket: placeBetValue?.maxLiabilityPerMarket,
         isBettable: placeBetValue?.isBettable,
         maxLiabilityPerBet: placeBetValue?.maxLiabilityPerBet,
-        b2c: settings.b2c,
-        cashout: placeBetValue?.cashout || false,
       },
     ]);
     setLoader(true);
@@ -174,10 +172,11 @@ const PlaceBets = ({
             </div>
             <div className="place-bet-odds">
               <input
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                }}
                 type="text"
                 className="form-control"
-                disabled=""
                 value={price}
               />
               {placeBetValue?.btype !== "CASINO" && (
@@ -193,7 +192,9 @@ const PlaceBets = ({
             </div>
             <div className="place-bet-stake">
               <input
-                onChange={(e) => setTotalSize(e.target.value)}
+                onChange={(e) => {
+                  setTotalSize(e.target.value);
+                }}
                 type="number"
                 className="form-control"
                 value={totalSize}
@@ -217,13 +218,10 @@ const PlaceBets = ({
           </div>
           <div className="place-bet-buttons">
             {buttonValues?.map((buttonVal) => {
-              const handleButtonValue = (val) => {
-                setTotalSize(val.value);
-              };
               return (
                 <>
                   <button
-                    onClick={() => handleButtonValue(buttonVal)}
+                    onClick={() => setTotalSize(buttonVal?.value)}
                     className="btn btn-place-bet"
                   >
                     {buttonVal?.label}

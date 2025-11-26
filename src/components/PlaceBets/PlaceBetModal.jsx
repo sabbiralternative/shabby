@@ -142,6 +142,7 @@ const PlaceBetModal = ({
       setPrice(parseFloat(price) - 1);
     }
   };
+
   return (
     <>
       <div className="fade modal-backdrop show"></div>
@@ -195,7 +196,9 @@ const PlaceBetModal = ({
                       )}
 
                       <input
-                        onChange={(e) => setPrice(e.target.value)}
+                        onChange={(e) => {
+                          setPrice(e.target.value);
+                        }}
                         type="text"
                         className="stakeinput"
                         disabled=""
@@ -215,7 +218,9 @@ const PlaceBetModal = ({
                 <div className="row mt-2">
                   <div className="col-4">
                     <input
-                      onChange={(e) => setTotalSize(e.target.value)}
+                      onChange={(e) => {
+                        setTotalSize(e.target.value);
+                      }}
                       type="number"
                       className="stakeinput w-100"
                       value={totalSize}
@@ -249,13 +254,10 @@ const PlaceBetModal = ({
                 </div>
                 <div className="place-bet-buttons mt-2">
                   {buttonValues?.map((buttonVal, i) => {
-                    const handleButtonValue = (val) => {
-                      setTotalSize(val.value);
-                    };
                     return (
                       <button
                         key={i}
-                        onClick={() => handleButtonValue(buttonVal)}
+                        onClick={() => setTotalSize(buttonVal?.value)}
                         className="btn btn-place-bet"
                       >
                         {buttonVal?.label}

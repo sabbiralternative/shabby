@@ -15,8 +15,21 @@ const DesktopPlaceBet = ({
   buttonValues,
   setShowBets,
   handleOrderBets,
+  setIsCashOut,
   // betDelay,
 }) => {
+  const handleButtonValue = (value) => {
+    setIsCashOut(false);
+    const buttonValue = Number(value);
+    const prevStake = totalSize === null ? null : Number(totalSize);
+
+    if (prevStake === null) {
+      setTotalSize(buttonValue);
+    }
+    if (prevStake >= 0) {
+      setTotalSize(buttonValue + prevStake);
+    }
+  };
   return (
     <>
       {showBets && window.innerWidth > 1199 && placeBetValue && (
@@ -122,17 +135,14 @@ const DesktopPlaceBet = ({
             </div>
             <div className="place-bet-buttons">
               {buttonValues?.map((buttonVal) => {
-                const handleButtonValue = (val) => {
-                  setTotalSize(val.value);
-                };
                 return (
                   <>
                     <button
                       disabled={placeBetValue?.cashout}
-                      onClick={() => handleButtonValue(buttonVal)}
+                      onClick={() => handleButtonValue(buttonVal?.value)}
                       className="btn btn-place-bet"
                     >
-                      {buttonVal?.label}
+                      {buttonVal?.value}
                     </button>
                   </>
                 );

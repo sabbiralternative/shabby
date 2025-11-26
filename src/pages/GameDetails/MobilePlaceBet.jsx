@@ -18,7 +18,20 @@ const MobilePlaceBet = ({
   SetButtonValue,
   buttonValue,
   predictOdds,
+  setIsCashOut,
 }) => {
+  const handleButtonValue = (value) => {
+    setIsCashOut(false);
+    const buttonValue = Number(value);
+    const prevStake = totalSize === null ? null : Number(totalSize);
+
+    if (prevStake === null) {
+      setTotalSize(buttonValue);
+    }
+    if (prevStake >= 0) {
+      setTotalSize(buttonValue + prevStake);
+    }
+  };
   return (
     <>
       {showBets && window.innerWidth < 1200 && placeBetValue && (
@@ -84,41 +97,44 @@ const MobilePlaceBet = ({
                       </div>
                       <div className="col-6">
                         <div className="float-end" style={{ display: "flex" }}>
-                          {!placeBetValue?.isWeak &&
-                            !placeBetValue?.cashout && (
-                              <button
-                                onClick={handleDecreasePrice}
-                                className="stakeactionminus btn"
-                              >
-                                <span className="fa fa-minus"></span>
-                              </button>
-                            )}
+                          {!placeBetValue?.isWeak && (
+                            <button
+                              onClick={handleDecreasePrice}
+                              className="stakeactionminus btn"
+                            >
+                              <span className="fa fa-minus"></span>
+                            </button>
+                          )}
 
                           <input
-                            readOnly={placeBetValue?.cashout}
-                            onChange={(e) => setPrice(e.target.value)}
+                            onChange={(e) => {
+                              setPrice(e.target.value);
+
+                              setIsCashOut(false);
+                            }}
                             type="text"
                             className="stakeinput"
                             disabled=""
                             value={price}
                           />
-                          {!placeBetValue?.isWeak &&
-                            !placeBetValue?.cashout && (
-                              <button
-                                onClick={handleIncreasePrice}
-                                className="stakeactionminus btn"
-                              >
-                                <span className="fa fa-plus"></span>
-                              </button>
-                            )}
+                          {!placeBetValue?.isWeak && (
+                            <button
+                              onClick={handleIncreasePrice}
+                              className="stakeactionminus btn"
+                            >
+                              <span className="fa fa-plus"></span>
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
                     <div className="row mt-2">
                       <div className="col-4">
                         <input
-                          readOnly={placeBetValue?.cashout}
-                          onChange={(e) => setTotalSize(e.target.value)}
+                          onChange={(e) => {
+                            setTotalSize(e.target.value);
+                            setIsCashOut(false);
+                          }}
                           type="number"
                           className="stakeinput w-100"
                           value={totalSize}
@@ -155,17 +171,13 @@ const MobilePlaceBet = ({
                     </div>
                     <div className="place-bet-buttons mt-2">
                       {buttonValues?.map((buttonVal, i) => {
-                        const handleButtonValue = (val) => {
-                          setTotalSize(val.value);
-                        };
                         return (
                           <button
-                            disabled={placeBetValue?.cashout}
                             key={i}
-                            onClick={() => handleButtonValue(buttonVal)}
+                            onClick={() => handleButtonValue(buttonVal?.value)}
                             className="btn btn-place-bet"
                           >
-                            {buttonVal?.label}
+                            {buttonVal?.value}
                           </button>
                         );
                       })}

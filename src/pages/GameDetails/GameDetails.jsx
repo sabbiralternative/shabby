@@ -48,6 +48,7 @@ const GameDetails = () => {
   const [videoUrl, setVideoUrl] = useState();
   const [showMobileTv, setShowMobileTv] = useState(false);
   const [showBets, setShowBets] = useState(false);
+  const [isCashOut, setIsCashOut] = useState(false);
   const {
     buttonValue,
     SetButtonValue,
@@ -85,6 +86,7 @@ const GameDetails = () => {
     setTotalSize(
       placeBetValue?.totalSize > 0 ? placeBetValue?.totalSize.toFixed(2) : null
     );
+    setIsCashOut(placeBetValue?.cashout || false);
   }, [placeBetValue]);
 
   /* Profit */
@@ -241,7 +243,7 @@ const GameDetails = () => {
         language,
         nounce: uuidv4(),
         isbetDelay: settings.betDelay,
-        cashout: placeBetValue.cashout || false,
+        cashout: isCashOut,
       },
     ]);
 
@@ -332,6 +334,7 @@ const GameDetails = () => {
     } else {
       setPrice(parseFloat(price) + 1);
     }
+    setIsCashOut(false);
   };
 
   /* Decrease price bets */
@@ -353,6 +356,7 @@ const GameDetails = () => {
     } else {
       setPrice(parseFloat(price) - 1);
     }
+    setIsCashOut(false);
   };
 
   useEffect(() => {
@@ -736,6 +740,7 @@ const GameDetails = () => {
           SetButtonValue={SetButtonValue}
           buttonValue={buttonValue}
           predictOdds={predictOdds}
+          setIsCashOut={setIsCashOut}
         />
 
         {/* Mobile place bet ends */}
@@ -769,6 +774,7 @@ const GameDetails = () => {
           buttonValues={buttonValues}
           setShowBets={setShowBets}
           handleOrderBets={handleOrderBets}
+          setIsCashOut={setIsCashOut}
         />
         {/* Place bet end */}
 
