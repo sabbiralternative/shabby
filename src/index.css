@@ -508,3 +508,20 @@ button.btn {
   background-color: var(--cash-out-bg);
   color: var(--cash-out-text);
 }
+
+svg .cls-1 {
+  -moz-animation: blinkmenu normal 1s infinite ease-in-out;
+  -webkit-animation: blinkmenu normal 1s infinite ease-in-out;
+  -ms-animation: blinkmenu normal 1s infinite ease-in-out;
+  animation: blinkmenu normal 1s infinite ease-in-out;
+}
+
+@keyframes blinkmenu {
+  0% {
+    fill: #e40539;
+  }
+
+  100% {
+    opacity: 0.1;
+  }
+}

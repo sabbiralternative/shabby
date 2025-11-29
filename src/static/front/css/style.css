@@ -9811,7 +9811,7 @@ img.r-rotate {
   background: var(--bg-secondary);
   color: var(--text-secondary);
   padding: 8px 10px;
-  border-radius: 4px;
+  /* border-radius: 4px; */
   font-weight: bold;
   cursor: pointer;
   transition: all 0.5s;
@@ -9824,6 +9824,7 @@ img.r-rotate {
 .btn-home-login:hover {
   background-color: var(--bg-secondary70);
   color: var(--text-secondary);
+  text-decoration: none;
 }
 
 .btn-home-login {
