@@ -873,7 +873,7 @@ const Header = () => {
                             )}
                           </li>
                         </Link>
-                        {settings.referral && (
+                        {socialLink?.referral && (
                           <Link
                             to="/affiliate"
                             onClick={() => setDropDown(!dropDown)}

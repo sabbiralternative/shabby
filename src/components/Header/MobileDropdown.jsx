@@ -149,7 +149,7 @@ const MobileDropdown = ({
               </li>
             </Link>
 
-            {settings.referral && (
+            {socialLink?.referral && (
               <Link to="/affiliate" onClick={() => setOpen(!open)}>
                 <li data-rr-ui-dropdown-item="" className="dropdown-item">
                   Affiliate
