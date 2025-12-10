@@ -37,6 +37,7 @@ import Greyhound from "../pages/Greyhound/Greyhound.jsx";
 import Horse from "../pages/Horse/Horse.jsx";
 import MyBankDetails from "../pages/MyBankDetails/MyBankDetails.jsx";
 import Affiliate from "../pages/Affiliate/Affiliate.jsx";
+import AffiliateUserProfitLoss from "../pages/AffiliateUserProfitLoss/AffiliateUserProfitLoss.jsx";
 
 const router = createBrowserRouter(
   [
@@ -167,6 +168,10 @@ const router = createBrowserRouter(
         {
           path: "/affiliate",
           element: <Affiliate />,
+        },
+        {
+          path: "affiliate/user-profit-loss",
+          element: <AffiliateUserProfitLoss />,
         },
       ],
     },
