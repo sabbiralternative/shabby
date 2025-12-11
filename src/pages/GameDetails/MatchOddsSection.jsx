@@ -5,6 +5,8 @@ import UseEncryptData from "../../hooks/UseEncryptData";
 import { API, settings } from "../../utils";
 import { useNavigate, useParams } from "react-router-dom";
 import handleCashoutPlaceBet from "../../utils/handleCashoutPlaceBet";
+import SpeedCashOut from "../../components/Modal/SpeedCashOut";
+import { isGameSuspended } from "../../utils/isGameSuspended";
 
 const MatchOddsSection = ({
   match_odds,
@@ -14,6 +16,7 @@ const MatchOddsSection = ({
   booksValue,
   totalSize,
 }) => {
+  const [speedCashOut, setSpeedCashOut] = useState(null);
   const navigate = useNavigate();
   const { eventId } = useParams();
   const [teamProfit, setTeamProfit] = useState([]);
@@ -101,7 +104,12 @@ const MatchOddsSection = ({
     runner2,
     gameId
   ) => {
-    let runner, largerExposure, layValue, oppositeLayValue, lowerExposure;
+    let runner,
+      largerExposure,
+      layValue,
+      oppositeLayValue,
+      lowerExposure,
+      speedCashOut;
 
     const pnlArr = [exposureA, exposureB];
     const isOnePositiveExposure = onlyOnePositive(pnlArr);
@@ -122,6 +130,12 @@ const MatchOddsSection = ({
       lowerExposure = exposureA;
     }
 
+    if (exposureA > 0 && exposureB > 0) {
+      const difference = exposureA - exposureB;
+      if (difference <= 10) {
+        speedCashOut = true;
+      }
+    }
     // Compute the absolute value of the lower exposure.
     let absLowerExposure = Math.abs(lowerExposure);
 
@@ -146,6 +160,11 @@ const MatchOddsSection = ({
       oppositeLayValue,
       gameId,
       isOnePositiveExposure,
+      exposureA,
+      exposureB,
+      runner1,
+      runner2,
+      speedCashOut,
     };
   };
   function onlyOnePositive(arr) {
@@ -192,6 +211,12 @@ const MatchOddsSection = ({
 
   return (
     <>
+      {speedCashOut && (
+        <SpeedCashOut
+          speedCashOut={speedCashOut}
+          setSpeedCashOut={setSpeedCashOut}
+        />
+      )}
       {showLadder && (
         <>
           <div className="fade modal-backdrop show"></div>
@@ -257,79 +282,109 @@ const MatchOddsSection = ({
             profit?.gameId === item?.id && profit?.isOnePositiveExposure
         );
 
+        const speedCashOut = teamProfit?.find(
+          (profit) => profit?.gameId === item?.id && profit?.speedCashOut
+        );
+
         return (
           <div key={item.id} className={`game-market market-4`}>
             <div className="market-title">
               <span style={{ display: "flex", alignItems: "center" }}>
                 {item?.name.toUpperCase()}
               </span>
-              {settings.betFairCashOut && item?.runners?.length !== 3 && (
-                <button
-                  onClick={() =>
-                    handleCashoutPlaceBet(
-                      item,
-                      "lay",
-                      setTotalSize,
-                      setShowBets,
-                      setPlaceBetValue,
-                      pnlBySelection,
-                      token,
-                      navigate,
-                      teamProfitForGame
-                    )
-                  }
-                  style={{
-                    cursor: `${!teamProfitForGame ? "not-allowed" : "pointer"}`,
-                    opacity: `${!teamProfitForGame ? "0.6" : "1"}`,
-                    height: "30px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    border: "none",
-                    minWidth: "130px",
-                  }}
-                  disabled={!teamProfitForGame}
-                  type="button"
-                  className={` ${
-                    teamProfitForGame?.profit > 0
-                      ? "btn-success"
-                      : teamProfitForGame?.profit < 0
-                      ? "btn-danger"
-                      : "cash-out-theme-bg"
-                  }`}
-                >
-                  <div>Cashout</div>
-                  {teamProfitForGame?.profit && (
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "start",
-                        justifyContent: "flex-start",
-                        marginLeft: "2px",
-                      }}
-                    >
-                      <span
+              {settings.betFairCashOut &&
+                item?.runners?.length !== 3 &&
+                !speedCashOut && (
+                  <button
+                    onClick={() =>
+                      handleCashoutPlaceBet(
+                        item,
+                        "lay",
+                        setTotalSize,
+                        setShowBets,
+                        setPlaceBetValue,
+                        pnlBySelection,
+                        token,
+                        navigate,
+                        teamProfitForGame
+                      )
+                    }
+                    style={{
+                      cursor: `${
+                        !teamProfitForGame ? "not-allowed" : "pointer"
+                      }`,
+                      opacity: `${!teamProfitForGame ? "0.6" : "1"}`,
+                      height: "30px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: "none",
+                      minWidth: "130px",
+                    }}
+                    disabled={!teamProfitForGame}
+                    type="button"
+                    className={` ${
+                      teamProfitForGame?.profit > 0
+                        ? "btn-success"
+                        : teamProfitForGame?.profit < 0
+                        ? "btn-danger"
+                        : "cash-out-theme-bg"
+                    }`}
+                  >
+                    <div>Cashout</div>
+                    {teamProfitForGame?.profit && (
+                      <div
                         style={{
+                          display: "flex",
+                          alignItems: "start",
+                          justifyContent: "flex-start",
                           marginLeft: "2px",
                         }}
                       >
-                        :
-                      </span>
-                      <span
-                        style={{
-                          marginLeft: "2px",
-                        }}
-                      >
-                        ₹{" "}
-                      </span>
-                      <span style={{ overflow: "visible" }}>
-                        {" "}
-                        {teamProfitForGame?.profit?.toFixed(2)}
-                      </span>
-                    </div>
-                  )}
-                </button>
-              )}
+                        <span
+                          style={{
+                            marginLeft: "2px",
+                          }}
+                        >
+                          :
+                        </span>
+                        <span
+                          style={{
+                            marginLeft: "2px",
+                          }}
+                        >
+                          ₹{" "}
+                        </span>
+                        <span style={{ overflow: "visible" }}>
+                          {" "}
+                          {teamProfitForGame?.profit?.toFixed(2)}
+                        </span>
+                      </div>
+                    )}
+                  </button>
+                )}
+
+              {settings.betFairCashOut &&
+                item?.runners?.length !== 3 &&
+                speedCashOut && (
+                  <button
+                    style={{
+                      height: "30px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: "none",
+                      minWidth: "130px",
+                      backgroundColor: "#82371b",
+                      color: "white",
+                    }}
+                    onClick={() => setSpeedCashOut(speedCashOut)}
+                    disabled={isGameSuspended(item)}
+                    type="button"
+                  >
+                    <div>Speed Cashout</div>
+                  </button>
+                )}
             </div>
 
             <div className="market-header">

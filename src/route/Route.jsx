@@ -38,6 +38,7 @@ import Horse from "../pages/Horse/Horse.jsx";
 import MyBankDetails from "../pages/MyBankDetails/MyBankDetails.jsx";
 import Affiliate from "../pages/Affiliate/Affiliate.jsx";
 import AffiliateUserProfitLoss from "../pages/AffiliateUserProfitLoss/AffiliateUserProfitLoss.jsx";
+import AffiliateUserStatement from "../pages/AffiliateUserStatement/AffiliateUserStatement.jsx";
 
 const router = createBrowserRouter(
   [
@@ -170,8 +171,12 @@ const router = createBrowserRouter(
           element: <Affiliate />,
         },
         {
-          path: "affiliate/user-profit-loss",
+          path: "/affiliate/user-profit-loss",
           element: <AffiliateUserProfitLoss />,
+        },
+        {
+          path: "/affiliate/user-statement",
+          element: <AffiliateUserStatement />,
         },
       ],
     },
