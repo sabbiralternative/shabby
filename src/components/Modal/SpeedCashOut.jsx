@@ -5,12 +5,12 @@ import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { useCurrentBets } from "../../hooks/currentBet";
 import { useExposure } from "../../hooks/exposure";
-import UseBalance from "../../hooks/useBalance";
+import UseBalance from "../../hooks/UseBalance";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import { useIndex } from "../../hooks";
 
 const SpeedCashOut = ({ speedCashOut, setSpeedCashOut }) => {
-  const { eventId } = useParams();
+  const { eventId, id } = useParams();
   const { refetch: refetchCurrentBets } = useCurrentBets(eventId);
   const { refetch: refetchExposure } = useExposure(eventId);
   const [, refetchBalance] = UseBalance();
@@ -32,6 +32,8 @@ const SpeedCashOut = ({ speedCashOut, setSpeedCashOut }) => {
       type: "speed_cashout",
       market_id: speedCashOut?.gameId,
       amount,
+      event_id: eventId,
+      event_type_id: id,
     };
     mutate(payload, {
       onSuccess: (data) => {
