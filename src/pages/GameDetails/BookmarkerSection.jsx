@@ -407,7 +407,13 @@ const BookmarkerSection = ({
                       backgroundColor: "#82371b",
                       color: "white",
                     }}
-                    onClick={() => setSpeedCashOut(speedCashOut)}
+                    onClick={() =>
+                      setSpeedCashOut({
+                        ...speedCashOut,
+                        market_name: bookmark?.name,
+                        event_name: bookmark?.eventName,
+                      })
+                    }
                     disabled={isGameSuspended(bookmark)}
                     type="button"
                   >

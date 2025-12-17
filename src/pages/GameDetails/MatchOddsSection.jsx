@@ -378,7 +378,13 @@ const MatchOddsSection = ({
                       backgroundColor: "#82371b",
                       color: "white",
                     }}
-                    onClick={() => setSpeedCashOut(speedCashOut)}
+                    onClick={() =>
+                      setSpeedCashOut({
+                        ...speedCashOut,
+                        market_name: item?.name,
+                        event_name: item?.eventName,
+                      })
+                    }
                     disabled={isGameSuspended(item)}
                     type="button"
                   >
