@@ -7,6 +7,7 @@ import UseEncryptData from "../../hooks/UseEncryptData";
 import UseState from "../../hooks/UseState";
 import { API, settings } from "../../utils";
 import useGetSocialLink from "../../hooks/useGetSocialLink";
+import { GrAndroid } from "react-icons/gr";
 
 const Login = () => {
   const { refetchSocialLinks } = useGetSocialLink();
@@ -157,6 +158,17 @@ const Login = () => {
       });
   };
 
+  const handleDownload = (e) => {
+    e.preventDefault();
+    const fileUrl = settings.apkLink;
+    const link = document.createElement("a");
+    link.href = fileUrl;
+    link.setAttribute("download", "site.apk");
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+  };
+
   return (
     <div className="login-page">
       {/* success message ater login */}
@@ -254,6 +266,18 @@ const Login = () => {
                     Register
                     <i className="fas fa-sign-in-alt float-end mt-1"></i>
                   </Link>
+                </div>
+              )}
+              {settings.apkLink && (
+                <div className="d-grid">
+                  <a
+                    style={{ fontSize: "16px" }}
+                    onClick={handleDownload}
+                    className="btn btn-secondary btn-block mt-2"
+                  >
+                    <GrAndroid /> Download .apk
+                    <i className="fas fa-sign-in-alt float-end mt-1"></i>
+                  </a>
                 </div>
               )}
             </div>

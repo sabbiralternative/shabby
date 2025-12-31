@@ -20,6 +20,7 @@ import Language from "../Modal/Language";
 import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
 import useGetSocialLink from "../../hooks/useGetSocialLink";
+import DownloadAPK from "../Modal/DownloadAPK/DownloadAPK";
 const Header = () => {
   const { socialLink } = useGetSocialLink();
 
@@ -66,6 +67,7 @@ const Header = () => {
   const [errorLogin, setErrorLogin] = useState("");
   /* show market state */
   const [showMyMarket, setShowMyMarket] = useState(false);
+  const [showAPKModal, setShowAPKModal] = useState(false);
 
   /* handle close modal click outside the modal desktop version */
   useEffect(() => {
@@ -359,11 +361,16 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
+    const apk_modal_shown = sessionStorage.getItem("apk_modal_shown");
     const closePopupForForever = localStorage.getItem("closePopupForForever");
     if (location?.state?.pathname === "/apk" || location.pathname === "/apk") {
+      sessionStorage.setItem("apk_modal_shown", true);
       localStorage.setItem("closePopupForForever", true);
       localStorage.removeItem("installPromptExpiryTime");
     } else {
+      if (!apk_modal_shown) {
+        setShowAPKModal(true);
+      }
       if (!closePopupForForever) {
         const expiryTime = localStorage.getItem("installPromptExpiryTime");
         const currentTime = new Date().getTime();
@@ -407,6 +414,9 @@ const Header = () => {
         {showReferral && <Referral setShowReferral={setShowReferral} />}
         {settings?.apkLink && showAppPopUp && windowWidth < 600 && (
           <AppPopup setShowAppPopUp={setShowAppPopUp} />
+        )}
+        {settings?.apkLink && showAPKModal && (
+          <DownloadAPK setShowAPKModal={setShowAPKModal} />
         )}
         {/* if error during the demo login then show error message  */}
         {errorLogin && (
