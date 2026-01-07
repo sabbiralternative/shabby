@@ -38,7 +38,7 @@ const DownloadAPK = ({ setShowAPKModal }) => {
         className="card-add-bank"
         ref={modalRef}
         style={{
-          maxHeight: "60vh",
+          maxHeight: "80vh",
           position: "relative",
           borderRadius: "30px",
           overflow: "auto",
