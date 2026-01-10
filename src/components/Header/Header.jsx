@@ -21,9 +21,11 @@ import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
 import useGetSocialLink from "../../hooks/useGetSocialLink";
 import DownloadAPK from "../Modal/DownloadAPK/DownloadAPK";
+import BuildVersion from "../Modal/BuildVersion/BuildVersion";
 const Header = () => {
   const { socialLink } = useGetSocialLink();
-
+  const [showBuildVersion, setShowBuildVersion] = useState(false);
+  const stored_build_version = localStorage.getItem("build_version");
   /* Open dropdown state for mobile version */
   const { language, valueByLanguage } = useLanguage();
   const [showLanguage, setShowLanguage] = useState(false);
@@ -384,6 +386,21 @@ const Header = () => {
     }
   }, [windowWidth, showAppPopUp, location?.state?.pathname, location.pathname]);
 
+  useEffect(() => {
+    const newVersion = socialLink?.build_version;
+    if (!stored_build_version) {
+      if (newVersion) {
+        setShowBuildVersion(true);
+      }
+    }
+    if (stored_build_version && newVersion) {
+      const parseVersion = JSON.parse(stored_build_version);
+      if (newVersion > parseVersion) {
+        setShowBuildVersion(true);
+      }
+    }
+  }, [socialLink?.build_version, stored_build_version]);
+
   const handleNavigateToIFrame = (name, id) => {
     if (token) {
       navigate(`/casino/${name}/${id}`);
@@ -417,6 +434,12 @@ const Header = () => {
         )}
         {settings?.apkLink && showAPKModal && (
           <DownloadAPK setShowAPKModal={setShowAPKModal} />
+        )}
+        {showBuildVersion && !showAPKModal && (
+          <BuildVersion
+            build_version={socialLink?.build_version}
+            setShowBuildVersion={setShowBuildVersion}
+          />
         )}
         {/* if error during the demo login then show error message  */}
         {errorLogin && (

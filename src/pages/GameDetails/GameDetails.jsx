@@ -61,14 +61,11 @@ const GameDetails = () => {
   const [totalSize, setTotalSize] = useState("");
   const [profit, setProfit] = useState("");
   const [loader, setLoader] = useState(false);
-
   const [betDelay, setBetDelay] = useState("");
-
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [tabs, setTabs] = useState("odds");
   const [, refetchBalance] = UseBalance();
-
   const [isSticky, setSticky] = useState(false);
   const [fetchVideo, setFetchVideo] = useState(false);
 
@@ -220,6 +217,9 @@ const GameDetails = () => {
       }
     },
   });
+  const currentPlaceBetEvent = data?.find(
+    (item) => item?.id === placeBetValue?.marketId
+  );
 
   /* Handle order bets */
   const handleOrderBets = () => {
@@ -228,7 +228,7 @@ const GameDetails = () => {
     /* Encrypt post data */
     const encryptedData = UseEncryptData([
       {
-        betDelay: placeBetValue?.betDelay,
+        betDelay: currentPlaceBetEvent?.betDelay,
         btype: placeBetValue?.btype,
         eventTypeId: placeBetValue?.eventTypeId,
         marketId: placeBetValue?.marketId,
@@ -264,8 +264,8 @@ const GameDetails = () => {
     ) {
       delay = 9000;
     } else {
-      setBetDelay(placeBetValue?.betDelay);
-      delay = settings.betDelay ? placeBetValue?.betDelay * 1000 : 0;
+      setBetDelay(currentPlaceBetEvent?.betDelay);
+      delay = settings.betDelay ? currentPlaceBetEvent?.betDelay * 1000 : 0;
     }
     setLoader(true);
     setTimeout(() => {
