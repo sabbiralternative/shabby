@@ -28,6 +28,7 @@ import CricketScore from "./CricketScore";
 import { Toaster } from "react-hot-toast";
 import MatchedBet from "./MatchedBet";
 import LiveMatch from "./LiveMatch";
+import useGetSocialLink from "../../hooks/useGetSocialLink";
 
 const GameDetails = () => {
   const { language } = useLanguage();
@@ -68,6 +69,7 @@ const GameDetails = () => {
   const [, refetchBalance] = UseBalance();
   const [isSticky, setSticky] = useState(false);
   const [fetchVideo, setFetchVideo] = useState(false);
+  const { socialLink } = useGetSocialLink();
 
   /* Get casino thumbnail for home page */
 
@@ -242,7 +244,7 @@ const GameDetails = () => {
         maxLiabilityPerBet: placeBetValue?.maxLiabilityPerBet,
         language,
         nounce: uuidv4(),
-        isbetDelay: settings.betDelay,
+        isbetDelay: socialLink?.bet_delay,
         cashout: isCashOut,
       },
     ]);
@@ -265,7 +267,7 @@ const GameDetails = () => {
       delay = 9000;
     } else {
       setBetDelay(currentPlaceBetEvent?.betDelay);
-      delay = settings.betDelay ? currentPlaceBetEvent?.betDelay * 1000 : 0;
+      delay = socialLink?.bet_delay ? currentPlaceBetEvent?.betDelay * 1000 : 0;
     }
     setLoader(true);
     setTimeout(() => {
