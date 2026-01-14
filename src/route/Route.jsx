@@ -39,6 +39,8 @@ import MyBankDetails from "../pages/MyBankDetails/MyBankDetails.jsx";
 import Affiliate from "../pages/Affiliate/Affiliate.jsx";
 import AffiliateUserProfitLoss from "../pages/AffiliateUserProfitLoss/AffiliateUserProfitLoss.jsx";
 import AffiliateUserStatement from "../pages/AffiliateUserStatement/AffiliateUserStatement.jsx";
+import Promotions from "../pages/Promotions/Promotions.jsx";
+import LossBackClaims from "../pages/LossBackClaims/LossBackClaims.jsx";
 
 const router = createBrowserRouter(
   [
@@ -177,6 +179,14 @@ const router = createBrowserRouter(
         {
           path: "/affiliate/user-statement",
           element: <AffiliateUserStatement />,
+        },
+        {
+          path: "/promotions",
+          element: <Promotions />,
+        },
+        {
+          path: "/lossback-claims",
+          element: <LossBackClaims />,
         },
       ],
     },

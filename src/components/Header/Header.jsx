@@ -919,7 +919,28 @@ const Header = () => {
                             </li>
                           </Link>
                         )}
-
+                        <Link
+                          to="/promotions"
+                          onClick={() => setDropDown(!dropDown)}
+                        >
+                          <li
+                            data-rr-ui-dropdown-item=""
+                            className="dropdown-item"
+                          >
+                            Promos & Bonus
+                          </li>
+                        </Link>
+                        <Link
+                          to="/lossback-claims"
+                          onClick={() => setDropDown(!dropDown)}
+                        >
+                          <li
+                            data-rr-ui-dropdown-item=""
+                            className="dropdown-item"
+                          >
+                            Loss Back Claims
+                          </li>
+                        </Link>
                         {/* <Link
                           to="/referral-statement"
                           onClick={() => {

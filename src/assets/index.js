@@ -14,8 +14,16 @@ import user from "./images/affi-user-icn.b08f83a6.svg";
 import share from "./images/af-share-img.51df8801.svg";
 import install_android from "./images/header_image.png";
 import warning from "./images/warning-yellow.svg";
+import promotionBanner from "./images/promotionBanner.webp";
+import cashBundle from "./images/cash-bundle.webp";
+import giftCard from "./images/giftCard.webp";
+import redeemCardGift from "./images/redeemCardGift.svg";
 
 export default {
+  cashBundle,
+  giftCard,
+  redeemCardGift,
+  promotionBanner,
   warning,
   install_android,
   share,

@@ -156,6 +156,16 @@ const MobileDropdown = ({
                 </li>
               </Link>
             )}
+            <Link to="/promotions" onClick={() => setOpen(!open)}>
+              <li data-rr-ui-dropdown-item="" className="dropdown-item">
+                Promos & Bonus
+              </li>
+            </Link>
+            <Link to="/lossback-claims" onClick={() => setOpen(!open)}>
+              <li data-rr-ui-dropdown-item="" className="dropdown-item">
+                Loss Back Claims
+              </li>
+            </Link>
             {/* {settings.referral && (
               <a
                 onClick={() => {
