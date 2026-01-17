@@ -19,6 +19,7 @@
     "disable-devtool": "^0.3.6",
     "flipclock": "^0.10.8",
     "jquery": "^3.7.1",
+    "jsencrypt": "^3.5.4",
     "jwt-decode": "^4.0.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",

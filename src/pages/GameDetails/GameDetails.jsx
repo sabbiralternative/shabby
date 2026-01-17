@@ -11,8 +11,6 @@ import FancyOne from "./FancyOne";
 import UseState from "../../hooks/UseState";
 import { useQuery } from "@tanstack/react-query";
 import Notification from "../../components/Notification/Notification";
-import UseEncryptData from "../../hooks/UseEncryptData";
-import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseBalance from "../../hooks/UseBalance";
 import MobilePlaceBet from "./MobilePlaceBet";
 import DesktopPlaceBet from "./DesktopPlaceBet";
@@ -29,6 +27,7 @@ import { Toaster } from "react-hot-toast";
 import MatchedBet from "./MatchedBet";
 import LiveMatch from "./LiveMatch";
 import useGetSocialLink from "../../hooks/useGetSocialLink";
+import { AxiosJSEncrypt } from "../../lib/AxiosJSEncrypt";
 
 const GameDetails = () => {
   const { language } = useLanguage();
@@ -83,7 +82,7 @@ const GameDetails = () => {
   useEffect(() => {
     setPrice(placeBetValue?.price);
     setTotalSize(
-      placeBetValue?.totalSize > 0 ? placeBetValue?.totalSize.toFixed(2) : null
+      placeBetValue?.totalSize > 0 ? placeBetValue?.totalSize.toFixed(2) : null,
     );
     setIsCashOut(placeBetValue?.cashout || false);
   }, [placeBetValue]);
@@ -141,19 +140,19 @@ const GameDetails = () => {
       (match_odd) =>
         match_odd.btype === "MATCH_ODDS" &&
         match_odd?.visible == true &&
-        match_odd?.name !== "tied match"
+        match_odd?.name !== "tied match",
     );
     setMatch_odds(filterMatch_odds);
 
     const bookmarkerFilter = data?.filter(
       (bookmarker) =>
-        bookmarker.btype === "BOOKMAKER" && bookmarker?.visible == true
+        bookmarker.btype === "BOOKMAKER" && bookmarker?.visible == true,
     );
     setBookmarker(bookmarkerFilter);
 
     const filterBookmarker2 = data?.filter(
       (bookmarker2) =>
-        bookmarker2.btype === "BOOKMAKER2" && bookmarker2?.visible == true
+        bookmarker2.btype === "BOOKMAKER2" && bookmarker2?.visible == true,
     );
     setBookmarker2(filterBookmarker2);
 
@@ -161,7 +160,7 @@ const GameDetails = () => {
       (normal) =>
         normal.btype === "FANCY" &&
         normal.tabGroupName === "Normal" &&
-        normal?.visible == true
+        normal?.visible == true,
     );
     setNormal(normalFilter);
 
@@ -169,7 +168,7 @@ const GameDetails = () => {
       (fancy1) =>
         fancy1.btype === "ODDS" &&
         fancy1.tabGroupName === "Fancy1" &&
-        fancy1?.visible == true
+        fancy1?.visible == true,
     );
     setFancy1(fancy1Filter);
 
@@ -177,7 +176,7 @@ const GameDetails = () => {
       (overByOver) =>
         overByOver.btype === "FANCY" &&
         overByOver.tabGroupName === "Over By Over" &&
-        overByOver?.visible == true
+        overByOver?.visible == true,
     );
     setOverByOver(overByOverFilter);
   }, [data]);
@@ -186,7 +185,7 @@ const GameDetails = () => {
     (match_odd) =>
       match_odd.btype === "MATCH_ODDS" &&
       match_odd?.visible == true &&
-      match_odd?.name === "tied match"
+      match_odd?.name === "tied match",
   );
 
   /* Get video */
@@ -220,15 +219,12 @@ const GameDetails = () => {
     },
   });
   const currentPlaceBetEvent = data?.find(
-    (item) => item?.id === placeBetValue?.marketId
+    (item) => item?.id === placeBetValue?.marketId,
   );
 
   /* Handle order bets */
   const handleOrderBets = () => {
-    /* Random token */
-    const generatedToken = UseTokenGenerator();
-    /* Encrypt post data */
-    const encryptedData = UseEncryptData([
+    const payloadData = [
       {
         betDelay: currentPlaceBetEvent?.betDelay,
         btype: placeBetValue?.btype,
@@ -238,7 +234,6 @@ const GameDetails = () => {
         selectionId: placeBetValue?.selectionId,
         side: placeBetValue?.side,
         totalSize: totalSize,
-        token: generatedToken,
         maxLiabilityPerMarket: placeBetValue?.maxLiabilityPerMarket,
         isBettable: placeBetValue?.isBettable,
         maxLiabilityPerBet: placeBetValue?.maxLiabilityPerBet,
@@ -247,7 +242,7 @@ const GameDetails = () => {
         isbetDelay: socialLink?.bet_delay,
         cashout: isCashOut,
       },
-    ]);
+    ];
 
     let delay = 0;
     if (
@@ -270,32 +265,21 @@ const GameDetails = () => {
       delay = socialLink?.bet_delay ? currentPlaceBetEvent?.betDelay * 1000 : 0;
     }
     setLoader(true);
-    setTimeout(() => {
-      fetch(API.order, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(encryptedData),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data?.success) {
-            refetchExposure();
-            refetchCurrentBets();
-            refetchBalance();
-            setLoader(false);
-            setShowBets(false);
-            setSuccessMessage("Bet Place Successfully !");
-          } else {
-            setErrorMessage(data?.error?.status[0]?.description);
-            setLoader(false);
-            setShowBets(false);
-            refetchExposure();
-            refetchBalance();
-            refetchCurrentBets();
-          }
-        });
+    setTimeout(async () => {
+      const { data } = await AxiosJSEncrypt.post(API.order, payloadData);
+      if (data?.success) {
+        refetchExposure();
+        refetchCurrentBets();
+        refetchBalance();
+        setLoader(false);
+        setShowBets(false);
+        setBetDelay(null);
+        setSuccessMessage("Bet Place Successfully !");
+      } else {
+        setErrorMessage(data?.error?.status[0]?.description);
+        setLoader(false);
+        setBetDelay(null);
+      }
     }, delay);
   };
 
@@ -305,7 +289,7 @@ const GameDetails = () => {
     queryFn: async () => {
       try {
         const { data } = await AxiosSecure.post(
-          `${API.currentBets}/${eventId}`
+          `${API.currentBets}/${eventId}`,
         );
 
         if (data.success) {
