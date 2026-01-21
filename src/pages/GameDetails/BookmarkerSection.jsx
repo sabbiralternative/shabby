@@ -104,7 +104,7 @@ const BookmarkerSection = ({
     exposureB,
     runner1,
     runner2,
-    gameId
+    gameId,
   ) => {
     let runner,
       largerExposure,
@@ -133,7 +133,7 @@ const BookmarkerSection = ({
     }
 
     if (exposureA > 0 && exposureB > 0) {
-      const difference = exposureA - exposureB;
+      const difference = Math.abs(exposureA - exposureB);
       if (difference <= 10) {
         speedCashOut = true;
       }
@@ -193,10 +193,10 @@ const BookmarkerSection = ({
           const runner2Lay = runner2?.lay?.[0]?.price;
 
           const pnl1 = pnlBySelection?.find(
-            (pnl) => pnl?.RunnerId === runner1?.id
+            (pnl) => pnl?.RunnerId === runner1?.id,
           )?.pnl;
           const pnl2 = pnlBySelection?.find(
-            (pnl) => pnl?.RunnerId === runner2?.id
+            (pnl) => pnl?.RunnerId === runner2?.id,
           )?.pnl;
 
           if (
@@ -214,7 +214,7 @@ const BookmarkerSection = ({
               pnl2,
               runner1,
               runner2,
-              game?.id
+              game?.id,
             );
             results.push(result);
           }
@@ -296,10 +296,10 @@ const BookmarkerSection = ({
       {bookmarker?.map((bookmark) => {
         const teamProfitForGame = teamProfit?.find(
           (profit) =>
-            profit?.gameId === bookmark?.id && profit?.isOnePositiveExposure
+            profit?.gameId === bookmark?.id && profit?.isOnePositiveExposure,
         );
         const speedCashOut = teamProfit?.find(
-          (profit) => profit?.gameId === bookmark?.id && profit?.speedCashOut
+          (profit) => profit?.gameId === bookmark?.id && profit?.speedCashOut,
         );
         return (
           <div key={bookmark?.id} className="game-market market-4">
@@ -321,7 +321,7 @@ const BookmarkerSection = ({
                         pnlBySelection,
                         token,
                         navigate,
-                        teamProfitForGame
+                        teamProfitForGame,
                       )
                     }
                     style={{
@@ -356,8 +356,8 @@ const BookmarkerSection = ({
                       teamProfitForGame?.profit > 0
                         ? "btn-success"
                         : teamProfitForGame?.profit < 0
-                        ? "btn-danger"
-                        : "cash-out-theme-bg"
+                          ? "btn-danger"
+                          : "cash-out-theme-bg"
                     }`}
                   >
                     <div>Cashout</div>
@@ -447,10 +447,10 @@ const BookmarkerSection = ({
             >
               {bookmark?.runners?.map((runner) => {
                 const pnl = pnlBySelection?.filter(
-                  (pnl) => pnl?.RunnerId === runner?.id
+                  (pnl) => pnl?.RunnerId === runner?.id,
                 );
                 const oddValues = booksValue?.filter(
-                  (val) => val?.id === runner?.id
+                  (val) => val?.id === runner?.id,
                 );
                 return (
                   <div
@@ -524,7 +524,7 @@ const BookmarkerSection = ({
                           const updatedPnl = [];
                           bookmark?.runners?.forEach((rnr) => {
                             const pnl = pnlBySelection?.find(
-                              (p) => p?.RunnerId === rnr?.id
+                              (p) => p?.RunnerId === rnr?.id,
                             );
                             if (pnl) {
                               updatedPnl.push({
@@ -559,7 +559,7 @@ const BookmarkerSection = ({
                             back: true,
                             name: bookmark.runners.map((runner) => runner.name),
                             runnerId: bookmark.runners.map(
-                              (runner) => runner.id
+                              (runner) => runner.id,
                             ),
                             isWeak: bookmark?.isWeak,
                             maxLiabilityPerMarket:
@@ -614,7 +614,7 @@ const BookmarkerSection = ({
                         const updatedPnl = [];
                         bookmark?.runners?.forEach((rnr) => {
                           const pnl = pnlBySelection?.find(
-                            (p) => p?.RunnerId === rnr?.id
+                            (p) => p?.RunnerId === rnr?.id,
                           );
                           if (pnl) {
                             updatedPnl.push({

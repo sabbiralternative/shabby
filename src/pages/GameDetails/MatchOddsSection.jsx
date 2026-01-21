@@ -102,7 +102,7 @@ const MatchOddsSection = ({
     exposureB,
     runner1,
     runner2,
-    gameId
+    gameId,
   ) => {
     let runner,
       largerExposure,
@@ -131,7 +131,7 @@ const MatchOddsSection = ({
     }
 
     if (exposureA > 0 && exposureB > 0) {
-      const difference = exposureA - exposureB;
+      const difference = Math.abs(exposureA - exposureB);
       if (difference <= 10) {
         speedCashOut = true;
       }
@@ -184,10 +184,10 @@ const MatchOddsSection = ({
           const runner1 = runners[0];
           const runner2 = runners[1];
           const pnl1 = pnlBySelection?.find(
-            (pnl) => pnl?.RunnerId === runner1?.id
+            (pnl) => pnl?.RunnerId === runner1?.id,
           )?.pnl;
           const pnl2 = pnlBySelection?.find(
-            (pnl) => pnl?.RunnerId === runner2?.id
+            (pnl) => pnl?.RunnerId === runner2?.id,
           )?.pnl;
 
           if (pnl1 && pnl2 && runner1 && runner2) {
@@ -196,7 +196,7 @@ const MatchOddsSection = ({
               pnl2,
               runner1,
               runner2,
-              game?.id
+              game?.id,
             );
             results.push(result);
           }
@@ -279,11 +279,11 @@ const MatchOddsSection = ({
       {match_odds?.map((item) => {
         const teamProfitForGame = teamProfit?.find(
           (profit) =>
-            profit?.gameId === item?.id && profit?.isOnePositiveExposure
+            profit?.gameId === item?.id && profit?.isOnePositiveExposure,
         );
 
         const speedCashOut = teamProfit?.find(
-          (profit) => profit?.gameId === item?.id && profit?.speedCashOut
+          (profit) => profit?.gameId === item?.id && profit?.speedCashOut,
         );
 
         return (
@@ -306,7 +306,7 @@ const MatchOddsSection = ({
                         pnlBySelection,
                         token,
                         navigate,
-                        teamProfitForGame
+                        teamProfitForGame,
                       )
                     }
                     style={{
@@ -327,8 +327,8 @@ const MatchOddsSection = ({
                       teamProfitForGame?.profit > 0
                         ? "btn-success"
                         : teamProfitForGame?.profit < 0
-                        ? "btn-danger"
-                        : "cash-out-theme-bg"
+                          ? "btn-danger"
+                          : "cash-out-theme-bg"
                     }`}
                   >
                     <div>Cashout</div>
@@ -420,10 +420,10 @@ const MatchOddsSection = ({
             >
               {item?.runners?.map((runner) => {
                 const pnl = pnlBySelection?.filter(
-                  (pnl) => pnl?.RunnerId === runner?.id
+                  (pnl) => pnl?.RunnerId === runner?.id,
                 );
                 const oddValues = booksValue?.filter(
-                  (val) => val?.id === runner?.id
+                  (val) => val?.id === runner?.id,
                 );
 
                 return (
@@ -509,7 +509,7 @@ const MatchOddsSection = ({
                           const updatedPnl = [];
                           item?.runners?.forEach((rnr) => {
                             const pnl = pnlBySelection?.find(
-                              (p) => p?.RunnerId === rnr?.id
+                              (p) => p?.RunnerId === rnr?.id,
                             );
                             if (pnl) {
                               updatedPnl.push({
@@ -596,7 +596,7 @@ const MatchOddsSection = ({
                         const updatedPnl = [];
                         item?.runners?.forEach((rnr) => {
                           const pnl = pnlBySelection?.find(
-                            (p) => p?.RunnerId === rnr?.id
+                            (p) => p?.RunnerId === rnr?.id,
                           );
                           if (pnl) {
                             updatedPnl.push({
