@@ -30,6 +30,7 @@ import useGetSocialLink from "../../hooks/useGetSocialLink";
 import { AxiosJSEncrypt } from "../../lib/AxiosJSEncrypt";
 
 const GameDetails = () => {
+  const closePopupForForever = localStorage.getItem("closePopupForForever");
   const { language } = useLanguage();
   const { id, eventId } = useParams();
   const token = localStorage.getItem("token");
@@ -241,6 +242,7 @@ const GameDetails = () => {
         nounce: uuidv4(),
         isbetDelay: socialLink?.bet_delay,
         cashout: isCashOut,
+        apk: closePopupForForever ? true : false,
       },
     ];
 

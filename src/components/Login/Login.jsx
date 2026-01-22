@@ -10,6 +10,7 @@ import useGetSocialLink from "../../hooks/useGetSocialLink";
 import { GrAndroid } from "react-icons/gr";
 
 const Login = () => {
+  const closePopupForForever = localStorage.getItem("closePopupForForever");
   const { refetchSocialLinks } = useGetSocialLink();
   const navigate = useNavigate();
   const [errorLogin, setErrorLogin] = useState("");
@@ -36,6 +37,7 @@ const Login = () => {
       password: password,
       token: generatedToken,
       b2c: settings.b2c,
+      apk: closePopupForForever ? true : false,
     };
 
     /* Encrypted the post data */
@@ -106,6 +108,7 @@ const Login = () => {
       token: generatedToken,
       site: settings.siteUrl,
       b2c: settings.b2c,
+      apk: closePopupForForever ? true : false,
     });
     fetch(API.login, {
       method: "POST",
