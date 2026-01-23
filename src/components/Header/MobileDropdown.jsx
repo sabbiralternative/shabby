@@ -22,6 +22,7 @@ const MobileDropdown = ({
   exp,
   logOut,
 }) => {
+  const closePopupForForever = localStorage.getItem("closePopupForForever");
   const { socialLink } = useGetSocialLink();
   const { valueByLanguage } = useLanguage();
   const handleOpenSocialLink = (link) => {
@@ -111,7 +112,7 @@ const MobileDropdown = ({
                 <li data-rr-ui-dropdown-item="" className="dropdown-item">
                   {languageValue(
                     valueByLanguage,
-                    LanguageKey.WITHDRAW_STATMENT
+                    LanguageKey.WITHDRAW_STATMENT,
                   )}
                 </li>
               </Link>
@@ -123,7 +124,7 @@ const MobileDropdown = ({
                 <li data-rr-ui-dropdown-item="" className="dropdown-item">
                   {languageValue(
                     valueByLanguage,
-                    LanguageKey.DEPOSIT_STATEMENT
+                    LanguageKey.DEPOSIT_STATEMENT,
                   )}
                 </li>
               </Link>
@@ -161,11 +162,19 @@ const MobileDropdown = ({
                 Promos & Bonus
               </li>
             </Link>
-            <Link to="/lossback-claims" onClick={() => setOpen(!open)}>
+            <Link to="/lossback-bonus" onClick={() => setOpen(!open)}>
               <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                Loss Back Claims
+                Lossback Bonus
               </li>
             </Link>
+            {closePopupForForever && (
+              <Link to="/app-only-claims" onClick={() => setOpen(!open)}>
+                <li data-rr-ui-dropdown-item="" className="dropdown-item">
+                  App Only Bonus
+                </li>
+              </Link>
+            )}
+
             {/* {settings.referral && (
               <a
                 onClick={() => {

@@ -41,6 +41,7 @@ import AffiliateUserProfitLoss from "../pages/AffiliateUserProfitLoss/AffiliateU
 import AffiliateUserStatement from "../pages/AffiliateUserStatement/AffiliateUserStatement.jsx";
 import Promotions from "../pages/Promotions/Promotions.jsx";
 import LossBackClaims from "../pages/LossBackClaims/LossBackClaims.jsx";
+import AppOnlyBonus from "../pages/AppOnlyBonus/AppOnlyBonus.jsx";
 
 const router = createBrowserRouter(
   [
@@ -185,8 +186,12 @@ const router = createBrowserRouter(
           element: <Promotions />,
         },
         {
-          path: "/lossback-claims",
+          path: "/lossback-bonus",
           element: <LossBackClaims />,
+        },
+        {
+          path: "/app-only-bonus",
+          element: <AppOnlyBonus />,
         },
       ],
     },
@@ -218,7 +223,7 @@ const router = createBrowserRouter(
   ],
   {
     basename: import.meta.env.BASE_URL ?? "/",
-  }
+  },
 );
 
 export default router;

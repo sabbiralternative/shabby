@@ -23,6 +23,7 @@ import useGetSocialLink from "../../hooks/useGetSocialLink";
 import DownloadAPK from "../Modal/DownloadAPK/DownloadAPK";
 import BuildVersion from "../Modal/BuildVersion/BuildVersion";
 const Header = () => {
+  const closePopupForForever = localStorage.getItem("closePopupForForever");
   const { socialLink } = useGetSocialLink();
   const [showBuildVersion, setShowBuildVersion] = useState(false);
   const stored_build_version = localStorage.getItem("build_version");
@@ -265,7 +266,7 @@ const Header = () => {
           /* set edited button values */
           localStorage.setItem(
             "buttonValue",
-            JSON.stringify(gameButtonsValues)
+            JSON.stringify(gameButtonsValues),
           );
           SetButtonValue(!buttonValue);
         }
@@ -834,7 +835,7 @@ const Header = () => {
                             >
                               {languageValue(
                                 valueByLanguage,
-                                LanguageKey.WITHDRAW_STATMENT
+                                LanguageKey.WITHDRAW_STATMENT,
                               )}
                             </li>
                           </Link>
@@ -851,7 +852,7 @@ const Header = () => {
                             >
                               {languageValue(
                                 valueByLanguage,
-                                LanguageKey.DEPOSIT_STATEMENT
+                                LanguageKey.DEPOSIT_STATEMENT,
                               )}
                             </li>
                           </Link>
@@ -888,7 +889,7 @@ const Header = () => {
                           >
                             {languageValue(
                               valueByLanguage,
-                              LanguageKey.MY_BANK_DETAILS
+                              LanguageKey.MY_BANK_DETAILS,
                             )}
                           </li>
                         </Link>
@@ -902,7 +903,7 @@ const Header = () => {
                           >
                             {languageValue(
                               valueByLanguage,
-                              LanguageKey.BONUS_STATEMENT
+                              LanguageKey.BONUS_STATEMENT,
                             )}
                           </li>
                         </Link>
@@ -931,16 +932,30 @@ const Header = () => {
                           </li>
                         </Link>
                         <Link
-                          to="/lossback-claims"
+                          to="/lossback-bonus"
                           onClick={() => setDropDown(!dropDown)}
                         >
                           <li
                             data-rr-ui-dropdown-item=""
                             className="dropdown-item"
                           >
-                            Loss Back Claims
+                            Lossback Bonus
                           </li>
                         </Link>
+                        {closePopupForForever && (
+                          <Link
+                            to="/app-only-bonus"
+                            onClick={() => setDropDown(!dropDown)}
+                          >
+                            <li
+                              data-rr-ui-dropdown-item=""
+                              className="dropdown-item"
+                            >
+                              App Only Bonus
+                            </li>
+                          </Link>
+                        )}
+
                         {/* <Link
                           to="/referral-statement"
                           onClick={() => {
@@ -997,7 +1012,7 @@ const Header = () => {
                           >
                             {languageValue(
                               valueByLanguage,
-                              LanguageKey.CHANGE_PASSWORD
+                              LanguageKey.CHANGE_PASSWORD,
                             )}
                           </li>
                         </Link>
