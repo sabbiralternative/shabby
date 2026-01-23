@@ -120,7 +120,13 @@ const GameDetails = () => {
       });
       const data = res.data;
 
-      const decryptionData = await handleDecryptData(JSON.stringify(data));
+      let decryptionData;
+
+      if (data?.ct) {
+        decryptionData = handleDecryptData(JSON.stringify(data));
+      } else {
+        decryptionData = data;
+      }
 
       if (decryptionData.success) {
         setIScore(decryptionData?.iscore);

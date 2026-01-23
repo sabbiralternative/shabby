@@ -51,7 +51,7 @@ const HomePage = () => {
           settings.casino == "diamond" ? API.diamondCasino : ""
         }  ${settings.casino == "test" ? API.testCasino : ""} ${
           settings?.casino === "mac88" ? API.mac88 : ""
-        }`
+        }`,
       );
       const data = res.data;
       setCasino_list(data);
@@ -72,7 +72,12 @@ const HomePage = () => {
           },
         });
         const data = res.data;
-        const decryptionData = await handleDecryptData(JSON.stringify(data));
+        let decryptionData;
+        if (data?.ct) {
+          decryptionData = handleDecryptData(JSON.stringify(data));
+        } else {
+          decryptionData = data;
+        }
         setData(decryptionData);
       }
     };
@@ -186,7 +191,7 @@ const HomePage = () => {
               style={{ cursor: "pointer" }}
               onClick={() => {
                 navigate(
-                  `/game-details/${event?.eventTypeId}/${event?.eventId}`
+                  `/game-details/${event?.eventTypeId}/${event?.eventId}`,
                 );
               }}
               key={i}

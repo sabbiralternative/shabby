@@ -14,8 +14,11 @@ const useGetGroupSportsBook = (group) => {
           "max-age": 1,
         },
       });
-      const decryptionData = await handleDecryptData(JSON.stringify(data));
-      return decryptionData;
+      if (data?.ct) {
+        return handleDecryptData(JSON.stringify(data));
+      } else {
+        return data;
+      }
     },
     gcTime: 0,
   });
