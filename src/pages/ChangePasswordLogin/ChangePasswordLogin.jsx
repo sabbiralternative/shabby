@@ -6,6 +6,7 @@ import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import UseState from "../../hooks/UseState";
 import { API, settings } from "../../utils";
+import { handleLogout } from "../../utils/handleLogout";
 
 const ChangePasswordLogin = () => {
   const token = localStorage.getItem("token");
@@ -46,7 +47,7 @@ const ChangePasswordLogin = () => {
           setSuccessMessage(data?.result?.message);
           /* After change password , logout user, navigation user to login page */
           setTimeout(() => {
-            localStorage.clear();
+            handleLogout();
             localStorage.removeItem("changePassword");
             navigate("/login");
           }, 1000);

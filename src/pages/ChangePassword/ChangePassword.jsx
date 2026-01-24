@@ -5,6 +5,7 @@ import Notification from "../../components/Notification/Notification";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
+import { handleLogout } from "../../utils/handleLogout";
 const ChangePassword = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -40,7 +41,7 @@ const ChangePassword = () => {
           setSuccessMessage(data?.result?.message);
           /* After change password , logout user, navigation user to login page */
           setTimeout(() => {
-            localStorage.clear();
+            handleLogout();
             navigate("/login");
           }, 1000);
         } else {

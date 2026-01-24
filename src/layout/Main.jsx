@@ -9,6 +9,7 @@ import DisableDevtool from "disable-devtool";
 import useLatestEvent from "../hooks/useLatestEvent";
 import { settings } from "../utils";
 import useGetSocialLink from "../hooks/useGetSocialLink";
+import { handleLogout } from "../utils/handleLogout";
 
 const Main = () => {
   const location = useLocation();
@@ -29,13 +30,13 @@ const Main = () => {
       const expirationTime = decodedToken.exp;
       isTokenExpired = expirationTime < Date.now() / 1000;
       if (isTokenExpired) {
-        localStorage.clear();
+        handleLogout();
         navigate("/login");
       }
       /* if forceLogin true in notice.json and token not available then logout */
     } else if (settings.forceLogin) {
       if (!token) {
-        localStorage.clear();
+        handleLogout();
         navigate("/login");
       }
     }
@@ -54,18 +55,18 @@ const Main = () => {
 
   /* Disabled devtool */
   useEffect(() => {
-    if (settings.disabledDevtool) {
+    if (socialLink?.disabledDevtool) {
       DisableDevtool({
         ondevtoolopen: (type) => {
           const info = "devtool opened!; type =" + type;
           if (info) {
-            localStorage.clear();
+            handleLogout();
             navigate("/login");
           }
         },
       });
     }
-  }, [navigate]);
+  }, [navigate, socialLink]);
 
   const navigateWhatsApp = () => {
     if (token && socialLink?.branchWhatsapplink) {
@@ -137,7 +138,7 @@ const Main = () => {
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   navigate(
-                    `/game-details/${event?.eventTypeId}/${event?.eventId}`
+                    `/game-details/${event?.eventTypeId}/${event?.eventId}`,
                   );
                 }}
                 key={i}

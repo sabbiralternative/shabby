@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import UseState from "./UseState";
 import { API, settings } from "../utils";
 import { AxiosSecure } from "../lib/AxiosSecure";
+import { handleLogout } from "../utils/handleLogout";
 /* Balance api */
 const UseBalance = () => {
   const { pathname } = useLocation();
@@ -18,7 +19,7 @@ const UseBalance = () => {
     queryFn: async () => {
       const res = await AxiosSecure.post(API.balance);
       if (res?.data?.success === false && token) {
-        localStorage.clear();
+        handleLogout();
         navigate("/login");
       } else if (res?.data?.success && token) {
         const data = res.data?.result;

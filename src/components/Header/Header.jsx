@@ -22,6 +22,7 @@ import { LanguageKey } from "../../constant";
 import useGetSocialLink from "../../hooks/useGetSocialLink";
 import DownloadAPK from "../Modal/DownloadAPK/DownloadAPK";
 import BuildVersion from "../Modal/BuildVersion/BuildVersion";
+import { handleLogout } from "../../utils/handleLogout";
 const Header = () => {
   const closePopupForForever = localStorage.getItem("closePopupForForever");
   const { socialLink } = useGetSocialLink();
@@ -144,7 +145,7 @@ const Header = () => {
 
   /*handle Logout */
   const logOut = () => {
-    localStorage.clear();
+    handleLogout();
     if (settings.forceLogin) {
       /* If force login is true in notice.json the navigate login page after logout otherwise stay in homepage */
       navigate("/login");
