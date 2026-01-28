@@ -5,6 +5,7 @@ import notice from "../../notice.json";
 export const StateContext = createContext(null);
 const StateProvider = ({ children }) => {
   const [predictOdds, setPredictOdds] = useState([]);
+  const [closePopupForForever, setClosePopUpForForever] = useState(false);
   const [sports, setSports] = useState(4);
   const [addBank, setAddBank] = useState(false);
   const [buttonValue, SetButtonValue] = useState(false);
@@ -52,11 +53,17 @@ const StateProvider = ({ children }) => {
       FavIconLink.href = `${API.assets}/${settings.siteUrl}/favicon.png`;
       document.head.appendChild(FavIconLink);
 
+      if (settings.appOnly && !closePopupForForever) {
+        document.title = window.location.hostname;
+      } else {
+        document.title = settings.siteTitle;
+      }
+
       return () => {
         document.head.removeChild(link);
       };
     }
-  }, [noticeLoaded]);
+  }, [noticeLoaded, closePopupForForever]);
 
   /* These are all exposure for state */
   /* data[0]?.runners[0] exposure */
@@ -340,6 +347,8 @@ const StateProvider = ({ children }) => {
     setSeventeenIndexZeroEx,
     predictOdds,
     setPredictOdds,
+    closePopupForForever,
+    setClosePopUpForForever,
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

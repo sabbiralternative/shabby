@@ -38,11 +38,6 @@ const Register = () => {
     otpMethod: "",
   });
 
-  /* set site title  */
-  useEffect(() => {
-    document.title = settings.siteTitle;
-  }, []);
-
   /* get whats app link from api */
   const { data: whatsAppLink } = useQuery({
     queryKey: ["whatsApp"],

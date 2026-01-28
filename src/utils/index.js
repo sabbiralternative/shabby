@@ -91,4 +91,5 @@ export const settings = {
   betDelay: "",
   otp: "",
   otpWhatsapp: "",
+  appOnly: "",
 };

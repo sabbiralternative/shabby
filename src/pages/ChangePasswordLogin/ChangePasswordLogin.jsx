@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Notification from "../../components/Notification/Notification";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import UseState from "../../hooks/UseState";
-import { API, settings } from "../../utils";
+import { API } from "../../utils";
 import { handleLogout } from "../../utils/handleLogout";
 
 const ChangePasswordLogin = () => {
@@ -19,10 +19,7 @@ const ChangePasswordLogin = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-  /* Site title */
-  useEffect(() => {
-    document.title = settings.siteTitle;
-  }, []);
+
   /* Change password login api */
   const onSubmit = ({ password, newPassword, newPasswordConfirm }) => {
     /* Random token */

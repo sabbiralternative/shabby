@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Notification from "../Notification/Notification";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
@@ -21,11 +21,6 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  /* Dynamically append the site title from notice.json */
-  useEffect(() => {
-    document.title = settings.siteTitle;
-  }, []);
 
   /* handle login user */
   const onSubmit = ({ username, password }) => {

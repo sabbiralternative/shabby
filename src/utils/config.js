@@ -99,6 +99,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         settings.liveCasinoType = setting?.liveCasinoType;
         settings.language = setting?.language;
         settings.betDelay = setting?.betDelay;
+        settings.appOnly = setting?.appOnly;
         setNoticeLoaded(true);
       }
     })

@@ -23,8 +23,8 @@ import useGetSocialLink from "../../hooks/useGetSocialLink";
 import DownloadAPK from "../Modal/DownloadAPK/DownloadAPK";
 import BuildVersion from "../Modal/BuildVersion/BuildVersion";
 import { handleLogout } from "../../utils/handleLogout";
+import Error from "../Modal/Error/Error";
 const Header = () => {
-  const closePopupForForever = localStorage.getItem("closePopupForForever");
   const { socialLink } = useGetSocialLink();
   const [showBuildVersion, setShowBuildVersion] = useState(false);
   const stored_build_version = localStorage.getItem("build_version");
@@ -49,7 +49,14 @@ const Header = () => {
   /* notification state */
 
   /* this are coming from context */
-  const { buttonValue, SetButtonValue, setSports, logo } = UseState();
+  const {
+    buttonValue,
+    SetButtonValue,
+    setSports,
+    logo,
+    closePopupForForever,
+    setClosePopUpForForever,
+  } = UseState();
 
   /* rule modal state */
   const [ruleModal, setRuleModal] = useState(false);
@@ -367,9 +374,11 @@ const Header = () => {
   useEffect(() => {
     const apk_modal_shown = sessionStorage.getItem("apk_modal_shown");
     const closePopupForForever = localStorage.getItem("closePopupForForever");
+    setClosePopUpForForever(closePopupForForever ? true : false);
     if (location?.state?.pathname === "/apk" || location.pathname === "/apk") {
       sessionStorage.setItem("apk_modal_shown", true);
       localStorage.setItem("closePopupForForever", true);
+      setClosePopUpForForever(true);
       localStorage.removeItem("installPromptExpiryTime");
     } else {
       if (!apk_modal_shown) {
@@ -414,6 +423,10 @@ const Header = () => {
   const openWhatsAppLink = (link) => {
     window.open(link, "_blank");
   };
+
+  if (settings.appOnly && !closePopupForForever) {
+    return <Error />;
+  }
 
   return (
     <>

@@ -42,11 +42,6 @@ const Main = () => {
     }
   }, [navigate, token]);
 
-  /* Site title */
-  useEffect(() => {
-    document.title = settings.siteTitle;
-  }, []);
-
   /* path */
   useEffect(() => {
     const relativeURL = currentURL.replace(baseUrl, "");
@@ -55,16 +50,18 @@ const Main = () => {
 
   /* Disabled devtool */
   useEffect(() => {
-    if (socialLink?.disabledDevtool) {
-      DisableDevtool({
-        ondevtoolopen: (type) => {
-          const info = "devtool opened!; type =" + type;
-          if (info) {
-            handleLogout();
-            navigate("/login");
-          }
-        },
-      });
+    if (window.location.hostname !== "localhost") {
+      if (socialLink?.disabledDevtool) {
+        DisableDevtool({
+          ondevtoolopen: (type) => {
+            const info = "devtool opened!; type =" + type;
+            if (info) {
+              handleLogout();
+              navigate("/login");
+            }
+          },
+        });
+      }
     }
   }, [navigate, socialLink]);
 
