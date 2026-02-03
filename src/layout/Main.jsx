@@ -8,12 +8,11 @@ import { jwtDecode } from "jwt-decode";
 import DisableDevtool from "disable-devtool";
 import useLatestEvent from "../hooks/useLatestEvent";
 import { settings } from "../utils";
-import useGetSocialLink from "../hooks/useGetSocialLink";
 import { handleLogout } from "../utils/handleLogout";
 
 const Main = () => {
   const location = useLocation();
-  const { socialLink } = useGetSocialLink();
+
   const params = useParams();
   const [relativeURL, setRelativeURL] = useState("");
   const currentURL = window.location.href;
@@ -51,7 +50,7 @@ const Main = () => {
   /* Disabled devtool */
   useEffect(() => {
     if (window.location.hostname !== "localhost") {
-      if (socialLink?.disabledDevtool) {
+      if (settings?.disabledDevtool) {
         DisableDevtool({
           ondevtoolopen: (type) => {
             const info = "devtool opened!; type =" + type;
@@ -63,13 +62,13 @@ const Main = () => {
         });
       }
     }
-  }, [navigate, socialLink]);
+  }, [navigate]);
 
   const navigateWhatsApp = () => {
-    if (token && socialLink?.branchWhatsapplink) {
-      window.open(socialLink?.branchWhatsapplink, "_blank");
+    if (token && settings?.branchWhatsapplink) {
+      window.open(settings?.branchWhatsapplink, "_blank");
     } else {
-      window.open(socialLink?.whatsapplink, "_blank");
+      window.open(settings?.whatsapplink, "_blank");
     }
   };
 
@@ -85,7 +84,7 @@ const Main = () => {
   }, [location.pathname, navigate]);
 
   useEffect(() => {
-    if (socialLink?.pixel) {
+    if (settings?.pixel) {
       // Create fb pixel main script
       const script = document.createElement("script");
       script.innerHTML = `
@@ -97,7 +96,7 @@ const Main = () => {
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', ${socialLink?.pixel});
+      fbq('init', ${settings?.pixel});
       fbq('track', 'PageView');
     `;
       document.head.appendChild(script);
@@ -108,7 +107,7 @@ const Main = () => {
       img.height = 1;
       img.width = 1;
       img.style.display = "none";
-      img.src = `https://www.facebook.com/tr?id=${socialLink?.pixel}&ev=PageView&noscript=1`;
+      img.src = `https://www.facebook.com/tr?id=${settings?.pixel}&ev=PageView&noscript=1`;
       noscript.appendChild(img);
 
       document.body.appendChild(noscript);
@@ -119,7 +118,7 @@ const Main = () => {
         noscript.remove();
       };
     }
-  }, [socialLink?.pixel]);
+  }, []);
 
   return (
     <div>
@@ -195,11 +194,11 @@ const Main = () => {
         </div>
       </div>
       <Footer />
-      {socialLink?.instagramLink ? (
+      {settings?.instagramLink ? (
         <a
           style={{ cursor: "pointer", bottom: "30%", right: "4.5%" }}
           className="whatsapp_link"
-          onClick={() => window.open(socialLink?.instagramLink, "_blank")}
+          onClick={() => window.open(settings?.instagramLink, "_blank")}
         >
           <img
             style={{ filter: "none", height: "60px", width: "60px" }}
@@ -207,11 +206,11 @@ const Main = () => {
           />
         </a>
       ) : null}
-      {socialLink?.telegramLink ? (
+      {settings?.telegramLink ? (
         <a
           style={{ cursor: "pointer", bottom: "17%", right: "4.5%" }}
           className="whatsapp_link"
-          onClick={() => window.open(socialLink?.telegramLink, "_blank")}
+          onClick={() => window.open(settings?.telegramLink, "_blank")}
         >
           <img
             style={{ filter: "none", height: "60px", width: "60px" }}
@@ -219,7 +218,7 @@ const Main = () => {
           />
         </a>
       ) : null}
-      {socialLink?.whatsapplink || socialLink?.branchWhatsapplink ? (
+      {settings?.whatsapplink || settings?.branchWhatsapplink ? (
         <a
           onClick={navigateWhatsApp}
           style={{ cursor: "pointer" }}

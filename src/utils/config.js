@@ -1,109 +1,49 @@
 import axios from "axios";
-import { API, settings } from "./index";
+import { API, settings as Settings } from "./index";
 
-export const getSetApis = (setNoticeLoaded, baseUrl) => {
+export const getSetApis = async (setNoticeLoaded, baseUrl) => {
   const url = baseUrl ? `${baseUrl}/notice.json` : "/notice.json";
-  axios
-    .get(url)
-    .then((res) => {
-      const data = res.data;
-      if (data?.result?.endpoint) {
-        const endPoints = data?.result?.endpoint;
-        const setting = data?.result?.settings;
-        API.mac88All = endPoints?.mac88All;
-        API.utr = endPoints?.utr;
-        API.withdrawBreakdown = endPoints?.withdrawBreakdown;
-        API.singleDiamond = endPoints?.singleDiamond;
-        API.singleDiamondRules = endPoints?.singleDiamondRules;
-        API.language = endPoints?.language;
-        API.ultraLobby = endPoints?.ultraLobby;
-        API.groupSportsBook = endPoints?.groupSportsBook;
-        API.uploadScreenshot = endPoints?.uploadScreenshot;
-        API.depositBreakdown = endPoints?.depositBreakdown;
-        API.pgStatus = endPoints?.pgStatus;
-        API.pg = endPoints?.pg;
-        API.index = endPoints?.index;
-        API.bankAccount = endPoints?.bankAccount;
-        API.bonus = endPoints?.bonus;
-        API.eventDetails = endPoints?.eventDetails;
-        API.liveCasinoIframe = endPoints?.liveCasinoIframe;
-        API.accessToken = endPoints?.accessToken;
-        API.notification = endPoints?.notification;
-        API.buttonValue = endPoints?.buttonValue;
-        API.login = endPoints?.login;
-        API.myMarket = endPoints?.myMarket;
-        API.searchEvent = endPoints?.searchEvent;
-        API.order = endPoints?.order;
-        API.whatsapp = endPoints?.whatsapp;
-        API.checkUsername = endPoints?.checkUsername;
-        API.register = endPoints?.register;
-        API.otp = endPoints?.otp;
-        API.menu = endPoints?.menu;
-        API.balance = endPoints?.balance;
-        API.latestEvents = endPoints?.latestEvents;
-        API.accountStatement = endPoints?.accountStatement;
-        API.settledBets = endPoints?.settledBets;
-        API.activityLogs = endPoints?.activityLogs;
-        API.ipDetails = endPoints?.ipDetails;
-        API.changePassword = endPoints?.changePassword;
-        API.group = endPoints?.group;
-        API.currentBets = endPoints?.currentBets;
-        API.depositIframe = endPoints?.depositIframe;
-        API.fantasyGames = endPoints?.fantasyGames;
-        API.ladder = endPoints?.ladder;
-        API.auraCasino = endPoints?.auraCasino;
-        API.diamondCasino = endPoints?.diamondCasino;
-        API.testCasino = endPoints?.testCasino;
-        API.liveCasinoWolf = endPoints?.liveCasinoWolf;
-        API.exposure = endPoints?.exposure;
-        API.odds = endPoints?.odds;
-        API.virtualCasino = endPoints?.virtualCasino;
-        API.slotsWolf = endPoints?.slotsWolf;
-        API.withdrawIframe = endPoints?.withdrawIframe;
-        API.assets = endPoints?.assets;
-        API.mac88 = endPoints?.mac88;
-        API.otpless = endPoints?.otpless;
-        API.fast_cashout = endPoints?.fast_cashout;
-        API.sb_cashout = endPoints?.sb_cashout;
-        settings.otp = setting?.otp;
-        settings.otpWhatsapp = setting?.otpWhatsapp;
-        settings.casino = setting?.casino;
-        settings.build = setting?.build;
-        settings.siteTitle = setting?.siteTitle;
-        settings.forceLogin = setting?.forceLogin;
-        settings.registration = setting?.registration;
-        settings.demoLogin = setting?.demoLogin;
-        settings.withdraw = setting?.withdraw;
-        settings.deposit = setting?.deposit;
-        settings.siteUrl = setting?.siteUrl;
-        settings.balanceApiLoop = setting?.balanceApiLoop;
-        settings.disabledDevtool = setting?.disabledDevtool;
-        settings.casinoCurrency = setting?.casinoCurrency;
-        settings.interval = setting?.interval;
-        settings.betFairCashOut = setting?.betFairCashOut;
-        settings.apkLink = setting?.apkLink;
-        settings.mac88 = setting?.mac88;
-        settings.referral = setting?.referral;
-        settings.paymentIntent = setting?.paymentIntent;
-        settings.registrationWhatsapp = setting?.registrationWhatsapp;
-        settings.ourVirtual = setting?.ourVirtual;
-        settings.fantasy = setting?.fantasy;
-        settings.slots = setting?.slots;
-        settings.liveCasino = setting?.liveCasino;
-        settings.ourCasino = setting?.ourCasino;
-        settings.logoFormat = setting?.logo?.format;
-        settings.logoHeight = setting?.logo?.height;
-        settings.logoWidth = setting?.logo?.width;
-        settings.b2c = setting?.b2c;
-        settings.bookmakerCashOut = setting?.bookmakerCashOut;
-        settings.liveCasinoType = setting?.liveCasinoType;
-        settings.language = setting?.language;
-        settings.betDelay = setting?.betDelay;
-        settings.appOnly = setting?.appOnly;
-        setNoticeLoaded(true);
-      }
-    })
-    .catch((e) => {
-      console.log(e);
+  const { data: settingsResponse } = await axios.get(url);
+  const { data: dataResponse } = await axios.post(
+    "https://api7.live/api/exchange/diamond/settings",
+  );
+
+  if (dataResponse?.result) {
+    const { endpoint = {}, ...rest } = dataResponse.result;
+    // Dynamically update API object
+    Object.keys(endpoint).forEach((key) => {
+      API[key] = endpoint[key];
     });
+
+    Settings.whatsapplink = rest.whatsapplink;
+    Settings.instagramLink = rest.instagramLink;
+    Settings.telegramLink = rest.telegramLink;
+    Settings.branchWhatsapplink = rest.branchWhatsapplink;
+    Settings.pixel = rest.pixel;
+    Settings.liveUrl = rest.liveUrl;
+    Settings.pixel2 = rest.pixel2;
+    Settings.whatsappFloatIconVisible = rest.whatsappFloatIconVisible;
+    Settings.referral_create_account = rest.referral_create_account;
+    Settings.bet_delay = rest.bet_delay;
+    Settings.build_version = rest.build_version;
+    Settings.disabledDevtool = rest.disabledDevtool;
+    Settings.referral = rest.referral;
+  }
+
+  if (settingsResponse?.result) {
+    // Destructure API endpoints and Settings
+    const { settings = {} } = settingsResponse.result;
+    // Dynamically update Settings object
+    Object.keys(settings).forEach((key) => {
+      if (key === "logo") {
+        Settings.logoHeight = settings?.["logo"]?.height;
+        Settings.logoWidth = settings?.["logo"]?.width;
+        Settings.logoFormat = settings?.["logo"]?.format;
+      } else {
+        Settings[key] = settings[key];
+      }
+    });
+
+    setNoticeLoaded(true);
+  }
 };

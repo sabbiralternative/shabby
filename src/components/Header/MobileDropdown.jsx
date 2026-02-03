@@ -3,7 +3,6 @@ import { settings } from "../../utils";
 import useLanguage from "../../hooks/useLanguage";
 import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
-import useGetSocialLink from "../../hooks/useGetSocialLink";
 
 const MobileDropdown = ({
   openModalRef,
@@ -23,7 +22,7 @@ const MobileDropdown = ({
   logOut,
 }) => {
   const closePopupForForever = localStorage.getItem("closePopupForForever");
-  const { socialLink } = useGetSocialLink();
+
   const { valueByLanguage } = useLanguage();
   const handleOpenSocialLink = (link) => {
     if (link) {
@@ -96,10 +95,10 @@ const MobileDropdown = ({
                 )}
               </div>{" "}
             </div>
-            {socialLink?.branchWhatsapplink && (
+            {settings?.branchWhatsapplink && (
               <Link
                 onClick={() =>
-                  handleOpenSocialLink(socialLink?.branchWhatsapplink)
+                  handleOpenSocialLink(settings?.branchWhatsapplink)
                 }
               >
                 <li data-rr-ui-dropdown-item="" className="dropdown-item">
@@ -150,7 +149,7 @@ const MobileDropdown = ({
               </li>
             </Link>
 
-            {socialLink?.referral && (
+            {settings?.referral && (
               <Link to="/affiliate" onClick={() => setOpen(!open)}>
                 <li data-rr-ui-dropdown-item="" className="dropdown-item">
                   Affiliate
@@ -263,9 +262,9 @@ const MobileDropdown = ({
                 />
               </div>
             </div>
-            {/* {socialLink?.whatsapplink && (
+            {/* {settings?.whatsapplink && (
               <Link
-                onClick={() => handleOpenSocialLink(socialLink?.whatsapplink)}
+                onClick={() => handleOpenSocialLink(settings?.whatsapplink)}
               >
                 <li data-rr-ui-dropdown-item="" className="dropdown-item">
                   All Support

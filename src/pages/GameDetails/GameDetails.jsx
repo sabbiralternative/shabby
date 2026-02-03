@@ -26,7 +26,6 @@ import CricketScore from "./CricketScore";
 import { Toaster } from "react-hot-toast";
 import MatchedBet from "./MatchedBet";
 import LiveMatch from "./LiveMatch";
-import useGetSocialLink from "../../hooks/useGetSocialLink";
 import { AxiosJSEncrypt } from "../../lib/AxiosJSEncrypt";
 
 const GameDetails = () => {
@@ -69,7 +68,6 @@ const GameDetails = () => {
   const [, refetchBalance] = UseBalance();
   const [isSticky, setSticky] = useState(false);
   const [fetchVideo, setFetchVideo] = useState(false);
-  const { socialLink } = useGetSocialLink();
 
   /* Get casino thumbnail for home page */
 
@@ -246,7 +244,7 @@ const GameDetails = () => {
         maxLiabilityPerBet: placeBetValue?.maxLiabilityPerBet,
         language,
         nounce: uuidv4(),
-        isbetDelay: socialLink?.bet_delay,
+        isbetDelay: settings?.bet_delay,
         cashout: isCashOut,
         apk: closePopupForForever ? true : false,
       },
@@ -270,7 +268,7 @@ const GameDetails = () => {
       delay = 9000;
     } else {
       setBetDelay(currentPlaceBetEvent?.betDelay);
-      delay = socialLink?.bet_delay ? currentPlaceBetEvent?.betDelay * 1000 : 0;
+      delay = settings?.bet_delay ? currentPlaceBetEvent?.betDelay * 1000 : 0;
     }
     setLoader(true);
     setTimeout(async () => {

@@ -19,13 +19,12 @@ import useLanguage from "../../hooks/useLanguage";
 import Language from "../Modal/Language";
 import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
-import useGetSocialLink from "../../hooks/useGetSocialLink";
+
 import DownloadAPK from "../Modal/DownloadAPK/DownloadAPK";
 import BuildVersion from "../Modal/BuildVersion/BuildVersion";
 import { handleLogout } from "../../utils/handleLogout";
 import Error from "../Modal/Error/Error";
 const Header = () => {
-  const { socialLink } = useGetSocialLink();
   const [showBuildVersion, setShowBuildVersion] = useState(false);
   const stored_build_version = localStorage.getItem("build_version");
   /* Open dropdown state for mobile version */
@@ -398,7 +397,7 @@ const Header = () => {
   }, [windowWidth, showAppPopUp, location?.state?.pathname, location.pathname]);
 
   useEffect(() => {
-    const newVersion = socialLink?.build_version;
+    const newVersion = settings?.build_version;
     if (!stored_build_version) {
       if (newVersion) {
         localStorage.setItem("build_version", newVersion);
@@ -410,7 +409,7 @@ const Header = () => {
         setShowBuildVersion(true);
       }
     }
-  }, [socialLink?.build_version, stored_build_version]);
+  }, [settings?.build_version, stored_build_version]);
 
   const handleNavigateToIFrame = (name, id) => {
     if (token) {
@@ -452,7 +451,7 @@ const Header = () => {
         )}
         {showBuildVersion && !showAPKModal && (
           <BuildVersion
-            build_version={socialLink?.build_version}
+            build_version={settings?.build_version}
             setShowBuildVersion={setShowBuildVersion}
           />
         )}
@@ -824,10 +823,10 @@ const Header = () => {
                         <div className="d-xl-none d-flex justify-content-center"></div>
                         {/* notice.json if withdraw = true then show withdraw button */}
 
-                        {socialLink?.branchWhatsapplink && (
+                        {settings?.branchWhatsapplink && (
                           <Link
                             onClick={() =>
-                              openWhatsAppLink(socialLink?.branchWhatsapplink)
+                              openWhatsAppLink(settings?.branchWhatsapplink)
                             }
                           >
                             <li
@@ -921,7 +920,7 @@ const Header = () => {
                             )}
                           </li>
                         </Link>
-                        {socialLink?.referral && (
+                        {settings?.referral && (
                           <Link
                             to="/affiliate"
                             onClick={() => setDropDown(!dropDown)}
@@ -1030,10 +1029,10 @@ const Header = () => {
                             )}
                           </li>
                         </Link>
-                        {/* {socialLink?.whatsapplink && (
+                        {/* {settings?.whatsapplink && (
                           <Link
                             onClick={() =>
-                              openWhatsAppLink(socialLink?.whatsapplink)
+                              openWhatsAppLink(settings?.whatsapplink)
                             }
                           >
                             <li
@@ -1158,12 +1157,10 @@ const Header = () => {
                     </a>
                   )}
                   {settings.registrationWhatsapp &&
-                    socialLink?.whatsapplink &&
+                    settings?.whatsapplink &&
                     !token && (
                       <a
-                        onClick={() =>
-                          openWhatsAppLink(socialLink?.whatsapplink)
-                        }
+                        onClick={() => openWhatsAppLink(settings?.whatsapplink)}
                         className="btn-home-login"
                       >
                         Get ID

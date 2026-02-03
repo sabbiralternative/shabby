@@ -6,12 +6,10 @@ import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import UseState from "../../hooks/UseState";
 import { API, settings } from "../../utils";
-import useGetSocialLink from "../../hooks/useGetSocialLink";
 import { GrAndroid } from "react-icons/gr";
 
 const Login = () => {
   const closePopupForForever = localStorage.getItem("closePopupForForever");
-  const { refetchSocialLinks } = useGetSocialLink();
   const navigate = useNavigate();
   const [errorLogin, setErrorLogin] = useState("");
   const { successRegister, setSuccessRegister, logo } = UseState();
@@ -47,7 +45,6 @@ const Login = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          refetchSocialLinks();
           /* Set token to localeStorage */
           localStorage.setItem("token", data.result.token);
           /* Set login name to locale storage */

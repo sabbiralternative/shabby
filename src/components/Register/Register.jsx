@@ -5,13 +5,12 @@ import { useForm } from "react-hook-form";
 import Notification from "../Notification/Notification";
 import UseState from "../../hooks/UseState";
 import { API, settings } from "../../utils";
-import useGetSocialLink from "../../hooks/useGetSocialLink";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 // import getOtpOnWhatsapp from "../../utils/getOtpOnWhatsapp";
 const Register = () => {
   const token = localStorage.getItem("token");
   const referralCode = localStorage.getItem("referralCode");
-  const { refetchSocialLinks } = useGetSocialLink();
+
   // const [userExist, setUserExist] = useState(false);
 
   const [user, setUser] = useState({
@@ -120,7 +119,7 @@ const Register = () => {
             status: "success",
           });
         }
-        refetchSocialLinks();
+
         /* Set token to localeStorage */
         localStorage.setItem("token", data.result.token);
         /* Set login name to locale storage */

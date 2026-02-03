@@ -4,13 +4,12 @@ import { useGetIndex } from "../../../hooks";
 import AddNewUser from "../../Modal/Affiliate/AddNewUser";
 import assets from "../../../assets";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
-import useGetSocialLink from "../../../hooks/useGetSocialLink";
+import { settings } from "../../../utils";
 
 const InviteSection = () => {
   const payload = { type: "get_referral_code" };
   const [showAddNewUserModal, setShowAddNewUserModal] = useState(false);
   const { data } = useGetIndex(payload);
-  const { socialLink } = useGetSocialLink();
 
   return (
     <Fragment>
@@ -35,7 +34,7 @@ const InviteSection = () => {
             />
           </div>
         </div>
-        {socialLink?.referral_create_account && (
+        {settings?.referral_create_account && (
           <div className="nw-affi-add-new-user-btn-sec" data-v-4c49d924>
             <button
               onClick={() => setShowAddNewUserModal(true)}
