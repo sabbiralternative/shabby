@@ -1218,11 +1218,11 @@ const Header = () => {
                     {languageValue(valueByLanguage, LanguageKey.HOME)}
                   </Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link className="nav-link" to="/game-details/4/27996014">
                     BBL
                   </Link>
-                </li>
+                </li> */}
 
                 <li className="nav-item">
                   <Link
