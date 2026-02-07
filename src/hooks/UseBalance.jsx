@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UseState from "./UseState";
-import { API, settings } from "../utils";
+import { API } from "../utils";
 import { AxiosSecure } from "../lib/AxiosSecure";
 import { handleLogout } from "../utils/handleLogout";
 /* Balance api */
 const UseBalance = () => {
-  const { pathname } = useLocation();
   const token = localStorage.getItem("token");
   /* Refetch bet exposure function*/
   const { setRefetchBetsExposure } = UseState();
@@ -28,14 +27,6 @@ const UseBalance = () => {
         return data;
       }
     },
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchInterval:
-      settings?.balanceApiLoop &&
-      !pathname.includes("/live-casino") &&
-      !pathname.includes("/our-casino")
-        ? 6000
-        : null,
   });
 
   return [balanceData, refetchBalance];

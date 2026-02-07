@@ -71,12 +71,6 @@ const GameDetails = () => {
 
   /* Get casino thumbnail for home page */
 
-  useEffect(() => {
-    if (!settings.balanceApiLoop) {
-      refetchBalance();
-    }
-  }, [refetchBalance]);
-
   /* Set price */
   useEffect(() => {
     setPrice(placeBetValue?.price);

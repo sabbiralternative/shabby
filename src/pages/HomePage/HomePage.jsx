@@ -7,7 +7,6 @@ import TabPanel from "./TabPanel";
 import BetTable from "../../components/BetTable/BetTable";
 import useLatestEvent from "../../hooks/useLatestEvent";
 import { useNavigate } from "react-router-dom";
-import UseBalance from "../../hooks/UseBalance";
 import { API, settings } from "../../utils";
 import handleDecryptData from "../../utils/handleDecryptData";
 
@@ -37,13 +36,6 @@ const HomePage = () => {
 
   const { latestEvents } = useLatestEvent();
   const navigate = useNavigate();
-  const [, refetchBalance] = UseBalance();
-
-  useEffect(() => {
-    if (!settings.balanceApiLoop) {
-      refetchBalance();
-    }
-  }, [refetchBalance]);
   useEffect(() => {
     const getAuraCasino = async () => {
       const res = await axios.get(

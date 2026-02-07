@@ -18,7 +18,7 @@
       "withdraw": true,
 
       "casinoCurrency": "AED",
-      "balanceApiLoop": true,
+
       "baseUrl": "",
       "betFairCashOut": true,
       "bookmakerCashOut": true,
