@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { getSetApis } from "../utils/config";
-import { API, settings } from "../utils";
+import { settings } from "../utils";
 import notice from "../../notice.json";
 export const StateContext = createContext(null);
 const StateProvider = ({ children }) => {
@@ -27,41 +27,11 @@ const StateProvider = ({ children }) => {
 
   useEffect(() => {
     if (noticeLoaded) {
-      /* Dynamically append  theme css  */
-      if (settings.build === "production") {
-        const logo = `${API.assets}/${settings.siteUrl}/logo.${settings.logoFormat}`;
-        setLogo(logo);
-      } else {
-        setLogo(`/assets/logo.${settings.logoFormat}`);
-      }
-
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.type = "text/css";
-
-      if (settings.build === "production") {
-        link.href = `${API.assets}/${settings.siteUrl}/theme.css`;
-        document.head.appendChild(link);
-      } else {
-        link.href = `/src/static/front/css/theme.css`;
-        document.head.appendChild(link);
-      }
-      /* Dynamically append site logo  */
-      const FavIconLink = document.createElement("link");
-      FavIconLink.rel = "icon";
-      FavIconLink.type = "image/png";
-      FavIconLink.href = `${API.assets}/${settings.siteUrl}/favicon.png`;
-      document.head.appendChild(FavIconLink);
-
       if (settings.appOnly && !closePopupForForever) {
         document.title = window.location.hostname;
       } else {
         document.title = settings.siteTitle;
       }
-
-      return () => {
-        document.head.removeChild(link);
-      };
     }
   }, [noticeLoaded, closePopupForForever]);
 
