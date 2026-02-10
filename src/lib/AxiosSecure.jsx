@@ -19,8 +19,10 @@ AxiosSecure.interceptors.request.use(
       let payload = {
         ...config.data,
         token: generatedToken,
-        site: settings.siteUrl,
       };
+      if (settings.siteUrl) {
+        payload.site = settings.siteUrl;
+      }
       if (settings.language) {
         payload.language = localStorage.getItem("language") || "english";
       }
@@ -34,7 +36,7 @@ AxiosSecure.interceptors.request.use(
     // Do something with request error
 
     return Promise.reject(error);
-  }
+  },
 );
 
 // Add a response interceptor
@@ -48,5 +50,5 @@ AxiosSecure.interceptors.response.use(
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     return Promise.reject(error);
-  }
+  },
 );
