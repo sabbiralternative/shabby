@@ -57,6 +57,8 @@ export const API = {
 };
 
 export const settings = {
+  apk_link: "",
+  maintenance_message: "",
   casino: "",
   siteTitle: "",
   forceLogin: "",
@@ -70,7 +72,7 @@ export const settings = {
   casinoCurrency: "",
   interval: "",
   betFairCashOut: "",
-  apkLink: "",
+
   build: "",
   mac88: "",
   referral: "",

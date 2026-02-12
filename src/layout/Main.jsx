@@ -9,6 +9,7 @@ import DisableDevtool from "disable-devtool";
 import useLatestEvent from "../hooks/useLatestEvent";
 import { settings } from "../utils";
 import { handleLogout } from "../utils/handleLogout";
+import MaintenanceMessage from "../components/MaintenanceMessage/MaintenanceMessage";
 
 const Main = () => {
   const location = useLocation();
@@ -120,6 +121,9 @@ const Main = () => {
     }
   }, []);
 
+  if (settings.maintenance_message) {
+    return <MaintenanceMessage />;
+  }
   return (
     <div>
       <Header />

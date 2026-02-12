@@ -9,7 +9,7 @@ const AppPopup = ({ setShowAppPopUp }) => {
 
   const handleDownload = (e) => {
     e.preventDefault();
-    const fileUrl = settings.apkLink;
+    const fileUrl = settings.apk_link;
     const link = document.createElement("a");
     link.href = fileUrl;
     link.setAttribute("download", "site.apk");

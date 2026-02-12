@@ -155,7 +155,7 @@ const Login = () => {
 
   const handleDownload = (e) => {
     e.preventDefault();
-    const fileUrl = settings.apkLink;
+    const fileUrl = settings.apk_link;
     const link = document.createElement("a");
     link.href = fileUrl;
     link.setAttribute("download", "site.apk");
@@ -263,7 +263,7 @@ const Login = () => {
                   </Link>
                 </div>
               )}
-              {settings.apkLink && (
+              {settings.apk_link && (
                 <div className="d-grid">
                   <a
                     style={{ fontSize: "16px" }}
