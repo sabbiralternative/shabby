@@ -1,5 +1,4 @@
 import { useMutation } from "@tanstack/react-query";
-import notice from "../../notice.json";
 import { AxiosSecure } from "../lib/AxiosSecure";
 import { settingsAPI } from "../constant";
 import { API, settings as Settings } from "../utils";
@@ -7,11 +6,10 @@ import UseState from "./UseState";
 
 export const useSettingsMutation = () => {
   const { setLogo } = UseState();
-  const site = notice?.result?.settings?.siteUrl;
   return useMutation({
     mutationKey: ["settings"],
     mutationFn: async () => {
-      const { data } = await AxiosSecure.post(settingsAPI, { site });
+      const { data } = await AxiosSecure.post(settingsAPI);
 
       if (data?.success) {
         if (data?.result) {
