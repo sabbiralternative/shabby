@@ -443,10 +443,10 @@ const Header = () => {
           />
         )}
         {showReferral && <Referral setShowReferral={setShowReferral} />}
-        {settings?.apkLink && showAppPopUp && windowWidth < 600 && (
+        {settings.apk_link && showAppPopUp && windowWidth < 600 && (
           <AppPopup setShowAppPopUp={setShowAppPopUp} />
         )}
-        {settings?.apkLink && showAPKModal && (
+        {settings.apk_link && showAPKModal && (
           <DownloadAPK setShowAPKModal={setShowAPKModal} />
         )}
         {showBuildVersion && !showAPKModal && (

@@ -41,12 +41,12 @@ const Language = ({ setShowLanguage, showAppPopUp, windowWidth }) => {
             maxWidth: "200px",
             position: "absolute",
             top: `${
-              settings?.apkLink && showAppPopUp && windowWidth < 600
+              settings.apk_link && showAppPopUp && windowWidth < 600
                 ? "125px"
                 : "60px"
             }`,
             right: `${
-              settings?.apkLink && showAppPopUp && windowWidth < 600
+              settings.apk_link && showAppPopUp && windowWidth < 600
                 ? "0px"
                 : "5px"
             }`,
