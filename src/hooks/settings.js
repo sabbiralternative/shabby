@@ -25,10 +25,10 @@ export const useSettingsMutation = () => {
         }
         /* Dynamically append  theme css  */
         if (Settings.build === "production") {
-          const logo = `${API.assets}/${Settings.siteUrl}/logo.${Settings.logoFormat}`;
+          const logo = `${API.assets}/${Settings.siteUrl}/logo.${Settings.logo_format}`;
           setLogo(logo);
         } else {
-          setLogo(`/assets/logo.${Settings.logoFormat}`);
+          setLogo(`/assets/logo.${Settings.logo_format}`);
         }
 
         const link = document.createElement("link");

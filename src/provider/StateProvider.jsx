@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { getSetApis } from "../utils/config";
 import { settings } from "../utils";
-import notice from "../../notice.json";
 export const StateContext = createContext(null);
 const StateProvider = ({ children }) => {
   const [predictOdds, setPredictOdds] = useState([]);
@@ -15,22 +14,22 @@ const StateProvider = ({ children }) => {
   const [successRegister, setSuccessRegister] = useState("");
   const [logo, setLogo] = useState("");
   const [noticeLoaded, setNoticeLoaded] = useState(false);
-  const baseUrl = notice?.result?.settings?.baseUrl;
+
   useEffect(() => {
     if (!noticeLoaded) {
       const fetchAPI = () => {
-        getSetApis(setNoticeLoaded, baseUrl);
+        getSetApis(setNoticeLoaded);
       };
       fetchAPI();
     }
-  }, [noticeLoaded, baseUrl]);
+  }, [noticeLoaded]);
 
   useEffect(() => {
     if (noticeLoaded) {
-      if (settings.appOnly && !closePopupForForever) {
+      if (settings.app_only && !closePopupForForever) {
         document.title = window.location.hostname;
       } else {
-        document.title = settings.siteTitle;
+        document.title = settings.site_name;
       }
     }
   }, [noticeLoaded, closePopupForForever]);

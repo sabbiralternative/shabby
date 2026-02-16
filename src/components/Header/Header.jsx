@@ -152,7 +152,7 @@ const Header = () => {
   /*handle Logout */
   const logOut = () => {
     handleLogout();
-    if (settings.forceLogin) {
+    if (settings.force_login) {
       /* If force login is true in notice.json the navigate login page after logout otherwise stay in homepage */
       navigate("/login");
     } else {
@@ -423,7 +423,7 @@ const Header = () => {
     window.open(link, "_blank");
   };
 
-  if (settings.appOnly && !closePopupForForever) {
+  if (settings.app_only && !closePopupForForever) {
     return <Error />;
   }
 
@@ -477,8 +477,8 @@ const Header = () => {
                 <img
                   style={
                     {
-                      // maxHeight: `${settings.logoHeight}px`,
-                      // maxWidth: `${settings.logoWidth}px`,
+                      // maxHeight: `${settings.logo_height}px`,
+                      // maxWidth: `${settings.logo_width}px`,
                     }
                   }
                   src={logo}
@@ -486,7 +486,7 @@ const Header = () => {
               </Link>
             </div>
             {/* in notice.json if demoLogin,registration = false and force login success or forceLoginSuccess and token in locale storage then show search box  */}
-            {(!settings.demoLogin &&
+            {(!settings.demo_login &&
               !settings.registration &&
               forceLoginSuccess) ||
             (forceLoginSuccess && token) ? (
@@ -1125,9 +1125,9 @@ const Header = () => {
             ) : null}
 
             {/* in notice.json if demoLogin or register = true and forceLogin(localeStorage) not success or demoLogin, register, token, forceLoginSuccess = false then show this html */}
-            {((settings.demoLogin || settings.registration) &&
+            {((settings.demo_login || settings.registration) &&
               !forceLoginSuccess) ||
-            (!settings.demoLogin &&
+            (!settings.demo_login &&
               !settings.registration &&
               !token &&
               !forceLoginSuccess) ? (
@@ -1151,12 +1151,12 @@ const Header = () => {
                     {languageValue(valueByLanguage, LanguageKey.LOGIN)}
                   </Link>
                   {/* notice.json --> demoLogin = true then show the button */}
-                  {settings.demoLogin && (
+                  {settings.demo_login && (
                     <a onClick={loginWithDemo} className="btn-home-login">
                       Demo
                     </a>
                   )}
-                  {settings.registrationWhatsapp &&
+                  {settings.registration_whatsapp &&
                     settings?.whatsapplink &&
                     !token && (
                       <a

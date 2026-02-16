@@ -41,13 +41,11 @@ const Category = () => {
           </li>
         )}
 
-        {settings.mac88 && settings.casinoCurrency === "INR" && (
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/mac88">
-              Mac88
-            </NavLink>
-          </li>
-        )}
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/mac88">
+            Mac88
+          </NavLink>
+        </li>
       </ul>
     </>
   );

@@ -26,7 +26,7 @@ const FantasyGames = () => {
 
   /* Navigate to slot casino video */
   const navigateSlotCasinoVideo = (casino) => {
-    if (settings.casinoCurrency !== "AED") {
+    if (settings.casino_currency !== "AED") {
       navigate(`/fantasy-games/${casino?.eventId}/${casino?.providerId}`);
     } else {
       setShowModal(true);
@@ -103,7 +103,7 @@ const FantasyGames = () => {
           </div>
         </div>
       </div>
-      {showModal && settings.casinoCurrency === "AED" && (
+      {showModal && settings.casino_currency === "AED" && (
         <LiveSlotModal setShowModal={setShowModal} casinoId={casinoId} />
       )}
     </div>

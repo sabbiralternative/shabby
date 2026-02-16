@@ -292,7 +292,7 @@ const MatchOddsSection = ({
               <span style={{ display: "flex", alignItems: "center" }}>
                 {item?.name.toUpperCase()}
               </span>
-              {settings.betFairCashOut &&
+              {settings.cashout &&
                 item?.runners?.length !== 3 &&
                 !speedCashOut && (
                   <button
@@ -364,7 +364,7 @@ const MatchOddsSection = ({
                   </button>
                 )}
 
-              {settings.betFairCashOut &&
+              {settings.cashout &&
                 item?.runners?.length !== 3 &&
                 speedCashOut && (
                   <button

@@ -5,44 +5,16 @@
   },
   "result": {
     "settings": {
-      "siteTitle": "Jainbook",
       "siteUrl": "magicwin.zip",
-      "interval": "600",
+      "build": "development",
       "casino": "diamond",
       "liveCasinoType": "ultrawin",
-      "registration": false,
-      "forceLogin": false,
-      "demoLogin": true,
-
-      "deposit": true,
-      "withdraw": true,
-
-      "casinoCurrency": "AED",
-
-      "baseUrl": "",
-      "betFairCashOut": true,
-      "bookmakerCashOut": true,
-      "mac88": true,
-
-      "logo": {
-        "height": 65,
-        "width": 250,
-        "format": "png"
-      },
       "paymentIntent": false,
-      "registrationWhatsapp": true,
       "ourCasino": true,
       "liveCasino": true,
       "slots": true,
       "fantasy": true,
-      "ourVirtual": true,
-      "b2c": true,
-      "language": false,
-      "build": "development",
-      "betDelay": false,
-      "otp": true,
-      "otpWhatsapp": true,
-      "appOnly": false
+      "ourVirtual": true
     },
 
     "endpoint": {

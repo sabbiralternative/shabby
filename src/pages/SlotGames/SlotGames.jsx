@@ -29,9 +29,9 @@ const SlotGames = () => {
 
   /* Navigate to slot video */
   const navigateSlotCasinoVideo = (casino) => {
-    if (settings.casinoCurrency !== "AED") {
+    if (settings.casino_currency !== "AED") {
       navigate(
-        `/slot-games/${casino?.game_name.replace(/ /g, "")}/${casino?.game_id}`
+        `/slot-games/${casino?.game_name.replace(/ /g, "")}/${casino?.game_id}`,
       );
       UseLiveSlotFantasyNewTab(casino);
     } else {
@@ -324,14 +324,14 @@ const SlotGames = () => {
                               ></div>
                             </div>
                           );
-                        }
-                      )
+                        },
+                      ),
                 )}
             </div>
           </div>
         </div>
       </div>
-      {showModal && settings.casinoCurrency === "AED" && (
+      {showModal && settings.casino_currency === "AED" && (
         <LiveSlotModal setShowModal={setShowModal} casinoId={casinoId} />
       )}
     </div>

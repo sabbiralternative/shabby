@@ -75,7 +75,7 @@ const HomePage = () => {
     };
     gameData();
     if (sports !== 7 && sports !== 4339) {
-      const intervalId = setInterval(gameData, settings.interval);
+      const intervalId = setInterval(gameData, 900);
       return () => clearInterval(intervalId);
     }
   }, [sports]);

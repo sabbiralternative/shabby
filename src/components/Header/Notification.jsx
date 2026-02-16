@@ -35,7 +35,7 @@ const Notification = () => {
       !showNotification
     ) {
       const filteredNotifications = notification.filter(
-        (notif) => !storedNotificationId.some((nId) => nId.id == notif.id)
+        (notif) => !storedNotificationId.some((nId) => nId.id == notif.id),
       );
 
       if (filteredNotifications?.length > 0) {
@@ -74,7 +74,9 @@ const Notification = () => {
         }}
         className="search-box-container d-xl-none"
       >
-        {(!settings.demoLogin && !settings.registration && forceLoginSuccess) ||
+        {(!settings.demo_login &&
+          !settings.registration &&
+          forceLoginSuccess) ||
         (forceLoginSuccess && token) ? (
           <SearchBox />
         ) : null}

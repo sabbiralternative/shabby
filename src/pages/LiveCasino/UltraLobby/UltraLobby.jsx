@@ -31,7 +31,7 @@ const UltraLobby = () => {
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
     const searchGames = data.filter((game) =>
-      game.gameName.toLowerCase().includes(e.target.value.toLowerCase())
+      game.gameName.toLowerCase().includes(e.target.value.toLowerCase()),
     );
     setFilteredData(searchGames);
   };
@@ -40,7 +40,7 @@ const UltraLobby = () => {
   useEffect(() => {
     if (data?.length > 0) {
       const subProviderNames = Array.from(
-        new Set(data.map((item) => item.subProviderName))
+        new Set(data.map((item) => item.subProviderName)),
       );
       const categories = Array.from(new Set(data.map((item) => item.category)));
 
@@ -67,7 +67,7 @@ const UltraLobby = () => {
     if (data?.length > 0) {
       if (selectedCategory !== "all" && searchQuery === "") {
         const filterByCategory = data?.filter(
-          (d) => d.category === selectedCategory
+          (d) => d.category === selectedCategory,
         );
         return setFilteredData(filterByCategory);
       }
@@ -79,7 +79,7 @@ const UltraLobby = () => {
     if (data?.length > 0) {
       if (selectedSubProvider !== "all" && searchQuery === "") {
         const filterByCategory = data?.filter(
-          (d) => d.subProviderName === selectedSubProvider
+          (d) => d.subProviderName === selectedSubProvider,
         );
         return setFilteredData(filterByCategory);
       }
@@ -89,9 +89,9 @@ const UltraLobby = () => {
   /* Handle Navigate */
   const handleNavigateToIFrame = (game) => {
     if (token) {
-      if (settings.casinoCurrency !== "AED") {
+      if (settings.casino_currency !== "AED") {
         navigate(
-          `/live-casino/${game?.gameName.replace(/ /g, "")}/${game?.gameId}`
+          `/live-casino/${game?.gameName.replace(/ /g, "")}/${game?.gameId}`,
         );
       } else {
         setShowModal(true);
@@ -117,7 +117,7 @@ const UltraLobby = () => {
 
   return (
     <>
-      {showModal && settings.casinoCurrency === "AED" && (
+      {showModal && settings.casino_currency === "AED" && (
         <LiveSlotModal setShowModal={setShowModal} casinoId={casinoId} />
       )}
       <div className="center-container">

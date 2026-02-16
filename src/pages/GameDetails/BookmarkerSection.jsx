@@ -307,7 +307,7 @@ const BookmarkerSection = ({
               <span style={{ display: "flex", alignItems: "center" }}>
                 {bookmark?.name.toUpperCase()}
               </span>
-              {settings.bookmakerCashOut &&
+              {settings.cashout &&
                 bookmark?.runners?.length !== 3 &&
                 !speedCashOut && (
                   <button
@@ -393,7 +393,7 @@ const BookmarkerSection = ({
                     )}
                   </button>
                 )}
-              {settings.bookmakerCashOut &&
+              {settings.cashout &&
                 bookmark?.runners?.length !== 3 &&
                 speedCashOut && (
                   <button

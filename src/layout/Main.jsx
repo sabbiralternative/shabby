@@ -34,7 +34,7 @@ const Main = () => {
         navigate("/login");
       }
       /* if forceLogin true in notice.json and token not available then logout */
-    } else if (settings.forceLogin) {
+    } else if (settings.force_login) {
       if (!token) {
         handleLogout();
         navigate("/login");

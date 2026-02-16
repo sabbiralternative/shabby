@@ -129,7 +129,7 @@ const GameDetails = () => {
     };
     getGameDetails();
     /* Refetch after some millisecond */
-    const intervalId = setInterval(getGameDetails, settings.interval);
+    const intervalId = setInterval(getGameDetails, 900);
     return () => clearInterval(intervalId);
   }, [token, id, eventId]);
 

@@ -235,7 +235,7 @@ const Login = () => {
                 Login<i className="fas fa-sign-in-alt float-end mt-1"></i>
               </button>
               {/* if in notice.json demoLogin true then show button value  */}
-              {settings.demoLogin && (
+              {settings.demo_login && (
                 <button
                   style={{
                     borderRadius: "0px",

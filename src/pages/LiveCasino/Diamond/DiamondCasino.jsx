@@ -29,9 +29,9 @@ const DiamondCasino = () => {
 
   /* Navigate to live casino video */
   const navigateLiveCasinoVideo = (casino) => {
-    if (settings.casinoCurrency !== "AED") {
+    if (settings.casino_currency !== "AED") {
       navigate(
-        `/live-casino/${casino?.game_name.replace(/ /g, "")}/${casino?.game_id}`
+        `/live-casino/${casino?.game_name.replace(/ /g, "")}/${casino?.game_id}`,
       );
     } else {
       setShowModal(true);
@@ -119,13 +119,13 @@ const DiamondCasino = () => {
                             ></div>
                           </div>
                         );
-                      }
-                    )
+                      },
+                    ),
               )}
           </div>
         </div>
       </div>
-      {showModal && settings.casinoCurrency === "AED" && (
+      {showModal && settings.casino_currency === "AED" && (
         <LiveSlotModal setShowModal={setShowModal} casinoId={casinoId} />
       )}
     </div>

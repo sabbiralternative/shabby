@@ -225,7 +225,7 @@ const Register = () => {
               {/* <!-- whatsapp start--> */}
               {!token &&
                 whatsAppLink?.whatsapplink &&
-                settings?.registrationWhatsapp && (
+                settings?.registration_whatsapp && (
                   <div className="whatsapp-box">
                     <div>
                       <span>Register as New User</span>

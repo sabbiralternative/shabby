@@ -126,7 +126,7 @@ const Footer = () => {
         <p></p>
         <p className="text-center">
           © Copyright {new Date().getFullYear()}. All Rights Reserved. Powered
-          by {settings.siteTitle}.
+          by {settings.site_name}.
         </p>
       </div>
     </>

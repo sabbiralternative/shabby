@@ -62,7 +62,7 @@ const Sidebar = () => {
                         {" "}
                         {languageValue(
                           valueByLanguage,
-                          LanguageKey.LIVE_CASINO
+                          LanguageKey.LIVE_CASINO,
                         )}
                       </span>
                     </Link>
@@ -83,16 +83,14 @@ const Sidebar = () => {
                   </li>
                 )}
 
-                {settings.casinoCurrency === "INR" && settings.mac88 && (
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/mac88">
-                      <span>
-                        {" "}
-                        {languageValue(valueByLanguage, LanguageKey.MAC88)}
-                      </span>
-                    </Link>
-                  </li>
-                )}
+                <li className="nav-item">
+                  <Link className="nav-link" to="/mac88">
+                    <span>
+                      {" "}
+                      {languageValue(valueByLanguage, LanguageKey.MAC88)}
+                    </span>
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
