@@ -2,11 +2,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Notification from "../Notification/Notification";
-import UseTokenGenerator from "../../hooks/UseTokenGenerator";
-import UseEncryptData from "../../hooks/UseEncryptData";
 import UseState from "../../hooks/UseState";
 import { API, settings } from "../../utils";
 import { GrAndroid } from "react-icons/gr";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const Login = () => {
   const closePopupForForever = localStorage.getItem("closePopupForForever");
@@ -21,136 +20,113 @@ const Login = () => {
   } = useForm();
 
   /* handle login user */
-  const onSubmit = ({ username, password }) => {
+  const onSubmit = async ({ username, password }) => {
     /* Random token generator */
-    const generatedToken = UseTokenGenerator();
+
     const loginData = {
       username: username,
-      site: settings.siteUrl,
       password: password,
-      token: generatedToken,
       b2c: settings.b2c,
       apk: closePopupForForever ? true : false,
     };
 
     /* Encrypted the post data */
-    const encryptedData = UseEncryptData(loginData);
-    fetch(API.login, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(encryptedData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          /* Set token to localeStorage */
-          localStorage.setItem("token", data.result.token);
-          /* Set login name to locale storage */
-          localStorage.setItem("loginName", data.result.loginName);
-          const buttonValue = JSON.stringify(data.result.buttonValue.game);
-          /* set button value to locale storage */
-          localStorage.setItem("buttonValue", buttonValue);
-          const modal = [
-            { banner: data?.result?.banner },
-            { bannerTitle: data?.result?.bannerTitle },
-          ];
-          /* set modal picture to locale storage for the open modal in home page */
-          if (data?.result?.banner) {
-            localStorage.setItem("modal", JSON.stringify(modal));
-          }
-          if (
-            localStorage.getItem("token") &&
-            localStorage.getItem("loginName") &&
-            data?.result?.changePassword === true
-          ) {
-            /* if token, login name, and result.password === true then navigation change-password-login page */
-            localStorage.setItem("changePassword", true);
-            navigate("/change-password-login");
-          } else if (
-            localStorage.getItem("token") &&
-            localStorage.getItem("loginName") &&
-            data?.result?.changePassword === false
-          ) {
-            if (localStorage.getItem("forceLogin")) {
-              localStorage.removeItem("forceLogin");
-              localStorage.setItem("forceLoginSuccess", "true");
-              /* if token, login name, and result.password === false then navigation home page */
-              navigate("/");
-            } else {
-              localStorage.setItem("forceLoginSuccess", "true");
-              navigate("/");
-            }
-          }
+    const { data } = await AxiosSecure.post(API.login, loginData);
+
+    if (data.success) {
+      /* Set token to localeStorage */
+      localStorage.setItem("token", data.result.token);
+      /* Set login name to locale storage */
+      localStorage.setItem("loginName", data.result.loginName);
+      const buttonValue = JSON.stringify(data.result.buttonValue.game);
+      /* set button value to locale storage */
+      localStorage.setItem("buttonValue", buttonValue);
+      const modal = [
+        { banner: data?.result?.banner },
+        { bannerTitle: data?.result?.bannerTitle },
+      ];
+      /* set modal picture to locale storage for the open modal in home page */
+      if (data?.result?.banner) {
+        localStorage.setItem("modal", JSON.stringify(modal));
+      }
+      if (
+        localStorage.getItem("token") &&
+        localStorage.getItem("loginName") &&
+        data?.result?.changePassword === true
+      ) {
+        /* if token, login name, and result.password === true then navigation change-password-login page */
+        localStorage.setItem("changePassword", true);
+        navigate("/change-password-login");
+      } else if (
+        localStorage.getItem("token") &&
+        localStorage.getItem("loginName") &&
+        data?.result?.changePassword === false
+      ) {
+        if (localStorage.getItem("forceLogin")) {
+          localStorage.removeItem("forceLogin");
+          localStorage.setItem("forceLoginSuccess", "true");
+          /* if token, login name, and result.password === false then navigation home page */
+          navigate("/");
         } else {
-          setErrorLogin(data?.error);
+          localStorage.setItem("forceLoginSuccess", "true");
+          navigate("/");
         }
-      });
+      }
+    } else {
+      setErrorLogin(data?.error);
+    }
   };
 
   /* handle login demo user */
-  const loginWithDemo = () => {
+  const loginWithDemo = async () => {
     /* Random token generator */
-    const generatedToken = UseTokenGenerator();
+
     /* Encrypted the post data */
-    const loginData = UseEncryptData({
+    const loginData = {
       username: "demo",
       password: "",
-      token: generatedToken,
-      site: settings.siteUrl,
       b2c: settings.b2c,
       apk: closePopupForForever ? true : false,
-    });
-    fetch(API.login, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(loginData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        /* Set token to localeStorage */
-        localStorage.setItem("token", data.result.token);
-        /* Set login name to locale storage */
-        localStorage.setItem("loginName", data.result.loginName);
-        /* set button value to locale storage */
-        const buttonValue = JSON.stringify(data.result.buttonValue.game);
-        /* set modal picture to locale storage for the open modal in home page */
-        localStorage.setItem("buttonValue", buttonValue);
-        const modal = [
-          { banner: data?.result?.banner },
-          { bannerTitle: data?.result?.bannerTitle },
-        ];
-        if (data?.result?.banner) {
-          localStorage.setItem("modal", JSON.stringify(modal));
-        }
-        if (
-          localStorage.getItem("token") &&
-          localStorage.getItem("loginName") &&
-          data?.result?.changePassword === true
-        ) {
-          /* if token, login name, and result.password === true then navigation change-password-login page */
-          navigate("/change-password-login");
-        } else if (
-          localStorage.getItem("token") &&
-          localStorage.getItem("loginName") &&
-          data?.result?.changePassword === false
-        ) {
-          if (localStorage.getItem("forceLogin")) {
-            localStorage.removeItem("forceLogin");
-            localStorage.setItem("forceLoginSuccess", "true");
-            navigate("/");
-            /* if token, login name, and result.password === false then navigation change-password-login page */
-          } else {
-            localStorage.setItem("forceLoginSuccess", "true");
-            navigate("/");
-          }
-        } else {
-          setErrorLogin(data?.error);
-        }
-      });
+    };
+    const { data } = await AxiosSecure.post(API.login, loginData);
+    localStorage.setItem("token", data.result.token);
+    /* Set login name to locale storage */
+    localStorage.setItem("loginName", data.result.loginName);
+    /* set button value to locale storage */
+    const buttonValue = JSON.stringify(data.result.buttonValue.game);
+    /* set modal picture to locale storage for the open modal in home page */
+    localStorage.setItem("buttonValue", buttonValue);
+    const modal = [
+      { banner: data?.result?.banner },
+      { bannerTitle: data?.result?.bannerTitle },
+    ];
+    if (data?.result?.banner) {
+      localStorage.setItem("modal", JSON.stringify(modal));
+    }
+    if (
+      localStorage.getItem("token") &&
+      localStorage.getItem("loginName") &&
+      data?.result?.changePassword === true
+    ) {
+      /* if token, login name, and result.password === true then navigation change-password-login page */
+      navigate("/change-password-login");
+    } else if (
+      localStorage.getItem("token") &&
+      localStorage.getItem("loginName") &&
+      data?.result?.changePassword === false
+    ) {
+      if (localStorage.getItem("forceLogin")) {
+        localStorage.removeItem("forceLogin");
+        localStorage.setItem("forceLoginSuccess", "true");
+        navigate("/");
+        /* if token, login name, and result.password === false then navigation change-password-login page */
+      } else {
+        localStorage.setItem("forceLoginSuccess", "true");
+        navigate("/");
+      }
+    } else {
+      setErrorLogin(data?.error);
+    }
   };
 
   const handleDownload = (e) => {

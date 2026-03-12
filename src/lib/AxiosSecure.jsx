@@ -2,6 +2,7 @@ import axios from "axios";
 import handleRandomToken from "../utils/handleRandomToken";
 import handleEncryptData from "../utils/handleEncryptData";
 import { settings } from "../utils";
+import { getSiteURL } from "../utils/getSiteURL";
 
 export const AxiosSecure = axios.create({
   baseURL: "",
@@ -20,8 +21,10 @@ AxiosSecure.interceptors.request.use(
         ...config.data,
         token: generatedToken,
       };
-      if (settings.siteUrl) {
-        payload.site = settings.siteUrl;
+      const { siteURL } = getSiteURL();
+
+      if (siteURL) {
+        payload.site = siteURL;
       }
       if (settings.language) {
         payload.language = localStorage.getItem("language") || "english";
