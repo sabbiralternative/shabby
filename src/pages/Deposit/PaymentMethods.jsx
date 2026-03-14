@@ -85,7 +85,8 @@ const PaymentMethods = ({
     if (
       method?.type === "upigateway" ||
       method?.type === "toitgateway" ||
-      method?.type === "i100gateway"
+      method?.type === "i100gateway" ||
+      method?.type === "upiclick"
     ) {
       const depositDetailForPg = {
         paymentId: method?.paymentId,
@@ -137,7 +138,8 @@ const PaymentMethods = ({
       tabs &&
       tabs !== "upigateway" &&
       tabs !== "toitgateway" &&
-      tabs !== "i100gateway"
+      tabs !== "i100gateway" &&
+      tabs !== "upiclick"
     ) {
       paymentMethodRef.current.scrollIntoView({
         behavior: "smooth",
@@ -211,7 +213,8 @@ const PaymentMethods = ({
                       ) : null}
                       {method?.type == "upigateway" ||
                       method?.type === "toitgateway" ||
-                      method?.type === "i100gateway" ? (
+                      method?.type === "i100gateway" ||
+                      method?.type === "upiclick" ? (
                         <img
                           style={{ height: "23px", width: "23px" }}
                           src={"/assets/bhim.png"}
@@ -939,7 +942,7 @@ const PaymentMethods = ({
                           <p
                             onClick={() =>
                               handleCopyToClipBoard(
-                                depositData?.depositAmount?.toString()
+                                depositData?.depositAmount?.toString(),
                               )
                             }
                             style={{ cursor: "pointer" }}
