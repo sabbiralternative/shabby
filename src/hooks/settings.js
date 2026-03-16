@@ -5,7 +5,8 @@ import { API, settings as Settings } from "../utils";
 import UseState from "./UseState";
 
 export const useSettingsMutation = () => {
-  const { setLogo } = UseState();
+  const isLocalhost = window.location.hostname === "localhost";
+  const { setLogo, closePopupForForever } = UseState();
   return useMutation({
     mutationKey: ["settings"],
     mutationFn: async () => {
@@ -23,8 +24,13 @@ export const useSettingsMutation = () => {
             Settings[key] = settings[key];
           });
         }
+        if (Settings.app_only && !closePopupForForever) {
+          document.title = window.location.hostname;
+        } else {
+          document.title = Settings.site_name;
+        }
         /* Dynamically append  theme css  */
-        if (Settings.build === "production") {
+        if (!isLocalhost) {
           const logo = `${API.assets}/${Settings.siteUrl}/logo.${Settings.logo_format}`;
           setLogo(logo);
         } else {
@@ -35,7 +41,7 @@ export const useSettingsMutation = () => {
         link.rel = "stylesheet";
         link.type = "text/css";
 
-        if (Settings.build === "production") {
+        if (!isLocalhost) {
           link.href = `${API.assets}/${Settings.siteUrl}/theme.css`;
           document.head.appendChild(link);
         } else {

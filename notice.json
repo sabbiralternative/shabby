@@ -6,7 +6,6 @@
   "result": {
     "settings": {
       "siteUrl": "magicwin.zip",
-      "build": "development",
       "casino": "diamond",
       "liveCasinoType": "ultrawin",
       "paymentIntent": false,

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { getSetApis } from "../utils/config";
-import { settings } from "../utils";
+
 export const StateContext = createContext(null);
 const StateProvider = ({ children }) => {
   const [predictOdds, setPredictOdds] = useState([]);
@@ -23,16 +23,6 @@ const StateProvider = ({ children }) => {
       fetchAPI();
     }
   }, [noticeLoaded]);
-
-  useEffect(() => {
-    if (noticeLoaded) {
-      if (settings.app_only && !closePopupForForever) {
-        document.title = window.location.hostname;
-      } else {
-        document.title = settings.site_name;
-      }
-    }
-  }, [noticeLoaded, closePopupForForever]);
 
   /* These are all exposure for state */
   /* data[0]?.runners[0] exposure */
