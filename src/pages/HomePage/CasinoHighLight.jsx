@@ -1,14 +1,12 @@
 /* eslint-disable react/no-unknown-property */
 
 import { useNavigate } from "react-router-dom";
-import { settings } from "../../utils";
 
 const CasinoHighLight = () => {
   const navigate = useNavigate();
   const handleNavigate = (link) => {
-    if (settings.liveCasinoType === "ultrawin") {
-      navigate(link);
-    }
+    // if (settings.liveCasinoType === "ultrawin") {
+    navigate(link);
   };
 
   return (

@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unknown-property */
 import { useNavigate } from "react-router-dom";
-import { settings } from "../../utils";
 
 const CasinoList = ({ casino }) => {
   const token = localStorage.getItem("token");
@@ -8,27 +7,28 @@ const CasinoList = ({ casino }) => {
 
   // let name = casino.name;
   // name = name.replace(/ /g, "");
-  const diamondCasino = {
-    eventId: casino?.eventId,
-    eventTypeId: casino?.eventTypeId,
-    casinoSlug: casino?.slug,
-    type: "ourCasino",
-  };
+  // const diamondCasino = {
+  //   eventId: casino?.eventId,
+  //   eventTypeId: casino?.eventTypeId,
+  //   casinoSlug: casino?.slug,
+  //   type: "ourCasino",
+  // };
 
   const navigateToCasinoDetails = async () => {
     if (token) {
-      if (settings.casino == "aura" || settings.casino === "test") {
-        navigate(`/casino/${casino?.eventId}/${casino?.eventTypeId}`);
-      } else if (settings.casino == "diamond") {
-        localStorage.removeItem("casino");
-        localStorage.removeItem("auraEventId");
-        localStorage.setItem("casino", JSON.stringify(diamondCasino));
-        navigate(`/our-casino/${casino?.slug}`);
-      } else if (settings.casino === "mac88") {
-        navigate(
-          `/mac88/${casino?.game_name.replace(/ /g, "")}/${casino?.game_id}`
-        );
-      }
+      // if (settings.casino == "aura" || settings.casino === "test") {
+      navigate(`/casino/${casino?.eventId}/${casino?.eventTypeId}`);
+
+      // else if (settings.casino == "diamond") {
+      //   localStorage.removeItem("casino");
+      //   localStorage.removeItem("auraEventId");
+      //   localStorage.setItem("casino", JSON.stringify(diamondCasino));
+      //   navigate(`/our-casino/${casino?.slug}`);
+      // } else if (settings.casino === "mac88") {
+      //   navigate(
+      //     `/mac88/${casino?.game_name.replace(/ /g, "")}/${casino?.game_id}`
+      //   );
+      // }
     } else {
       navigate("/login");
     }
@@ -36,7 +36,7 @@ const CasinoList = ({ casino }) => {
 
   return (
     <>
-      {settings?.casino === "mac88" ? (
+      {/* {settings?.casino === "mac88" ? (
         <div
           style={{ cursor: "pointer" }}
           onClick={navigateToCasinoDetails}
@@ -73,7 +73,15 @@ const CasinoList = ({ casino }) => {
             }}
           ></div>
         </div>
-      )}
+      )} */}
+      <div onClick={navigateToCasinoDetails} className="casino-list-item">
+        <div
+          className="casino-list-item-banner"
+          style={{
+            backgroundImage: `url(${casino.image})`,
+          }}
+        ></div>
+      </div>
     </>
   );
 };

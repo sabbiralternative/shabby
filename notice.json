@@ -6,14 +6,8 @@
   "result": {
     "settings": {
       "siteUrl": "magicwin.zip",
-      "casino": "diamond",
-      "liveCasinoType": "ultrawin",
-      "paymentIntent": false,
-      "ourCasino": true,
-      "liveCasino": true,
-      "slots": true,
-      "fantasy": true,
-      "ourVirtual": true
+
+      "liveCasinoType": "ultrawin"
     },
 
     "endpoint": {

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import DiamondCasinoList from "./DiamondCasinoList";
+// import DiamondCasinoList from "./DiamondCasinoList";
 import CasinoList from "../../components/Casino/CasinoList";
 import { Link } from "react-router-dom";
 import UseState from "../../hooks/UseState";
-import { API, settings } from "../../utils";
+import { API } from "../../utils";
 const OurCasino = () => {
   const [data, setData] = useState([]);
   const [casino_list, setCasino_list] = useState([]);
@@ -15,23 +15,22 @@ const OurCasino = () => {
   /* Get casino thumbnail */
   useEffect(() => {
     const getAuraCasino = async () => {
-      const res = await axios.get(
-        `${settings.casino == "aura" ? API.auraCasino : ""} ${
-          settings.casino == "diamond" ? API.diamondCasino : ""
-        } 
-        ${settings.casino == "test" ? API.testCasino : ""}
-        ${settings?.casino === "mac88" ? API.mac88 : ""}
-        `
-      );
-
+      // const res = await axios.get(
+      //   `${settings.casino == "aura" ? API.auraCasino : ""} ${
+      //     settings.casino == "diamond" ? API.diamondCasino : ""
+      //   }
+      //   ${settings.casino == "test" ? API.testCasino : ""}
+      //   ${settings?.casino === "mac88" ? API.mac88 : ""}
+      //   `,
+      // );
+      const res = await axios.get(API.auraCasino);
       const data = res.data;
-      if (settings?.casino === "mac88") {
-        setData(data?.data);
-      } else {
-        const sort = data.sort((Link, b) => Link.sort - b.sort);
-        setData(sort);
-        setCasino_list(sort);
-      }
+      // if (settings?.casino === "mac88") {
+      //   setData(data?.data);
+      // } else {
+      const sort = data.sort((Link, b) => Link.sort - b.sort);
+      setData(sort);
+      setCasino_list(sort);
     };
     getAuraCasino();
   }, [filterGames]);
@@ -108,15 +107,15 @@ const OurCasino = () => {
             })}
           </ul>
         </div>
-        {settings?.casino === "mac88" && (
+        {/* {settings?.casino === "mac88" && (
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             {data?.map((casino, i) => (
               <CasinoList key={i} casino={casino} />
             ))}
           </div>
-        )}
+        )} */}
 
-        {settings.casino == "diamond" && (
+        {/* {settings.casino == "diamond" && (
           <div className="tab-content mt-xl-2 mt-1">
             <div className="tab-pane active" id="all-casino">
               {
@@ -128,15 +127,14 @@ const OurCasino = () => {
               }
             </div>
           </div>
-        )}
+        )} */}
 
-        {settings.casino == "aura" || settings.casino === "test" ? (
-          <div className="casino-list mt-2">
-            {casino_list.map((casino, i) => (
-              <CasinoList key={i} casino={casino} />
-            ))}
-          </div>
-        ) : null}
+        {/* {settings.casino == "aura" || settings.casino === "test" ? ( */}
+        <div className="casino-list mt-2">
+          {casino_list.map((casino, i) => (
+            <CasinoList key={i} casino={casino} />
+          ))}
+        </div>
       </div>
     </>
   );

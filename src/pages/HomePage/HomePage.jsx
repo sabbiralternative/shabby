@@ -7,7 +7,7 @@ import TabPanel from "./TabPanel";
 import BetTable from "../../components/BetTable/BetTable";
 import useLatestEvent from "../../hooks/useLatestEvent";
 import { useNavigate } from "react-router-dom";
-import { API, settings } from "../../utils";
+import { API } from "../../utils";
 import handleDecryptData from "../../utils/handleDecryptData";
 
 import useLanguage from "../../hooks/useLanguage";
@@ -38,13 +38,14 @@ const HomePage = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const getAuraCasino = async () => {
-      const res = await axios.get(
-        `${settings.casino == "aura" ? API.auraCasino : ""} ${
-          settings.casino == "diamond" ? API.diamondCasino : ""
-        }  ${settings.casino == "test" ? API.testCasino : ""} ${
-          settings?.casino === "mac88" ? API.mac88 : ""
-        }`,
-      );
+      // const res = await axios.get(
+      //   `${settings.casino == "aura" ? API.auraCasino : ""} ${
+      //     settings.casino == "diamond" ? API.diamondCasino : ""
+      //   }  ${settings.casino == "test" ? API.testCasino : ""} ${
+      //     settings?.casino === "mac88" ? API.mac88 : ""
+      //   }`,
+      // );
+      const res = await axios.get(API.auraCasino);
       const data = res.data;
       setCasino_list(data);
     };
@@ -258,9 +259,9 @@ const HomePage = () => {
         </>
       )}
 
-      {settings.liveCasinoType === "ultrawin" && <CasinoHighLight />}
+      <CasinoHighLight />
       {/* Casino thumbnail component */}
-      {settings?.casino === "mac88" ? (
+      {/* {settings?.casino === "mac88" ? (
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           {casino_list?.data?.map((casino, i) => (
             <CasinoList key={i} casino={casino} />
@@ -273,7 +274,14 @@ const HomePage = () => {
             <CasinoList key={i} casino={casino} />
           ))}
         </div>
-      )}
+      )} */}
+
+      <div className="casino-list mt-2">
+        {" "}
+        {casino_list?.map((casino, i) => (
+          <CasinoList key={i} casino={casino} />
+        ))}
+      </div>
     </div>
   );
 };
