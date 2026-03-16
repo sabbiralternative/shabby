@@ -3,6 +3,7 @@ import { getSetApis } from "../utils/config";
 
 export const StateContext = createContext(null);
 const StateProvider = ({ children }) => {
+  const isLocalhost = window.location.hostname === "localhost";
   const [predictOdds, setPredictOdds] = useState([]);
   const [closePopupForForever, setClosePopUpForForever] = useState(false);
   const [sports, setSports] = useState(4);
@@ -14,15 +15,17 @@ const StateProvider = ({ children }) => {
   const [successRegister, setSuccessRegister] = useState("");
   const [logo, setLogo] = useState("");
   const [noticeLoaded, setNoticeLoaded] = useState(false);
-
   useEffect(() => {
-    if (!noticeLoaded) {
+    if (!noticeLoaded && isLocalhost) {
       const fetchAPI = () => {
         getSetApis(setNoticeLoaded);
       };
       fetchAPI();
     }
-  }, [noticeLoaded]);
+    if (!noticeLoaded && !isLocalhost) {
+      setNoticeLoaded(true);
+    }
+  }, [noticeLoaded, isLocalhost]);
 
   /* These are all exposure for state */
   /* data[0]?.runners[0] exposure */
