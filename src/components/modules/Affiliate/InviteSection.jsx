@@ -5,9 +5,14 @@ import AddNewUser from "../../Modal/Affiliate/AddNewUser";
 import assets from "../../../assets";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import { settings } from "../../../utils";
+import { getSiteURL } from "../../../utils/getSiteURL";
 
 const InviteSection = () => {
-  const payload = { type: "get_referral_code" };
+  let payload = { type: "get_referral_code" };
+  const { siteURL } = getSiteURL();
+  if (siteURL) {
+    payload.site = siteURL;
+  }
   const [showAddNewUserModal, setShowAddNewUserModal] = useState(false);
   const { data } = useGetIndex(payload);
 
