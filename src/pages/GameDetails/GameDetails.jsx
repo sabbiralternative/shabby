@@ -238,32 +238,42 @@ const GameDetails = () => {
         maxLiabilityPerBet: placeBetValue?.maxLiabilityPerBet,
         language,
         nounce: uuidv4(),
-        isbetDelay: settings?.bet_delay,
+        isbetDelay:
+          placeBetValue?.btype === "FANCY" && placeBetValue?.eventTypeId === "4"
+            ? false
+            : settings.bet_delay,
         cashout: isCashOut,
         apk: closePopupForForever ? true : false,
       },
     ];
 
     let delay = 0;
+
     if (
-      (id == 4 || id == 2) &&
-      placeBetValue?.btype === "MATCH_ODDS" &&
-      price > 3 &&
-      placeBetValue?.name?.length === 2
+      placeBetValue?.btype !== "FANCY" &&
+      placeBetValue?.eventTypeId !== "4"
     ) {
-      delay = 9000;
+      if (
+        (id == 4 || id == 2) &&
+        placeBetValue?.btype === "MATCH_ODDS" &&
+        price > 3 &&
+        placeBetValue?.name?.length === 2
+      ) {
+        delay = 9000;
+      }
+      if (
+        (id == 4 || id == 2) &&
+        placeBetValue?.btype === "MATCH_ODDS" &&
+        price > 7 &&
+        placeBetValue?.name?.length === 3
+      ) {
+        delay = 9000;
+      } else {
+        setBetDelay(currentPlaceBetEvent?.betDelay);
+        delay = settings?.bet_delay ? currentPlaceBetEvent?.betDelay * 1000 : 0;
+      }
     }
-    if (
-      (id == 4 || id == 2) &&
-      placeBetValue?.btype === "MATCH_ODDS" &&
-      price > 7 &&
-      placeBetValue?.name?.length === 3
-    ) {
-      delay = 9000;
-    } else {
-      setBetDelay(currentPlaceBetEvent?.betDelay);
-      delay = settings?.bet_delay ? currentPlaceBetEvent?.betDelay * 1000 : 0;
-    }
+
     setLoader(true);
     setTimeout(async () => {
       const { data } = await AxiosJSEncrypt.post(API.order, payloadData);
