@@ -357,7 +357,7 @@ const MatchOddsSection = ({
                         </span>
                         <span style={{ overflow: "visible" }}>
                           {" "}
-                          {teamProfitForGame?.profit?.toFixed(2)}
+                          {teamProfitForGame?.profit?.toFixed(0)}
                         </span>
                       </div>
                     )}
