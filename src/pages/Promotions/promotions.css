@@ -1,7 +1,7 @@
 .page {
   max-width: 100%;
-  margin: 20px auto;
-  padding: 10px;
+  margin: 0px auto;
+  padding: 0px 10px;
 }
 
 /* Bonus Card */
@@ -137,8 +137,14 @@
 }
 
 .gift-input {
+  position: relative;
   margin-top: 10px;
-  background: rgba(255, 255, 255, 0.2);
+}
+
+.code {
+  border: none;
+  font-size: 14px;
+  width: 100%;
   border-radius: 6px;
   padding: 6px;
   display: flex;
@@ -146,16 +152,16 @@
   align-items: center;
 }
 
-.code {
-  font-size: 14px;
-}
-
 .redeem {
+  position: absolute;
+  right: 2px;
+  top: 4px;
   background: #a9243d;
   border: none;
   color: white;
-  padding: 6px 12px;
+  padding: 3px 8px;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
+  font-size: 13px;
 }

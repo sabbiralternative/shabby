@@ -1,17 +1,46 @@
 import { useNavigate } from "react-router-dom";
 import "./promotions.css";
 import assets from "../../assets";
+import UseBalance from "../../hooks/UseBalance";
+import { useState } from "react";
+import { useBonusMutation } from "../../hooks/bonus";
+import toast from "react-hot-toast";
 
 const Promotions = () => {
+  const [, refetchBalance] = UseBalance();
+  const [coupon, setCoupon] = useState(null);
+  const { mutateAsync } = useBonusMutation();
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
   const handleNavigate = (link) => {
     token ? navigate(link) : navigate("/login");
   };
+
+  const claimCoupon = async () => {
+    if (token) {
+      if (!coupon) {
+        return toast.error("Please enter a coupon code");
+      }
+      const data = await mutateAsync({
+        type: "claimCoupon",
+        coupon_code: coupon,
+      });
+
+      if (data?.success) {
+        refetchBalance();
+        toast.success(data?.result);
+        setCoupon(null);
+      } else {
+        toast.error(data?.error);
+      }
+    } else {
+      navigate("/login");
+    }
+  };
   return (
     <div className="page center-container" style={{ width: "100%" }}>
-      <div className="bonus-card">
+      {/* <div className="bonus-card">
         <div style={{ display: "flex", width: "100%", gap: "10px" }}>
           <div className="bonus-box">
             <p className="label">BONUS EARNED</p>
@@ -45,7 +74,7 @@ const Promotions = () => {
           src={assets.giftCard}
           alt=""
         />
-      </div>
+      </div> */}
 
       <div className="lossback">
         <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
@@ -55,9 +84,9 @@ const Promotions = () => {
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           {" "}
-          <div className="lossback-info">Login to view claims</div>
+          {!token && <div className="lossback-info">Login to view claims</div>}
           <button
-            onClick={() => handleNavigate("/lossback-claims")}
+            onClick={() => handleNavigate("/lossback-bonus")}
             className="view-all"
           >
             VIEW ALL
@@ -71,14 +100,23 @@ const Promotions = () => {
             <img src={assets.redeemCardGift} alt="" />
           </div>
           <div className="gift-text">
-            <h3>GIFT CARD</h3>
-            <p>Type or Paste your promocode and get rewards in your wallet.</p>
+            <h3>Coupon Code</h3>
+            <p>
+              Type or Paste your coupon code and get rewards in your wallet.
+            </p>
           </div>
         </div>
 
         <div className="gift-input">
-          <span className="code">true</span>
-          <button onClick={() => handleNavigate("/")} className="redeem">
+          <input
+            value={coupon || ""}
+            onChange={(e) => setCoupon(e.target.value)}
+            className="code"
+            type="text"
+            placeholder="Enter coupon code here"
+          />
+
+          <button onClick={claimCoupon} className="redeem">
             {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"

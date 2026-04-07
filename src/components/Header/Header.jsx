@@ -833,7 +833,7 @@ const Header = () => {
                               data-rr-ui-dropdown-item=""
                               className="dropdown-item"
                             >
-                              Deposit Support
+                              Customer Support
                             </li>
                           </Link>
                         )}
