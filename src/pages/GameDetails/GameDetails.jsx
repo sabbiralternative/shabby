@@ -27,6 +27,7 @@ import { Toaster } from "react-hot-toast";
 import MatchedBet from "./MatchedBet";
 import LiveMatch from "./LiveMatch";
 import { AxiosJSEncrypt } from "../../lib/AxiosJSEncrypt";
+import { isBetDelay, isDelay } from "../../utils/isBetDelay";
 
 const GameDetails = () => {
   const closePopupForForever = localStorage.getItem("closePopupForForever");
@@ -238,10 +239,7 @@ const GameDetails = () => {
         maxLiabilityPerBet: placeBetValue?.maxLiabilityPerBet,
         language,
         nounce: uuidv4(),
-        isbetDelay:
-          placeBetValue?.btype === "FANCY" && placeBetValue?.eventTypeId === "4"
-            ? false
-            : settings.bet_delay,
+        isbetDelay: isBetDelay(placeBetValue),
         cashout: isCashOut,
         apk: closePopupForForever ? true : false,
       },
@@ -249,12 +247,9 @@ const GameDetails = () => {
 
     let delay = 0;
 
-    if (
-      placeBetValue?.btype !== "FANCY" &&
-      placeBetValue?.eventTypeId !== "4"
-    ) {
+    if (isDelay(placeBetValue)) {
       if (
-        (id == 4 || id == 2) &&
+        id == 4 &&
         placeBetValue?.btype === "MATCH_ODDS" &&
         price > 3 &&
         placeBetValue?.name?.length === 2
@@ -262,7 +257,7 @@ const GameDetails = () => {
         delay = 9000;
       }
       if (
-        (id == 4 || id == 2) &&
+        id == 4 &&
         placeBetValue?.btype === "MATCH_ODDS" &&
         price > 7 &&
         placeBetValue?.name?.length === 3
