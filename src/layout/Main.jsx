@@ -13,6 +13,12 @@ import MaintenanceMessage from "../components/MaintenanceMessage/MaintenanceMess
 
 const Main = () => {
   const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const affnook_token = params.get("token");
+
+  if (affnook_token) {
+    localStorage.setItem("affnook_token", affnook_token);
+  }
 
   const params = useParams();
   const [relativeURL, setRelativeURL] = useState("");

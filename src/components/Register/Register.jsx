@@ -8,6 +8,7 @@ import { API, settings } from "../../utils";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 // import getOtpOnWhatsapp from "../../utils/getOtpOnWhatsapp";
 const Register = () => {
+  const affnook_token = localStorage.getItem("affnook_token");
   const token = localStorage.getItem("token");
   const referralCode = localStorage.getItem("referralCode");
 
@@ -109,6 +110,7 @@ const Register = () => {
         referralCode: referralCode || user.referralCode,
         orderId: order.orderId,
         otpMethod: order.otpMethod,
+        affnook_token: affnook_token || null,
       };
 
       const { data } = await AxiosSecure.post(API.register, registerData);
