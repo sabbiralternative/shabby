@@ -108,7 +108,7 @@ const MyBankDetails = () => {
               </button>
               <button
                 style={{ background: "transparent", border: "none" }}
-                onClick={() => setTab(2)}
+                onClick={() => setTab(0)}
                 className="btn-inactive "
               >
                 <span className="">Deleted</span>
