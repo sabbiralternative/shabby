@@ -27,6 +27,7 @@ const ChangePassword = () => {
       password: newPassword,
       passVerify: newPasswordConfirm,
       token: generatedToken,
+      nonce: crypto.randomUUID(),
     });
     fetch(API.changePassword, {
       method: "POST",

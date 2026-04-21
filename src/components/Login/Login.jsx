@@ -28,6 +28,7 @@ const Login = () => {
       password: password,
       b2c: settings.b2c,
       apk: closePopupForForever ? true : false,
+      nonce: crypto.randomUUID(),
     };
 
     /* Encrypted the post data */
@@ -87,6 +88,7 @@ const Login = () => {
       password: "",
       b2c: settings.b2c,
       apk: closePopupForForever ? true : false,
+      nonce: crypto.randomUUID(),
     };
     const { data } = await AxiosSecure.post(API.login, loginData);
     localStorage.setItem("token", data.result.token);
