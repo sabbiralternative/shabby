@@ -13,8 +13,8 @@ import MaintenanceMessage from "../components/MaintenanceMessage/MaintenanceMess
 
 const Main = () => {
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const affnook_token = params.get("token");
+  const param = new URLSearchParams(location.search);
+  const affnook_token = param.get("token");
 
   if (affnook_token) {
     localStorage.setItem("affnook_token", affnook_token);

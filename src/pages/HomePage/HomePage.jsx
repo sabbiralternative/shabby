@@ -9,7 +9,7 @@ import useLatestEvent from "../../hooks/useLatestEvent";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../utils";
 import handleDecryptData from "../../utils/handleDecryptData";
-
+import { FaUniversity } from "react-icons/fa";
 import useLanguage from "../../hooks/useLanguage";
 import { MdSportsCricket, MdSportsKabaddi } from "react-icons/md";
 import { BiBasketball } from "react-icons/bi";
@@ -118,6 +118,12 @@ const HomePage = () => {
       icon: MdSportsKabaddi,
       to: "kabaddi",
       id: 5,
+    },
+    {
+      label: "Politics",
+      icon: FaUniversity,
+      to: "politics",
+      id: 6,
     },
     {
       label: languageValue(valueByLanguage, LanguageKey.HORSE),
