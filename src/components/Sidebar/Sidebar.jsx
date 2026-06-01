@@ -41,7 +41,7 @@ const Sidebar = () => {
           <div className="accordion-collapse collapse show">
             <div className="other-casino-list accordion-body">
               <ul>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link className="nav-link" to="/our-casino">
                     <span className="blink_me">Our Casino</span>
                   </Link>
@@ -51,7 +51,7 @@ const Sidebar = () => {
                   <Link className="nav-link" to="/our-virtual">
                     <span className="blink_me">Our Virtual</span>
                   </Link>
-                </li>
+                </li> */}
 
                 <li className="nav-item">
                   <Link className="nav-link" to="/live-casino">

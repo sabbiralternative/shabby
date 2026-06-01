@@ -17,7 +17,7 @@ const CasinoList = ({ casino }) => {
   const navigateToCasinoDetails = async () => {
     if (token) {
       // if (settings.casino == "aura" || settings.casino === "test") {
-      navigate(`/casino/${casino?.eventId}/${casino?.eventTypeId}`);
+      navigate(`/casino/${casino?.game_name}/${casino?.game_id}`);
 
       // else if (settings.casino == "diamond") {
       //   localStorage.removeItem("casino");
@@ -78,7 +78,7 @@ const CasinoList = ({ casino }) => {
         <div
           className="casino-list-item-banner"
           style={{
-            backgroundImage: `url(${casino.image})`,
+            backgroundImage: `url(${casino.img})`,
           }}
         ></div>
       </div>

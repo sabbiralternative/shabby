@@ -45,9 +45,10 @@ const HomePage = () => {
       //     settings?.casino === "mac88" ? API.mac88 : ""
       //   }`,
       // );
-      const res = await axios.get(API.auraCasino);
+      const res = await axios.get(API.mac88);
       const data = res.data;
-      setCasino_list(data);
+
+      setCasino_list(data?.data);
     };
     getAuraCasino();
   }, []);
