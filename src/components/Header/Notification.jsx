@@ -71,6 +71,7 @@ const Notification = () => {
         style={{
           display: "flex",
           alignItems: "center",
+          backgroundColor: "var(--bg-primary)",
         }}
         className="search-box-container d-xl-none"
       >
@@ -95,13 +96,26 @@ const Notification = () => {
             ))}
           </Marquee>
         )}
+        <RxCross2
+          style={{
+            position: "absolute",
+            right: "15",
+            bottom: "0",
+            zIndex: "999",
+            marginLeft: "20px",
+            fontWeight: "800",
+          }}
+          onClick={closeNotification}
+          size={20}
+          cursor="pointer"
+        />
         {/* </div> */}
       </div>
 
       {showNotification && filteredNotification?.length > 0 && (
         <div
           className="d-none d-xl-block"
-          // style={{ backgroundColor: "#353535" }}
+          style={{ backgroundColor: "var(--bg-primary)", position: "relative" }}
         >
           {" "}
           <Marquee>
@@ -113,7 +127,7 @@ const Notification = () => {
             style={{
               position: "absolute",
               right: "15",
-              bottom: "10",
+              bottom: "2",
               zIndex: "999",
               marginLeft: "20px",
               fontWeight: "800",
