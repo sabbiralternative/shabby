@@ -136,7 +136,9 @@
 .Modal-Background {
   position: fixed;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   inset: 0;
   background: rgba(28, 28, 28, 0.7);
   -webkit-backdrop-filter: blur(1px);
@@ -152,7 +154,7 @@
   gap: 1rem;
   border-radius: 1.5rem 1.5rem 0rem 0rem;
   background: #ebedf4;
-  animation: slide-up 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  /* animation: slide-up 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; */
   width: 100%;
 }
 
@@ -1023,7 +1025,25 @@
   border-radius: 1.5rem 1.5rem 0rem 0rem;
   background: #fff;
   z-index: 9999999999;
-  animation: slide-in 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: popUpOpenAnimation 0.3s ease-in-out;
+  max-height: 80vh;
+  position: relative;
+  border-radius: 10px !important;
+  overflow: auto;
+  max-width: 500px;
+  /* animation: slide-in 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; */
+}
+
+@keyframes popUpOpenAnimation {
+  0% {
+    opacity: 0.5;
+    transform: scale(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .card-add-bank {
@@ -1349,8 +1369,14 @@
   gap: 1rem;
   border-radius: 1.5rem 1.5rem 0rem 0rem;
   background: #ebedf4;
-  animation: slide-up 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  /* animation: slide-up 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; */
+  animation: popUpOpenAnimation 0.3s ease-in-out;
   width: 100%;
+  max-height: 80vh;
+  position: relative;
+  border-radius: 30px;
+  overflow: auto;
+  max-width: 500px;
 }
 .depositbreak {
   display: flex;

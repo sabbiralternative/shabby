@@ -6,7 +6,9 @@ import UseState from "../../hooks/UseState";
 
 const HeaderBottomDesktopLinks = () => {
   const token = localStorage.getItem("token");
-  const { setSports, setFilterGames } = UseState();
+  // setFilterGames is used to set the filter for casino games when user clicks on casino game links in header. It is used in OurCasino component to filter the games based on the selected game type.
+  // const { setFilterGames } = UseState();
+  const { setSports } = UseState();
   const { valueByLanguage } = useLanguage();
   const navigate = useNavigate();
 
@@ -111,7 +113,7 @@ const HeaderBottomDesktopLinks = () => {
               Table Tennis
             </Link>
           </li>
-          <li
+          {/* <li
             onClick={() => {
               navigate("our-casino");
               setFilterGames("Baccarat");
@@ -165,7 +167,7 @@ const HeaderBottomDesktopLinks = () => {
             <Link className="nav-link" to="/lucky-7">
               Lucky 7
             </Link>
-          </li>
+          </li> */}
 
           <li
             onClick={() => handleNavigateToIFrame("crash", "201206 ")}
