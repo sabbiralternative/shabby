@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import BetTable from "../../components/BetTable/BetTable";
 import { API } from "../../utils";
+import handleDecryptData from "../../utils/handleDecryptData";
 
 const Cricket = () => {
   const [data, setData] = useState([]);
@@ -11,7 +12,7 @@ const Cricket = () => {
   useEffect(() => {
     const gamesData = async () => {
       if (group !== null) {
-        const apiUrl = `${API.group}/${group}`;
+        const apiUrl = `${API.groupSportsBook}/${group}`;
         const res = await axios.get(apiUrl, {
           headers: {
             "Cache-Control": "public",
@@ -19,8 +20,13 @@ const Cricket = () => {
           },
         });
         const data = res.data;
-
-        setData(data);
+        let decryptionData;
+        if (data?.ct) {
+          decryptionData = handleDecryptData(JSON.stringify(data));
+        } else {
+          decryptionData = data;
+        }
+        setData(decryptionData);
         setLoading(false);
       }
     };

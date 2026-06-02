@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const HorseGreyhound = ({ data, eventTypeId }) => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState(
-    data?.[0]?.childs?.[0]?.countryCode
+    data?.[0]?.childs?.[0]?.countryCode,
   );
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const HorseGreyhound = ({ data, eventTypeId }) => {
                     </a>
                   </div>
                 );
-              })
+              }),
             )}
           </div>
           <div className="tab-content">
@@ -67,7 +67,10 @@ const HorseGreyhound = ({ data, eventTypeId }) => {
                   className="fade tab-pane active show"
                 >
                   <div className="bet-table position-relative horse-table">
-                    <div className="bet-table-body">
+                    <div
+                      className="bet-table-body"
+                      // style={{ justifyContent: "start" }}
+                    >
                       <div className="bet-table-row">
                         <div className="bet-nation-name">
                           <div className="game-icon">
@@ -84,7 +87,7 @@ const HorseGreyhound = ({ data, eventTypeId }) => {
                                 key={children?.eventId}
                                 onClick={() =>
                                   navigate(
-                                    `/game-details/${eventTypeId}/${children?.eventId}`
+                                    `/game-details/${eventTypeId}/${children?.eventId}`,
                                   )
                                 }
                               >

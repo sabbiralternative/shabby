@@ -55,7 +55,7 @@ const Horse = () => {
                 <b>2</b>
               </div>
             </div>
-            <div className="bet-table-body">
+            <div className="bet-table-body" style={{ justifyContent: "start" }}>
               {data?.length > 0 ? (
                 <HorseGreyhound
                   data={data}

@@ -200,7 +200,7 @@ const router = createBrowserRouter(
       element: <LiveCasinoVideo />,
     },
     {
-      path: "/casino/:eventId/:eventTypeId",
+      path: "/casino/:gameName/:gameId",
       element: <SingleCasino />,
     },
     {

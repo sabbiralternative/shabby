@@ -3,12 +3,12 @@ import { useParams } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import NavbarWithIFrame from "./NavbarWithIFrame";
 import IFrameLoader from "../Loader/IFrameLoader";
-import { API } from "../../utils";
+import { API, settings } from "../../utils";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const SingleCasino = () => {
   const [url, setUrl] = useState(null);
-  const { eventId, eventTypeId } = useParams();
+  const { gameId } = useParams();
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
 
@@ -19,12 +19,13 @@ const SingleCasino = () => {
       setLoading(true);
       /* Encryp */
       const payload = {
-        eventId: eventId,
-        eventTypeId: eventTypeId,
+        gameId: gameId,
+        isHome: false,
         mobileOnly: true,
+        casinoCurrency: settings.casino_currency,
       };
-      const res = await AxiosSecure.post(API.accessToken, payload);
-      const link = res?.data?.result?.url;
+      const res = await AxiosSecure.post(API.liveCasinoIframe, payload);
+      const link = res?.data?.gameUrl;
       setLoading(false);
 
       if (link) {
@@ -32,7 +33,7 @@ const SingleCasino = () => {
       }
     };
     CasinoIFrame();
-  }, [eventId, eventTypeId, token]);
+  }, [gameId, token]);
 
   // if(loading){
   //   return <IFrameLoader/>

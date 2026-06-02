@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import BetTable from "../../components/BetTable/BetTable";
 import { API } from "../../utils";
+import handleDecryptData from "../../utils/handleDecryptData";
 
 const Kabaddi = () => {
   const [data, setData] = useState([]);
@@ -9,7 +10,7 @@ const Kabaddi = () => {
   /* Football events */
   useEffect(() => {
     const gamesData = async () => {
-      const apiUrl = `${API.group}/${5}`;
+      const apiUrl = `${API.groupSportsBook}/${5}`;
       const res = await axios.get(apiUrl, {
         headers: {
           "Cache-Control": "public",
@@ -17,7 +18,15 @@ const Kabaddi = () => {
         },
       });
       const data = res.data;
-      setData(data);
+      let decryptionData;
+      if (data?.ct) {
+        decryptionData = handleDecryptData(JSON.stringify(data));
+      } else {
+        decryptionData = data;
+      }
+
+      console.log(data);
+      setData(decryptionData);
       setLoading(false);
     };
     gamesData();
@@ -30,6 +39,7 @@ const Kabaddi = () => {
   if (loading) {
     return "";
   }
+
   return (
     <div className="center-container" style={{ width: "100%" }}>
       <div className="tab-content mt-1">
@@ -50,7 +60,8 @@ const Kabaddi = () => {
               </div>
             </div>
             <div className="bet-table-body">
-              {Object.values(data).length > 0 &&
+              {data !== null &&
+                Object.values(data).length > 0 &&
                 Object.keys(data)
                   ?.filter((key) => {
                     return data?.[key]?.visible === true;
@@ -60,9 +71,13 @@ const Kabaddi = () => {
                     <BetTable key={index} keys={key} data={data} />
                   ))}
 
-              {Object.keys(data)?.filter((key) => {
-                return data?.[key]?.visible === true;
-              }).length < 1 && (
+              {data !== null &&
+                Object.keys(data)?.filter((key) => {
+                  return data?.[key]?.visible === true;
+                }).length < 1 && (
+                  <div className="bet-table-row">No Record Found</div>
+                )}
+              {data === null && (
                 <div className="bet-table-row">No Record Found</div>
               )}
             </div>
