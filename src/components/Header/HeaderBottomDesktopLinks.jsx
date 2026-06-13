@@ -3,6 +3,7 @@ import useLanguage from "../../hooks/useLanguage";
 import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
 import UseState from "../../hooks/UseState";
+import { latestEvent } from "../../static/latest-event";
 
 const HeaderBottomDesktopLinks = () => {
   const token = localStorage.getItem("token");
@@ -54,11 +55,18 @@ const HeaderBottomDesktopLinks = () => {
               {languageValue(valueByLanguage, LanguageKey.HOME)}
             </Link>
           </li>
-          {/* <li className="nav-item">
-                  <Link className="nav-link" to="/game-details/4/33439271">
-                    T20 World Cup
+
+          {latestEvent
+            ?.filter((item) => item?.show)
+            ?.map((item) => {
+              return (
+                <li key={item?.eventName} className="nav-item">
+                  <Link className="nav-link" to={item?.pathname}>
+                    {item?.eventName}
                   </Link>
-                </li> */}
+                </li>
+              );
+            })}
 
           <li className="nav-item">
             <Link onClick={cricketEndpoint} className="nav-link" to="/cricket">
