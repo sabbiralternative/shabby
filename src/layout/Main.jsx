@@ -10,8 +10,10 @@ import useLatestEvent from "../hooks/useLatestEvent";
 import { settings } from "../utils";
 import { handleLogout } from "../utils/handleLogout";
 import MaintenanceMessage from "../components/MaintenanceMessage/MaintenanceMessage";
+import useLanguage from "../hooks/useLanguage";
 
 const Main = () => {
+  const { setLanguage } = useLanguage();
   const location = useLocation();
   const param = new URLSearchParams(location.search);
   const affnook_token = param.get("token");
@@ -126,6 +128,10 @@ const Main = () => {
       };
     }
   }, []);
+
+  useEffect(() => {
+    setLanguage(localStorage.getItem("language") || "english");
+  }, [setLanguage]);
 
   if (settings.maintenance_message) {
     return <MaintenanceMessage />;

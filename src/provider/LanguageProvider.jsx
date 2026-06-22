@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import { findByLanguage } from "../utils/language";
 import { API } from "../utils";
 import { AxiosSecure } from "../lib/AxiosSecure";
 
@@ -12,8 +11,7 @@ const LanguageProvider = ({ children }) => {
   useEffect(() => {
     const getLanguage = async () => {
       const { data } = await AxiosSecure.get(API.language);
-      const d = findByLanguage(data);
-      setValueByLanguage(d);
+      setValueByLanguage(data);
     };
     getLanguage();
   }, [language]);

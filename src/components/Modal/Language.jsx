@@ -17,16 +17,20 @@ const Language = ({ setShowLanguage, showAppPopUp, windowWidth }) => {
     setShowLanguage(false);
   });
 
-  const languages = data?.[0]?.CRICKET;
+  const languages = data?.CRICKET;
 
   const handleSetLanguage = (language) => {
+    console.log(language);
     localStorage.setItem("language", language);
-    setShowLanguage(false);
     setLanguage(language);
+    setShowLanguage(false);
   };
 
   return (
-    <div className="cdk-overlay-container" style={{ position: "absolute" }}>
+    <div
+      className="cdk-overlay-container"
+      style={{ position: "absolute", zIndex: 9999 }}
+    >
       <div className="cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing"></div>
       <div
         className="cdk-global-overlay-wrapper"
@@ -123,6 +127,7 @@ const Language = ({ setShowLanguage, showAppPopUp, windowWidth }) => {
                                   textTransform: "capitalize",
                                   paddingLeft: "0px",
                                   color: "var(--bg-primary)",
+                                  cursor: "pointer",
                                 }}
                                 key={idx}
                               >
