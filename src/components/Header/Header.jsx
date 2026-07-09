@@ -386,9 +386,9 @@ const Header = () => {
     }
   }, [settings?.build_version, stored_build_version]);
 
-  const openWhatsAppLink = (link) => {
-    window.open(link, "_blank");
-  };
+  // const openWhatsAppLink = (link) => {
+  //   window.open(link, "_blank");
+  // };
 
   if (settings.app_only && !closePopupForForever) {
     return <Error />;
@@ -854,7 +854,7 @@ const Header = () => {
                       Demo
                     </a>
                   )}
-                  {settings.registration_whatsapp &&
+                  {/* {settings.registration_whatsapp &&
                     settings?.whatsapplink &&
                     !token && (
                       <a
@@ -863,7 +863,7 @@ const Header = () => {
                       >
                         Get ID
                       </a>
-                    )}
+                    )} */}
                   {settings.language && (
                     <a
                       onClick={() => setShowLanguage(true)}
