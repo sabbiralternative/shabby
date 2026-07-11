@@ -52,7 +52,7 @@ const Tracker = ({ score }) => {
         </div>
       )} */}
 
-      {score && score?.tracker !== null && (
+      {score && score?.tracker && (
         <div
           style={{
             width: "100%",

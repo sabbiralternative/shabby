@@ -28,6 +28,7 @@ import MatchedBet from "./MatchedBet";
 import LiveMatch from "./LiveMatch";
 import { AxiosJSEncrypt } from "../../lib/AxiosJSEncrypt";
 import { isBetDelay, isDelay } from "../../utils/isBetDelay";
+import Premium from "./Premium";
 
 const GameDetails = () => {
   const closePopupForForever = localStorage.getItem("closePopupForForever");
@@ -36,6 +37,7 @@ const GameDetails = () => {
   const token = localStorage.getItem("token");
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
   const [data, setData] = useState([]);
+  const [premium, setPremium] = useState(null);
   const [score, setScore] = useState();
   const [iScore, setIScore] = useState();
   const [sportsBook, setSportsBook] = useState();
@@ -126,6 +128,7 @@ const GameDetails = () => {
         setData(decryptionData.result);
         setScore(decryptionData.score);
         setSportsBook(decryptionData?.sportsbook?.Result);
+        setPremium(decryptionData?.premium);
       }
     };
     getGameDetails();
@@ -621,7 +624,7 @@ const GameDetails = () => {
               totalSize={totalSize}
             />
           ) : null}
-
+          {premium && premium?.eventId && <Premium premium={premium} />}
           {/* Bookmarker section  */}
           {(bookmarker && bookmarker?.length > 0 && tabs === "odds") ||
           tabs === "tv" ? (
