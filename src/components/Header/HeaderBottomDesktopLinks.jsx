@@ -4,6 +4,7 @@ import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
 import UseState from "../../hooks/UseState";
 import { latestEvent } from "../../static/latest-event";
+import { eventNameList } from "../../static/event-name-list";
 
 const HeaderBottomDesktopLinks = () => {
   const token = localStorage.getItem("token");
@@ -49,7 +50,10 @@ const HeaderBottomDesktopLinks = () => {
   return (
     <div className="header-bottom d-none d-xl-block">
       <nav className="navbar navbar-expand">
-        <ul className="navbar-nav">
+        <ul
+          style={{ overflow: "auto", flexWrap: "nowrap" }}
+          className="navbar-nav"
+        >
           <li className="nav-item">
             <Link className="nav-link" to="/">
               {languageValue(valueByLanguage, LanguageKey.HOME)}
@@ -111,7 +115,15 @@ const HeaderBottomDesktopLinks = () => {
               {languageValue(valueByLanguage, LanguageKey.GREYHOUND)}
             </Link>
           </li>
-
+          {eventNameList.map((item) => {
+            return (
+              <li key={item.id} className="nav-item">
+                <Link className="nav-link" to={`/event/${item.id}`}>
+                  {item.name}
+                </Link>
+              </li>
+            );
+          })}
           <li className="nav-item">
             <Link
               onClick={tableTennisEndpoint}

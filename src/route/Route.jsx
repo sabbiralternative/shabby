@@ -42,6 +42,7 @@ import AffiliateUserStatement from "../pages/AffiliateUserStatement/AffiliateUse
 import Promotions from "../pages/Promotions/Promotions.jsx";
 import LossBackClaims from "../pages/LossBackClaims/LossBackClaims.jsx";
 import AppOnlyBonus from "../pages/AppOnlyBonus/AppOnlyBonus.jsx";
+import EventSports from "../pages/EventSports/EventSports.jsx";
 
 const router = createBrowserRouter(
   [
@@ -192,6 +193,10 @@ const router = createBrowserRouter(
         {
           path: "/app-only-bonus",
           element: <AppOnlyBonus />,
+        },
+        {
+          path: "/event/:id",
+          element: <EventSports />,
         },
       ],
     },

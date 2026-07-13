@@ -12,26 +12,27 @@ import handleDecryptData from "../../utils/handleDecryptData";
 import { FaUniversity } from "react-icons/fa";
 import useLanguage from "../../hooks/useLanguage";
 import { MdSportsCricket, MdSportsKabaddi } from "react-icons/md";
-import { BiBasketball } from "react-icons/bi";
-import { GiBasketballBall, GiVolleyballBall } from "react-icons/gi";
-import { TbClover } from "react-icons/tb";
+// import { BiBasketball } from "react-icons/bi";
+// import { GiBasketballBall, GiVolleyballBall } from "react-icons/gi";
+// import { TbClover } from "react-icons/tb";
 import {
-  IoGameController,
-  IoFootballOutline,
+  // IoGameController,
+  // IoFootballOutline,
   IoFootball,
   IoTennisballSharp,
 } from "react-icons/io5";
 import { FaPlayCircle, FaTrophy } from "react-icons/fa";
-import { FaTableTennisPaddleBall } from "react-icons/fa6";
+// import { FaTableTennisPaddleBall } from "react-icons/fa6";
 import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
 import CasinoHighLight from "./CasinoHighLight";
 import HorseGreyhound from "../../components/HorseGreyhound/HorseGreyhound";
+import { eventNameList } from "../../static/event-name-list";
 
 const HomePage = () => {
   const { valueByLanguage } = useLanguage();
   const [casino_list, setCasino_list] = useState([]);
-  const { sports } = UseState();
+  const { sports, setSports } = UseState();
   const [data, setData] = useState([]);
 
   const { latestEvents } = useLatestEvent();
@@ -138,48 +139,49 @@ const HomePage = () => {
       to: "kabaddi",
       id: 4339,
     },
-    {
-      label: "Table Tennis",
-      icon: FaTableTennisPaddleBall,
-      to: "tableTennis",
-      id: 8,
-    },
-    {
-      label: "Basketball",
-      icon: GiBasketballBall,
-      to: "basketball",
-      id: 15,
-    },
-    {
-      label: "Volleyball",
-      icon: GiVolleyballBall,
-      to: "volleyball",
-      id: 18,
-    },
-    {
-      label: "Snooker",
-      icon: TbClover,
-      to: "snooker",
-      id: 59,
-    },
-    {
-      label: "E Games",
-      icon: IoGameController,
-      to: "eGames",
-      id: 11,
-    },
-    {
-      label: "Futsal",
-      icon: IoFootballOutline,
-      to: "futsal",
-      id: 9,
-    },
-    {
-      label: "Handball",
-      icon: BiBasketball,
-      to: "handball",
-      id: 85,
-    },
+    // {
+    //   label: "Basketball",
+    //   icon: GiBasketballBall,
+    //   to: "basketball",
+    //   id: 7522,
+    // },
+    // {
+    //   label: "Table Tennis",
+    //   icon: FaTableTennisPaddleBall,
+    //   to: "tableTennis",
+    //   id: 8,
+    // },
+
+    // {
+    //   label: "Volleyball",
+    //   icon: GiVolleyballBall,
+    //   to: "volleyball",
+    //   id: 18,
+    // },
+    // {
+    //   label: "Snooker",
+    //   icon: TbClover,
+    //   to: "snooker",
+    //   id: 59,
+    // },
+    // {
+    //   label: "E Games",
+    //   icon: IoGameController,
+    //   to: "eGames",
+    //   id: 11,
+    // },
+    // {
+    //   label: "Futsal",
+    //   icon: IoFootballOutline,
+    //   to: "futsal",
+    //   id: 9,
+    // },
+    // {
+    //   label: "Handball",
+    //   icon: BiBasketball,
+    //   to: "handball",
+    //   id: 85,
+    // },
   ];
 
   return (
@@ -216,6 +218,28 @@ const HomePage = () => {
             path={tab?.path}
           />
         ))}
+        {eventNameList.map((item) => {
+          return (
+            <li
+              key={item.id}
+              onClick={() => setSports(item.id)}
+              className="nav-item"
+            >
+              <p className={`nav-link ${sports === item.id ? "active" : ""}`}>
+                <div
+                  style={{
+                    paddingBottom: "3px",
+                    fontSize: "15px",
+                  }}
+                  className="d-xl-none"
+                >
+                  <img src={item.image} style={{ height: "16px" }} alt="" />
+                </div>
+                <span>{item.name}</span>
+              </p>
+            </li>
+          );
+        })}
       </ul>
 
       {sports !== 7 && sports !== 4339 ? (
