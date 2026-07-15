@@ -624,7 +624,7 @@ const GameDetails = () => {
               totalSize={totalSize}
             />
           ) : null}
-          {premium && premium?.eventId && <Premium premium={premium} />}
+
           {/* Bookmarker section  */}
           {(bookmarker && bookmarker?.length > 0 && tabs === "odds") ||
           tabs === "tv" ? (
@@ -713,6 +713,7 @@ const GameDetails = () => {
               totalSize={totalSize}
             />
           ) : null}
+          {premium && premium?.eventId && <Premium premium={premium} />}
         </div>
 
         {/* Mobile place bet starts */}
