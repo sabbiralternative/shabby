@@ -30,7 +30,7 @@ const Header = () => {
   const [showBuildVersion, setShowBuildVersion] = useState(false);
   const stored_build_version = localStorage.getItem("build_version");
   /* Open dropdown state for mobile version */
-  const { language, valueByLanguage } = useLanguage();
+  const { valueByLanguage } = useLanguage();
   const [showLanguage, setShowLanguage] = useState(false);
 
   const [showReferral, setShowReferral] = useState(false);
@@ -814,7 +814,7 @@ const Header = () => {
                           textTransform: "capitalize",
                         }}
                       >
-                        {language || "EN"}
+                        {/* {language || "EN"} */}
                       </p>
                     </div>
                   </a>
@@ -893,7 +893,7 @@ const Header = () => {
                             textTransform: "capitalize",
                           }}
                         >
-                          {language || "EN"}
+                          {/* {language || "EN"} */}
                         </p>
                       </div>
                     </a>

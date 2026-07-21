@@ -11,8 +11,10 @@ import { settings } from "../utils";
 import { handleLogout } from "../utils/handleLogout";
 import MaintenanceMessage from "../components/MaintenanceMessage/MaintenanceMessage";
 import useLanguage from "../hooks/useLanguage";
+import MiniGames from "../components/MiniGames";
 
 const Main = () => {
+  const [showMiniGamesModal, setShowMiniGamesModal] = useState(false);
   const { setLanguage } = useLanguage();
   const location = useLocation();
   const param = new URLSearchParams(location.search);
@@ -210,39 +212,44 @@ const Main = () => {
         </div>
       </div>
       <Footer />
-      {settings?.instagramLink ? (
-        <a
-          style={{ cursor: "pointer", bottom: "30%", right: "4.5%" }}
-          className="whatsapp_link"
-          onClick={() => window.open(settings?.instagramLink, "_blank")}
-        >
-          <img
-            style={{ filter: "none", height: "60px", width: "60px" }}
-            src="/assets/instagram.png"
-          />
+      <a
+        className="whatsapp_link"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {settings?.instagramLink ? (
+          <a onClick={() => window.open(settings?.instagramLink, "_blank")}>
+            <img
+              style={{ filter: "none", height: "60px", width: "60px" }}
+              src="/assets/instagram.png"
+            />
+          </a>
+        ) : null}
+        {settings?.telegramLink ? (
+          <a onClick={() => window.open(settings?.telegramLink, "_blank")}>
+            <img
+              style={{ filter: "none", height: "60px", width: "60px" }}
+              src="/assets/telegram.png"
+            />
+          </a>
+        ) : null}
+        {settings?.whatsapplink || settings?.branchWhatsapplink ? (
+          <a onClick={navigateWhatsApp}>
+            <img src="/assets/wp_support.webp" alt="WhatsAPP" />
+          </a>
+        ) : null}
+
+        <a onClick={() => setShowMiniGamesModal(true)}>
+          <img src="/assets/uv_games-CkYT1PYz.gif" alt="WhatsAPP" />
         </a>
-      ) : null}
-      {settings?.telegramLink ? (
-        <a
-          style={{ cursor: "pointer", bottom: "17%", right: "4.5%" }}
-          className="whatsapp_link"
-          onClick={() => window.open(settings?.telegramLink, "_blank")}
-        >
-          <img
-            style={{ filter: "none", height: "60px", width: "60px" }}
-            src="/assets/telegram.png"
-          />
-        </a>
-      ) : null}
-      {settings?.whatsapplink || settings?.branchWhatsapplink ? (
-        <a
-          onClick={navigateWhatsApp}
-          style={{ cursor: "pointer" }}
-          className="whatsapp_link"
-        >
-          <img src="/assets/wp_support.webp" alt="WhatsAPP" />
-        </a>
-      ) : null}
+      </a>
+      {showMiniGamesModal && (
+        <MiniGames setShowMiniGamesModal={setShowMiniGamesModal} />
+      )}
     </div>
   );
 };
