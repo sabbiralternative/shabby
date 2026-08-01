@@ -29,8 +29,10 @@ import LiveMatch from "./LiveMatch";
 import { AxiosJSEncrypt } from "../../lib/AxiosJSEncrypt";
 import { isBetDelay, isDelay } from "../../utils/isBetDelay";
 import Premium from "./Premium";
+import ToggleButtons from "./ToggleButtons";
 
 const GameDetails = () => {
+  const [fancyPremiumTab, setFancyPremiumTab] = useState("");
   const closePopupForForever = localStorage.getItem("closePopupForForever");
   const { language } = useLanguage();
   const { id, eventId } = useParams();
@@ -650,9 +652,20 @@ const GameDetails = () => {
               setTotalSize={setTotalSize}
             />
           ) : null}
-
+          {data?.length > 0 && (
+            <ToggleButtons
+              data={data}
+              premium={premium}
+              fancy={normal}
+              setFancyPremiumTab={setFancyPremiumTab}
+              fancyPremiumTab={fancyPremiumTab}
+            />
+          )}
           {/* Normal section */}
-          {(normal && normal?.length > 0 && tabs === "odds") ||
+          {(normal &&
+            normal?.length > 0 &&
+            tabs === "odds" &&
+            fancyPremiumTab === "fancy") ||
           tabs === "tv" ? (
             <NormalSection
               normal={normal}
@@ -662,7 +675,9 @@ const GameDetails = () => {
               setTotalSize={setTotalSize}
             />
           ) : null}
-
+          {premium && premium?.eventId && fancyPremiumTab === "premium" && (
+            <Premium premium={premium} />
+          )}
           {/* Over by over */}
           {(overByOver && overByOver?.length > 0 && tabs === "odds") ||
           tabs === "tv" ? (
@@ -713,7 +728,6 @@ const GameDetails = () => {
               totalSize={totalSize}
             />
           ) : null}
-          {premium && premium?.eventId && <Premium premium={premium} />}
         </div>
 
         {/* Mobile place bet starts */}
