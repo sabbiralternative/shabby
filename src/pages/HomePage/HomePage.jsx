@@ -28,8 +28,11 @@ import { LanguageKey } from "../../constant";
 import CasinoHighLight from "./CasinoHighLight";
 import HorseGreyhound from "../../components/HorseGreyhound/HorseGreyhound";
 import { eventNameList } from "../../static/event-name-list";
+import LiveVirtual from "./LiveVirtual";
+import { filterLiveVirtual } from "../../utils/filter-live-virtual";
 
 const HomePage = () => {
+  const [liveVirtual, setLiveVirtual] = useState([]);
   const { valueByLanguage } = useLanguage();
   const [casino_list, setCasino_list] = useState([]);
   const { sports, setSports } = UseState();
@@ -183,7 +186,7 @@ const HomePage = () => {
     //   id: 85,
     // },
   ];
-
+  const groupedData = filterLiveVirtual(liveVirtual, sports, data);
   return (
     <div className="center-container">
       <div className="latest-event d-none d-xl-flex">
@@ -249,6 +252,10 @@ const HomePage = () => {
               <div className="bet-table-header">
                 <div className="bet-nation-name">
                   <b>Game</b>
+                  <LiveVirtual
+                    setLiveVirtual={setLiveVirtual}
+                    category={sports}
+                  />
                 </div>
                 <div className="bet-nation-odd">
                   <b>1</b>
@@ -267,14 +274,9 @@ const HomePage = () => {
                 Object.values(data).length > 0 &&
                 sports !== 4339 &&
                 sports !== 7
-                  ? Object.keys(data)
-                      ?.filter((key) => {
-                        return data?.[key]?.visible === true;
-                      })
-                      .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort)
-                      .map((key, index) => (
-                        <BetTable key={index} keys={key} data={data} />
-                      ))
+                  ? groupedData?.map(([key], index) => (
+                      <BetTable key={index} keys={key} data={data} />
+                    ))
                   : null}
 
                 {!data && <div className="bet-table-row">No Record Found</div>}
