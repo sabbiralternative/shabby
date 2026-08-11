@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { settings } from "../../utils";
+// import { settings } from "../../utils";
 
 const Category = () => {
   return (
@@ -11,11 +11,11 @@ const Category = () => {
           </NavLink>
         </li>
 
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <NavLink className="nav-link" to="/our-casino">
             Our Casino
           </NavLink>
-        </li>
+        </li> */}
 
         <li className="nav-item">
           <NavLink className="nav-link" to="/live-casino">
@@ -35,11 +35,11 @@ const Category = () => {
           </NavLink>
         </li>
 
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <NavLink className="nav-link" to="/mac88">
             Mac88
           </NavLink>
-        </li>
+        </li> */}
       </ul>
     </>
   );
