@@ -242,11 +242,13 @@ const GameDetails = () => {
         maxLiabilityPerMarket: placeBetValue?.maxLiabilityPerMarket,
         isBettable: placeBetValue?.isBettable,
         maxLiabilityPerBet: placeBetValue?.maxLiabilityPerBet,
+        eventId: placeBetValue?.eventId,
         language,
         nounce: uuidv4(),
         isbetDelay: isBetDelay(placeBetValue),
         cashout: isCashOut,
         apk: closePopupForForever ? true : false,
+        b2c: settings.b2c,
       },
     ];
 

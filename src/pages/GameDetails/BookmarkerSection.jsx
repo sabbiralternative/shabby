@@ -566,6 +566,7 @@ const BookmarkerSection = ({
                               bookmark?.maxLiabilityPerMarket,
                             isBettable: bookmark?.isBettable,
                             maxLiabilityPerBet: bookmark?.maxLiabilityPerBet,
+                            eventId: bookmark?.eventId,
                           });
                         };
                         return (
@@ -654,6 +655,7 @@ const BookmarkerSection = ({
                             bookmark?.maxLiabilityPerMarket,
                           isBettable: bookmark?.isBettable,
                           maxLiabilityPerBet: bookmark?.maxLiabilityPerBet,
+                          eventId: bookmark?.eventId,
                         });
                       };
                       return (

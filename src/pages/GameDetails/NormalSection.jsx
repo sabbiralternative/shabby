@@ -179,7 +179,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
             <div className="row row10">
               {normal?.map((fancyGame) => {
                 const pnl = pnlBySelection?.filter(
-                  (pnl) => pnl?.MarketId === fancyGame?.id
+                  (pnl) => pnl?.MarketId === fancyGame?.id,
                 );
 
                 return (
@@ -244,6 +244,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                                 maxLiabilityPerMarket:
                                   fancyGame?.maxLiabilityPerMarket,
                                 isBettable: fancyGame?.isBettable,
+                                eventId: fancyGame?.eventId,
                               });
                             };
 
@@ -263,7 +264,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                                 </span>
                               </div>
                             );
-                          })
+                          }),
                         )}
 
                         {fancyGame?.runners?.map((runner) =>
@@ -294,6 +295,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                                 maxLiabilityPerMarket:
                                   fancyGame?.maxLiabilityPerMarket,
                                 isBettable: fancyGame?.isBettable,
+                                eventId: fancyGame?.eventId,
                               });
                             };
                             return (
@@ -312,7 +314,7 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                                 </span>
                               </div>
                             );
-                          })
+                          }),
                         )}
 
                         <div className="fancy-min-max-box">

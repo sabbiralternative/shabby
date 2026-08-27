@@ -178,7 +178,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
             <div className="row row10">
               {fancy1?.map((odd) => {
                 const pnl = pnlBySelection?.filter(
-                  (pnl) => pnl?.MarketId === fancy1?.id
+                  (pnl) => pnl?.MarketId === fancy1?.id,
                 );
 
                 return (
@@ -242,6 +242,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                                   odd?.maxLiabilityPerMarket,
                                 isBettable: odd?.isBettable,
                                 selectedBetName: runner?.name,
+                                eventId: odd?.eventId,
                               });
                             };
                             return (
@@ -261,7 +262,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                                 </span>
                               </div>
                             );
-                          })
+                          }),
                         )}
 
                         {odd?.runners?.map((runner) =>
@@ -290,6 +291,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                                   odd?.maxLiabilityPerMarket,
                                 isBettable: odd?.isBettable,
                                 selectedBetName: runner?.name,
+                                eventId: odd?.eventId,
                               });
                             };
                             return (
@@ -308,7 +310,7 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                                 </span>
                               </div>
                             );
-                          })
+                          }),
                         )}
 
                         <div className="fancy-min-max-box">

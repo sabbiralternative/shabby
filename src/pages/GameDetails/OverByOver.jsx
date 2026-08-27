@@ -176,7 +176,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
             <div className="row row10">
               {overByOver?.map((over) => {
                 const pnl = pnlBySelection?.filter(
-                  (pnl) => pnl?.MarketId === over?.id
+                  (pnl) => pnl?.MarketId === over?.id,
                 );
                 return (
                   <div key={over.id} className="col-md-6">
@@ -238,6 +238,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
                                 maxLiabilityPerMarket:
                                   over?.maxLiabilityPerMarket,
                                 isBettable: over?.isBettable,
+                                eventId: over?.eventId,
                               });
                             };
                             return (
@@ -256,7 +257,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
                                 </span>
                               </div>
                             );
-                          })
+                          }),
                         )}
 
                         {over?.runners?.map((runner) =>
@@ -284,6 +285,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
                                 isBettable: over?.isBettable,
                                 maxLiabilityPerMarket:
                                   over?.maxLiabilityPerMarket,
+                                eventId: over?.eventId,
                               });
                             };
                             return (
@@ -302,7 +304,7 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
                                 </span>
                               </div>
                             );
-                          })
+                          }),
                         )}
 
                         <div className="fancy-min-max-box">

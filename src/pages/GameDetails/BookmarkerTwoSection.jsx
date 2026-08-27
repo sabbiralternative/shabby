@@ -193,7 +193,7 @@ const BookmarkerTwoSection = ({
             >
               {bookmaker?.runners?.map((runner) => {
                 const pnl = pnlBySelection?.filter(
-                  (pnl) => pnl?.RunnerId === runner?.id
+                  (pnl) => pnl?.RunnerId === runner?.id,
                 );
                 return (
                   <div
@@ -263,13 +263,14 @@ const BookmarkerTwoSection = ({
                             selectedBetName: runner?.name,
                             back: true,
                             name: bookmaker.runners.map(
-                              (runner) => runner.name
+                              (runner) => runner.name,
                             ),
                             isWeak: bookmaker?.isWeak,
                             maxLiabilityPerMarket:
                               bookmaker?.maxLiabilityPerMarket,
                             isBettable: bookmaker?.isBettable,
                             maxLiabilityPerBet: bookmaker?.maxLiabilityPerBet,
+                            eventId: bookmaker?.eventId,
                           });
                         };
                         return (
@@ -339,6 +340,7 @@ const BookmarkerTwoSection = ({
                             bookmaker?.maxLiabilityPerMarket,
                           isBettable: bookmaker?.isBettable,
                           maxLiabilityPerBet: bookmaker?.maxLiabilityPerBet,
+                          eventId: bookmaker?.eventId,
                         });
                       };
                       return (

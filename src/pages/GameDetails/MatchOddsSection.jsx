@@ -549,6 +549,7 @@ const MatchOddsSection = ({
                             maxLiabilityPerMarket: item?.maxLiabilityPerMarket,
                             isBettable: item?.isBettable,
                             maxLiabilityPerBet: item?.maxLiabilityPerBet,
+                            eventId: item?.eventId,
                           });
                         };
 
@@ -636,6 +637,7 @@ const MatchOddsSection = ({
                           maxLiabilityPerMarket: item?.maxLiabilityPerMarket,
                           isBettable: item?.isBettable,
                           maxLiabilityPerBet: item?.maxLiabilityPerBet,
+                          eventId: item?.eventId,
                         });
                       };
                       return (
