@@ -3,8 +3,11 @@ import UseState from "../../hooks/UseState";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
+  const { getLanguage } = useLanguage();
   const [previousData, setPreviousData] = useState(fancy1);
   const [changedPrices, setChangedPrices] = useState({});
   const token = localStorage.getItem("token");
@@ -113,8 +116,10 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                     <table className="table table-bordered">
                       <thead>
                         <tr>
-                          <th>Run</th>
-                          <th className="text-end">Amount</th>
+                          <th>{getLanguage(LanguageKey.RUN)}</th>
+                          <th className="text-end">
+                            {getLanguage(LanguageKey.AMOUNT)}
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -316,10 +321,12 @@ const FancyOne = ({ fancy1, setShowBets, exposer, setTotalSize }) => {
                         <div className="fancy-min-max-box">
                           <div className="fancy-min-max">
                             <span className="w-100 d-block">
-                              Min: {odd?.minLiabilityPerBet}
+                              {getLanguage(LanguageKey.MIN)}:{" "}
+                              {odd?.minLiabilityPerBet}
                             </span>
                             <span className="w-100 d-block">
-                              Max: {odd?.maxLiabilityPerBet}
+                              {getLanguage(LanguageKey.MAX)}:{" "}
+                              {odd?.maxLiabilityPerBet}
                             </span>
                           </div>
                         </div>

@@ -3,8 +3,11 @@ import { useForm } from "react-hook-form";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const WithdrawStatement = () => {
+  const { getLanguage } = useLanguage();
   const { register, handleSubmit } = useForm();
 
   //   const settledBetsApi = config?.result?.endpoint?.settledBets;
@@ -81,7 +84,9 @@ const WithdrawStatement = () => {
     <div className="center-container">
       <div className="card">
         <div className="card-header">
-          <h4 className="card-title">Withdraw Statement</h4>
+          <h4 className="card-title">
+            {getLanguage(LanguageKey.WITHDRAW_STATMENT)}
+          </h4>
         </div>
         <div className="card-body">
           <div className="report-form">
@@ -129,7 +134,7 @@ const WithdrawStatement = () => {
 
               <div className="col-lg-2 col-md-2 d-grid">
                 <button type="submit" className="btn btn-primary btn-block">
-                  Submit
+                  {getLanguage(LanguageKey.SUBMIT)}
                 </button>
               </div>
             </form>
@@ -169,19 +174,19 @@ const WithdrawStatement = () => {
                 <thead>
                   <tr role="row">
                     <th colSpan="1" role="columnheader">
-                      Amount
+                      {getLanguage(LanguageKey.AMOUNT)}
                     </th>
                     <th colSpan="1" role="columnheader">
-                      Status
+                      {getLanguage(LanguageKey.STATUS)}
                     </th>
                     <th colSpan="1" role="columnheader">
-                      Account
+                      {getLanguage(LanguageKey.ACCOUNT)}
                     </th>
                     <th colSpan="1" role="columnheader">
-                      Date
+                      {getLanguage(LanguageKey.DATE)}
                     </th>
                     <th colSpan="1" role="columnheader">
-                      Remark
+                      {getLanguage(LanguageKey.REMARK)}
                     </th>
                   </tr>
                 </thead>

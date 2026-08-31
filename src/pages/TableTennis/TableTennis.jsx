@@ -3,8 +3,11 @@ import axios from "axios";
 import BetTable from "../../components/BetTable/BetTable";
 import { API } from "../../utils";
 import handleDecryptData from "../../utils/handleDecryptData";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const TableTennis = () => {
+  const { getLanguage } = useLanguage();
   const [data, setData] = useState([]);
   const group = JSON.parse(localStorage.getItem("group"));
   const [loading, setLoading] = useState(true);
@@ -60,7 +63,9 @@ const TableTennis = () => {
                     <BetTable key={index} keys={key} data={data} />
                   ))}
               {Object.values(data).length < 1 && (
-                <div className="bet-table-row">No Record Found</div>
+                <div className="bet-table-row">
+                  {getLanguage(LanguageKey.NO_RECORD_FOUND)}
+                </div>
               )}
             </div>
           </div>

@@ -3,8 +3,11 @@ import UseState from "../../hooks/UseState";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
+  const { getLanguage } = useLanguage();
   const [previousData, setPreviousData] = useState(overByOver);
   const [changedPrices, setChangedPrices] = useState({});
   const [showLadder, setShowLadder] = useState(false);
@@ -110,8 +113,10 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
                     <table className="table table-bordered">
                       <thead>
                         <tr>
-                          <th>Run</th>
-                          <th className="text-end">Amount</th>
+                          <th>{getLanguage(LanguageKey.RUN)}</th>
+                          <th className="text-end">
+                            {getLanguage(LanguageKey.AMOUNT)}
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -310,10 +315,12 @@ const OverByOver = ({ overByOver, setShowBets, exposer, setTotalSize }) => {
                         <div className="fancy-min-max-box">
                           <div className="fancy-min-max">
                             <span className="w-100 d-block">
-                              Min: {over?.minLiabilityPerBet}
+                              {getLanguage(LanguageKey.MIN)}:{" "}
+                              {over?.minLiabilityPerBet}
                             </span>
                             <span className="w-100 d-block">
-                              Max: {over?.maxLiabilityPerBet}
+                              {getLanguage(LanguageKey.MAX)}:{" "}
+                              {over?.maxLiabilityPerBet}
                             </span>
                           </div>
                         </div>

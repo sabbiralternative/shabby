@@ -8,8 +8,11 @@ import { AxiosSecure } from "../../lib/AxiosSecure";
 import axios from "axios";
 import useUTR from "../../hooks/utr";
 import ImageUploadMessage from "../../components/Modal/ImageUploadMessage/ImageUploadMessage";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const UploadTransaction = ({ paymentId, amount, tabs }) => {
+  const { getLanguage } = useLanguage();
   const [imageUploadMessage, setImageUploadMessage] = useState(null);
   const { mutate: getUTR } = useUTR();
   const token = localStorage.getItem("token");
@@ -168,7 +171,7 @@ const UploadTransaction = ({ paymentId, amount, tabs }) => {
                       </svg>
                       <div className="uploadtxt ng-tns-c159-0 ng-star-inserted">
                         <p className="ng-tns-c159-0">
-                          Upload Transaction Image
+                          {getLanguage(LanguageKey.UPLOAD_TRANSACTION_IMAGE)}
                         </p>
                       </div>
                       <div className="frame ng-tns-c159-0 ng-star-inserted">
@@ -184,7 +187,7 @@ const UploadTransaction = ({ paymentId, amount, tabs }) => {
                           htmlFor="fileInput"
                           className="uploadbtn ng-tns-c159-0"
                         >
-                          Upload
+                          {getLanguage(LanguageKey.UPLOAD)}
                         </label>
                       </div>
                     </div>
@@ -259,7 +262,7 @@ const UploadTransaction = ({ paymentId, amount, tabs }) => {
             <p className="ng-tns-c159-0" style={{ color: "black" }}>
               {" "}
               {tabs === "usdt" || tabs === "usdt_bep20"
-                ? "Hash Code"
+                ? getLanguage(LanguageKey.HASH_CODE)
                 : "Enter UTR/Trans ID/Ref ID number to proceed further"}
             </p>
 
@@ -336,7 +339,7 @@ const UploadTransaction = ({ paymentId, amount, tabs }) => {
             }}
             className="ng-tns-c159-2"
           >
-            I have Made The Payment
+            {getLanguage(LanguageKey.I_HAVE_MADE_THE_PAYMENT)}
           </button>
         </div>
       </div>

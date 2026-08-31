@@ -5,7 +5,10 @@ import Notification from "../../components/Notification/Notification";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 const CurrentBet = () => {
+  const { getLanguage } = useLanguage();
   const { register, handleSubmit } = useForm();
   const token = localStorage.getItem("token");
   const [sports, setSports] = useState([]);
@@ -100,7 +103,9 @@ const CurrentBet = () => {
       )}
       <div className="card">
         <div className="card-header">
-          <h4 className="card-title">Current Bets</h4>
+          <h4 className="card-title">
+            {getLanguage(LanguageKey.CURRENT_BETS)}
+          </h4>
         </div>
         <div className="card-body">
           <div className="report-form">
@@ -113,16 +118,20 @@ const CurrentBet = () => {
                     name="sportsType"
                   >
                     <option value="none" disabled="">
-                      Select Report Type
+                      {getLanguage(LanguageKey.SELECT_REPORT_TYPE)}
                     </option>
-                    <option value="sports">Sports</option>
-                    <option value="casino">Casino</option>
+                    <option value="sports">
+                      {getLanguage(LanguageKey.SPORTS)}
+                    </option>
+                    <option value="casino">
+                      {getLanguage(LanguageKey.CASINO)}
+                    </option>
                   </select>
                 </div>
               </div>
               <div className="col-lg-2 col-md-2 d-grid">
                 <button type="submit" className="btn btn-primary btn-block">
-                  Submit
+                  {getLanguage(LanguageKey.SUBMIT)}
                 </button>
               </div>
             </form>
@@ -181,8 +190,10 @@ const CurrentBet = () => {
               </div>
               <div className="col-lg-3 col-md-6 text-center">
                 <div>
-                  Total Bets: <span className="me-2">{visibleData.length}</span>{" "}
-                  Total Amount: <span className="me-2">{totalAmount}</span>
+                  {getLanguage(LanguageKey.TOTAL_BETS)}:{" "}
+                  <span className="me-2">{visibleData.length}</span>{" "}
+                  {getLanguage(LanguageKey.TOTAL_AMOUNT)}:{" "}
+                  <span className="me-2">{totalAmount}</span>
                 </div>
               </div>
               <div className="col-lg-2 col-6">
@@ -208,33 +219,33 @@ const CurrentBet = () => {
                       role="columnheader"
                       className="report-sport"
                     >
-                      Sports
+                      {getLanguage(LanguageKey.SPORTS)}
                     </th>
                     <th colSpan="1" role="columnheader">
-                      Event Name
+                      {getLanguage(LanguageKey.EVENT_NAME)}
                     </th>
                     <th colSpan="1" role="columnheader">
-                      Market Name
+                      {getLanguage(LanguageKey.MARKET_NAME)}
                     </th>
                     <th colSpan="1" role="columnheader">
-                      Nation
+                      {getLanguage(LanguageKey.NATION)}
                     </th>
                     <th
                       colSpan="1"
                       role="columnheader"
                       className="report-amount text-end"
                     >
-                      User Rate
+                      {getLanguage(LanguageKey.USER_RATE)}
                     </th>
                     <th
                       colSpan="1"
                       role="columnheader"
                       className="report-amount text-end"
                     >
-                      Amount
+                      {getLanguage(LanguageKey.AMOUNT)}
                     </th>
                     <th colSpan="1" role="columnheader" className="report-date">
-                      Place Date
+                      {getLanguage(LanguageKey.PLACE_DATE)}
                     </th>
                     <th
                       colSpan="1"

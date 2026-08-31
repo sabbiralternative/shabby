@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 // import { settings } from "../../utils";
 
 const Category = () => {
+  const { getLanguage } = useLanguage();
   return (
     <>
       <ul className="nav nav-tabs d-xl-none menu-tabs">
@@ -19,19 +22,19 @@ const Category = () => {
 
         <li className="nav-item">
           <NavLink className="nav-link" to="/live-casino">
-            Live Casino
+            {getLanguage(LanguageKey.LIVE_CASINO)}
           </NavLink>
         </li>
 
         <li className="nav-item">
           <NavLink className="nav-link" to="/slot-games">
-            Slots
+            {getLanguage(LanguageKey.SLOTS)}
           </NavLink>
         </li>
 
         <li className="nav-item">
           <NavLink className="nav-link" to="/fantasy-games">
-            Fantasy
+            {getLanguage(LanguageKey.FANTASY)}
           </NavLink>
         </li>
 

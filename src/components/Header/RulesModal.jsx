@@ -1,4 +1,8 @@
+import { LanguageKey } from "../../constant";
+import useLanguage from "../../hooks/use-language";
+
 const RulesModal = ({ setRuleModal, ruleModal }) => {
+  const { getLanguage } = useLanguage();
   return (
     <>
       <div className={`fade modal-backdrop show`}></div>
@@ -14,7 +18,9 @@ const RulesModal = ({ setRuleModal, ruleModal }) => {
         <div className="modal-dialog modal-xl">
           <div className="modal-content">
             <div className="modal-header">
-              <div className="modal-title h4">Rules</div>
+              <div className="modal-title h4">
+                {getLanguage(LanguageKey.RULES)}
+              </div>
               <div className="rules-langualge">
                 <div className="dropdown">
                   <button

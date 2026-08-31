@@ -3,8 +3,11 @@ import axios from "axios";
 import BetTable from "../../components/BetTable/BetTable";
 import { API } from "../../utils";
 import handleDecryptData from "../../utils/handleDecryptData";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const Kabaddi = () => {
+  const { getLanguage } = useLanguage();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   /* Football events */
@@ -75,10 +78,14 @@ const Kabaddi = () => {
                 Object.keys(data)?.filter((key) => {
                   return data?.[key]?.visible === true;
                 }).length < 1 && (
-                  <div className="bet-table-row">No Record Found</div>
+                  <div className="bet-table-row">
+                    {getLanguage(LanguageKey.NO_RECORD_FOUND)}
+                  </div>
                 )}
               {data === null && (
-                <div className="bet-table-row">No Record Found</div>
+                <div className="bet-table-row">
+                  {getLanguage(LanguageKey.NO_RECORD_FOUND)}
+                </div>
               )}
             </div>
           </div>

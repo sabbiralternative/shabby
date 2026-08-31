@@ -2,21 +2,23 @@ import { useRef, useState } from "react";
 import useGetGroupSportsBook from "../../hooks/groupSportsBook";
 import { Link } from "react-router-dom";
 import useCloseMultipleModal from "../../hooks/closeMultipleModal";
-
-const listItems = [
-  {
-    title: "Horse Racing",
-    group: "7a",
-    dropDownTitle: "All Horse Racing",
-  },
-  {
-    title: "Greyhound Racing",
-    group: "4339a",
-    dropDownTitle: "All Greyhound Racing",
-  },
-];
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const HorseGreyhoundMenu = () => {
+  const { getLanguage } = useLanguage();
+  const listItems = [
+    {
+      title: getLanguage(LanguageKey.HORSE),
+      group: "7a",
+      dropDownTitle: "All Horse Racing",
+    },
+    {
+      title: getLanguage(LanguageKey.GREYHOUND),
+      group: "4339a",
+      dropDownTitle: "All Greyhound Racing",
+    },
+  ];
   const dropdownRefs = useRef({});
   const [activeTab, setActiveTab] = useState(null);
   const { data } = useGetGroupSportsBook(activeTab);

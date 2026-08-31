@@ -1,8 +1,11 @@
 import toast from "react-hot-toast";
 import useSBCashOut from "../../hooks/sb_cashout";
 import { useParams } from "react-router-dom";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const MyBets = ({ myBets, sportsBook, refetchCurrentBets }) => {
+  const { getLanguage } = useLanguage();
   const { id, eventId } = useParams();
   const { mutate: cashOut } = useSBCashOut();
 
@@ -12,7 +15,7 @@ const MyBets = ({ myBets, sportsBook, refetchCurrentBets }) => {
       (group) =>
         group?.Name !== "Bet Builder" &&
         group?.Name !== "Fast Markets" &&
-        group?.Name !== "Player Specials"
+        group?.Name !== "Player Specials",
     );
 
   const handleCashOut = ({ betHistory, sportsBook, price, cashout_value }) => {
@@ -26,7 +29,7 @@ const MyBets = ({ myBets, sportsBook, refetchCurrentBets }) => {
     });
 
     const column = item?.Items?.find(
-      (col) => col?.Id === betHistory?.selectionId
+      (col) => col?.Id === betHistory?.selectionId,
     );
 
     const payload = {
@@ -63,17 +66,17 @@ const MyBets = ({ myBets, sportsBook, refetchCurrentBets }) => {
   return (
     <div className="sidebar-box my-bet-container">
       <div className="sidebar-title">
-        <h4>My Bet</h4>
+        <h4>{getLanguage(LanguageKey.MY_BET)}</h4>
       </div>
       <div className="my-bets">
         <div className="table-responsive w-100">
           <table className="table">
             <thead>
               <tr>
-                <th>Matched Bet</th>
+                <th>{getLanguage(LanguageKey.MATCHED_BETS)}</th>
                 <th className="text-end"></th>
-                <th className="text-end">Odds</th>
-                <th className="text-end">Stake</th>
+                <th className="text-end">{getLanguage(LanguageKey.ODDS)}</th>
+                <th className="text-end">{getLanguage(LanguageKey.STAKE)}</th>
               </tr>
             </thead>
             {myBets?.length > 0 && Array.isArray(myBets) && (
@@ -84,7 +87,7 @@ const MyBets = ({ myBets, sportsBook, refetchCurrentBets }) => {
                     group?.Items?.forEach((data) => {
                       if (bet?.marketId == data?.Id) {
                         column = data?.Items?.find(
-                          (col) => col?.Id === bet?.selectionId
+                          (col) => col?.Id === bet?.selectionId,
                         );
                       }
                     });
@@ -128,7 +131,7 @@ const MyBets = ({ myBets, sportsBook, refetchCurrentBets }) => {
                             }}
                           >
                             <span style={{ fontSize: "10px", color: "black" }}>
-                              Cashout
+                              {getLanguage(LanguageKey.CASHOUT)}
                             </span>
                             {price && (
                               <span

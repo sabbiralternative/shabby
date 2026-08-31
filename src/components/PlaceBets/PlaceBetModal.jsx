@@ -4,6 +4,8 @@ import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
 import UseBalance from "../../hooks/UseBalance";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const PlaceBetModal = ({
   // showBets,
@@ -14,6 +16,7 @@ const PlaceBetModal = ({
   setSuccessMessage,
   setErrorMessage,
 }) => {
+  const { getLanguage } = useLanguage();
   const [, refetchBalance] = UseBalance();
   /* price state */
   const [price, setPrice] = useState("");
@@ -159,7 +162,9 @@ const PlaceBetModal = ({
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <div className="modal-title h4">Place Bet</div>
+              <div className="modal-title h4">
+                {getLanguage(LanguageKey.PLACE_BET)}
+              </div>
               <button
                 onClick={() => setShowBets(false)}
                 type="button"
@@ -228,7 +233,7 @@ const PlaceBetModal = ({
                   </div>
                   <div onClick={handleOrderBets} className="col-4 d-grid">
                     <button className="btn btn-primary btn-block">
-                      Submit
+                      {getLanguage(LanguageKey.SUBMIT)}
                     </button>
                   </div>
                   <div className="col-4 text-center pt-2">

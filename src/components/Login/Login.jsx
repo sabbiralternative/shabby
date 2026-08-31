@@ -6,8 +6,11 @@ import UseState from "../../hooks/UseState";
 import { API, settings } from "../../utils";
 import { GrAndroid } from "react-icons/gr";
 import { AxiosSecure } from "../../lib/AxiosSecure";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const Login = () => {
+  const { getLanguage } = useLanguage();
   const closePopupForForever = localStorage.getItem("closePopupForForever");
   const navigate = useNavigate();
   const [errorLogin, setErrorLogin] = useState("");
@@ -166,7 +169,8 @@ const Login = () => {
         </Link>
         <div className="login-form mt-4">
           <h4 className="text-center login-title">
-            LOGIN <i className="fas fa-hand-point-down"></i>
+            {getLanguage(LanguageKey.LOGIN)}{" "}
+            <i className="fas fa-hand-point-down"></i>
           </h4>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4 input-group position-relative">
@@ -210,7 +214,8 @@ const Login = () => {
                 type="submit"
                 className="btn btn-primary btn-block"
               >
-                Login<i className="fas fa-sign-in-alt float-end mt-1"></i>
+                {getLanguage(LanguageKey.LOGIN)}
+                <i className="fas fa-sign-in-alt float-end mt-1"></i>
               </button>
               {/* if in notice.json demoLogin true then show button value  */}
               {settings.demo_login && (
@@ -224,7 +229,7 @@ const Login = () => {
                   type="button"
                   className="btn btn-primary btn-block mt-2"
                 >
-                  Login With demo ID
+                  {getLanguage(LanguageKey.DEMO_LOGIN)}
                   <i className="fas fa-sign-in-alt float-end mt-1"></i>
                 </button>
               )}
@@ -236,7 +241,7 @@ const Login = () => {
                     to="/register"
                     className="btn btn-secondary btn-block mt-2"
                   >
-                    Register
+                    {getLanguage(LanguageKey.REGISTER)}
                     <i className="fas fa-sign-in-alt float-end mt-1"></i>
                   </Link>
                 </div>
@@ -248,7 +253,7 @@ const Login = () => {
                     onClick={handleDownload}
                     className="btn btn-secondary btn-block mt-2"
                   >
-                    <GrAndroid /> Download .apk
+                    <GrAndroid /> {getLanguage(LanguageKey.DOWNLOAD_APK)}
                     <i className="fas fa-sign-in-alt float-end mt-1"></i>
                   </a>
                 </div>

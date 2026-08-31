@@ -5,13 +5,16 @@ import Notification from "../../components/Notification/Notification";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 const ActivityLogs = () => {
+  const { getLanguage } = useLanguage();
   const [activityLogs, setActivityLogs] = useState([]);
   const { register, handleSubmit } = useForm();
   const token = localStorage.getItem("token");
   const [errorMessage, setErrorMessage] = useState("");
- 
-/* Activity log api */
+
+  /* Activity log api */
   const onSubmit = ({ toDate, fromDate, logType }) => {
     /* Generated token */
     const generatedToken = UseTokenGenerator();
@@ -84,7 +87,9 @@ const ActivityLogs = () => {
       )}
       <div className="card">
         <div className="card-header">
-          <h4 className="card-title">Activity Log</h4>
+          <h4 className="card-title">
+            {getLanguage(LanguageKey.ACTIVITY_LOGS)}
+          </h4>
         </div>
         <div className="card-body">
           <div className="report-form">
@@ -131,15 +136,21 @@ const ActivityLogs = () => {
                     className="form-select"
                     name="logType"
                   >
-                    <option value="none">Select Log Type</option>
-                    <option value="login">Login</option>
-                    <option value="password">Change Password</option>
+                    <option value="none">
+                      {getLanguage(LanguageKey.SELECT_LOG_TYPE)}
+                    </option>
+                    <option value="login">
+                      {getLanguage(LanguageKey.LOGIN)}
+                    </option>
+                    <option value="password">
+                      {getLanguage(LanguageKey.CHANGE_PASSWORD)}
+                    </option>
                   </select>
                 </div>
               </div>
               <div className="col-lg-2 col-md-2 d-grid">
                 <button type="submit" className="btn btn-primary btn-block">
-                  Submit
+                  {getLanguage(LanguageKey.SUBMIT)}
                 </button>
               </div>
             </form>
@@ -179,16 +190,16 @@ const ActivityLogs = () => {
                 <thead>
                   <tr role="row">
                     <th colSpan="1" role="columnheader">
-                      Username
+                      {getLanguage(LanguageKey.USERNAME)}
                     </th>
                     <th colSpan="1" role="columnheader">
-                      Date
+                      {getLanguage(LanguageKey.DATE)}
                     </th>
                     <th colSpan="1" role="columnheader">
-                      Ip Address
+                      {getLanguage(LanguageKey.IP_ADDRESS)}
                     </th>
                     <th colSpan="1" role="columnheader">
-                      Browser Detail
+                      {getLanguage(LanguageKey.BROWSER_DETAILS)}
                     </th>
                   </tr>
                 </thead>

@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { API } from "../../utils";
 import handleDecryptData from "../../utils/handleDecryptData";
 import { FaUniversity } from "react-icons/fa";
-import useLanguage from "../../hooks/useLanguage";
 import { MdSportsCricket, MdSportsKabaddi } from "react-icons/md";
 // import { BiBasketball } from "react-icons/bi";
 // import { GiBasketballBall, GiVolleyballBall } from "react-icons/gi";
@@ -23,17 +22,17 @@ import {
 } from "react-icons/io5";
 import { FaPlayCircle, FaTrophy } from "react-icons/fa";
 // import { FaTableTennisPaddleBall } from "react-icons/fa6";
-import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
 import CasinoHighLight from "./CasinoHighLight";
 import HorseGreyhound from "../../components/HorseGreyhound/HorseGreyhound";
 import { eventNameList } from "../../static/event-name-list";
 import LiveVirtual from "./LiveVirtual";
 import { filterLiveVirtual } from "../../utils/filter-live-virtual";
+import useLanguage from "../../hooks/use-language";
 
 const HomePage = () => {
   const [liveVirtual, setLiveVirtual] = useState([]);
-  const { valueByLanguage } = useLanguage();
+  const { getLanguage } = useLanguage();
   const [casino_list, setCasino_list] = useState([]);
   const { sports, setSports } = UseState();
   const [data, setData] = useState([]);
@@ -88,56 +87,56 @@ const HomePage = () => {
 
   const tabPanel = [
     {
-      label: "In-Play",
+      label: getLanguage(LanguageKey.IN_PLAY),
       icon: FaPlayCircle,
       to: "",
       id: 0,
     },
     {
-      label: languageValue(valueByLanguage, LanguageKey.CRICKET),
+      label: getLanguage(LanguageKey.CRICKET),
       icon: MdSportsCricket,
       to: "",
       id: 4,
     },
     {
-      label: languageValue(valueByLanguage, LanguageKey.FOOTBALL),
+      label: getLanguage(LanguageKey.FOOTBALL),
       icon: IoFootball,
       to: "football",
       id: 1,
     },
     {
-      label: languageValue(valueByLanguage, LanguageKey.TENNIS),
+      label: getLanguage(LanguageKey.TENNIS),
       icon: IoTennisballSharp,
       to: "tennis",
       id: 2,
     },
     {
-      label: "Sportsbook",
+      label: getLanguage(LanguageKey.SPORTSBOOK),
       icon: FaTrophy,
       to: "sportsbook",
       id: 299,
       path: "/casino/sportsbook/550000",
     },
     {
-      label: languageValue(valueByLanguage, LanguageKey.KABADDI),
+      label: getLanguage(LanguageKey.KABADDI),
       icon: MdSportsKabaddi,
       to: "kabaddi",
       id: 5,
     },
     {
-      label: "Politics",
+      label: getLanguage(LanguageKey.POLITICS),
       icon: FaUniversity,
       to: "politics",
       id: 6,
     },
     {
-      label: languageValue(valueByLanguage, LanguageKey.HORSE),
+      label: getLanguage(LanguageKey.HORSE),
       icon: MdSportsKabaddi,
       to: "horse",
       id: 7,
     },
     {
-      label: languageValue(valueByLanguage, LanguageKey.GREYHOUND),
+      label: getLanguage(LanguageKey.GREYHOUND),
       icon: MdSportsKabaddi,
       to: "kabaddi",
       id: 4339,
@@ -279,7 +278,11 @@ const HomePage = () => {
                     ))
                   : null}
 
-                {!data && <div className="bet-table-row">No Record Found</div>}
+                {!data && (
+                  <div className="bet-table-row">
+                    {getLanguage(LanguageKey.NO_RECORD_FOUND)}
+                  </div>
+                )}
               </div>
             </div>
           </div>

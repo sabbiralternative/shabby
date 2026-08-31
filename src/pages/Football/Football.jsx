@@ -5,8 +5,11 @@ import { API } from "../../utils";
 import handleDecryptData from "../../utils/handleDecryptData";
 import { filterLiveVirtual } from "../../utils/filter-live-virtual";
 import LiveVirtual from "../HomePage/LiveVirtual";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const Football = () => {
+  const { getLanguage } = useLanguage();
   const [liveVirtual, setLiveVirtual] = useState([]);
   const [data, setData] = useState([]);
   const group = JSON.parse(localStorage.getItem("group"));
@@ -79,7 +82,9 @@ const Football = () => {
               {Object.keys(data)?.filter((key) => {
                 return data?.[key]?.visible === true;
               }).length < 1 && (
-                <div className="bet-table-row">No Record Found</div>
+                <div className="bet-table-row">
+                  {getLanguage(LanguageKey.NO_RECORD_FOUND)}
+                </div>
               )}
             </div>
           </div>

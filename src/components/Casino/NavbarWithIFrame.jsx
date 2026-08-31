@@ -1,7 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import UseState from "../../hooks/UseState";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const NavbarWithIFrame = () => {
+  const { getLanguage } = useLanguage();
+
   const { logo, setSports, setFilterGames } = UseState();
   const navigate = useNavigate();
 
@@ -50,7 +54,7 @@ const NavbarWithIFrame = () => {
             <ul className="navbar-nav">
               <li className="nav-item">
                 <Link className="nav-link" to="/">
-                  Home
+                  {getLanguage(LanguageKey.HOME)}
                 </Link>
               </li>
               <li className="nav-item">
@@ -59,7 +63,7 @@ const NavbarWithIFrame = () => {
                   className="nav-link"
                   to="/cricket"
                 >
-                  Cricket
+                  {getLanguage(LanguageKey.CRICKET)}
                 </Link>
               </li>
               <li className="nav-item">
@@ -68,7 +72,7 @@ const NavbarWithIFrame = () => {
                   className="nav-link"
                   to="/tennis"
                 >
-                  Tennis
+                  {getLanguage(LanguageKey.TENNIS)}
                 </Link>
               </li>
               <li className="nav-item">
@@ -77,7 +81,7 @@ const NavbarWithIFrame = () => {
                   className="nav-link"
                   to="/football"
                 >
-                  Football
+                  {getLanguage(LanguageKey.FOOTBALL)}
                 </Link>
               </li>
               <li className="nav-item">
@@ -86,7 +90,7 @@ const NavbarWithIFrame = () => {
                   className="nav-link"
                   to="/table-tennis"
                 >
-                  Table Tennis
+                  {getLanguage(LanguageKey.TABLE_TENNIS)}
                 </Link>
               </li>
               <li
@@ -97,7 +101,7 @@ const NavbarWithIFrame = () => {
                 className="nav-item"
               >
                 <Link className="nav-link" to="/baccarat">
-                  Baccarat
+                  {getLanguage(LanguageKey.BACCARAT)}
                 </Link>
               </li>
               <li
@@ -108,7 +112,7 @@ const NavbarWithIFrame = () => {
                 className="nav-item"
               >
                 <Link className="nav-link" to="/32-cards">
-                  32 Cards
+                  {getLanguage(LanguageKey._32_CARDS)}
                 </Link>
               </li>
               <li
@@ -119,7 +123,7 @@ const NavbarWithIFrame = () => {
                 className="nav-item"
               >
                 <Link className="nav-link" to="/teenpatti">
-                  Teenpatti
+                  {getLanguage(LanguageKey.TEEN_PATTI)}
                 </Link>
               </li>
               <li
@@ -130,7 +134,7 @@ const NavbarWithIFrame = () => {
                 className="nav-item"
               >
                 <Link className="nav-link" to="/poker">
-                  Poker
+                  {getLanguage(LanguageKey.POKER)}
                 </Link>
               </li>
               <li
@@ -141,7 +145,7 @@ const NavbarWithIFrame = () => {
                 className="nav-item"
               >
                 <Link className="nav-link" to="/lucky-7">
-                  Lucky 7
+                  {getLanguage(LanguageKey.LUCKY_7)}
                 </Link>
               </li>
             </ul>

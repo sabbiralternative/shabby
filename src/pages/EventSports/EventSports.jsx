@@ -4,8 +4,11 @@ import BetTable from "../../components/BetTable/BetTable";
 import { API } from "../../utils";
 import handleDecryptData from "../../utils/handleDecryptData";
 import { useParams } from "react-router-dom";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const EventSports = () => {
+  const { getLanguage } = useLanguage();
   const [data, setData] = useState([]);
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
@@ -69,7 +72,9 @@ const EventSports = () => {
                     <BetTable key={index} keys={key} data={data} />
                   ))
               ) : (
-                <div className="bet-table-row">No Record Found</div>
+                <div className="bet-table-row">
+                  {getLanguage(LanguageKey.NO_RECORD_FOUND)}
+                </div>
               )}
               {/* {Object.keys(data)?.filter((key) => {
                 return data?.[key]?.visible === true;

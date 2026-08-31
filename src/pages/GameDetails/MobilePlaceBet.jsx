@@ -1,4 +1,6 @@
 import { FaSpinner } from "react-icons/fa";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const MobilePlaceBet = ({
   // betDelay,
@@ -20,6 +22,7 @@ const MobilePlaceBet = ({
   predictOdds,
   setIsCashOut,
 }) => {
+  const { getLanguage } = useLanguage();
   const handleButtonValue = (value) => {
     setIsCashOut(false);
     const buttonValue = Number(value);
@@ -50,7 +53,9 @@ const MobilePlaceBet = ({
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <div className="modal-title h4">Place Bet</div>
+                  <div className="modal-title h4">
+                    {getLanguage(LanguageKey.PLACE_BET)}
+                  </div>
                   <button
                     onClick={() => setShowBets(false)}
                     type="button"
@@ -80,13 +85,16 @@ const MobilePlaceBet = ({
                             </span> */}
                           </span>
                           <span style={{ fontWeight: "500" }}>
-                            Your bet is being processed...
+                            {getLanguage(
+                              LanguageKey.YOUR_BET_IS_BEING_PROCESSED,
+                            )}
+                            ...
                           </span>
                           <span
                             style={{ fontWeight: "500" }}
                             className="font-semibold"
                           >
-                            Please Wait...
+                            {getLanguage(LanguageKey.PLEASE_WAIT)}...
                           </span>
                         </div>
                       </div>
@@ -142,7 +150,7 @@ const MobilePlaceBet = ({
                       </div>
                       <div onClick={handleOrderBets} className="col-4 d-grid">
                         <button className="btn btn-primary btn-block">
-                          Submit
+                          {getLanguage(LanguageKey.SUBMIT)}
                         </button>
                       </div>
                       <div className="col-4 text-center pt-2">

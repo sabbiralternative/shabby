@@ -1,4 +1,6 @@
 import { FaSpinner } from "react-icons/fa";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 const DesktopPlaceBet = ({
   showBets,
   placeBetValue,
@@ -18,6 +20,7 @@ const DesktopPlaceBet = ({
   setIsCashOut,
   // betDelay,
 }) => {
+  const { getLanguage } = useLanguage();
   const handleButtonValue = (value) => {
     setIsCashOut(false);
     const buttonValue = Number(value);
@@ -35,7 +38,7 @@ const DesktopPlaceBet = ({
       {showBets && window.innerWidth > 1199 && placeBetValue && (
         <div className="sidebar-box place-bet-container">
           <div className="sidebar-title">
-            <h4>Place Bet</h4>
+            <h4>{getLanguage(LanguageKey.PLACE_BET)}</h4>
           </div>
           <div
             className={`place-bet-box position-relative ${
@@ -58,19 +61,25 @@ const DesktopPlaceBet = ({
                     </span> */}
                   </span>
                   <span style={{ fontWeight: "500" }}>
-                    Your bet is being processed...
+                    {getLanguage(LanguageKey.YOUR_BET_IS_BEING_PROCESSED)}...
                   </span>
                   <span style={{ fontWeight: "500" }} className="font-semibold">
-                    Please Wait...
+                    {getLanguage(LanguageKey.PLEASE_WAIT)}...
                   </span>
                 </div>
               </div>
             )}
             <div className="place-bet-box-header">
               <div className="place-bet-for">(Bet for)</div>
-              <div className="place-bet-odds">Odds</div>
-              <div className="place-bet-stake">Stake</div>
-              <div className="place-bet-profit">Profit</div>
+              <div className="place-bet-odds">
+                {getLanguage(LanguageKey.ODDS)}
+              </div>
+              <div className="place-bet-stake">
+                {getLanguage(LanguageKey.STAKE)}
+              </div>
+              <div className="place-bet-profit">
+                {getLanguage(LanguageKey.PROFIT)}
+              </div>
             </div>
             <div className="place-bet-box-body">
               <div className="place-bet-for">
@@ -150,21 +159,23 @@ const DesktopPlaceBet = ({
             </div>
             <div className="place-bet-action-buttons">
               <div onClick={() => SetButtonValue(!buttonValue)}>
-                <button className="btn btn-info">Edit</button>
+                <button className="btn btn-info">
+                  {getLanguage(LanguageKey.EDIT)}
+                </button>
               </div>
               <div>
                 <button
                   onClick={() => setShowBets(!showBets)}
                   className="btn btn-danger me-1"
                 >
-                  Reset
+                  {getLanguage(LanguageKey.CANCEL)}
                 </button>
                 <button
                   onClick={handleOrderBets}
                   className="btn btn-success"
                   disabled=""
                 >
-                  Submit
+                  {getLanguage(LanguageKey.SUBMIT)}
                 </button>
               </div>
             </div>

@@ -20,7 +20,6 @@ import HorseGreyhound from "./HorseGreyhoynd";
 import Tracker from "./Tracker";
 import MyBets from "./MyBets";
 import { AxiosSecure } from "../../lib/AxiosSecure";
-import useLanguage from "../../hooks/useLanguage";
 import SportsBook from "./SportsBook/SportsBook";
 import CricketScore from "./CricketScore";
 import { Toaster } from "react-hot-toast";
@@ -30,11 +29,13 @@ import { AxiosJSEncrypt } from "../../lib/AxiosJSEncrypt";
 import { isBetDelay, isDelay } from "../../utils/isBetDelay";
 import Premium from "./Premium";
 import ToggleButtons from "./ToggleButtons";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const GameDetails = () => {
   const [fancyPremiumTab, setFancyPremiumTab] = useState("");
   const closePopupForForever = localStorage.getItem("closePopupForForever");
-  const { language } = useLanguage();
+  const { language, getLanguage } = useLanguage();
   const { id, eventId } = useParams();
   const token = localStorage.getItem("token");
   const buttonValues = JSON.parse(localStorage.getItem("buttonValue"));
@@ -485,7 +486,7 @@ const GameDetails = () => {
                 className={`nav-link ${tabs === "odds" ? "active" : ""}`}
                 data-bs-toggle="tab"
               >
-                Odds
+                {getLanguage(LanguageKey.ODDS)}
               </a>
             </li>
 
@@ -498,7 +499,7 @@ const GameDetails = () => {
                 className={`nav-link ${tabs === "matchBets" ? "active" : ""}`}
                 data-bs-toggle="tab"
               >
-                Matched Bet ({myBets?.length})
+                {getLanguage(LanguageKey.MATCHED_BETS)} ({myBets?.length})
               </a>
             </li>
 

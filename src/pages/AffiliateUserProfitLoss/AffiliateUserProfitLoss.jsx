@@ -1,8 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { useGetIndex } from "../../hooks";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const AffiliateUserProfitLoss = () => {
+  const { getLanguage } = useLanguage();
   const fromDate = new Date(new Date().setDate(new Date().getDate() - 7))
     .toISOString()
     .split("T")[0];
@@ -20,7 +23,7 @@ const AffiliateUserProfitLoss = () => {
   });
 
   const getUniqueDate = Array.from(
-    new Set(data?.result?.map((item) => item?.settledTime))
+    new Set(data?.result?.map((item) => item?.settledTime)),
   );
 
   return (
@@ -46,14 +49,14 @@ const AffiliateUserProfitLoss = () => {
             ></path>
           </svg>
           <span className="deposit-withdraw-head-title  ng-star-inserted">
-            Back
+            {getLanguage(LanguageKey.BACK)}
           </span>
         </div>
         {getUniqueDate?.length > 0 && (
           <div>
             {getUniqueDate?.map((date) => {
               const filterByDate = data?.result?.filter(
-                (item) => item?.settledTime === date
+                (item) => item?.settledTime === date,
               );
               const totalPnl = filterByDate?.reduce((acc, curr) => {
                 return acc + curr.memberWin;
@@ -92,7 +95,7 @@ const AffiliateUserProfitLoss = () => {
                         justifyContent: "center",
                       }}
                     >
-                      <span>Total PL</span>
+                      <span>{getLanguage(LanguageKey.TOTAL_PL)}</span>
                       <span style={{ marginTop: "-2px", marginLeft: "4px" }}>
                         :
                       </span>
@@ -104,8 +107,8 @@ const AffiliateUserProfitLoss = () => {
                             totalPnl > 0
                               ? "#48BB78"
                               : totalPnl < 0
-                              ? "#F56565"
-                              : "#FFFFFF",
+                                ? "#F56565"
+                                : "#FFFFFF",
                         }}
                       >
                         {totalPnl}
@@ -138,7 +141,8 @@ const AffiliateUserProfitLoss = () => {
                                 {item?.narration}
                               </h3>
                               <h3 style={{ fontSize: "12px" }}>
-                                Balance: {item?.balance}
+                                {getLanguage(LanguageKey.BALANCE)}:{" "}
+                                {item?.balance}
                               </h3>
                               <h3 style={{ color: "gray", fontSize: "12px" }}>
                                 {item?.time}
@@ -176,13 +180,17 @@ const AffiliateUserProfitLoss = () => {
 
         {getUniqueDate?.length === 0 && (
           <div className="no-data ng-star-inserted">
-            <p>Passbook not found</p>
+            <p>{getLanguage(LanguageKey.PASSBOOK_NOT_FOUND)}</p>
           </div>
         )}
 
         {!token && (
           <div className="no-data ng-star-inserted">
-            <p>Please login to view your passbook entries</p>
+            <p>
+              {getLanguage(
+                LanguageKey.PLEASE_LOGIN_TO_VIEW_YOUR_PASSBOOK_ENTRIES,
+              )}
+            </p>
           </div>
         )}
       </div>

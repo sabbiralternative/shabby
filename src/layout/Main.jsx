@@ -10,8 +10,8 @@ import useLatestEvent from "../hooks/useLatestEvent";
 import { settings } from "../utils";
 import { handleLogout } from "../utils/handleLogout";
 import MaintenanceMessage from "../components/MaintenanceMessage/MaintenanceMessage";
-import useLanguage from "../hooks/useLanguage";
 import MiniGames from "../components/MiniGames";
+import useLanguage from "../hooks/use-language";
 
 const Main = () => {
   const [showMiniGamesModal, setShowMiniGamesModal] = useState(false);
@@ -140,6 +140,8 @@ const Main = () => {
   }
   return (
     <div>
+      <meta name="description" content={settings.metaDescription} />
+      <meta name="keywords" content={settings.metaKeywords} />
       <Header />
       <div className="main-container">
         <div className="sidebar left-sidebar">

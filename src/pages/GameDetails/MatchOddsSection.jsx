@@ -7,6 +7,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import handleCashoutPlaceBet from "../../utils/handleCashoutPlaceBet";
 import SpeedCashOut from "../../components/Modal/SpeedCashOut";
 import { isGameSuspended } from "../../utils/isGameSuspended";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const MatchOddsSection = ({
   match_odds,
@@ -16,6 +18,7 @@ const MatchOddsSection = ({
   booksValue,
   totalSize,
 }) => {
+  const { getLanguage } = useLanguage();
   const [speedCashOut, setSpeedCashOut] = useState(null);
   const navigate = useNavigate();
   const { eventId } = useParams();
@@ -245,8 +248,10 @@ const MatchOddsSection = ({
                     <table className="table table-bordered">
                       <thead>
                         <tr>
-                          <th>Run</th>
-                          <th className="text-end">Amount</th>
+                          <th>{getLanguage(LanguageKey.RUN)}</th>
+                          <th className="text-end">
+                            {getLanguage(LanguageKey.AMOUNT)}
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -331,7 +336,7 @@ const MatchOddsSection = ({
                           : "cash-out-theme-bg"
                     }`}
                   >
-                    <div>Cashout</div>
+                    <div>{getLanguage(LanguageKey.CASHOUT)}</div>
                     {teamProfitForGame?.profit && (
                       <div
                         style={{
@@ -388,7 +393,7 @@ const MatchOddsSection = ({
                     disabled={isGameSuspended(item)}
                     type="button"
                   >
-                    <div>Speed Cashout</div>
+                    <div>{getLanguage(LanguageKey.SPEED_CASHOUT)}</div>
                   </button>
                 )}
             </div>
@@ -396,7 +401,7 @@ const MatchOddsSection = ({
             <div className="market-header">
               <div className="market-nation-detail">
                 <span className="market-nation-name">
-                  Max: {item?.maxLiabilityPerBet}
+                  {getLanguage(LanguageKey.MAX)}: {item?.maxLiabilityPerBet}
                 </span>
               </div>
               <div className="market-odd-box no-border d-none d-md-block"></div>

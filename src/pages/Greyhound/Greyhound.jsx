@@ -3,8 +3,11 @@ import axios from "axios";
 import { API } from "../../utils";
 import HorseGreyhound from "../../components/HorseGreyhound/HorseGreyhound";
 import handleDecryptData from "../../utils/handleDecryptData";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const Horse = () => {
+  const { getLanguage } = useLanguage();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   /* Cricket event */
@@ -64,7 +67,9 @@ const Horse = () => {
                   title="Greyhound Racing"
                 />
               ) : (
-                <div className="bet-table-row">No Record Found</div>
+                <div className="bet-table-row">
+                  {getLanguage(LanguageKey.NO_RECORD_FOUND)}
+                </div>
               )}
               {/* {Object.values(data).length < 1 && (
                 <div className="bet-table-row">No Record Found</div>

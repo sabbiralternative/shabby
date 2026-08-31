@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 import { settings } from "../../utils";
-import useLanguage from "../../hooks/useLanguage";
-import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
 import UseState from "../../hooks/UseState";
+import useLanguage from "../../hooks/use-language";
 
 const DesktopDropdown = ({
   setDropDown,
@@ -14,7 +13,7 @@ const DesktopDropdown = ({
   exp,
   logOut,
 }) => {
-  const { valueByLanguage } = useLanguage();
+  const { getLanguage } = useLanguage();
   const {
     buttonValue,
     SetButtonValue,
@@ -45,14 +44,14 @@ const DesktopDropdown = ({
         {settings?.branchWhatsapplink && (
           <Link onClick={() => openWhatsAppLink(settings?.branchWhatsapplink)}>
             <li data-rr-ui-dropdown-item="" className="dropdown-item">
-              Customer Support
+              {getLanguage(LanguageKey.CUSTOMER_SUPPORT)}
             </li>
           </Link>
         )}
         {settings.withdraw && (
           <Link to="/withdraw-statement" onClick={() => setDropDown(!dropDown)}>
             <li data-rr-ui-dropdown-item="" className="dropdown-item">
-              {languageValue(valueByLanguage, LanguageKey.WITHDRAW_STATMENT)}
+              {getLanguage(LanguageKey.WITHDRAW_STATMENT)}
             </li>
           </Link>
         )}
@@ -60,51 +59,51 @@ const DesktopDropdown = ({
         {settings.deposit && (
           <Link to="/deposit-statement" onClick={() => setDropDown(!dropDown)}>
             <li data-rr-ui-dropdown-item="" className="dropdown-item">
-              {languageValue(valueByLanguage, LanguageKey.DEPOSIT_STATEMENT)}
+              {getLanguage(LanguageKey.DEPOSIT_STATEMENT)}
             </li>
           </Link>
         )}
         <Link to="/account-statement" onClick={() => setDropDown(!dropDown)}>
           <li data-rr-ui-dropdown-item="" className="dropdown-item">
-            Account Statement
+            {getLanguage(LanguageKey.ACCOUNT_STATEMENT)}
           </li>
         </Link>
         <Link onClick={() => setDropDown(!dropDown)} to="/current-bet">
           <li data-rr-ui-dropdown-item="" className="dropdown-item">
-            Current Bets
+            {getLanguage(LanguageKey.CURRENT_BETS)}
           </li>
         </Link>
         <Link to="/my-bank-details" onClick={() => setDropDown(!dropDown)}>
           <li data-rr-ui-dropdown-item="" className="dropdown-item">
-            {languageValue(valueByLanguage, LanguageKey.MY_BANK_DETAILS)}
+            {getLanguage(LanguageKey.MY_BANK_DETAILS)}
           </li>
         </Link>
         <Link to="/bonus-statement" onClick={() => setDropDown(!dropDown)}>
           <li data-rr-ui-dropdown-item="" className="dropdown-item">
-            {languageValue(valueByLanguage, LanguageKey.BONUS_STATEMENT)}
+            {getLanguage(LanguageKey.BONUS_STATEMENT)}
           </li>
         </Link>
         {settings?.referral && (
           <Link to="/affiliate" onClick={() => setDropDown(!dropDown)}>
             <li data-rr-ui-dropdown-item="" className="dropdown-item">
-              Affiliate
+              {getLanguage(LanguageKey.AFFILIATE)}
             </li>
           </Link>
         )}
         <Link to="/promotions" onClick={() => setDropDown(!dropDown)}>
           <li data-rr-ui-dropdown-item="" className="dropdown-item">
-            Promos & Bonus
+            {getLanguage(LanguageKey.PROMOTION_AND_BONUSES)}
           </li>
         </Link>
         <Link to="/lossback-bonus" onClick={() => setDropDown(!dropDown)}>
           <li data-rr-ui-dropdown-item="" className="dropdown-item">
-            Lossback Bonus
+            {getLanguage(LanguageKey.LOSSBACK_BONUS)}
           </li>
         </Link>
         {closePopupForForever && (
           <Link to="/app-only-bonus" onClick={() => setDropDown(!dropDown)}>
             <li data-rr-ui-dropdown-item="" className="dropdown-item">
-              App Only Bonus
+              {getLanguage(LanguageKey.APP_ONLY_BONUS)}
             </li>
           </Link>
         )}
@@ -125,7 +124,7 @@ const DesktopDropdown = ({
 
         <Link onClick={() => setDropDown(!dropDown)} to="/activity-logs">
           <li data-rr-ui-dropdown-item="" className="dropdown-item">
-            Activity Logs
+            {getLanguage(LanguageKey.ACTIVITY_LOGS)}
           </li>
         </Link>
 
@@ -135,17 +134,19 @@ const DesktopDropdown = ({
             setDropDown(!dropDown);
           }}
         >
-          <li className="dropdown-item">Set Button Values</li>
+          <li className="dropdown-item">
+            {getLanguage(LanguageKey.EDIT_STAKE)}
+          </li>
         </div>
 
         <Link to="/secure-auth" onClick={() => setDropDown(!dropDown)}>
           <li data-rr-ui-dropdown-item="" className="dropdown-item">
-            Security Auth Verification
+            {getLanguage(LanguageKey.SECURITY_AUTH_VERIFICATION)}
           </li>
         </Link>
         <Link onClick={() => setDropDown(!dropDown)} to="/change-password">
           <li data-rr-ui-dropdown-item="" className="dropdown-item">
-            {languageValue(valueByLanguage, LanguageKey.CHANGE_PASSWORD)}
+            {getLanguage(LanguageKey.CHANGE_PASSWORD)}
           </li>
         </Link>
         {/* {settings?.whatsapplink && (
@@ -163,23 +164,20 @@ const DesktopDropdown = ({
                           </Link>
                         )} */}
         <div className="d-xl-none">
-          <li className="dropdown-item">
-            {" "}
-            {languageValue(valueByLanguage, LanguageKey.RULES)}
-          </li>
+          <li className="dropdown-item"> {getLanguage(LanguageKey.RULES)}</li>
         </div>
 
         <Link
           onClick={() => setBalance(!balance)}
           className="dropdown-item d-xl-none"
         >
-          {languageValue(valueByLanguage, LanguageKey.BALANCE)}
+          {getLanguage(LanguageKey.BALANCE)}
           <div className="form-check float-end">
             <input className="form-check-input" type="checkbox" />
           </div>
         </Link>
         <Link onClick={() => setExp(!exp)} className="dropdown-item d-xl-none">
-          {languageValue(valueByLanguage, LanguageKey.EXPOSURE)}
+          {getLanguage(LanguageKey.EXPOSURE)}
           <div className="form-check float-end">
             <input className="form-check-input" type="checkbox" />
           </div>
@@ -190,7 +188,7 @@ const DesktopDropdown = ({
           data-rr-ui-dropdown-item=""
           className="dropdown-item"
         >
-          {languageValue(valueByLanguage, LanguageKey.LOGOUT)}
+          {getLanguage(LanguageKey.LOGOUT)}
         </li>
       </ul>
     </div>

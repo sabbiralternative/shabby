@@ -2,13 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API } from "../../utils";
-import useLanguage from "../../hooks/useLanguage";
-import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
 import HorseGreyhoundMenu from "./HorseGreyhoundMenu";
+import useLanguage from "../../hooks/use-language";
 
 const Sidebar = () => {
-  const { valueByLanguage } = useLanguage();
+  const { getLanguage } = useLanguage();
   const [sportsLink, setSportsLink] = useState(true);
   const [menu, setMenu] = useState([]);
 
@@ -35,7 +34,7 @@ const Sidebar = () => {
               aria-expanded="true"
               className="accordion-button"
             >
-              Others
+              {getLanguage(LanguageKey.OTHERS)}
             </button>
           </h2>
           <div className="accordion-collapse collapse show">
@@ -55,31 +54,25 @@ const Sidebar = () => {
 
                 <li className="nav-item">
                   <Link className="nav-link" to="/live-casino">
-                    <span>
-                      {" "}
-                      {languageValue(valueByLanguage, LanguageKey.LIVE_CASINO)}
-                    </span>
+                    <span> {getLanguage(LanguageKey.LIVE_CASINO)}</span>
                   </Link>
                 </li>
 
                 <li className="nav-item">
                   <Link className="nav-link" to="/slot-games">
-                    <span>Slot Game</span>
+                    <span>{getLanguage(LanguageKey.SLOTS)}</span>
                   </Link>
                 </li>
 
                 <li className="nav-item">
                   <Link className="nav-link" to="/fantasy-games">
-                    <span>Fantasy Game</span>
+                    <span>{getLanguage(LanguageKey.FANTASY)}</span>
                   </Link>
                 </li>
 
                 <li className="nav-item">
                   <Link className="nav-link" to="/mac88">
-                    <span>
-                      {" "}
-                      {languageValue(valueByLanguage, LanguageKey.MAC88)}
-                    </span>
+                    <span> {getLanguage(LanguageKey.MAC88)}</span>
                   </Link>
                 </li>
               </ul>
@@ -98,7 +91,7 @@ const Sidebar = () => {
               aria-expanded="true"
               className={`accordion-button ${!sportsLink ? "collapsed" : ""}`}
             >
-              All Sports
+              {getLanguage(LanguageKey.ALL_SPORTS)}
             </button>
           </h2>
           {sportsLink && (

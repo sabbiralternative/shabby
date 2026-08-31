@@ -2,14 +2,15 @@
 
 import { useRef } from "react";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
-import useLanguage from "../../hooks/useLanguage";
 
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useGetLanguage } from "../../hooks/language";
 import { settings } from "../../utils";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const Language = ({ setShowLanguage, showAppPopUp, windowWidth }) => {
-  const { setLanguage } = useLanguage();
+  const { setLanguage, getLanguage } = useLanguage();
   const { data } = useGetLanguage();
 
   const languageRef = useRef();
@@ -99,7 +100,8 @@ const Language = ({ setShowLanguage, showAppPopUp, windowWidth }) => {
                         _ngcontent-ng-c2806737617=""
                         className="form-title"
                       >
-                        <MdKeyboardArrowRight /> <span>Select Language</span>
+                        <MdKeyboardArrowRight />{" "}
+                        <span>{getLanguage(LanguageKey.SELECT_LANGUAGE)}</span>
                       </h1>
 
                       <div

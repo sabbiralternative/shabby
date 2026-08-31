@@ -3,8 +3,11 @@ import UseState from "../../hooks/UseState";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
+  const { getLanguage } = useLanguage();
   const token = localStorage.getItem("token");
   const [previousData, setPreviousData] = useState(normal);
   const [changedPrices, setChangedPrices] = useState({});
@@ -113,8 +116,10 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                     <table className="table table-bordered">
                       <thead>
                         <tr>
-                          <th>Run</th>
-                          <th className="text-end">Amount</th>
+                          <th>{getLanguage(LanguageKey.RUN)}</th>
+                          <th className="text-end">
+                            {getLanguage(LanguageKey.AMOUNT)}
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -320,10 +325,12 @@ const NormalSection = ({ normal, setShowBets, exposer, setTotalSize }) => {
                         <div className="fancy-min-max-box">
                           <div className="fancy-min-max">
                             <span className="w-100 d-block">
-                              Min: {fancyGame?.minLiabilityPerBet}
+                              {getLanguage(LanguageKey.MIN)}:{" "}
+                              {fancyGame?.minLiabilityPerBet}
                             </span>
                             <span className="w-100 d-block">
-                              Max: {fancyGame?.maxLiabilityPerBet}
+                              {getLanguage(LanguageKey.MAX)}:{" "}
+                              {fancyGame?.maxLiabilityPerBet}
                             </span>
                           </div>
                         </div>

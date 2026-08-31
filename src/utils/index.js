@@ -57,6 +57,8 @@ export const API = {
 };
 
 export const settings = {
+  metaKeywords: "",
+  metaDescription: "",
   apk_banner: "",
   apk_link: "",
   site: "",

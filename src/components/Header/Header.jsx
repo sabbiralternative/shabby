@@ -15,9 +15,7 @@ import { API, settings } from "../../utils";
 import AppPopup from "./AppPopUp";
 import Referral from "../Modal/Referral";
 import MobileDropdown from "./MobileDropdown";
-import useLanguage from "../../hooks/useLanguage";
 import Language from "../Modal/Language";
-import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
 
 import DownloadAPK from "../Modal/DownloadAPK/DownloadAPK";
@@ -26,11 +24,12 @@ import { handleLogout } from "../../utils/handleLogout";
 import Error from "../Modal/Error/Error";
 import DesktopDropdown from "./DesktopDropdown";
 import HeaderBottomDesktopLinks from "./HeaderBottomDesktopLinks";
+import useLanguage from "../../hooks/use-language";
 const Header = () => {
   const [showBuildVersion, setShowBuildVersion] = useState(false);
   const stored_build_version = localStorage.getItem("build_version");
   /* Open dropdown state for mobile version */
-  const { valueByLanguage } = useLanguage();
+  const { getLanguage } = useLanguage();
   const [showLanguage, setShowLanguage] = useState(false);
 
   const [showReferral, setShowReferral] = useState(false);
@@ -468,7 +467,7 @@ const Header = () => {
                 >
                   <div>
                     <Link className="rules-link pointer">
-                      <b>{languageValue(valueByLanguage, LanguageKey.RULES)}</b>
+                      <b>{getLanguage(LanguageKey.RULES)}</b>
                     </Link>
                   </div>
                 </div>
@@ -476,22 +475,20 @@ const Header = () => {
                   {/* In notice.json if deposit = true then showing deposit button */}
                   {settings.deposit && (
                     <Link className="btn btn-success me-2" to="/deposit">
-                      {languageValue(valueByLanguage, LanguageKey.DEPOSIT)}
+                      {getLanguage(LanguageKey.DEPOSIT)}
                     </Link>
                   )}
                   {/* In notice.json if withdraw = true then showing withdraw button */}
                   {settings.withdraw && (
                     <Link className="btn btn-danger" to="/withdraw">
-                      {languageValue(valueByLanguage, LanguageKey.WITHDRAW)}
+                      {getLanguage(LanguageKey.WITHDRAW)}
                     </Link>
                   )}
                 </div>
                 <div className="user-balance ms-1 ms-xl-3">
                   {balance && (
                     <div>
-                      <span>
-                        {languageValue(valueByLanguage, LanguageKey.BALANCE)}:
-                      </span>
+                      <span>{getLanguage(LanguageKey.BALANCE)}:</span>
                       <b>{balanceData?.creditLimit}</b>
                     </div>
                   )}
@@ -837,7 +834,7 @@ const Header = () => {
                   {/* if register = true in notice.json then show register button */}
                   {settings.registration && (
                     <Link className="btn-home-login" to="/register">
-                      {languageValue(valueByLanguage, LanguageKey.REGISTER)}
+                      {getLanguage(LanguageKey.REGISTER)}
                     </Link>
                   )}
 
@@ -846,12 +843,12 @@ const Header = () => {
                     className="btn-home-login"
                     to="/login"
                   >
-                    {languageValue(valueByLanguage, LanguageKey.LOGIN)}
+                    {getLanguage(LanguageKey.LOGIN)}
                   </Link>
                   {/* notice.json --> demoLogin = true then show the button */}
                   {settings.demo_login && (
                     <a onClick={loginWithDemo} className="btn-home-login">
-                      Demo
+                      {getLanguage(LanguageKey.DEMO_LOGIN)}
                     </a>
                   )}
                   {/* {settings.registration_whatsapp &&

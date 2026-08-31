@@ -5,8 +5,11 @@ import Notification from "../../components/Notification/Notification";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const AccountStatement = () => {
+  const { getLanguage } = useLanguage();
   const { register, handleSubmit } = useForm();
 
   const token = localStorage.getItem("token");
@@ -124,7 +127,9 @@ const AccountStatement = () => {
         )}
         <div className="card">
           <div className="card-header">
-            <h4 className="card-title">Account Statement</h4>
+            <h4 className="card-title">
+              {getLanguage(LanguageKey.ACCOUNT_STATEMENT)}
+            </h4>
           </div>
           <div className="card-body">
             <div className="report-form">
@@ -138,7 +143,7 @@ const AccountStatement = () => {
                           type="date"
                           defaultValue={
                             new Date(
-                              new Date().setDate(new Date().getDate() - 7)
+                              new Date().setDate(new Date().getDate() - 7),
                             )
                               .toISOString()
                               .split("T")[0]
@@ -174,11 +179,17 @@ const AccountStatement = () => {
                       name="reportType"
                     >
                       <option value="none" disabled="">
-                        Select Report Type
+                        {getLanguage(LanguageKey.SELECT_REPORT_TYPE)}
                       </option>
-                      <option value="ALL">All Reports</option>
-                      <option value="DW">Deposite/Withdraw Reports</option>
-                      <option value="GR">Game Reports</option>
+                      <option value="ALL">
+                        {getLanguage(LanguageKey.ALL_REPORTS)}
+                      </option>
+                      <option value="DW">
+                        {getLanguage(LanguageKey.DEPOSIT_WITHDRAW_REPORT)}
+                      </option>
+                      <option value="GR">
+                        {getLanguage(LanguageKey.GAME_REPORT)}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -228,28 +239,28 @@ const AccountStatement = () => {
                         role="columnheader"
                         className="report-date"
                       >
-                        Date
+                        {getLanguage(LanguageKey.DATE)}
                       </th>
                       <th
                         colSpan="1"
                         role="columnheader"
                         className="report-sr text-end"
                       >
-                        Sr no
+                        {getLanguage(LanguageKey.SR_NO)}
                       </th>
                       <th
                         colSpan="1"
                         role="columnheader"
                         className="report-amount text-end"
                       >
-                        Credit
+                        {getLanguage(LanguageKey.CREDIT)}
                       </th>
                       <th
                         colSpan="1"
                         role="columnheader"
                         className="report-amount text-end"
                       >
-                        Debit
+                        {getLanguage(LanguageKey.DEBIT)}
                       </th>
                       <th
                         colSpan="1"
@@ -260,7 +271,7 @@ const AccountStatement = () => {
                       </th>
 
                       <th colSpan="1" role="columnheader">
-                        Remark
+                        {getLanguage(LanguageKey.REMARK)}
                       </th>
                     </tr>
                   </thead>
@@ -276,7 +287,7 @@ const AccountStatement = () => {
                               settledTime,
                               time,
                             },
-                            i
+                            i,
                           ) => {
                             return (
                               <tr key={i} role="row">
@@ -331,7 +342,7 @@ const AccountStatement = () => {
                                 </td>
                               </tr>
                             );
-                          }
+                          },
                         )
                       : null}
                   </tbody>

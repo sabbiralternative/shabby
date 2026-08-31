@@ -6,8 +6,11 @@ import Notification from "../Notification/Notification";
 import UseState from "../../hooks/UseState";
 import { API, settings } from "../../utils";
 import { AxiosSecure } from "../../lib/AxiosSecure";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 // import getOtpOnWhatsapp from "../../utils/getOtpOnWhatsapp";
 const Register = () => {
+  const { getLanguage } = useLanguage();
   const affnook_token = localStorage.getItem("affnook_token");
   const token = localStorage.getItem("token");
   const referralCode = localStorage.getItem("referralCode");
@@ -221,7 +224,8 @@ const Register = () => {
           </div>
           <div className="login-form mt-4">
             <h4 className="text-center login-title">
-              Register <i className="fas fa-hand-point-down"></i>
+              {getLanguage(LanguageKey.REGISTER)}{" "}
+              <i className="fas fa-hand-point-down"></i>
             </h4>
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* <!-- whatsapp start--> */}
@@ -230,8 +234,14 @@ const Register = () => {
                 settings?.registration_whatsapp && (
                   <div className="whatsapp-box">
                     <div>
-                      <span>Register as New User</span>
-                      <h4>Get your instant ID from whatsapp</h4>
+                      <span>
+                        {getLanguage(LanguageKey.REGISTER_AS_NEW_USER)}
+                      </span>
+                      <h4>
+                        {getLanguage(
+                          LanguageKey.GET_YOUR_INSTANT_ID_FROM_WHATSAPP,
+                        )}
+                      </h4>
                     </div>
                     <Link
                       onClick={() =>
@@ -242,7 +252,9 @@ const Register = () => {
                       <div className="whatsapp-icon">
                         <i className="fab fa-whatsapp"></i>
                       </div>
-                      <div className="click-here">click here</div>
+                      <div className="click-here">
+                        {getLanguage(LanguageKey.CLICK_HERE)}
+                      </div>
                     </Link>
                   </div>
                 )}
@@ -278,7 +290,7 @@ const Register = () => {
                     className="btn btn-primary btn-block"
                     type="button"
                   >
-                    Retry in {timer}
+                    {getLanguage(LanguageKey.RETRY_IN)} {timer}
                   </button>
                 ) : (
                   <button
@@ -286,7 +298,7 @@ const Register = () => {
                     className="btn btn-primary btn-block"
                     type="button"
                   >
-                    Get OTP Message
+                    {getLanguage(LanguageKey.GET_OTP_ON_MESSAGE)}
                   </button>
                 )}
 
@@ -368,13 +380,14 @@ const Register = () => {
               </div>
               <div className="d-grid">
                 <button type="submit" className="btn btn-primary btn-block">
-                  Register<i className="fas fa-sign-in-alt float-end mt-1"></i>
+                  {getLanguage(LanguageKey.REGISTER)}
+                  <i className="fas fa-sign-in-alt float-end mt-1"></i>
                 </button>
               </div>
               <div className="mt-2 mb-1">
                 <b>Already have User?</b>
                 <Link to="/login" className="ms-1">
-                  <b>Login here</b>
+                  <b>{getLanguage(LanguageKey.LOGIN)}</b>
                 </Link>
               </div>
               <small className="recaptchaTerms mt-1">

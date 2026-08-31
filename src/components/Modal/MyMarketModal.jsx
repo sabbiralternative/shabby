@@ -1,8 +1,11 @@
 import { useRef } from "react";
 import CloseModalClickOutside from "../../hooks/CloseModalClickOutside";
 import { Link } from "react-router-dom";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const MyMarketModal = ({ setShowMyMarket, myMarketData }) => {
+  const { getLanguage } = useLanguage();
   /* Close modal click outside */
   const modalRef = useRef();
   CloseModalClickOutside(modalRef, () => {
@@ -22,7 +25,9 @@ const MyMarketModal = ({ setShowMyMarket, myMarketData }) => {
         <div className="modal-dialog modal-xl">
           <div className="modal-content" ref={modalRef}>
             <div className="modal-header">
-              <div className="modal-title h4">My Market</div>
+              <div className="modal-title h4">
+                {getLanguage(LanguageKey.MY_MARKETS)}
+              </div>
               <button
                 onClick={() => setShowMyMarket(false)}
                 type="button"
@@ -35,8 +40,8 @@ const MyMarketModal = ({ setShowMyMarket, myMarketData }) => {
                 <table className="table">
                   <thead>
                     <tr>
-                      <th>Event Type</th>
-                      <th>Event Name</th>
+                      <th>{getLanguage(LanguageKey.EVENT_TYPE)}</th>
+                      <th>{getLanguage(LanguageKey.EVENT_NAME)}</th>
                     </tr>
                   </thead>
                   <tbody>

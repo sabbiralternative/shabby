@@ -5,8 +5,11 @@ import { API } from "../../utils";
 import handleDecryptData from "../../utils/handleDecryptData";
 import { filterLiveVirtual } from "../../utils/filter-live-virtual";
 import LiveVirtual from "../HomePage/LiveVirtual";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const Cricket = () => {
+  const { getLanguage } = useLanguage();
   const [liveVirtual, setLiveVirtual] = useState([]);
   const [data, setData] = useState([]);
   const group = JSON.parse(localStorage.getItem("group"));
@@ -55,7 +58,7 @@ const Cricket = () => {
                 className="bet-nation-name"
                 style={{ display: "flex", alignItems: "center" }}
               >
-                <b>Game</b>
+                <b>{getLanguage(LanguageKey.GAME)}</b>
                 <LiveVirtual setLiveVirtual={setLiveVirtual} category={group} />
               </div>
               <div className="bet-nation-odd">
@@ -75,12 +78,16 @@ const Cricket = () => {
                   <BetTable key={index} keys={key} data={data} />
                 ))
               ) : (
-                <div className="bet-table-row">No Record Found</div>
+                <div className="bet-table-row">
+                  {getLanguage(LanguageKey.NO_RECORD_FOUND)}
+                </div>
               )}
               {Object.keys(data)?.filter((key) => {
                 return data?.[key]?.visible === true;
               }).length < 1 && (
-                <div className="bet-table-row">No Record Found</div>
+                <div className="bet-table-row">
+                  {getLanguage(LanguageKey.NO_RECORD_FOUND)}
+                </div>
               )}
             </div>
           </div>

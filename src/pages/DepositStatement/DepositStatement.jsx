@@ -4,7 +4,10 @@ import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import Notification from "../../components/Notification/Notification";
 import { API } from "../../utils";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 const DepositStatement = () => {
+  const { getLanguage } = useLanguage();
   const { register, handleSubmit } = useForm();
 
   //   const settledBetsApi = config?.result?.endpoint?.settledBets;
@@ -81,7 +84,6 @@ const DepositStatement = () => {
 
   /* Pagination  end*/
 
-
   return (
     <div className="center-container">
       {errorMessage && (
@@ -93,7 +95,9 @@ const DepositStatement = () => {
       )}
       <div className="card">
         <div className="card-header">
-          <h4 className="card-title">Deposit Statement</h4>
+          <h4 className="card-title">
+            {getLanguage(LanguageKey.DEPOSIT_STATEMENT)}
+          </h4>
         </div>
         <div className="card-body">
           <div className="report-form">
@@ -147,18 +151,24 @@ const DepositStatement = () => {
                     data-gtm-form-interact-field-id="4"
                   >
                     <option value="" disabled="">
-                      Select Type
+                      {getLanguage(LanguageKey.SELECT_TYPE)}
                     </option>
-                    <option value="ALL">All</option>
-                    <option value="PENDING">Pending</option>
-                    <option value="APPROVED">Approved</option>
-                    <option value="REJECTED">Rejected</option>
+                    <option value="ALL">{getLanguage(LanguageKey.ALL)}</option>
+                    <option value="PENDING">
+                      {getLanguage(LanguageKey.PENDING)}
+                    </option>
+                    <option value="APPROVED">
+                      {getLanguage(LanguageKey.APPROVED)}
+                    </option>
+                    <option value="REJECTED">
+                      {getLanguage(LanguageKey.REJECTED)}
+                    </option>
                   </select>
                 </div>
               </div>
               <div className="col-lg-2 col-md-2 d-grid">
                 <button type="submit" className="btn btn-primary btn-block">
-                  Submit
+                  {getLanguage(LanguageKey.SUBMIT)}
                 </button>
               </div>
             </form>
@@ -186,7 +196,6 @@ const DepositStatement = () => {
                     type="search"
                     className="form-control"
                     placeholder={`${visibleData.length} records...`}
-                
                   />
                 </div>
               </div>
@@ -199,16 +208,16 @@ const DepositStatement = () => {
                 <thead>
                   <tr role="row">
                     <th colSpan="1" role="columnheader">
-                      Amount
+                      {getLanguage(LanguageKey.AMOUNT)}
                     </th>
                     <th colSpan="1" role="columnheader">
-                      Status
+                      {getLanguage(LanguageKey.STATUS)}
                     </th>
                     <th colSpan="1" role="columnheader">
-                      Date
+                      {getLanguage(LanguageKey.DATE)}
                     </th>
                     <th colSpan="1" role="columnheader">
-                      Remark
+                      {getLanguage(LanguageKey.REMARK)}
                     </th>
                   </tr>
                 </thead>

@@ -8,8 +8,11 @@ import Notification from "../Notification/Notification";
 import UseState from "../../hooks/UseState";
 import { Toaster } from "react-hot-toast";
 import { useGetIndex } from "../../hooks";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const Referral = ({ setShowReferral }) => {
+  const { getLanguage } = useLanguage();
   const [success, setSuccess] = useState("");
   const { logo } = UseState();
 
@@ -112,10 +115,14 @@ const Referral = ({ setShowReferral }) => {
                         className="modal-body"
                         style={{ backgroundColor: "white" }}
                       >
-                        <h3 _ngcontent-ng-c526813732="">Refer and earn</h3>
+                        <h3 _ngcontent-ng-c526813732="">
+                          {getLanguage(LanguageKey.REFER_AND_EARN)}
+                        </h3>
                         <p _ngcontent-ng-c526813732="">
-                          Be our brand hero, refer your friend using your refer
-                          code.
+                          {getLanguage(
+                            LanguageKey.BE_OUR_BRAND_HERO_REFER_YOUR_FRIEND_USING_YOUR_REFER_CODE,
+                          )}
+                          .
                         </p>
                         <div
                           _ngcontent-ng-c526813732=""
@@ -141,7 +148,7 @@ const Referral = ({ setShowReferral }) => {
                             _ngcontent-ng-c526813732=""
                             className="btn secondary-btn"
                           >
-                            Copy
+                            {getLanguage(LanguageKey.COPY)}
                           </button>
                         </div>
                       </div>

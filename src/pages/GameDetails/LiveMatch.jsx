@@ -1,9 +1,13 @@
+import { LanguageKey } from "../../constant";
+import useLanguage from "../../hooks/use-language";
+
 const LiveMatch = ({
   setShowMobileTv,
   setFetchVideo,
   showMobileTv,
   videoUrl,
 }) => {
+  const { getLanguage } = useLanguage();
   return (
     <div
       style={{
@@ -16,7 +20,7 @@ const LiveMatch = ({
       className="sidebar-box"
     >
       <div className="sidebar-title">
-        <h4>Live Match</h4>
+        <h4>{getLanguage(LanguageKey.LIVE_STREAM)}</h4>
       </div>
       {showMobileTv && (
         <div className="live-tv">

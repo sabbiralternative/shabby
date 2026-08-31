@@ -6,10 +6,12 @@ import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
 import { handleLogout } from "../../utils/handleLogout";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 const ChangePassword = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
+  const { getLanguage } = useLanguage();
   const {
     register,
     handleSubmit,
@@ -72,14 +74,18 @@ const ChangePassword = () => {
           style={{ color: "black", paddingLeft: "0px" }}
           className="card-header"
         >
-          <h4 className="card-title">Change Password</h4>
+          <h4 className="card-title">
+            {getLanguage(LanguageKey.CHANGE_PASSWORD)}
+          </h4>
         </div>
         <div className="card-body">
           <div className="report-form">
             <form onSubmit={handleSubmit(onSubmit)} className="">
               <div className="row row10">
                 <div className="mb-3 position-relative col-md-6">
-                  <label className="form-label">Current Password:</label>
+                  <label className="form-label">
+                    {getLanguage(LanguageKey.OLD_PASSWORD)}:
+                  </label>
                   <input
                     {...register("password", { required: true })}
                     name="password"
@@ -95,7 +101,9 @@ const ChangePassword = () => {
               </div>
               <div className="row row10">
                 <div className="mb-3 position-relative col-md-6">
-                  <label className="form-label">New Password:</label>
+                  <label className="form-label">
+                    {getLanguage(LanguageKey.NEW_PASSWORD)}:
+                  </label>
                   <input
                     {...register("newPassword", {
                       required: true,
@@ -120,7 +128,9 @@ const ChangePassword = () => {
               </div>
               <div className="row row10">
                 <div className="mb-4 position-relative col-md-6">
-                  <label className="form-label">Confirm Password:</label>
+                  <label className="form-label">
+                    {getLanguage(LanguageKey.CONFIRM_PASSWORD)}:
+                  </label>
                   <input
                     {...register("newPasswordConfirm", {
                       required: true,
@@ -147,7 +157,7 @@ const ChangePassword = () => {
               <div className="row row10">
                 <div className="mb-3 col-md-6">
                   <button type="submit" className="btn btn-primary btn-block">
-                    Change Password
+                    {getLanguage(LanguageKey.CHANGE_PASSWORD)}
                   </button>
                 </div>
               </div>

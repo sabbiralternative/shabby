@@ -1,17 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
-import useLanguage from "../../hooks/useLanguage";
-import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
 import UseState from "../../hooks/UseState";
 import { latestEvent } from "../../static/latest-event";
 import { eventNameList } from "../../static/event-name-list";
+import useLanguage from "../../hooks/use-language";
 
 const HeaderBottomDesktopLinks = () => {
   const token = localStorage.getItem("token");
   // setFilterGames is used to set the filter for casino games when user clicks on casino game links in header. It is used in OurCasino component to filter the games based on the selected game type.
   // const { setFilterGames } = UseState();
   const { setSports } = UseState();
-  const { valueByLanguage } = useLanguage();
+  const { getLanguage } = useLanguage();
   const navigate = useNavigate();
 
   const cricketEndpoint = () => {
@@ -56,7 +55,7 @@ const HeaderBottomDesktopLinks = () => {
         >
           <li className="nav-item">
             <Link className="nav-link" to="/">
-              {languageValue(valueByLanguage, LanguageKey.HOME)}
+              {getLanguage(LanguageKey.HOME)}
             </Link>
           </li>
 
@@ -74,7 +73,7 @@ const HeaderBottomDesktopLinks = () => {
 
           <li className="nav-item">
             <Link onClick={cricketEndpoint} className="nav-link" to="/cricket">
-              {languageValue(valueByLanguage, LanguageKey.CRICKET)}
+              {getLanguage(LanguageKey.CRICKET)}
             </Link>
           </li>
           <li className="nav-item">
@@ -83,12 +82,12 @@ const HeaderBottomDesktopLinks = () => {
               className="nav-link"
               to="/football"
             >
-              {languageValue(valueByLanguage, LanguageKey.FOOTBALL)}
+              {getLanguage(LanguageKey.FOOTBALL)}
             </Link>
           </li>
           <li className="nav-item">
             <Link onClick={tennisEndpoint} className="nav-link" to="/tennis">
-              {languageValue(valueByLanguage, LanguageKey.TENNIS)}
+              {getLanguage(LanguageKey.TENNIS)}
             </Link>
           </li>
           <li
@@ -96,23 +95,23 @@ const HeaderBottomDesktopLinks = () => {
             className="nav-item"
           >
             <a className="nav-link" to="/tennis">
-              Sportsbook
+              {getLanguage(LanguageKey.SPORTSBOOK)}
             </a>
           </li>
 
           <li className="nav-item">
             <Link onClick={kabbadiEndpoint} className="nav-link" to="/kabaddi">
-              {languageValue(valueByLanguage, LanguageKey.KABADDI)}
+              {getLanguage(LanguageKey.KABADDI)}
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/horse">
-              {languageValue(valueByLanguage, LanguageKey.HORSE)}
+              {getLanguage(LanguageKey.HORSE)}
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/greyhound">
-              {languageValue(valueByLanguage, LanguageKey.GREYHOUND)}
+              {getLanguage(LanguageKey.GREYHOUND)}
             </Link>
           </li>
           {eventNameList.map((item) => {
@@ -130,7 +129,7 @@ const HeaderBottomDesktopLinks = () => {
               className="nav-link"
               to="/table-tennis"
             >
-              Table Tennis
+              {getLanguage(LanguageKey.TABLE_TENNIS)}
             </Link>
           </li>
           {/* <li
@@ -244,7 +243,7 @@ const HeaderBottomDesktopLinks = () => {
                   </g>
                 </g>
               </svg>
-              <span className="ms-1">Crash</span>
+              <span className="ms-1">{getLanguage(LanguageKey.CRASH)}</span>
             </a>
           </li>
         </ul>

@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { settings } from "../../utils";
-import useLanguage from "../../hooks/useLanguage";
-import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../constant";
+import useLanguage from "../../hooks/use-language";
 
 const MobileDropdown = ({
   openModalRef,
@@ -23,7 +22,7 @@ const MobileDropdown = ({
 }) => {
   const closePopupForForever = localStorage.getItem("closePopupForForever");
 
-  const { valueByLanguage } = useLanguage();
+  const { getLanguage } = useLanguage();
   const handleOpenSocialLink = (link) => {
     if (link) {
       window.open(link, "_blank");
@@ -79,7 +78,7 @@ const MobileDropdown = ({
                     className="btn btn-success me-2"
                     to="/deposit"
                   >
-                    {languageValue(valueByLanguage, LanguageKey.DEPOSIT)}
+                    {getLanguage(LanguageKey.DEPOSIT)}
                   </Link>
                 )}
                 {/* In notice.json if withdraw = true then showDeposit */}
@@ -90,7 +89,7 @@ const MobileDropdown = ({
                     className="btn btn-danger"
                     to="/withdraw"
                   >
-                    {languageValue(valueByLanguage, LanguageKey.WITHDRAW)}
+                    {getLanguage(LanguageKey.WITHDRAW)}
                   </Link>
                 )}
               </div>{" "}
@@ -102,17 +101,14 @@ const MobileDropdown = ({
                 }
               >
                 <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                  Customer Support
+                  {getLanguage(LanguageKey.CUSTOMER_SUPPORT)}
                 </li>
               </Link>
             )}
             {settings.withdraw && (
               <Link to="/withdraw-statement" onClick={() => setOpen(!open)}>
                 <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                  {languageValue(
-                    valueByLanguage,
-                    LanguageKey.WITHDRAW_STATMENT,
-                  )}
+                  {getLanguage(LanguageKey.WITHDRAW_STATMENT)}
                 </li>
               </Link>
             )}
@@ -121,55 +117,52 @@ const MobileDropdown = ({
             {settings.deposit && (
               <Link to="/deposit-statement" onClick={() => setOpen(!open)}>
                 <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                  {languageValue(
-                    valueByLanguage,
-                    LanguageKey.DEPOSIT_STATEMENT,
-                  )}
+                  {getLanguage(LanguageKey.DEPOSIT_STATEMENT)}
                 </li>
               </Link>
             )}
             <Link to="/account-statement" onClick={() => setOpen(!open)}>
               <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                Account Statement
+                {getLanguage(LanguageKey.ACCOUNT_STATEMENT)}
               </li>
             </Link>
             <Link onClick={() => setOpen(!open)} to="/current-bet">
               <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                Current Bets
+                {getLanguage(LanguageKey.CURRENT_BETS)}
               </li>
             </Link>
             <Link to="/my-bank-details" onClick={() => setOpen(!open)}>
               <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                My Bank Details
+                {getLanguage(LanguageKey.MY_BANK_DETAILS)}
               </li>
             </Link>
             <Link to="/bonus-statement" onClick={() => setOpen(!open)}>
               <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                Bonus Statement
+                {getLanguage(LanguageKey.BONUS_STATEMENT)}
               </li>
             </Link>
 
             {settings?.referral && (
               <Link to="/affiliate" onClick={() => setOpen(!open)}>
                 <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                  Affiliate
+                  {getLanguage(LanguageKey.AFFILIATE)}
                 </li>
               </Link>
             )}
             <Link to="/promotions" onClick={() => setOpen(!open)}>
               <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                Promos & Bonus
+                {getLanguage(LanguageKey.PROMOTION_AND_BONUSES)}
               </li>
             </Link>
             <Link to="/lossback-bonus" onClick={() => setOpen(!open)}>
               <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                Lossback Bonus
+                {getLanguage(LanguageKey.LOSSBACK_BONUS)}
               </li>
             </Link>
             {closePopupForForever && (
               <Link to="/app-only-claims" onClick={() => setOpen(!open)}>
                 <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                  App Only Bonus
+                  {getLanguage(LanguageKey.APP_ONLY_BONUS)}
                 </li>
               </Link>
             )}
@@ -200,7 +193,7 @@ const MobileDropdown = ({
 
             <Link onClick={() => setOpen(!open)} to="/activity-logs">
               <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                Activity Logs
+                {getLanguage(LanguageKey.ACTIVITY_LOGS)}
               </li>
             </Link>
 
@@ -210,17 +203,19 @@ const MobileDropdown = ({
                 setOpen(!open);
               }}
             >
-              <li className="dropdown-item">Set Button Values</li>
+              <li className="dropdown-item">
+                {getLanguage(LanguageKey.EDIT_STAKE)}
+              </li>
             </div>
 
             <Link to="/secure-auth" onClick={() => setOpen(!open)}>
               <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                Security Auth Verification
+                {getLanguage(LanguageKey.SECURITY_AUTH_VERIFICATION)}
               </li>
             </Link>
             <Link onClick={() => setOpen(!open)} to="/change-password">
               <li data-rr-ui-dropdown-item="" className="dropdown-item">
-                {languageValue(valueByLanguage, LanguageKey.CHANGE_PASSWORD)}
+                {getLanguage(LanguageKey.CHANGE_PASSWORD)}
               </li>
             </Link>
             <Link
@@ -232,11 +227,11 @@ const MobileDropdown = ({
             >
               <li className="dropdown-item">
                 {" "}
-                {languageValue(valueByLanguage, LanguageKey.RULES)}
+                {getLanguage(LanguageKey.RULES)}
               </li>
             </Link>
             <div className="dropdown-item d-xl-none">
-              {languageValue(valueByLanguage, LanguageKey.BALANCE)}
+              {getLanguage(LanguageKey.BALANCE)}
               <div className="form-check float-end">
                 <input
                   style={{ cursor: "pointer" }}
@@ -251,7 +246,7 @@ const MobileDropdown = ({
               // onClick={() => setExp(!exp)}
               className="dropdown-item d-xl-none"
             >
-              {languageValue(valueByLanguage, LanguageKey.EXPOSURE)}
+              {getLanguage(LanguageKey.EXPOSURE)}
               <div className="form-check float-end">
                 <input
                   style={{ cursor: "pointer" }}
@@ -277,7 +272,7 @@ const MobileDropdown = ({
               data-rr-ui-dropdown-item=""
               className="dropdown-item"
             >
-              {languageValue(valueByLanguage, LanguageKey.LOGOUT)}
+              {getLanguage(LanguageKey.LOGOUT)}
             </li>
           </ul>
         </div>

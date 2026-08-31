@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 const SettleBetsModal = ({
   setShowModal,
   showModal,
@@ -7,12 +9,12 @@ const SettleBetsModal = ({
   setFilteredData,
 }) => {
   const [sportsRef, setSportsRef] = useState("");
-
+  const { getLanguage } = useLanguage();
   /* Filter sports */
   useEffect(() => {
     if (sportsRef !== "all" && sportsRef !== "") {
       const filterLayBack = modalData.filter(
-        (game) => game.betType === sportsRef
+        (game) => game.betType === sportsRef,
       );
       setFilteredData(filterLayBack);
     } else if (sportsRef === "all") {
@@ -42,7 +44,9 @@ const SettleBetsModal = ({
         <div className="modal-dialog modal-xl">
           <div className="modal-content">
             <div className="modal-header">
-              <div className="modal-title h4">Result</div>
+              <div className="modal-title h4">
+                {getLanguage(LanguageKey.RESULT)}
+              </div>
               <button
                 onClick={() => setShowModal(!showModal)}
                 type="button"
@@ -67,7 +71,7 @@ const SettleBetsModal = ({
                       name="filter"
                       value="all"
                     />
-                    All
+                    {getLanguage(LanguageKey.ALL_SPORTS)}
                     <label className="form-check-label" htmlFor="all"></label>
                   </div>
                   <div className="form-check form-check-inline">
@@ -97,8 +101,9 @@ const SettleBetsModal = ({
                 </div>
                 <div className="col-md-6 text-end">
                   <div>
-                    Total Bets: <span className="me-2">{data.length}</span>
-                    Total Amount:
+                    {getLanguage(LanguageKey.TOTAL_BETS)}:{" "}
+                    <span className="me-2">{data.length}</span>
+                    {getLanguage(LanguageKey.TOTAL_AMOUNT)}:
                     <span className="me-2 text-danger">{total}</span>
                   </div>
                 </div>
@@ -111,28 +116,28 @@ const SettleBetsModal = ({
                   <thead>
                     <tr role="row">
                       <th colSpan="1" role="columnheader">
-                        Nation
+                        {getLanguage(LanguageKey.NATION)}
                       </th>
                       <th colSpan="1" role="columnheader" className="text-end">
-                        Rate
+                        {getLanguage(LanguageKey.RATE)}
                       </th>
                       <th colSpan="1" role="columnheader" className="text-end">
                         Bhav
                       </th>
                       <th colSpan="1" role="columnheader" className="text-end">
-                        Amount
+                        {getLanguage(LanguageKey.AMOUNT)}
                       </th>
                       <th colSpan="1" role="columnheader" className="text-end">
-                        Win
+                        {getLanguage(LanguageKey.WIN)}
                       </th>
                       <th colSpan="1" role="columnheader">
-                        Date
+                        {getLanguage(LanguageKey.DATE)}
                       </th>
                       <th colSpan="1" role="columnheader">
-                        Ip Address
+                        {getLanguage(LanguageKey.IP_ADDRESS)}
                       </th>
                       <th colSpan="1" role="columnheader">
-                        Browser Details
+                        {getLanguage(LanguageKey.BROWSER_DETAILS)}
                       </th>
                       <th colSpan="1" role="columnheader">
                         <div className="text-end">

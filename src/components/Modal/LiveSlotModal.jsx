@@ -1,13 +1,16 @@
 import { useNavigate } from "react-router-dom";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const LiveSlotModal = ({ setShowModal, casinoId }) => {
+  const { getLanguage } = useLanguage();
   const navigate = useNavigate();
   const handleNavigate = async () => {
     setShowModal(false);
     navigate(
       `/${casinoId?.base}/${casinoId?.name || casinoId?.providerId}/${
         casinoId?.eventId
-      }`
+      }`,
     );
   };
   return (
@@ -29,7 +32,7 @@ const LiveSlotModal = ({ setShowModal, casinoId }) => {
                     className="fas fa-exclamation-triangle me-2"
                     style={{ fontSize: "14px" }}
                   ></i>
-                  <b>Please note</b>
+                  <b>{getLanguage(LanguageKey.PLEASE_NOTE)}</b>
                 </div>
                 <div className="mt-3 text-center" style={{ fontSize: "22px" }}>
                   (1 Point = ₹ 100)
@@ -47,13 +50,14 @@ const LiveSlotModal = ({ setShowModal, casinoId }) => {
                     type="button"
                     className="btn btn-outline-primary"
                   >
-                    Ok,I Agree!
+                    {getLanguage(LanguageKey.OK)},
+                    {getLanguage(LanguageKey.I_AGREE)}!
                   </button>
                   <a
                     onClick={() => setShowModal(false)}
                     className="btn btn-outline-danger"
                   >
-                    <span>Exit</span>
+                    <span>{getLanguage(LanguageKey.EXIT)}</span>
                   </a>
                 </div>
               </div>

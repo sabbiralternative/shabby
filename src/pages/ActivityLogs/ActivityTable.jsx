@@ -2,14 +2,17 @@ import { useState } from "react";
 import UseTokenGenerator from "../../hooks/UseTokenGenerator";
 import UseEncryptData from "../../hooks/UseEncryptData";
 import { API } from "../../utils";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../constant";
 
 const ActivityTable = ({ data }) => {
+  const { getLanguage } = useLanguage();
   const { username, ipAddress, date } = data;
   const token = localStorage.getItem("token");
   const [modalData, setModalData] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-/* Show ip details */
+  /* Show ip details */
   const showIpDetail = (ip) => {
     /* Random token */
     const generatedToken = UseTokenGenerator();
@@ -48,7 +51,9 @@ const ActivityTable = ({ data }) => {
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <div className="modal-title h4">Ip Details</div>
+                  <div className="modal-title h4">
+                    {getLanguage(LanguageKey.IP_DETAILS)}
+                  </div>
                   <button
                     onClick={() => setShowModal(!showModal)}
                     type="button"
@@ -65,11 +70,11 @@ const ActivityTable = ({ data }) => {
                           <td>{modalData.query}</td>
                         </tr>
                         <tr>
-                          <td>City:</td>
+                          <td>{getLanguage(LanguageKey.CITY)}:</td>
                           <td>{modalData.city}</td>
                         </tr>
                         <tr>
-                          <td>Country:</td>
+                          <td>{getLanguage(LanguageKey.COUNTRY)}:</td>
                           <td>{modalData.country}</td>
                         </tr>
                       </tbody>
