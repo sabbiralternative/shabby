@@ -458,5 +458,7 @@ export const LanguageKey = {
   GAME: "GAME",
   SELECT_TYPE: "SELECT_TYPE",
   ALL: "ALL",
+  BY_USERNAME: "BY_USERNAME",
+  BY_PHONE: "BY_PHONE",
 };
 export const settingsAPI = "https://api7.live/api/exchange/diamond/settings";

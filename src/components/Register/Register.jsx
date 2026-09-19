@@ -8,8 +8,12 @@ import { API, settings } from "../../utils";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 import useLanguage from "../../hooks/use-language";
 import { LanguageKey } from "../../constant";
+import { FaRegUser, FaMobileAlt } from "react-icons/fa";
 // import getOtpOnWhatsapp from "../../utils/getOtpOnWhatsapp";
 const Register = () => {
+  const [tab, setTab] = useState(
+    settings.registration_mobile ? "mobile" : "username",
+  );
   const { getLanguage } = useLanguage();
   const affnook_token = localStorage.getItem("affnook_token");
   const token = localStorage.getItem("token");
@@ -23,6 +27,7 @@ const Register = () => {
     mobileNo: "",
     otp: "",
     referralCode: "",
+    username: "",
   });
   const { setSuccessRegister, logo } = UseState();
   const [confirmPasswordErr, setConfirmPasswordErr] = useState("");
@@ -106,6 +111,7 @@ const Register = () => {
       return setOtpField("Enter four digit OTP no");
     } else {
       const registerData = {
+        username: user?.username,
         password: user?.password,
         confirmPassword: user?.confirmPassword,
         mobile: user?.mobileNo,
@@ -114,6 +120,8 @@ const Register = () => {
         orderId: order.orderId,
         otpMethod: order.otpMethod,
         affnook_token: affnook_token || null,
+        registration_mobile: settings.registration_mobile,
+        registration_username: settings.registration_username,
       };
 
       const { data } = await AxiosSecure.post(API.register, registerData);
@@ -259,21 +267,87 @@ const Register = () => {
                   </div>
                 )}
               {/* <!-- whatsapp end--> */}
+              {settings.registration_mobile &&
+                settings.registration_username && (
+                  <div
+                    style={{
+                      width: "100%",
+                      background:
+                        "color-mix(in srgb, var(--bg-primary) 30%, transparent)",
+                      marginBottom: "12px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                        position: "relative",
+                        width: "100%",
+                      }}
+                    >
+                      <div
+                        onClick={() => setTab("mobile")}
+                        style={{
+                          cursor: "pointer",
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          padding: "5px",
+                          width: "100%",
+                          gap: "6px",
+                          color: tab === "mobile" ? "white" : "black",
+                          background:
+                            tab === "mobile" ? "var(--bg-primary)" : undefined,
+                        }}
+                      >
+                        <FaMobileAlt />
 
-              <div className="mb-4 input-group position-relative username-text">
-                <input
-                  name="mobileNo"
-                  type="number"
-                  className="form-control PhoneInput"
-                  placeholder="Mobile No."
-                  onChange={(e) =>
-                    setUser({ ...user, mobileNo: e.target.value })
-                  }
-                />
-                <span className="input-group-text">
-                  <i className="fas fa-phone"></i>
-                </span>
-                {/* {settings.otpWhatsapp && (
+                        <span>{getLanguage(LanguageKey.BY_PHONE)}</span>
+                      </div>
+
+                      <div
+                        onClick={() => setTab("username")}
+                        style={{
+                          cursor: "pointer",
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          padding: "5px",
+                          width: "100%",
+                          gap: "6px",
+                          color: tab === "username" ? "white" : "black",
+                          background:
+                            tab === "username"
+                              ? "var(--bg-primary)"
+                              : undefined,
+                        }}
+                      >
+                        <FaRegUser />
+
+                        <span>{getLanguage(LanguageKey.BY_USERNAME)}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              {tab === "mobile" && settings.registration_mobile && (
+                <div className="mb-4 input-group position-relative username-text">
+                  <input
+                    name="mobileNo"
+                    type="number"
+                    className="form-control PhoneInput"
+                    placeholder="Mobile No."
+                    onChange={(e) =>
+                      setUser({ ...user, mobileNo: e.target.value })
+                    }
+                  />
+                  <span className="input-group-text">
+                    <i className="fas fa-phone"></i>
+                  </span>
+                  {/* {settings.otpWhatsapp && (
                   <button
                     style={{ marginBottom: "2px" }}
                     disabled={user.mobileNo.length < 10}
@@ -284,28 +358,45 @@ const Register = () => {
                     Get OTP Whatsapp
                   </button>
                 )} */}
-                {timer ? (
-                  <button
-                    style={{ cursor: "auto" }}
-                    className="btn btn-primary btn-block"
-                    type="button"
-                  >
-                    {getLanguage(LanguageKey.RETRY_IN)} {timer}
-                  </button>
-                ) : (
-                  <button
-                    onClick={getOtp}
-                    className="btn btn-primary btn-block"
-                    type="button"
-                  >
-                    {getLanguage(LanguageKey.GET_OTP_ON_MESSAGE)}
-                  </button>
-                )}
+                  {timer ? (
+                    <button
+                      style={{ cursor: "auto" }}
+                      className="btn btn-primary btn-block"
+                      type="button"
+                    >
+                      {getLanguage(LanguageKey.RETRY_IN)} {timer}
+                    </button>
+                  ) : (
+                    <button
+                      onClick={getOtp}
+                      className="btn btn-primary btn-block"
+                      type="button"
+                    >
+                      {getLanguage(LanguageKey.GET_OTP_ON_MESSAGE)}
+                    </button>
+                  )}
 
-                {mobile && (
-                  <p className="success-form text-danger">{mobile} </p>
-                )}
-              </div>
+                  {mobile && (
+                    <p className="success-form text-danger">{mobile} </p>
+                  )}
+                </div>
+              )}
+
+              {tab === "username" && settings.registration_username && (
+                <div className="mb-4 input-group position-relative username-text">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Username"
+                    onChange={(e) => {
+                      setUser({ ...user, username: e.target.value });
+                    }}
+                  />
+                  <span className="input-group-text">
+                    <i className="fas fa-user"></i>
+                  </span>
+                </div>
+              )}
 
               <div className="mb-4 input-group position-relative username-text">
                 <input
