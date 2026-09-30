@@ -118,6 +118,13 @@ const HomePage = () => {
       path: "/casino/sportsbook/550000",
     },
     {
+      label: getLanguage(LanguageKey.FANTASY_11),
+      icon: FaTrophy,
+      to: "fantasy-11",
+      id: 29944,
+      path: "/casino/fantasy-11/595001",
+    },
+    {
       label: getLanguage(LanguageKey.KABADDI),
       icon: MdSportsKabaddi,
       to: "kabaddi",

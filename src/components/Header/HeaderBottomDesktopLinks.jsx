@@ -98,6 +98,14 @@ const HeaderBottomDesktopLinks = () => {
               {getLanguage(LanguageKey.SPORTSBOOK)}
             </a>
           </li>
+          <li
+            onClick={() => handleNavigateToIFrame("fantasy-11", "595001")}
+            className="nav-item"
+          >
+            <a className="nav-link" to="/tennis">
+              {getLanguage(LanguageKey.FANTASY_11)}
+            </a>
+          </li>
 
           <li className="nav-item">
             <Link onClick={kabbadiEndpoint} className="nav-link" to="/kabaddi">
